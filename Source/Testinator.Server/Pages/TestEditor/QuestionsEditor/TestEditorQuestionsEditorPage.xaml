@@ -96,26 +96,20 @@
 
             </Button>
 
-            <Button Grid.Row="0" Grid.Column="1"
-                    Background="{StaticResource GreenSeaBrush}"
-                    Margin="5"
+            <Button Grid.Column="1"
                     Command="{Binding SelectQuestionTypeCommand}"
                     CommandParameter="{x:Static core:QuestionType.MultipleCheckboxes}"
-                    IsEnabled="False"
-                    Cursor="No">
+                    Style="{StaticResource GreenTileButton}">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Pytanie z checkboxami"/>
                     <TextBlock Text="Comming soon!"/>
                 </StackPanel>
             </Button>
 
-            <Button Grid.Row="0" Grid.Column="2"
-                    Background="{StaticResource GreenSeaBrush}"
-                    Margin="5"
+            <Button Grid.Column="2"
                     Command="{Binding SelectQuestionTypeCommand}"
                     CommandParameter="{x:Static core:QuestionType.SingleTextBox}"
-                    IsEnabled="False"
-                    Cursor="No">
+                    Style="{StaticResource GreenTileButton}">
                 <StackPanel Orientation="Vertical">
                     <TextBlock Text="Pytania z textboxem" />
                     <TextBlock Text="Comming soon!"/>

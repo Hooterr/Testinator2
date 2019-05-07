@@ -25,19 +25,25 @@
                     Margin="20"
                     Style="{StaticResource GreenTileButton}">
 
-                <StackPanel Orientation="Horizontal" 
-                            FlowDirection="RightToLeft">
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
 
                     <TextBlock Text="{StaticResource FontAwesomeTestIcon}"
-                               Margin="30 0"
+                               Margin="40 0"
                                Style="{StaticResource FontAwesomeIconText}" />
                     <TextBlock Text="{x:Static core:LocalizationResource.CreateNewTest}"
+                               Grid.Column="2"
                                Foreground="{StaticResource WhitePureBrush}"
                                FontSize="{StaticResource FontSizeXXLarge}"
-                               Margin="30 0"
+                               Margin="40 0"
                                Style="{StaticResource MediumTitleText}" />
 
-                </StackPanel>
+                </Grid>
 
             </Button>
 
@@ -45,41 +51,54 @@
                     Margin="20"
                     Grid.Row="1"
                     Style="{StaticResource GreenTileButton}">
-                
-                <StackPanel Orientation="Horizontal">
 
-                    <TextBlock Text="{StaticResource FontAwesomeTestIcon}"
-                               Margin="30 0"
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="{StaticResource FontAwesomeEditIcon}"
+                               Margin="40 0"
+                               Grid.Column="2"
                                Style="{StaticResource FontAwesomeIconText}" />
                     <TextBlock Text="{x:Static core:LocalizationResource.EditManageTest}"
                                Foreground="{StaticResource WhitePureBrush}"
                                FontSize="{StaticResource FontSizeXXLarge}"
-                               Margin="30 0"
+                               Margin="40 0"
                                Style="{StaticResource MediumTitleText}" />
 
-                </StackPanel>
-                
+                </Grid>
+
             </Button>
 
-            <Button Command="{Binding CreateNewCriteriaCommand}"
+            <Button Command="{Binding EditCriteriaCommand}"
                     Margin="20"
                     Grid.Row="2"
                     Style="{StaticResource GreenTileButton}">
-                
-                <StackPanel Orientation="Horizontal" 
-                            FlowDirection="RightToLeft">
 
-                    <TextBlock Text="{StaticResource FontAwesomeTestIcon}"
-                               Margin="30 0"
+                <Grid>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="{StaticResource FontAwesomePercentIcon}"
+                               Margin="40 0"
                                Style="{StaticResource FontAwesomeIconText}" />
                     <TextBlock Text="{x:Static core:LocalizationResource.CreateNewCriteria}"
+                               Grid.Column="2"
                                Foreground="{StaticResource WhitePureBrush}"
                                FontSize="{StaticResource FontSizeXXLarge}"
-                               Margin="30 0"
+                               Margin="40 0"
                                Style="{StaticResource MediumTitleText}" />
 
-                </StackPanel>
-                
+                </Grid>
+
             </Button>
 
         </Grid>

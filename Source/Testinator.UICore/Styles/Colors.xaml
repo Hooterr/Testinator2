@@ -4,9 +4,6 @@
     
     <!-- COLOR NAMING RULE: ColorHue/Brush/ -->
 
-    <Color x:Key="WhitePure">#FFFFFF</Color>
-    <SolidColorBrush x:Key="WhitePureBrush" Color="{StaticResource WhitePure}" />
-
     <Color x:Key="WhiteLight">#F3F4F8</Color>
     <SolidColorBrush x:Key="WhiteLightBrush" Color="{StaticResource WhiteLight}" />
 
@@ -16,25 +13,30 @@
     <Color x:Key="GrayLight">#E3E3E3</Color>
     <SolidColorBrush x:Key="GrayLightBrush" Color="{StaticResource GrayLight}" />
 
-    <Color x:Key="GreenSea">#4CA194</Color>
-    <SolidColorBrush x:Key="GreenSeaBrush" Color="{StaticResource GreenSea}" />
-
-    <Color x:Key="GreenSeaLight">#60b2a5</Color>
-    <SolidColorBrush x:Key="GreenSeaLightBrush" Color="{StaticResource GreenSeaLight}" />
-
-    <Color x:Key="BlueDark">#2F475F</Color>
-    <SolidColorBrush x:Key="BlueDarkBrush" Color="{StaticResource BlueDark}" />
-
     <Color x:Key="RedLight">#f24040</Color>
     <SolidColorBrush x:Key="RedLightBrush" Color="{StaticResource RedLight}" />
 
     <Color x:Key="BlackLight">#64666C</Color>
     <SolidColorBrush x:Key="BlackLightBrush" Color="{StaticResource BlackLight}" />
 
-    <Color x:Key="BlackDark">#171918</Color>
-    <SolidColorBrush x:Key="BlackDarkBrush" Color="{StaticResource BlackDark}" />
-
     <Color x:Key="BlackPure">#000000</Color>
     <SolidColorBrush x:Key="BlackPureBrush" Color="{StaticResource BlackPure}" />
+    
+    <!-- NEW UI -->
+
+    <Color x:Key="BlueDark">#2F475F</Color>
+    <SolidColorBrush x:Key="BlueDarkBrush" Color="{StaticResource BlueDark}" />
+
+    <Color x:Key="GreenSea">#4CA194</Color>
+    <SolidColorBrush x:Key="GreenSeaBrush" Color="{StaticResource GreenSea}" />
+
+    <Color x:Key="GreenSeaLight">#60b2a5</Color>
+    <SolidColorBrush x:Key="GreenSeaLightBrush" Color="{StaticResource GreenSeaLight}" />
+
+    <Color x:Key="WhitePure">#FFFFFF</Color>
+    <SolidColorBrush x:Key="WhitePureBrush" Color="{StaticResource WhitePure}" />
+
+    <Color x:Key="BlackDark">#171918</Color>
+    <SolidColorBrush x:Key="BlackDarkBrush" Color="{StaticResource BlackDark}" />
 
 </ResourceDictionary>
