@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Testinator.TestSystem.Abstractions
 {
@@ -35,9 +34,9 @@ namespace Testinator.TestSystem.Abstractions
         public ICriteria Criteria { get; set; }
 
         /// <summary>
-        /// The collection of every question attached to this test
+        /// The list of questions attached to this test
         /// </summary>
-        public ICollection<Question> QuestionCollection { get; set; }
+        public QuestionList Questions { get; set; }
 
         /// <summary>
         /// The time this test can take at most
