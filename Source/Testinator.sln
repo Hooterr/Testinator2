@@ -25,6 +25,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.AnimationFramewo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Updater", "Testinator.Updater\Testinator.Updater.csproj", "{2A2D8211-B3C3-492C-A4BD-75BD1F837D1A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.TestSystem.Abstractions", "Testinator.TestSystem.Abstractions\Testinator.TestSystem.Abstractions.csproj", "{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -117,6 +119,14 @@ Global
 		{2A2D8211-B3C3-492C-A4BD-75BD1F837D1A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2A2D8211-B3C3-492C-A4BD-75BD1F837D1A}.Release|x86.ActiveCfg = Release|Any CPU
 		{2A2D8211-B3C3-492C-A4BD-75BD1F837D1A}.Release|x86.Build.0 = Release|Any CPU
+		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Debug|x86.Build.0 = Debug|Any CPU
+		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Release|x86.ActiveCfg = Release|Any CPU
+		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
