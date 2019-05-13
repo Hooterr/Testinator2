@@ -6,15 +6,17 @@
     public class Question
     {
         /// <summary>
-        /// The content of this question as <see cref="IContent"/>
+        /// The content of this question task as <see cref="IQuestionTask"/>
         /// So it can be text or image or whatever implements this interface
         /// </summary>
-        public IContent Content { get; set; }
+        public IQuestionTask Task { get; set; }
 
         /// <summary>
-        /// The scoring of this question as <see cref="IScoring"/>
+        /// The scoring for this question as <see cref="IQuestionScoring"/>
         /// </summary>
-        public IScoring Scoring { get; set; }
+        public IQuestionScoring Scoring { get; set; }
+
+        public IQuestionAnswer Answer { get; set; }
 
         /// <summary>
         /// The author of this question
@@ -27,7 +29,5 @@
         /// Can contain subcategories
         /// </summary>
         public Category Category { get; set; }
-
-        // TODO: Answers or however we call them
     }
 }

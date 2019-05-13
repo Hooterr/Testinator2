@@ -31,7 +31,7 @@ namespace Testinator.TestSystem.Abstractions
         /// <summary>
         /// The criteria attached to this test
         /// </summary>
-        public ICriteria Criteria { get; set; }
+        public Criteria Criteria { get; set; }
 
         /// <summary>
         /// The list of questions attached to this test

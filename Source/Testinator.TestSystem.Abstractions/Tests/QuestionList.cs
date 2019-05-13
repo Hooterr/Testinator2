@@ -7,6 +7,9 @@ namespace Testinator.TestSystem.Abstractions
     /// </summary>
     public class QuestionList
     {
+        public ICollection<QuestionProvider> Questions { get; set; }
+
+        /*
         /// <summary>
         /// The collection of references (as GUID string) to the questions that are in a main poll
         /// </summary>
@@ -15,6 +18,11 @@ namespace Testinator.TestSystem.Abstractions
         /// <summary>
         /// The collection of locally-saved questions that are not in a main pool
         /// </summary>
-        public ICollection<Question> LocalQuestions { get; set; }
+        public ICollection<Question> LocalQuestions { get; set; }*/
+    }
+
+    public abstract class QuestionProvider
+    {
+        public abstract Question GetQuestion();
     }
 }

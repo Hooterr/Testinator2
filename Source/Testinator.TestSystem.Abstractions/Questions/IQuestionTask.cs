@@ -3,7 +3,13 @@
     /// <summary>
     /// The interface for every question's content
     /// </summary>
-    public interface IContent
+    public interface IQuestionTask
     {
+        bool IsEmpty();
+
+        string GetStringTask();
+
+
+
     }
 }
