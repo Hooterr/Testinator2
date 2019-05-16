@@ -25,7 +25,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.AnimationFramewo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Updater", "Testinator.Updater\Testinator.Updater.csproj", "{2A2D8211-B3C3-492C-A4BD-75BD1F837D1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.TestSystem.Abstractions", "Testinator.TestSystem.Abstractions\Testinator.TestSystem.Abstractions.csproj", "{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.TestSystem.Abstractions", "Testinator.TestSystem.Abstractions\Testinator.TestSystem.Abstractions.csproj", "{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Server.TestSystem.Implementation", "Testinator.Server.TestSystem.Implementation\Testinator.Server.TestSystem.Implementation.csproj", "{7710DF93-A84A-4073-8358-B4AE051C3942}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFDCBB19-9D71-49B1-B256-8E2F0DA3729D}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -127,6 +134,14 @@ Global
 		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Release|x86.ActiveCfg = Release|Any CPU
 		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}.Release|x86.Build.0 = Release|Any CPU
+		{7710DF93-A84A-4073-8358-B4AE051C3942}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7710DF93-A84A-4073-8358-B4AE051C3942}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7710DF93-A84A-4073-8358-B4AE051C3942}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7710DF93-A84A-4073-8358-B4AE051C3942}.Debug|x86.Build.0 = Debug|Any CPU
+		{7710DF93-A84A-4073-8358-B4AE051C3942}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7710DF93-A84A-4073-8358-B4AE051C3942}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7710DF93-A84A-4073-8358-B4AE051C3942}.Release|x86.ActiveCfg = Release|Any CPU
+		{7710DF93-A84A-4073-8358-B4AE051C3942}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

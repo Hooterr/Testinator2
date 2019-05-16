@@ -3,31 +3,40 @@
     /// <summary>
     /// The question which is base object in test system
     /// </summary>
-    public class Question
+    public abstract class Question
     {
         /// <summary>
         /// The content of this question task as <see cref="IQuestionTask"/>
         /// So it can be text or image or whatever implements this interface
         /// </summary>
-        public IQuestionTask Task { get; set; }
+        public abstract IQuestionTask Task { get; protected set; }
 
         /// <summary>
-        /// The scoring for this question as <see cref="IQuestionScoring"/>
+        /// The scoring for this question as <see cref="IEvaluable"/>
         /// </summary>
-        public IQuestionScoring Scoring { get; set; }
+        public abstract IEvaluable Scoring { get; protected set; }
 
-        public IQuestionAnswer Answer { get; set; }
+        public abstract IQuestionAnswer Answer { get; protected set; }
 
         /// <summary>
         /// The author of this question
         /// NOTE: It's the person who created this question, not necessary the one who owns it
         /// </summary>
-        public string Author { get; set; }
+        public string Author { get; protected set; }
 
         /// <summary>
         /// The category of this question
         /// Can contain subcategories
         /// </summary>
-        public Category Category { get; set; }
+        public Category Category { get; protected set; }
+
+        public virtual bool IsValid()
+        {
+            var isNotComplete = false;
+            isNotComplete |= Task == null || Task.IsEmpty();
+            isNotComplete |= Scoring == null || Scoring.IsWellDefined();
+            isNotComplete |= Answer == null || Answer.IsWellDefined();
+            return !isNotComplete;                
+        }
     }
 }

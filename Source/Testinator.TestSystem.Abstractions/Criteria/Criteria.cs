@@ -25,6 +25,6 @@ namespace Testinator.TestSystem.Abstractions
         /// <summary>
         /// Calculates scoring result based on provided scoring
         /// </summary>
-        public abstract IScoringResult CalculateScoringResult(IQuestionScoring scoring);
+        public abstract IScoringResult CalculateScoringResult(IEvaluable scoring);
     }
 }

@@ -8,6 +8,6 @@
         /// <summary>
         /// Calculates scoring result based on provided scoring
         /// </summary>
-        IScoringResult CalculateScoringResult(IQuestionScoring scoring);
+        IScoringResult CalculateScoringResult(IEvaluable scoring);
     }
 }
