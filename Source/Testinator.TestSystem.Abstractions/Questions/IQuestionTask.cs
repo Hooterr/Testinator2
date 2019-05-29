@@ -7,8 +7,8 @@ namespace Testinator.TestSystem.Abstractions
     /// </summary>
     public interface IQuestionTask
     {
-        ITextContent Text { get; set; }
-        IImageContent Images { get; set; }
+        ITextContent Text { get; }
+        IImageContent Images { get; }
         bool IsEmpty();
     }
 }

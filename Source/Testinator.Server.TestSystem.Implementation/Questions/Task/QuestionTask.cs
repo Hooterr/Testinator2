@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Testinator.Server.TestSystem.Implementation.Questions.Task;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Questions.Task;
 
@@ -12,31 +13,32 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
     public class QuestionTask : IQuestionTask
     {
         #region Private Members
-
-        private ITextContent mText;
-        private IImageContent mImages;
+        private TextContent mText;
+        private ImageContent mImages;
 
         #endregion
 
-        public ITextContent Text
-        {
-            get => mText;
-            set => mText = value;
-        }
+        public ITextContent Text => mText;
 
-        public IImageContent Images
-        {
-            get => mImages;
-            set => mImages = value;
-        }
+        public IImageContent Images => mImages;
 
         public bool IsEmpty()
         {
-            var isEmpty = false;
+            var isEmpty = true;
             isEmpty |= Text == null || Text.IsEmpty();
             isEmpty |= mImages == null || mImages.IsEmpty();
 
             return isEmpty;
+        }
+        
+        internal void SetTextContent(TextContent content)
+        {
+            mText = content;
+        }
+
+        internal void SetImageContent(ImageContent content)
+        {
+            mImages = content;
         }
     }
 }

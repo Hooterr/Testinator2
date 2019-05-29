@@ -7,6 +7,8 @@ namespace Testinator.TestSystem.Abstractions.Questions.Task
 {
     public interface IImageContent
     {
+        // Get rid of the methods that alter the object (delete, add etc.)
+        // Constructing the object should be done by a builder
         ICollection<Image> GetAll();
         void DeleteAll();
         void Delete(Image img);

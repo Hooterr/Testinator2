@@ -32,11 +32,11 @@
 
         public virtual bool IsValid()
         {
-            var isNotComplete = false;
-            isNotComplete |= Task == null || Task.IsEmpty();
-            isNotComplete |= Scoring == null || Scoring.IsWellDefined();
-            isNotComplete |= Answer == null || Answer.IsWellDefined();
-            return !isNotComplete;                
+            var isComplete = true;
+            isComplete &= Task != null && !Task.IsEmpty();
+            isComplete &= Scoring != null && !Scoring.IsWellDefined();
+            isComplete &= Answer != null && !Answer.IsWellDefined();
+            return isComplete;                
         }
     }
 }
