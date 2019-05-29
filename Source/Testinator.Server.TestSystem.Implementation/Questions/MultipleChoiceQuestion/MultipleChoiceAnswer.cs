@@ -15,7 +15,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
 
         /// <summary>
         /// The answers for this question
-        /// NOTE: using IEnumerable so the order cannot be modified outside the this class
+        /// NOTE: using IEnumerable so the order cannot be modified outside this class
         /// </summary>
         public IEnumerable<string> Answers => mAnswers;
 

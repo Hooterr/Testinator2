@@ -19,7 +19,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
                 mMax = value;
             }
         }
-        // TODO: evalution strategies
+        // TODO: evaluation strategies
         // Presuming it's linear for now
 
         public int Evalute(int correctPercentage)
