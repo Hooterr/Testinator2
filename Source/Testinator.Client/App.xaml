@@ -12,7 +12,10 @@
                 <ResourceDictionary Source="pack://application:,,,/Testinator.UICore;component/Styles/Buttons.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Testinator.UICore;component/Styles/Texts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Testinator.UICore;component/Styles/Checkboxes.xaml" />
-                
+
+
+                <ResourceDictionary Source="pack://application:,,,/Testinator.Client;component/Styles/Colors.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>
