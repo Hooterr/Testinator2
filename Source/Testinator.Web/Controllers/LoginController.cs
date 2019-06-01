@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using Testinator.Web.Core;
 
 namespace Testinator.Web
@@ -17,8 +18,17 @@ namespace Testinator.Web
             return View();
         }
 
-        public IActionResult Login()
+        public async Task<IActionResult> LoginAsync(LoginViewModel loginViewModel)
         {
+            // If view model isn't valid one to attempt logging in
+            if (!ModelState.IsValid)
+            {
+                // Return the model back to show the errors
+                return View(loginViewModel);
+            }
+
+            await mAccountService.LoginUserAsync(loginViewModel.Username, loginViewModel.Password);
+
             return Ok();
         }
     }
