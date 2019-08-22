@@ -6,11 +6,11 @@ using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal abstract class BaseEditor<TQuestion> : IQuestionEditor
+    internal abstract class BaseEditor<TQuestion>
         where TQuestion : Question, new()
     {
 
-        private TQuestion mQuestion;
+        internal TQuestion mQuestion;
         private ITaskEditor mTaskEditor;
 
 
