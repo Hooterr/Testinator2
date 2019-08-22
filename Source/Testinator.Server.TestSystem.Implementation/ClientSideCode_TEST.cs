@@ -12,11 +12,11 @@ namespace Testinator.Server.TestSystem.Implementation
         {
 
             var listOfQuestions = new List<Question>();
-
             var editor = Editors.MultipleChoiceQuestion
                 .NewQuestion()
                 .UseNewestVersion()
                 .Build();
+            //editor.Task.
 
         }
     }

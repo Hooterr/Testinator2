@@ -6,13 +6,22 @@ using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal abstract class BaseEditor<TQuestion>
+    internal abstract class BaseEditor<TQuestion> : IQuestionEditor
         where TQuestion : Question, new()
     {
 
-        internal TQuestion mQuestion = null;
+        private TQuestion mQuestion;
+        private ITaskEditor mTaskEditor;
+
 
         public int Version => mQuestion == null ? -1 : mQuestion.Version;
+
+        public ITaskEditor Task => mTaskEditor;
+
+        internal void CompleteSetup()
+        {
+            mTaskEditor = new TaskEditor(Version);
+        }
 
         internal void EditExisting(TQuestion question)
         {
@@ -26,6 +35,5 @@ namespace Testinator.Server.TestSystem.Implementation
                 Version = version 
             };
         }
-
     }
 }

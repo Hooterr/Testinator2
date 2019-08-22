@@ -7,7 +7,9 @@ using Testinator.TestSystem.Abstractions.Questions.Task;
 namespace Testinator.Server.TestSystem.Implementation
 {
     internal class TaskEditor : ITaskEditor
-{ 
+{
+        private readonly int mVersion;
+
         public OperationResult AddImage(Image img)
         {
             throw new NotImplementedException();
@@ -41,6 +43,14 @@ namespace Testinator.Server.TestSystem.Implementation
         public int GetMaxCount()
         {
             throw new NotImplementedException();
+        }
+
+        public TaskEditor(int version)
+        {
+            if (Versions.OutOfRange(version))
+                throw new ArgumentOutOfRangeException(nameof(version));
+
+            mVersion = version;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    public interface IMultipleChoiceQuestionEditor : IQuestionEditor
+    public interface IMultipleChoiceQuestionEditor
     {
         OperationResult AddOption(string option);
     }
