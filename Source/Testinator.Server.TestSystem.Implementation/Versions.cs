@@ -11,7 +11,7 @@ namespace Testinator.Server.TestSystem.Implementation
         public const int Lowest = 1;
 
         public static bool InRange(int version) => version >= Lowest && version <= Highest;
-        public static bool OutOfRange(int version) => !InRange(version);
+        public static bool NotInRange(int version) => !InRange(version);
     }
 
 }

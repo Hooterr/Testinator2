@@ -71,7 +71,7 @@ namespace Testinator.Server.TestSystem.Implementation
                 throw new NotSupportedException("Changing question version is not supported yet.");
             }
 
-            if (Versions.OutOfRange(version))
+            if (Versions.NotInRange(version))
             {
                 throw new NotSupportedException($"Version must be between highest ({Versions.Highest}) and lowest({Versions.Lowest}).");
             }

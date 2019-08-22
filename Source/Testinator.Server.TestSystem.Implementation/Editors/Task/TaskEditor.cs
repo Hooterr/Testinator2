@@ -47,7 +47,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public TaskEditor(int version)
         {
-            if (Versions.OutOfRange(version))
+            if (Versions.NotInRange(version))
                 throw new ArgumentOutOfRangeException(nameof(version));
 
             mVersion = version;
