@@ -64,7 +64,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public IEditorBuilder<TEditorInterface, TQuestion> SetVersion(int version)
         {
-            if (mConcreteEditor.mQuestion != null && mQuestion.Version != version)
+            if (mQuestion != null && mQuestion.Version != version)
             {
                 throw new NotSupportedException("Changing question version is not supported yet.");
             }
@@ -81,7 +81,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public IEditorBuilder<TEditorInterface, TQuestion> UseNewestVersion()
         {
-            if (mConcreteEditor.mQuestion != null && mQuestion.Version != Versions.Highest)
+            if (mQuestion != null && mQuestion.Version != Versions.Highest)
             {
                 throw new NotSupportedException("Changing question version is not supported yet.");
             }
