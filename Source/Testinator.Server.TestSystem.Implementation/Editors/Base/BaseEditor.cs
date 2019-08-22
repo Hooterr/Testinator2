@@ -11,12 +11,10 @@ namespace Testinator.Server.TestSystem.Implementation
     {
 
         internal TQuestion mQuestion;
-        private ITaskEditor mTaskEditor;
+        protected ITaskEditor mTaskEditor;
 
 
         public int Version => mQuestion == null ? -1 : mQuestion.Version;
-
-        public ITaskEditor Task => mTaskEditor;
 
         internal void CompleteSetup()
         {

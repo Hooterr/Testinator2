@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Testinator.Server.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
@@ -16,7 +17,7 @@ namespace Testinator.Server.TestSystem.Implementation
                 .NewQuestion()
                 .UseNewestVersion()
                 .Build();
-            //editor.Task.
+            editor.Task.AddText("", MarkupLanguage.PlainText);
 
         }
     }
