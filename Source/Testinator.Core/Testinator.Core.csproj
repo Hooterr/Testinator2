@@ -1,230 +1,39 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\PropertyChanged.Fody.3.1.0\build\PropertyChanged.Fody.props" Condition="Exists('..\packages\PropertyChanged.Fody.3.1.0\build\PropertyChanged.Fody.props')" />
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{F592FA60-030D-440B-BB00-ED4EA5A919F6}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Testinator.Core</RootNamespace>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <AssemblyName>Testinator.Core</AssemblyName>
-    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
+    <RootNamespace>Testinator.Core</RootNamespace>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Microsoft.EntityFrameworkCore, Version=2.2.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.2.2.4\lib\netstandard2.0\Microsoft.EntityFrameworkCore.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.EntityFrameworkCore.Abstractions, Version=2.2.4.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.EntityFrameworkCore.Abstractions.2.2.4\lib\netstandard2.0\Microsoft.EntityFrameworkCore.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Caching.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Caching.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Caching.Memory, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Caching.Memory.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Caching.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Configuration.Binder, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Configuration.Binder.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Configuration.Binder.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.2.2.0\lib\net461\Microsoft.Extensions.DependencyInjection.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Logging, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Logging.Abstractions, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Logging.Abstractions.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Logging.Abstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Options, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Options.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Options.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Extensions.Primitives, Version=2.2.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Extensions.Primitives.2.2.0\lib\netstandard2.0\Microsoft.Extensions.Primitives.dll</HintPath>
-    </Reference>
-    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
-      <HintPath>..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
-    </Reference>
-    <Reference Include="PropertyChanged, Version=3.1.0.0, Culture=neutral, PublicKeyToken=ee3ee20bcf148ddd, processorArchitecture=MSIL">
-      <HintPath>..\packages\PropertyChanged.Fody.3.1.0\lib\net452\PropertyChanged.dll</HintPath>
-    </Reference>
-    <Reference Include="Remotion.Linq, Version=2.2.0.0, Culture=neutral, PublicKeyToken=fee00910d6e5f53b, processorArchitecture=MSIL">
-      <HintPath>..\packages\Remotion.Linq.2.2.0\lib\net45\Remotion.Linq.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable, Version=1.2.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.1.5.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ComponentModel.Annotations.4.5.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.DataAnnotations" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.DiagnosticSource, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.DiagnosticSource.4.5.0\lib\net46\System.Diagnostics.DiagnosticSource.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Interactive.Async, Version=3.2.0.0, Culture=neutral, PublicKeyToken=94bc3704cddfc263, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Interactive.Async.3.2.0\lib\net46\System.Interactive.Async.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.1\lib\netstandard2.0\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.4.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.1\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="2.2.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Analyzers" Version="2.2.6" />
+    <PackageReference Include="PropertyChanged.Fody" Version="3.1.0" />
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+    <PackageReference Include="System.Security.Cryptography.ProtectedData" Version="4.0.0" />
   </ItemGroup>
+
   <ItemGroup>
-    <Compile Include="Base\BaseViewModel.cs" />
-    <Compile Include="Base\IHavePassword.cs" />
-    <Compile Include="Base\RelayCommand.cs" />
-    <Compile Include="Base\RelayParameterizedCommand.cs" />
-    <Compile Include="Database\BaseEntity.cs" />
-    <Compile Include="Database\BaseRepository.cs" />
-    <Compile Include="Database\IBaseEntity.cs" />
-    <Compile Include="Database\IRepository.cs" />
-    <Compile Include="Database\SqlExceptionExtensions.cs" />
-    <Compile Include="DataModels\Builder\Builder.cs" />
-    <Compile Include="DataModels\Builder\IBuilder.cs" />
-    <Compile Include="DataModels\Client\Client.cs" />
-    <Compile Include="DataModels\DataPackage\Content\ResultFormPackage.cs" />
-    <Compile Include="DataModels\DataPackage\Content\StatusPackage.cs" />
-    <Compile Include="DataModels\DataPackage\Content\TestStartupArgsPackage.cs" />
-    <Compile Include="DataModels\DataPackage\DataPackage.cs" />
-    <Compile Include="DataModels\DataPackage\Content\InfoPackage.cs" />
-    <Compile Include="DataModels\DataPackage\PackageContent.cs" />
-    <Compile Include="DataModels\DataPackage\PackageType.cs" />
-    <Compile Include="DataModels\Questions\Answer\Base\Answer.cs" />
-    <Compile Include="DataModels\Questions\Answer\Base\IAnswer.cs" />
-    <Compile Include="DataModels\Questions\Answer\Implementation\MultipleCheckboxesAnswer.cs" />
-    <Compile Include="DataModels\Questions\Answer\Implementation\MultipleChoiceAnswer.cs" />
-    <Compile Include="DataModels\Questions\Answer\Implementation\SingleTextBoxAnswer.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Base\Builder\QuestionBuilder.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Base\Question\IQuestion.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Base\Question\QuestionBase.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Base\Scoring\Scoring.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Base\Scoring\ScoringMode.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Implementation\Builders\MultipleCheckboxesQuestionBuilder.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Implementation\Builders\MultipleChoiceQuestionBuilder.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Implementation\Builders\SingleTextBoxQuestionBuilder.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Implementation\Questions\MultipleCheckBoxesQuestion.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Implementation\Questions\MultipleChoiceQuestion.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Base\Question\QuestionTypes.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Implementation\Questions\SingleTextBoxQuestion.cs" />
-    <Compile Include="DataModels\Questions\QuestionModel\Base\Question\Task\TaskContent.cs" />
-    <Compile Include="DataModels\Results\Implementation\ClientTestResults.cs" />
-    <Compile Include="DataModels\Results\Implementation\ServerTestResults.cs" />
-    <Compile Include="DataModels\Results\TestResultsClientModel.cs" />
-    <Compile Include="DataModels\Test\GradingSystem\Base\GradingBase.cs" />
-    <Compile Include="DataModels\Test\GradingSystem\Implementation\GradingPoints.cs" />
-    <Compile Include="DataModels\Test\GradingSystem\Implementation\GradingPercentage.cs" />
-    <Compile Include="DataModels\Test\GradingSystem\GradingExtensionMethods.cs" />
-    <Compile Include="DataModels\Test\GradingSystem\Base\Mark.cs" />
-    <Compile Include="DataModels\Test\GradingSystem\Base\Marks.cs" />
-    <Compile Include="DataModels\Test\TestCore\Builder\TestBuilder.cs" />
-    <Compile Include="DataModels\Test\TestCore\Test.cs" />
-    <Compile Include="DataModels\Test\TestCore\TestInformation.cs" />
-    <Compile Include="Dialogs\Base\BaseDialogViewModel.cs" />
-    <Compile Include="Dialogs\Base\MessageTypes.cs" />
-    <Compile Include="Dialogs\ViewModels\DecisionDialogViewModel.cs" />
-    <Compile Include="Dialogs\ViewModels\MessageBoxDialogViewModel.cs" />
-    <Compile Include="EnumberableExtensions.cs" />
-    <Compile Include="Enums\EnumHelpers.cs" />
-    <Compile Include="Expressions\ExpressionHelpers.cs" />
-    <Compile Include="Files\Base\FileDataHasher.cs" />
-    <Compile Include="Files\Base\FileHandler.cs" />
-    <Compile Include="Files\Models\SettingsPropertyInfo.cs" />
-    <Compile Include="Files\Readers\BinaryReader.cs" />
-    <Compile Include="Files\Readers\XmlReader.cs" />
-    <Compile Include="Files\Base\FileManagerBase.cs" />
-    <Compile Include="Files\Models\Paths.cs" />
-    <Compile Include="Files\Models\SaveableObjects.cs" />
-    <Compile Include="Files\Writers\BinaryWriter.cs" />
-    <Compile Include="Files\Writers\LogsWriter.cs" />
-    <Compile Include="Files\Writers\XmlWriter.cs" />
-    <Compile Include="IoC\IoC.cs" />
-    <Compile Include="LocalizationResource.Designer.cs">
+    <Reference Include="System.Data.SqlClient">
+      <HintPath>..\..\..\..\..\..\..\Program Files\dotnet\sdk\NuGetFallbackFolder\system.data.sqlclient\4.6.0\ref\netcoreapp2.1\System.Data.SqlClient.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="LocalizationResource.Designer.cs">
       <DependentUpon>LocalizationResource.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Logging\ILogger.cs" />
-    <Compile Include="Logging\LogFactoryLevel.cs" />
-    <Compile Include="Logging\LogLevel.cs" />
-    <Compile Include="Network\DataPackageDescriptor.cs" />
-    <Compile Include="Network\NetworkHelpers.cs" />
-    <Compile Include="Network\MacAddressHelpers.cs" />
-    <Compile Include="Network\SocketHelpers.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+
   <ItemGroup>
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="LocalizationResource.pl-PL.resx" />
-    <EmbeddedResource Include="LocalizationResource.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
+    <EmbeddedResource Update="LocalizationResource.resx">
       <LastGenOutput>LocalizationResource.Designer.cs</LastGenOutput>
+      <Generator>PublicResXFileCodeGenerator</Generator>
     </EmbeddedResource>
   </ItemGroup>
-  <ItemGroup />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Fody.6.0.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.0.0\build\Fody.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Fody.6.0.0\build\Fody.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Fody.6.0.0\build\Fody.targets'))" />
-    <Error Condition="!Exists('..\packages\PropertyChanged.Fody.3.1.0\build\PropertyChanged.Fody.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\PropertyChanged.Fody.3.1.0\build\PropertyChanged.Fody.props'))" />
-  </Target>
+
 </Project>

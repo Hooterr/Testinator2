@@ -69,7 +69,8 @@ namespace Testinator.Server.Core
             CreatePINCommand = new RelayCommand(CreatePIN);
 
             // Check if pin is set
-            FoundPIN = FileDataHasher.ReadAndUnhashString();
+            // TODO: Something is wrong with nuget packages, fix it later
+            FoundPIN = "1111";//FileDataHasher.ReadAndUnhashString();
 
             // If its not empty and has 4 characters to ensure its not modified
             if (!string.IsNullOrEmpty(FoundPIN) && FoundPIN.Length == 4)
@@ -97,7 +98,7 @@ namespace Testinator.Server.Core
             FileDataHasher.HashAndSaveString(PIN);
 
             // Log the user in by changing the page
-            IoCServer.Application.GoToPage(ApplicationPage.Home);
+            DI.Application.GoToPage(ApplicationPage.Home);
         }
 
         /// <summary>
@@ -114,7 +115,7 @@ namespace Testinator.Server.Core
             }
 
             // Otherwise login the user in by changing the page
-            IoCServer.Application.GoToPage(ApplicationPage.Home);
+            DI.Application.GoToPage(ApplicationPage.Home);
         }
 
         #endregion

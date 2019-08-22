@@ -9,6 +9,12 @@ namespace Testinator.Server.Core
     /// </summary>
     public class TestEditorQuestionsEditorViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly TestEditor mTestEditor;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -29,12 +35,12 @@ namespace Testinator.Server.Core
         /// <summary>
         /// The current number of questions in test
         /// </summary>
-        public int CurrentQuestionsCount => IoCServer.TestEditor.Builder.CurrentQuestions.Count;
+        public int CurrentQuestionsCount => mTestEditor.Builder.CurrentQuestions.Count;
 
         /// <summary>
         /// The current total score of this test
         /// </summary>
-        public int CurrentTotalPointsScore => IoCServer.TestEditor.Builder.CurrentPointScore;
+        public int CurrentTotalPointsScore => mTestEditor.Builder.CurrentPointScore;
 
         /// <summary>
         /// Indicates if cancel button should be visible
@@ -114,9 +120,9 @@ namespace Testinator.Server.Core
                 CurrentQuestionEditorViewModel = null;
             }
             
-            if (IoCServer.TestEditor.Builder.CurrentQuestions.Count == 0)
+            if (mTestEditor.Builder.CurrentQuestions.Count == 0)
             {
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel()
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel()
                 {
                     Message = "Nie można przejść dalej, ponieważ test nie posiada pytań!",
                     Title = "Test editor",
@@ -125,9 +131,9 @@ namespace Testinator.Server.Core
                 return;
             }
 
-            if (IoCServer.TestEditor.Builder.CurrentPointScore <= 4)
+            if (mTestEditor.Builder.CurrentPointScore <= 4)
             {
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel()
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel()
                 {
                     Message = "Nie można przejść dalej, ponieważ maksymalna liczba punktów za test jest mniejsza od 5!",
                     Title = "Test editor",
@@ -136,7 +142,7 @@ namespace Testinator.Server.Core
                 return;
             }
 
-            IoCServer.TestEditor.GoNextPhase();
+            mTestEditor.GoNextPhase();
         }
 
         /// <summary>
@@ -153,7 +159,7 @@ namespace Testinator.Server.Core
                 }
             }
 
-            IoCServer.TestEditor.GoPreviousPage();
+            mTestEditor.GoPreviousPage();
         }
 
         /// <summary>
@@ -161,7 +167,7 @@ namespace Testinator.Server.Core
         /// </summary>
         private void DeleteQuestion()
         {
-            IoCServer.TestEditor.DeleteQuestion(CurrentQuestionEditorViewModel.OriginalQuestion);
+            mTestEditor.DeleteQuestion(CurrentQuestionEditorViewModel.OriginalQuestion);
             QuestionListViewModel.Instance.UnCheckAll();
             QuestionListViewModel.Instance.CanChangeSelection = true;
             QuestionTypeDialogVisible = true;
@@ -209,7 +215,7 @@ namespace Testinator.Server.Core
             catch
             {
                 // Developer error
-                IoCServer.Logger.Log("No such question. Error code: 1");
+                DI.Logger.Log("No such question. Error code: 1");
                 return;
             }
             
@@ -241,7 +247,7 @@ namespace Testinator.Server.Core
                 }
             }
 
-            var SelectedQuestion = IoCServer.TestEditor.Builder.CurrentQuestions[SelectedQuestionIndex];
+            var SelectedQuestion = mTestEditor.Builder.CurrentQuestions[SelectedQuestionIndex];
 
             CurrentQuestionEditorViewModel = BaseQuestionEditorViewModel.ToViewModel(SelectedQuestion);
             CurrentQuestionType = SelectedQuestion.Type;
@@ -259,8 +265,11 @@ namespace Testinator.Server.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestEditorQuestionsEditorViewModel()
+        public TestEditorQuestionsEditorViewModel(TestEditor testEditor)
         {
+            // Inject DI services
+            mTestEditor = testEditor;
+
             QuestionListViewModel.Instance.LoadItems(null);
             Initialize();
             CurrentQuestionEditorViewModel = null;
@@ -294,7 +303,7 @@ namespace Testinator.Server.Core
                 Title = "Edytor testów",
             };
 
-            IoCServer.UI.ShowMessage(vm);
+            DI.UI.ShowMessage(vm);
 
             return vm.UserResponse;
         }
@@ -317,17 +326,17 @@ namespace Testinator.Server.Core
                 // Update question
                 if (CurrentQuestionEditorViewModel.IsInEditMode)
                 {
-                    IoCServer.TestEditor.Builder.UpdateQuestion(CurrentQuestionEditorViewModel.OriginalQuestion, NewQuestion);
+                    mTestEditor.Builder.UpdateQuestion(CurrentQuestionEditorViewModel.OriginalQuestion, NewQuestion);
                     QuestionListViewModel.Instance.UpdateQuestion(CurrentQuestionEditorViewModel.OriginalQuestion, NewQuestion);
                 }
                 // Add question
                 else
                 {
-                    IoCServer.TestEditor.Builder.AddQuestion(NewQuestion);
+                    mTestEditor.Builder.AddQuestion(NewQuestion);
                     QuestionListViewModel.Instance.AppendQuestion(NewQuestion);
                 }
 
-                IoCServer.TestEditor.UpdateQuestion();
+                mTestEditor.UpdateQuestion();
 
                 return true;
             }
@@ -382,7 +391,7 @@ namespace Testinator.Server.Core
             ImagesEditorViewModel.Instance.LoadItems(null);
 
             // Fired when data about a test changes, so we can update properties
-            IoCServer.TestEditor.QuestionsChanged += UpdateQuestionsInformation;
+            mTestEditor.QuestionsChanged += UpdateQuestionsInformation;
 
             QuestionListViewModel.Instance.ItemSelected += QuestionListItemSelectedEvent;
 
@@ -397,7 +406,7 @@ namespace Testinator.Server.Core
         {
             // Unsubscribe from all events
             QuestionListViewModel.Instance.ItemSelected -= QuestionListItemSelectedEvent;
-            IoCServer.TestEditor.QuestionsChanged -= UpdateQuestionsInformation;
+            mTestEditor.QuestionsChanged -= UpdateQuestionsInformation;
             QuestionListViewModel.Instance.ItemSelected -= QuestionListItemSelectedEvent;
             QuestionListViewModel.Instance.SelectionChanges -= QuestionListViewModel_SelectionChanges;
 

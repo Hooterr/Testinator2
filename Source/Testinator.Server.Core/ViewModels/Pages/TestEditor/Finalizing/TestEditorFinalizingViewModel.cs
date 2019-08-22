@@ -12,12 +12,14 @@ namespace Testinator.Server.Core
     /// </summary>
     public class TestEditorFinalizingViewModel : BaseViewModel
     {
-        #region Private Properties
+        #region Private Members
 
         /// <summary>
         /// Indicates if default filename should be used
         /// </summary>
         private bool mDefaultFileName = true;
+
+        private readonly TestEditor mTestEditor;
 
         #endregion
 
@@ -26,37 +28,37 @@ namespace Testinator.Server.Core
         /// <summary>
         /// The name of the test
         /// </summary>
-        public string TestName => IoCServer.TestEditor.CurrentTestName;
+        public string TestName => mTestEditor.CurrentTestName;
 
         /// <summary>
         /// Duration of the test, already formatted
         /// </summary>
-        public string Duration => IoCServer.TestEditor.CurrentDuration;
+        public string Duration => mTestEditor.CurrentDuration;
 
         /// <summary>
         /// Current tags associated with the test
         /// </summary>
-        public string Tags => IoCServer.TestEditor.CurrentTags;
+        public string Tags => mTestEditor.CurrentTags;
 
         /// <summary>
         /// Current point score for this test
         /// </summary>
-        public string TotalPointsScore => IoCServer.TestEditor.CurrentPointScore.ToString();
+        public string TotalPointsScore => mTestEditor.CurrentPointScore.ToString();
 
         /// <summary>
         /// The number of multiple chocie questions
         /// </summary>
-        public int MultipleChoiceQuestionsCount => IoCServer.TestEditor.CurrentQuestionsNumber[QuestionType.MultipleChoice];
+        public int MultipleChoiceQuestionsCount => mTestEditor.CurrentQuestionsNumber[QuestionType.MultipleChoice];
 
         /// <summary>
         /// The number of multiple checkboxes questions
         /// </summary>
-        public int MultipleCheckBoxesQuestionsCount => IoCServer.TestEditor.CurrentQuestionsNumber[QuestionType.MultipleCheckboxes];
+        public int MultipleCheckBoxesQuestionsCount => mTestEditor.CurrentQuestionsNumber[QuestionType.MultipleCheckboxes];
 
         /// <summary>
         /// The number of single testbox questions
         /// </summary>
-        public int SingleTextBoxQuestionsCount => IoCServer.TestEditor.CurrentQuestionsNumber[QuestionType.SingleTextBox];
+        public int SingleTextBoxQuestionsCount => mTestEditor.CurrentQuestionsNumber[QuestionType.SingleTextBox];
 
         /// <summary>
         /// File name for this test
@@ -73,7 +75,7 @@ namespace Testinator.Server.Core
             {
                 // In edit mode file name cannot be changed
                 // TODO: save as... but after file classes rework
-                if (IoCServer.TestEditor.IsInEditMode)
+                if (mTestEditor.IsInEditMode)
                     return;
 
                 mDefaultFileName = value;
@@ -126,8 +128,8 @@ namespace Testinator.Server.Core
                 }
             }
 
-            if(IoCServer.TestEditor.Save(FileName))
-                IoCServer.TestEditor.FinishAndClose();
+            if(mTestEditor.Save(FileName))
+                mTestEditor.FinishAndClose();
         }
 
         /// <summary>
@@ -135,7 +137,7 @@ namespace Testinator.Server.Core
         /// </summary>
         private void GoPreviousPage()
         {
-            IoCServer.TestEditor.GoPreviousPage();
+            mTestEditor.GoPreviousPage();
         }
 
         #endregion
@@ -145,13 +147,17 @@ namespace Testinator.Server.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestEditorFinalizingViewModel()
+        public TestEditorFinalizingViewModel(TestEditor testEditor)
         {
+            // Inject DI services
+            mTestEditor = testEditor;
+
+            // Create commands
             GoPreviousPageCommand = new RelayCommand(GoPreviousPage);
             FinishCommand = new RelayCommand(Finish);
 
-            if (IoCServer.TestEditor.IsInEditMode)
-                FileName = IoCServer.TestEditor.GetCurrentTestFileName();
+            if (mTestEditor.IsInEditMode)
+                FileName = mTestEditor.GetCurrentTestFileName();
             else
                 FileName = GetFreeFileName();   
         }

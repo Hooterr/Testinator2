@@ -12,27 +12,34 @@ namespace Testinator.Server.Core
     /// </summary>
     public class BeginTestViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly TestHost mTestHost;
+        private readonly ServerNetwork mServerNetwork;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
         /// A list of connected clients
         /// </summary>
-        public ObservableCollection<ClientModel> ClientsConnected => IoCServer.Network.ConnectedClients;
+        public ObservableCollection<ClientModel> ClientsConnected => mServerNetwork.ConnectedClients;
 
         /// <summary>
         /// All clients that are currently taking the test
         /// </summary>
-        public ObservableCollection<ClientModel> ClientsTakingTheTest => IoCServer.TestHost.ClientsInTest;
+        public ObservableCollection<ClientModel> ClientsTakingTheTest => mTestHost.ClientsInTest;
 
         /// <summary>
         /// The test which is choosen by user on the list
         /// </summary>
-        public Test CurrentTest => IoCServer.TestHost.CurrentTest;
+        public Test CurrentTest => mTestHost.CurrentTest;
 
         /// <summary>
         /// The number of connected clients
         /// </summary>
-        public int ClientsNumber => IoCServer.Network.ConnectedClientsCount;
+        public int ClientsNumber => mServerNetwork.ConnectedClientsCount;
 
         /// <summary>
         /// The number of the questions in the test
@@ -42,27 +49,27 @@ namespace Testinator.Server.Core
         /// <summary>
         /// A flag indicating whether server has started
         /// </summary>
-        public bool IsServerStarted => IoCServer.Network.IsRunning;
+        public bool IsServerStarted => mServerNetwork.IsRunning;
 
         /// <summary>
         /// A flag indicating whether test has started
         /// </summary>
-        public bool IsTestInProgress => IoCServer.TestHost.IsTestInProgress;
+        public bool IsTestInProgress => mTestHost.IsTestInProgress;
 
         /// <summary>
         /// The time that is left to the end of the test
         /// </summary>
-        public TimeSpan TimeLeft => IoCServer.TestHost.TimeLeft;
+        public TimeSpan TimeLeft => mTestHost.TimeLeft;
 
         /// <summary>
         /// The server's ip
         /// </summary>
-        public string ServerIpAddress => IoCServer.Network.IPString;
+        public string ServerIpAddress => mServerNetwork.IPString;
 
         /// <summary>
         /// The server's port
         /// </summary>
-        public string ServerPort { get; set; } = IoCServer.Network.Port.ToString();
+        public string ServerPort { get; set; }
 
         /// <summary>
         /// Indicates if the result page should be allowed for the users
@@ -144,13 +151,17 @@ namespace Testinator.Server.Core
 
         #endregion
 
-        #region Construction/Desctruction
+        #region Construction/Destruction
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public BeginTestViewModel()
+        public BeginTestViewModel(TestHost testHost, ServerNetwork serverNetwork)
         {
+            // Inject DI services
+            mTestHost = testHost;
+            mServerNetwork = serverNetwork;
+
             // Create commands
             StartServerCommand = new RelayCommand(StartServer);
             StopServerCommand = new RelayCommand(StopServer);
@@ -166,11 +177,11 @@ namespace Testinator.Server.Core
             TestListViewModel.Instance.LoadItems();
 
             // Keep the view up-to-date
-            IoCServer.TestHost.OnTimerUpdated += () => UpdateView();
-            IoCServer.Network.OnClientConnected += (s) => UpdateView();
-            IoCServer.Network.OnClientDisconnected += (s) => UpdateView();
+            mTestHost.OnTimerUpdated += () => UpdateView();
+            mServerNetwork.OnClientConnected += (s) => UpdateView();
+            mServerNetwork.OnClientDisconnected += (s) => UpdateView();
             TestListViewModel.Instance.SelectionChanged += () => UpdateView();
-
+            ServerPort = mServerNetwork.Port.ToString();
         }
 
         /// <summary>
@@ -179,9 +190,9 @@ namespace Testinator.Server.Core
         public override void Dispose()
         {
             // Unsub from events
-            IoCServer.TestHost.OnTimerUpdated -= () => UpdateView();
-            IoCServer.Network.OnClientConnected -= (s) => UpdateView();
-            IoCServer.Network.OnClientDisconnected -= (s) => UpdateView();
+            mTestHost.OnTimerUpdated -= () => UpdateView();
+            mServerNetwork.OnClientConnected -= (s) => UpdateView();
+            mServerNetwork.OnClientDisconnected -= (s) => UpdateView();
             TestListViewModel.Instance.SelectionChanged -= () => UpdateView();
         }
 
@@ -198,7 +209,7 @@ namespace Testinator.Server.Core
 
             if (CanStartTestClients.Count == 0)
             {
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel()
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel()
                 {
                     Message = "No latecomers to add!",
                     OkText = "OK",
@@ -215,10 +226,10 @@ namespace Testinator.Server.Core
                     CancelText = "Cancel",
                 };
 
-                IoCServer.UI.ShowMessage(viewmodel);
+                DI.UI.ShowMessage(viewmodel);
 
                 if (viewmodel.UserResponse.Count != 0)
-                    IoCServer.TestHost.AddLateComers(viewmodel.UserResponse);
+                    mTestHost.AddLateComers(viewmodel.UserResponse);
             }
         }
 
@@ -231,7 +242,7 @@ namespace Testinator.Server.Core
             if (!NetworkHelpers.IsPortCorrect(ServerPort))
             {
                 // Show a message box with info about it
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Title = "Niepoprawne dane!",
                     Message = "Niepoprawny port.",
@@ -241,10 +252,10 @@ namespace Testinator.Server.Core
             }
 
             // Set network data
-            IoCServer.Network.Port = int.Parse(ServerPort);
+            mServerNetwork.Port = int.Parse(ServerPort);
 
             // Start the server
-            IoCServer.Network.Start();
+            mServerNetwork.Start();
 
             UpdateView();
         }
@@ -255,7 +266,7 @@ namespace Testinator.Server.Core
         private void StopServer()
         {
             // Check if any test is already in progress
-            if (IoCServer.TestHost.IsTestInProgress)
+            if (mTestHost.IsTestInProgress)
             {
                 // Ask the user if he wants to stop the test
                 var vm = new DecisionDialogViewModel()
@@ -265,7 +276,7 @@ namespace Testinator.Server.Core
                     AcceptText = "Tak",
                     CancelText = "Nie",
                 };
-                IoCServer.UI.ShowMessage(vm);
+                DI.UI.ShowMessage(vm);
                 
                 // If he agreed
                 if (vm.UserResponse)
@@ -278,12 +289,12 @@ namespace Testinator.Server.Core
             }
             
             // Stop the server
-            IoCServer.Network.ShutDown();
+            mServerNetwork.ShutDown();
 
             UpdateView();
 
             // Go to the initial page
-            IoCServer.Application.GoToBeginTestPage(ApplicationPage.BeginTestInitial);
+            DI.Application.GoToBeginTestPage(ApplicationPage.BeginTestInitial);
         }
 
         /// <summary>
@@ -295,7 +306,7 @@ namespace Testinator.Server.Core
             if (!IsServerStarted)
             {
                 // Show a message box with info about it
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Title = "Serwer nie włączony!",
                     Message = "By zmienić stronę, należy przedtem włączyć serwer.",
@@ -305,7 +316,7 @@ namespace Testinator.Server.Core
             }
 
             // Simply go to target page
-            IoCServer.Application.GoToBeginTestPage(ApplicationPage.BeginTestChoose);
+            DI.Application.GoToBeginTestPage(ApplicationPage.BeginTestChoose);
         }
 
         /// <summary>
@@ -314,15 +325,15 @@ namespace Testinator.Server.Core
         private void ChangePageInfo()
         {
             // Meanwhile lock the clients list and send them the test 
-            IoCServer.TestHost.AddClients(IoCServer.Network.ConnectedClients.ToList());
+            mTestHost.AddClients(mServerNetwork.ConnectedClients.ToList());
 
             // Add selected test
-            IoCServer.TestHost.AddTest(TestListViewModel.Instance.SelectedItem);
+            mTestHost.AddTest(TestListViewModel.Instance.SelectedItem);
 
             // If there is no enough users to start the test, show the message and don't send the test
-            if (IoCServer.TestHost.ClientsInTest.Count == 0)
+            if (mTestHost.ClientsInTest.Count == 0)
             {
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Title = "Brak użytkowników",
                     Message = "Nie można ropocząć testu. Brak użytkowników, którzy mogą go rozpocząć.",
@@ -332,10 +343,10 @@ namespace Testinator.Server.Core
                 return;
             }
 
-            IoCServer.TestHost.SendTestToAll();
+            mTestHost.SendTestToAll();
 
             // Then go to the info page
-            IoCServer.Application.GoToBeginTestPage(ApplicationPage.BeginTestInfo);
+            DI.Application.GoToBeginTestPage(ApplicationPage.BeginTestInfo);
         }
 
         /// <summary>
@@ -344,14 +355,14 @@ namespace Testinator.Server.Core
         private void BeginTest()
         {
             // Send the args before startting
-            IoCServer.TestHost.ConfigureStartup(new TestOptions()
+            mTestHost.ConfigureStartup(new TestOptions()
             {
                 FullScreenEnabled = FullScreenMode,
                 ResultsPageAllowed = ResultPageAllowed,
             });
 
-            IoCServer.TestHost.TestStart();
-            IoCServer.Application.GoToBeginTestPage(ApplicationPage.BeginTestInProgress);
+            mTestHost.TestStart();
+            DI.Application.GoToBeginTestPage(ApplicationPage.BeginTestInProgress);
         }
 
         /// <summary>
@@ -367,7 +378,7 @@ namespace Testinator.Server.Core
                 AcceptText = "Tak",
                 CancelText = "Nie",
             };
-            IoCServer.UI.ShowMessage(vm);
+            DI.UI.ShowMessage(vm);
 
             // If his will match
             if (vm.UserResponse)
@@ -390,13 +401,13 @@ namespace Testinator.Server.Core
         private void ResultPageExit()
         {
             // Go back to the main begin test page
-            IoCServer.Application.GoToPage(ApplicationPage.BeginTest);
+            DI.Application.GoToPage(ApplicationPage.BeginTest);
 
             // Change the mini-page accordingly
-            if (IoCServer.Network.IsRunning)
-                IoCServer.Application.GoToBeginTestPage(ApplicationPage.BeginTestChoose);
+            if (mServerNetwork.IsRunning)
+                DI.Application.GoToBeginTestPage(ApplicationPage.BeginTestChoose);
             else
-                IoCServer.Application.GoToBeginTestPage(ApplicationPage.BeginTestInitial);
+                DI.Application.GoToBeginTestPage(ApplicationPage.BeginTestInitial);
         }
 
         #endregion
@@ -423,8 +434,8 @@ namespace Testinator.Server.Core
         /// </summary>
         private void StopTestForcefully()
         {
-            IoCServer.TestHost.AbortTest();
-            IoCServer.Application.GoToBeginTestPage(ApplicationPage.BeginTestInitial);
+            mTestHost.AbortTest();
+            DI.Application.GoToBeginTestPage(ApplicationPage.BeginTestInitial);
         }
 
         #endregion
@@ -439,7 +450,7 @@ namespace Testinator.Server.Core
         {
             var CanStartTestClients = new List<ClientModel>();
 
-            foreach(var client in IoCServer.Network.ConnectedClients)
+            foreach(var client in mServerNetwork.ConnectedClients)
                 if (client.CanStartTest)
                     CanStartTestClients.Add(client);
 
