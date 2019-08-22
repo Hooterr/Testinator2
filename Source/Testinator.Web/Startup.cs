@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using Testinator.Web.Core;
 using Testinator.Web.Database;
 
 namespace Testinator.Web
