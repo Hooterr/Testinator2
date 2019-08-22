@@ -35,13 +35,11 @@ namespace Testinator.Server.TestSystem.Implementation
             mConcreteEditor = new TEditorImpl();
             // New question is being created
             if (mQuestion == null)
-            {
                 mConcreteEditor.CreateNew(mVersion);
-            }
             else
-            {
                 mConcreteEditor.EditExisting(mQuestion);
-            }
+
+            mConcreteEditor.CompleteSetup();
 
             return mConcreteEditor;
         }
