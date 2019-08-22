@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
+using Testinator.Server.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
@@ -10,40 +9,15 @@ namespace Testinator.Server.TestSystem.Implementation
 {
         private readonly int mVersion;
 
-        public OperationResult AddImage(Image img)
-        {
-            throw new NotImplementedException();
-        }
+        private QuestionTask mTask;
 
-        public OperationResult AddText(string text, MarkupLanguage markup)
-        {
-            throw new NotImplementedException();
-        }
+        private readonly TextEditor mTextEditor;
+        private readonly ImageEditor mImageEditor;
 
-        public OperationResult DeleteAllImages()
-        {
-            throw new NotImplementedException();
-        }
 
-        public OperationResult DeleteImage(Image img)
-        {
-            throw new NotImplementedException();
-        }
+        public ITextEditor Text => mTextEditor;
 
-        public OperationResult DeleteImageAt(int index)
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetCurrentCount()
-        {
-            throw new NotImplementedException();
-        }
-
-        public int GetMaxCount()
-        {
-            throw new NotImplementedException();
-        }
+        public IImageEditor Images => mImageEditor;
 
         public TaskEditor(int version)
         {
@@ -51,6 +25,9 @@ namespace Testinator.Server.TestSystem.Implementation
                 throw new ArgumentOutOfRangeException(nameof(version));
 
             mVersion = version;
+            mTextEditor = new TextEditor(version);
+            mImageEditor = new ImageEditor(version);
+            mTask = new QuestionTask();
         }
     }
 }

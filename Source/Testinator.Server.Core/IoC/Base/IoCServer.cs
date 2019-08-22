@@ -1,6 +1,7 @@
 ﻿using Ninject;
 using System;
 using Testinator.Core;
+using Testinator.Server.TestSystem.Implementation;
 
 namespace Testinator.Server.Core
 {
@@ -105,6 +106,7 @@ namespace Testinator.Server.Core
         /// <returns></returns>
         public static T Get<T>()
         {
+            ClientSideCode_TEST.A();
             return Kernel.Get<T>();
         }
     }

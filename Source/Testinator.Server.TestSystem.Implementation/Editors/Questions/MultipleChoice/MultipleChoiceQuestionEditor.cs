@@ -17,7 +17,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public int GetVersion()
         {
-            return this.Version;
+            return Version;
         }
     }
 }

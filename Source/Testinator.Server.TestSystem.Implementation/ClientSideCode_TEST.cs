@@ -17,7 +17,7 @@ namespace Testinator.Server.TestSystem.Implementation
                 .NewQuestion()
                 .UseNewestVersion()
                 .Build();
-            editor.Task.AddText("", MarkupLanguage.PlainText);
+            //editor.Task.Images.
 
         }
     }

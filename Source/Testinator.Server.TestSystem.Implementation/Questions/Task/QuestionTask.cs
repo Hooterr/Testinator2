@@ -13,6 +13,8 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
     public class QuestionTask : IQuestionTask
     {
         #region Private Members
+
+
         private TextContent mText;
         private ImageContent mImages;
 
