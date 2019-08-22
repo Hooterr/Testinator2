@@ -50,7 +50,7 @@ namespace Testinator.Web
             if (!ModelState.IsValid)
             {
                 // Return the model back to show the errors
-                return RedirectToAction("Login", loginViewModel);
+                return RedirectToAction(nameof(Login), loginViewModel);
             }
 
             // Find the user by email
@@ -61,7 +61,7 @@ namespace Testinator.Web
             {
                 // Return error
                 ModelState.AddModelError("", "Taki użytkownik nie istnieje");
-                return RedirectToAction("Login", loginViewModel);
+                return RedirectToAction(nameof(Login), loginViewModel);
             }
 
             // Log the user in
@@ -70,24 +70,24 @@ namespace Testinator.Web
             // If successfully logged in...
             if (result.Succeeded)
             {
-                // TODO: Redirect to dashboard
-                return Ok();
+                // Redirect to dashboard
+                return RedirectToAction("Index", "Dashboard");
             }
             // If user was locked out from logging in...
             if (result.IsLockedOut)
             {
                 // Return the error
-                return RedirectToAction("Login", "Lockout");
+                return RedirectToAction(nameof(Login), "Lockout");
             }
             // If user can't be logged in with just password...
             if (result.RequiresTwoFactor)
             {
                 // Return the error
-                return RedirectToAction("Login", "Two factor required");
+                return RedirectToAction(nameof(Login), "Two factor required");
             }
             // If something went wrong in general
             ModelState.AddModelError("", "Nie udało się zalogować");
-            return RedirectToAction("Login", loginViewModel);
+            return RedirectToAction(nameof(Login), loginViewModel);
         }
 
         #endregion
@@ -108,7 +108,7 @@ namespace Testinator.Web
             if (!ModelState.IsValid)
             {
                 // Return the model back to show the errors
-                return RedirectToAction("Register", registerViewModel);
+                return RedirectToAction(nameof(Register), registerViewModel);
             }
 
             // Create brand-new user with provided data
@@ -126,8 +126,8 @@ namespace Testinator.Web
             // If registration succeeded...
             if (result.Succeeded)
             {
-                // TODO: 
-                return Ok();
+                // TODO: For now, redirect to login, but maybe automatically log in here or sth
+                return RedirectToAction(nameof(Login), new LoginViewModel { Email = registerViewModel.Email });
             }
 
             // Registration failed, return the errors
@@ -135,7 +135,7 @@ namespace Testinator.Web
             {
                 ModelState.AddModelError(error.Code, error.Description);
             }
-            return RedirectToAction("Register", registerViewModel);
+            return RedirectToAction(nameof(Register), registerViewModel);
         }
 
         #endregion
