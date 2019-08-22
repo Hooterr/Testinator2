@@ -27,7 +27,7 @@ namespace Testinator.Web
                 return View(loginViewModel);
             }
 
-            await mAccountService.LoginUserAsync(loginViewModel.Username, loginViewModel.Password);
+            await mAccountService.LoginUserAsync(loginViewModel.Email, loginViewModel.Password);
 
             return Ok();
         }
