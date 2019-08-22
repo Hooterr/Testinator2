@@ -7,7 +7,6 @@ namespace Testinator.TestSystem.Abstractions.Questions.Task
     public interface ITextContent
     {
         string GetText();
-        bool IsEmpty();
         MarkupLanguage GetMarkup();
     }
 }

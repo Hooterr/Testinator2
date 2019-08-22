@@ -9,6 +9,5 @@ namespace Testinator.TestSystem.Abstractions
     {
         ITextContent Text { get; }
         IImageContent Images { get; }
-        bool IsEmpty();
     }
 }

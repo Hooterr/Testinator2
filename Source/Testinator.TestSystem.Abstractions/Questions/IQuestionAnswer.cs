@@ -6,6 +6,5 @@ namespace Testinator.TestSystem.Abstractions
 {
     public interface IQuestionAnswer
     {
-        bool IsWellDefined();
     }
 }

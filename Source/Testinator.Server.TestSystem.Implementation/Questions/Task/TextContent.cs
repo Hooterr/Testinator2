@@ -13,12 +13,12 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
         /// <summary>
         /// The actual content
         /// </summary>
-        public string Content { get; set; }
+        public string Content { get; internal set; }
 
         /// <summary>
         /// Describes what markup language has been used
         /// </summary>
-        public MarkupLanguage Markup { get; set; }
+        public MarkupLanguage Markup { get; internal set; }
 
         public MarkupLanguage GetMarkup()
         {

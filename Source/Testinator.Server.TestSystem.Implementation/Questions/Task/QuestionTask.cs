@@ -22,15 +22,6 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
 
         public IImageContent Images => mImages;
 
-        public bool IsEmpty()
-        {
-            var isEmpty = true;
-            isEmpty |= Text == null || Text.IsEmpty();
-            isEmpty |= mImages == null || mImages.IsEmpty();
-
-            return isEmpty;
-        }
-        
         internal void SetTextContent(TextContent content)
         {
             mText = content;

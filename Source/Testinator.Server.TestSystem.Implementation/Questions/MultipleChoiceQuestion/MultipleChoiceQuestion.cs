@@ -1,17 +1,35 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Testinator.TestSystem.Abstractions;
+﻿using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions
 {
-    public class MultipleChoiceQuestion : Question
+    public sealed class MultipleChoiceQuestion : Question
     {
-        public override IQuestionTask Task { get; protected set; }
+        #region Private Members 
 
-        public override IQuestionAnswer Answer { get; protected set; }
 
-        public override IEvaluable Scoring { get; protected set; }
+        #endregion
 
+        #region Abstract Members Implementation
+
+        public override IQuestionTask Task => TaskImpl;
+
+        public override IQuestionAnswer Answer => Options;
+
+        public override IEvaluable Scoring => PointScoring;
+
+        #endregion
+
+
+        #region Public Properties
+
+        public new int Version { get; internal set; }
+
+        public MultipleChoiceAnswer Options { get; internal set; }
+
+        public PointScoring PointScoring { get; internal set; }
+
+        public QuestionTask TaskImpl { get; internal set; }
+
+        #endregion
     }
 }

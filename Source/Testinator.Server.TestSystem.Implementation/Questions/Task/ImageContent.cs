@@ -38,11 +38,6 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
             throw new NotSupportedException();
         }
 
-        public bool IsEmpty()
-        {
-            return GetCurrentCount() > 0;
-        }
-
         public void Add(Image img)
         {
             if (mImages == null)

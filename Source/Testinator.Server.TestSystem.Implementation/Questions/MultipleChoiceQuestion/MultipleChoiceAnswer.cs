@@ -9,7 +9,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
     {
         /// <summary>
         /// The answers for this question
-        /// NOTE: user IList interface since ICollection does not guarantee 
+        /// NOTE: user IList interface since ICollection does not guarantee order
         /// </summary>
         private IList<string> mAnswers;
 
@@ -23,7 +23,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
         /// The index of the correct answer
         /// NOTE: we're counting from 0!
         /// </summary>
-        public int CorrectAnswerIndex { get; set; }
+        public int CorrectAnswerIndex { get; internal set; }
 
         public bool IsWellDefined()
         {

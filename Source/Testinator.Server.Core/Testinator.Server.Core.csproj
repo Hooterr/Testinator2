@@ -123,6 +123,10 @@
       <Project>{F592FA60-030D-440B-BB00-ED4EA5A919F6}</Project>
       <Name>Testinator.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Testinator.Server.TestSystem.Implementation\Testinator.Server.TestSystem.Implementation.csproj">
+      <Project>{7710df93-a84a-4073-8358-b4ae051c3942}</Project>
+      <Name>Testinator.Server.TestSystem.Implementation</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

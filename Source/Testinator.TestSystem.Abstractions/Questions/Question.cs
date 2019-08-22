@@ -9,14 +9,14 @@
         /// The content of this question task as <see cref="IQuestionTask"/>
         /// So it can be text or image or whatever implements this interface
         /// </summary>
-        public abstract IQuestionTask Task { get; protected set; }
+        public abstract IQuestionTask Task { get; }
 
         /// <summary>
         /// The scoring for this question as <see cref="IEvaluable"/>
         /// </summary>
-        public abstract IEvaluable Scoring { get; protected set; }
+        public abstract IEvaluable Scoring { get; }
 
-        public abstract IQuestionAnswer Answer { get; protected set; }
+        public abstract IQuestionAnswer Answer { get; }
 
         /// <summary>
         /// The author of this question
@@ -30,13 +30,9 @@
         /// </summary>
         public Category Category { get; protected set; }
 
-        public virtual bool IsValid()
-        {
-            var isComplete = true;
-            isComplete &= Task != null && !Task.IsEmpty();
-            isComplete &= Scoring != null && !Scoring.IsWellDefined();
-            isComplete &= Answer != null && !Answer.IsWellDefined();
-            return isComplete;                
-        }
+        /// <summary>
+        /// Code version of the test system when this question was created
+        /// </summary>
+        public int Version { get; set; }
     }
 }
