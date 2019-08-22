@@ -14,46 +14,12 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
         #region Private Members
 
         private ICollection<Image> mImages;
-        private const int mMaxImageCount = 5;
-        #endregion
 
+        #endregion
 
         public ICollection<Image> GetAll()
         {
             return mImages;
         }
-
-        public void DeleteAll()
-        {
-            mImages = new List<Image>();
-        }
-
-        public void Delete(Image img)
-        {
-            mImages.Remove(img);
-        }
-
-        public void DeleteAt(int index)
-        {
-            throw new NotSupportedException();
-        }
-
-        public void Add(Image img)
-        {
-            if (mImages == null)
-                mImages = new List<Image>();
-
-            mImages.Add(img);
-        }
-
-        public int GetMaxCount()
-        {
-            return mMaxImageCount;
-        }
-
-        public int GetCurrentCount()
-        {
-            return mImages == null ? 0 : mImages.Count;
-        } 
     }
 }
