@@ -32,9 +32,6 @@ namespace Testinator.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-            // Add services to DI
-            services.AddScoped<IAccountService, AccountService>();
-
             // Add TestinatorWebDbContext to DI
             services.AddDbContext<TestinatorWebDbContext>(options =>
                 // TODO: Add connection string to app settings
