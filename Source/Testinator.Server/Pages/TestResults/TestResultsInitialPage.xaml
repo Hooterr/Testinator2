@@ -1,0 +1,203 @@
+﻿<UICore:BasePage x:TypeArguments="Core:TestResultsViewModel" x:Class="Testinator.Server.TestResultsInitialPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Testinator.Server"
+             xmlns:Core="clr-namespace:Testinator.Server.Core;assembly=Testinator.Server.Core"
+             xmlns:core="clr-namespace:Testinator.Core;assembly=Testinator.Core"
+             xmlns:UICore="clr-namespace:Testinator.UICore;assembly=Testinator.UICore"
+             mc:Ignorable="d"
+             d:DesignHeight="720"
+             d:DesignWidth="1024">
+
+
+
+
+    <Border Background="{StaticResource WhiteLightBrush}">
+
+        <Grid>
+
+            <Grid.ColumnDefinitions>
+
+                <ColumnDefinition Width="1.3*"
+                                    MinWidth="350"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" 
+                                    MinWidth="250"/>
+                
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.Column="0" 
+                    Background="{StaticResource WhiteDarkBrush}"
+                    Margin="10"
+                    Padding="10"
+                    CornerRadius="25" >
+
+                <!-- Left side menu-->
+                <Grid>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="3*" />
+                        <RowDefinition Height="0.5*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Top info side -->
+                    <Grid Grid.Row="0">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <StackPanel Grid.Row="0" 
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Orientation="Horizontal"
+                                    >
+                            <TextBlock Text="{x:Static core:LocalizationResource.LoadedSemicolon}"
+                                        FontSize="{StaticResource FontSizeLarge}"
+                                        />
+                            <TextBlock Text="{Binding ItemsLoadedCount}"
+                                        FontSize="{StaticResource FontSizeLarge}"
+                                        />
+                            <TextBlock Text="{x:Static core:LocalizationResource.SpaceResults}"
+                                        FontSize="{StaticResource FontSizeLarge}"
+                                        />
+                        </StackPanel>
+
+                        <TextBlock Grid.Row="1" 
+                                    Text="{x:Static core:LocalizationResource.LoadedSemicolon}"
+                                    FontSize="{StaticResource FontSizeLarge}"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"/>
+                    </Grid>
+
+                    <!-- Results details -->
+                    <Grid Grid.Row="1">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Text="{x:Static core:LocalizationResource.DateSemicolon}"
+                                    Style="{StaticResource QuestionTextBlockStyle}" 
+                                    Margin="15"
+                                    />
+
+                        <TextBlock Text="{Binding ResultsDateDay}"
+                                    Grid.Column="1"
+                                    Style="{StaticResource QuestionTextBlockStyle}"
+                                    Margin="15"
+                                    />
+
+
+                        <TextBlock Text="{x:Static core:LocalizationResource.Hour}"
+                                    Grid.Row="1" Grid.Column="0"
+                                    Style="{StaticResource QuestionTextBlockStyle}" 
+                                    Margin="15"
+                                   
+                                    />
+
+                        <TextBlock Text="{Binding ResultsDateHour}"
+                                    Grid.Row="1" Grid.Column="1"
+                                    Style="{StaticResource QuestionTextBlockStyle}"
+                                    Margin="15"
+                                   
+                                    />
+
+                        <TextBlock Text="{x:Static core:LocalizationResource.TestName}"
+                                    Grid.Row="2" Grid.Column="0"
+                                    Style="{StaticResource QuestionTextBlockStyle}" 
+                                    Margin="15"
+                                   
+                                    />
+
+                        <TextBlock Text="{Binding TestName}"
+                                    Grid.Row="2" Grid.Column="1"
+                                    Style="{StaticResource QuestionTextBlockStyle}"
+                                    Margin="15"
+                                   
+                                    />
+
+                        <TextBlock Text="{x:Static core:LocalizationResource.TakingPart}"
+                                    Grid.Row="3" Grid.Column="0"
+                                    Style="{StaticResource QuestionTextBlockStyle}" 
+                                    Margin="15"
+                                   
+                                    />
+
+                        <TextBlock Text="{Binding TestAttendeesNumber}"
+                                    Grid.Row="3" Grid.Column="1"
+                                    Style="{StaticResource QuestionTextBlockStyle}"
+                                    Margin="15"
+                                   
+                                    />
+                    </Grid>
+
+                    <Grid Grid.Row="2">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0"
+                                Style="{StaticResource BaseUIButton}"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Bottom"
+                                IsEnabled="{Binding IsAnyItemSelected}"
+                                Command="{Binding DeleteCommand}"
+                                Content="Usuń"/>
+                        <Button Content="{x:Static core:LocalizationResource.Details}"
+                                Grid.Column="1"
+                                Style="{StaticResource BaseUIButton}"
+                                Command="{Binding ShowDetailsCommnd}"
+                                IsEnabled="{Binding IsAnyItemSelected}"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"/>
+                    </Grid>
+                          
+
+
+                </Grid>
+                
+            </Border>
+
+            <GridSplitter Grid.Column="1"
+                            Width="6"
+                            HorizontalAlignment="Center">
+                <GridSplitter.Template>
+                    <ControlTemplate TargetType="{x:Type GridSplitter}">
+                        <Border Background="Black" Padding="1.5 0">
+                            <Border Background="{StaticResource BlackLightBrush}"/>
+                        </Border>
+                    </ControlTemplate>
+                </GridSplitter.Template>
+            </GridSplitter>
+
+            <Border Grid.Column="2"
+                    Padding="5"
+                    Margin="5 0 0 0">
+                <local:ResultsListControl DataContext="{Binding ListViewModel}"
+                                          Background="{StaticResource BlackLightBrush}"
+                                          Focusable="True">
+                    <local:ResultsListControl.InputBindings>
+                        <KeyBinding Key="Delete" Command="{Binding DeleteCommand}"/>
+                    </local:ResultsListControl.InputBindings>
+                </local:ResultsListControl>
+            </Border>
+        </Grid>
+        
+        </Border>
+    
+</UICore:BasePage>
