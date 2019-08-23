@@ -10,7 +10,10 @@ namespace Testinator.Server.TestSystem.Implementation
     {
         private readonly int mVersion;
         private ImageContent mImageContent;
+
         private int mMaxImageCount;
+        private int mMaxImageWidth;
+        private int mMaxImageHeight;
 
         public OperationResult AddImage(Image img)
         {
@@ -52,6 +55,12 @@ namespace Testinator.Server.TestSystem.Implementation
 
             var mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContent, ICollection<Image>, MaxCollectionCountAttribute, int>
                 (obj => obj.Images, attr => attr.MaxCount, mVersion);
+
+            var ImageSizeAttr = AttributeHelper.GetPropertyAttribute<ImageContent, ICollection<Image>, MaxImageSizeAttribute>
+                (x => x.Images, mVersion);
+
+            mMaxImageHeight = ImageSizeAttr.Height;
+            mMaxImageWidth = ImageSizeAttr.Width;
         }
     }
 }
