@@ -10,12 +10,18 @@ namespace Testinator.Client.Core
     /// </summary>
     public class ResultQuestionsViewModel : PageHostViewModel
     {
+        #region Private Members
+
+        private readonly TestHost mTestHost;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
         /// Viewmodels for the questions
         /// </summary>
-        public List<BaseViewModel> Questions => IoCClient.TestHost.QuestionViewModels;
+        public List<BaseViewModel> Questions => mTestHost.QuestionViewModels;
 
         #endregion
 
@@ -38,8 +44,11 @@ namespace Testinator.Client.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ResultQuestionsViewModel()
+        public ResultQuestionsViewModel(TestHost testHost)
         {
+            // Inject DI services
+            mTestHost = testHost;
+
             // Create commands
             SelectQuestionCommand = new RelayParameterizedCommand(SelectQuestion);
             ReturnCommand = new RelayCommand(Return);
@@ -84,7 +93,7 @@ namespace Testinator.Client.Core
         /// </summary>
         private void Return()
         {
-            IoCClient.Application.GoToPage(ApplicationPage.ResultOverviewPage);
+            DI.Application.GoToPage(ApplicationPage.ResultOverviewPage);
         }
 
         #endregion

@@ -39,7 +39,7 @@ namespace Testinator.Server.Core
             OnPropertyChanged(nameof(CurrentPageViewModel));
 
             // Log it
-            IoCServer.Logger.Log("Changing application page to:" + page.ToString());
+            DI.Logger.Log("Changing application page to:" + page.ToString());
         }
 
         #endregion

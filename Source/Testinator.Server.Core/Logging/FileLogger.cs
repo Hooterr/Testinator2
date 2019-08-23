@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dna;
+using System;
 using Testinator.Core;
 
 namespace Testinator.Server.Core
@@ -47,7 +48,7 @@ namespace Testinator.Server.Core
             var timeLogString = LogTime ? $"[{ currentTime}] " : "";
 
             // Write the message
-            IoCServer.File.WriteToFile($"{timeLogString}{message}{Environment.NewLine}", FilePath);
+            Framework.Service<FileManagerBase>().WriteToFile($"{timeLogString}{message}{Environment.NewLine}", FilePath);
         }
 
         #endregion

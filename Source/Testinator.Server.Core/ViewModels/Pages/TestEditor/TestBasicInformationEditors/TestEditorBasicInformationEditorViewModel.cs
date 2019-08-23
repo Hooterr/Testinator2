@@ -9,6 +9,12 @@ namespace Testinator.Server.Core
     /// </summary>
     public class TestEditorBasicInformationEditorViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly TestEditor mTestEditor;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -109,7 +115,7 @@ namespace Testinator.Server.Core
             {
                 // Follow the order of properties like in the view
 
-                IoCServer.TestEditor.Builder.AddName(Name);
+                mTestEditor.Builder.AddName(Name);
 
                 if (string.IsNullOrEmpty(DurationHours))
                     DurationHours = "00";
@@ -131,11 +137,11 @@ namespace Testinator.Server.Core
                     throw new Exception("Niepoprawna wartość w polu sekund.");
 
 
-                IoCServer.TestEditor.Builder.AddDuration(new TimeSpan(durationHours, durationMinutes, durationSeconds));
+                mTestEditor.Builder.AddDuration(new TimeSpan(durationHours, durationMinutes, durationSeconds));
 
-                IoCServer.TestEditor.Builder.AddTags(Tags);
+                mTestEditor.Builder.AddTags(Tags);
 
-                IoCServer.TestEditor.Builder.AddNote(Note);
+                mTestEditor.Builder.AddNote(Note);
 
             }
             catch (Exception ex)
@@ -149,11 +155,11 @@ namespace Testinator.Server.Core
             {
                 if (mOriginalInfo.Name != Name || mOriginalInfo.Duration.TotalSeconds != (durationHours * 3600 + durationMinutes * 60 + durationSeconds) ||
                   mOriginalInfo.Tags != Tags || mOriginalInfo.Note != Note)
-                    IoCServer.TestEditor.TestChanged();
+                    mTestEditor.TestChanged();
             }
 
             // If everything went fine proceed to the next phase of creation/edition of this test
-            IoCServer.TestEditor.GoNextPhase();
+            mTestEditor.GoNextPhase();
         }
 
         #endregion
@@ -163,8 +169,11 @@ namespace Testinator.Server.Core
         /// <summary>
         /// Creates this viewmodel with edit mode off so it means that it is creating a new test not editing one
         /// </summary>
-        public TestEditorBasicInformationEditorViewModel()
+        public TestEditorBasicInformationEditorViewModel(TestEditor testEditor)
         {
+            // Inject DI services
+            mTestEditor = testEditor;
+
             CreateCommands();
         }
 
@@ -204,7 +213,7 @@ namespace Testinator.Server.Core
         private void CreateCommands()
         {
             SubmitCommand = new RelayCommand(Submit);
-            ExitCommand = new RelayCommand(() => IoCServer.TestEditor.Exit());
+            ExitCommand = new RelayCommand(() => mTestEditor.Exit());
         }
 
         #endregion

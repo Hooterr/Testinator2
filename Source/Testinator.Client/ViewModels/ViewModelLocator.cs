@@ -1,4 +1,5 @@
-﻿using Testinator.Client.Core;
+﻿using Dna;
+using Testinator.Client.Core;
 using Testinator.Core;
 
 namespace Testinator.Client
@@ -18,17 +19,17 @@ namespace Testinator.Client
         /// <summary>
         /// The application view model
         /// </summary>
-        public static ApplicationViewModel ApplicationViewModel => IoCClient.Application;
+        public static ApplicationViewModel ApplicationViewModel => DI.Application;
 
         /// <summary>
         /// The test host
         /// </summary>
-        public static TestHost TestHost => IoCClient.TestHost;
+        public static TestHost TestHost => Framework.Service<TestHost>();
 
         /// <summary>
         /// The client (user) model
         /// </summary>
-        public static ClientModel ClientModel => IoCClient.Client;
+        public static ClientModel ClientModel => Framework.Service<ClientModel>();
 
         #endregion
     }

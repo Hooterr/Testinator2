@@ -21,79 +21,79 @@ namespace Testinator.Server
             switch (page)
             {
                 case ApplicationPage.Login:
-                    return new LoginPage(viewModel as LoginViewModel);
+                    return new LoginPage(viewModel as LoginViewModel ?? DI.GetInjectedPageViewModel<LoginViewModel>());
 
                 case ApplicationPage.Home:
-                    return new HomePage(viewModel as HomeViewModel);
+                    return new HomePage(viewModel as HomeViewModel ?? DI.GetInjectedPageViewModel<HomeViewModel>());
 
                 case ApplicationPage.BeginTest:
-                    return new BeginTestPage(viewModel as BeginTestViewModel);
+                    return new BeginTestPage(viewModel as BeginTestViewModel ?? DI.GetInjectedPageViewModel<BeginTestViewModel>());
 
                 case ApplicationPage.BeginTestInitial:
-                    return new BeginTestInitialPage(viewModel as BeginTestViewModel);
+                    return new BeginTestInitialPage(viewModel as BeginTestViewModel ?? DI.GetInjectedPageViewModel<BeginTestViewModel>());
 
                 case ApplicationPage.BeginTestChoose:
-                    return new BeginTestChoosePage(viewModel as BeginTestViewModel);
+                    return new BeginTestChoosePage(viewModel as BeginTestViewModel ?? DI.GetInjectedPageViewModel<BeginTestViewModel>());
 
                 case ApplicationPage.BeginTestInfo:
-                    return new BeginTestInfoPage(viewModel as BeginTestViewModel);
+                    return new BeginTestInfoPage(viewModel as BeginTestViewModel ?? DI.GetInjectedPageViewModel<BeginTestViewModel>());
 
                 case ApplicationPage.BeginTestInProgress:
-                    return new BeginTestInProgressPage(viewModel as BeginTestViewModel);
+                    return new BeginTestInProgressPage(viewModel as BeginTestViewModel ?? DI.GetInjectedPageViewModel<BeginTestViewModel>());
 
                 case ApplicationPage.BeginTestResults:
-                    return new BeginTestResultsPage(viewModel as BeginTestViewModel);
+                    return new BeginTestResultsPage(viewModel as BeginTestViewModel ?? DI.GetInjectedPageViewModel<BeginTestViewModel>());
 
                 case ApplicationPage.TestEditorInitial:
-                    return new TestEditorInitialPage(viewModel as TestEditorInitialPageViewModel);
+                    return new TestEditorInitialPage(viewModel as TestEditorInitialPageViewModel ?? DI.GetInjectedPageViewModel<TestEditorInitialPageViewModel>());
 
                 case ApplicationPage.TestEditorCriteriaEditor:
-                    return new TestEditorCriteriaEditorPage(viewModel as TestEditorCriteriaEditorViewModel);
+                    return new TestEditorCriteriaEditorPage(viewModel as TestEditorCriteriaEditorViewModel ?? DI.GetInjectedPageViewModel<TestEditorCriteriaEditorViewModel>());
 
                 case ApplicationPage.TestEditorBasicInformationEditor:
-                    return new TestEditorBasicInformationEditorPage(viewModel as TestEditorBasicInformationEditorViewModel);
+                    return new TestEditorBasicInformationEditorPage(viewModel as TestEditorBasicInformationEditorViewModel ?? DI.GetInjectedPageViewModel<TestEditorBasicInformationEditorViewModel>());
 
                 case ApplicationPage.TestEditorQuestionsEditor:
-                    return new TestEditorQuestionsEditorPage(viewModel as TestEditorQuestionsEditorViewModel);
+                    return new TestEditorQuestionsEditorPage(viewModel as TestEditorQuestionsEditorViewModel ?? DI.GetInjectedPageViewModel<TestEditorQuestionsEditorViewModel>());
 
                 case ApplicationPage.TestEditorTestManagmentPage:
-                    return new TestEditorTestManagmentPage(viewModel as TestEditorTestManagmentViewModel);
+                    return new TestEditorTestManagmentPage(viewModel as TestEditorTestManagmentViewModel ?? DI.GetInjectedPageViewModel<TestEditorTestManagmentViewModel>());
 
                 case ApplicationPage.TestEditorAttachCriteria:
-                    return new TestEditorAttachCriteriaPage(viewModel as TestEditorAttachCriteriaViewModel);
+                    return new TestEditorAttachCriteriaPage(viewModel as TestEditorAttachCriteriaViewModel ?? DI.GetInjectedPageViewModel<TestEditorAttachCriteriaViewModel>());
 
                 case ApplicationPage.TestEditorFinalize:
-                    return new TestEditorFinalizePage(viewModel as TestEditorFinalizingViewModel);
+                    return new TestEditorFinalizePage(viewModel as TestEditorFinalizingViewModel ?? DI.GetInjectedPageViewModel<TestEditorFinalizingViewModel>());
 
                 case ApplicationPage.TestResultsInitial:
-                    return new TestResultsInitialPage(viewModel as TestResultsViewModel);
+                    return new TestResultsInitialPage(viewModel as TestResultsViewModel ?? DI.GetInjectedPageViewModel<TestResultsViewModel>());
 
                 case ApplicationPage.TestResultsDetails:
-                    return new TestResultsDetailsPage(viewModel as TestResultsDetailsViewModel);
+                    return new TestResultsDetailsPage(viewModel as TestResultsDetailsViewModel ?? DI.GetInjectedPageViewModel<TestResultsDetailsViewModel>());
 
                 case ApplicationPage.TestResultsStudentsView:
-                    return new TestResultsStudentsViewPage(viewModel as TestResultsDetailsViewModel);
+                    return new TestResultsStudentsViewPage(viewModel as TestResultsDetailsViewModel ?? DI.GetInjectedPageViewModel<TestResultsDetailsViewModel>());
 
                 case ApplicationPage.TestResultsQuestionsView:
-                    return new TestResultsQuestionsViewPage(viewModel as TestResultsDetailsViewModel);
+                    return new TestResultsQuestionsViewPage(viewModel as TestResultsDetailsViewModel ?? DI.GetInjectedPageViewModel<TestResultsDetailsViewModel>());
 
                 case ApplicationPage.TestResultsDetailsView:
-                    return new TestResultsStudentsViewPage(viewModel as TestResultsDetailsViewModel);
+                    return new TestResultsStudentsViewPage(viewModel as TestResultsDetailsViewModel ?? DI.GetInjectedPageViewModel<TestResultsDetailsViewModel>());
 
                 case ApplicationPage.QuestionMultipleCheckboxes:
-                    return new QuestionMultipleCheckboxesPage(viewModel as QuestionMultipleCheckboxesViewModel);
+                    return new QuestionMultipleCheckboxesPage(viewModel as QuestionMultipleCheckboxesViewModel ?? DI.GetInjectedPageViewModel<QuestionMultipleCheckboxesViewModel>());
 
                 case ApplicationPage.QuestionMultipleChoice:
-                    return new QuestionMultipleChoicePage(viewModel as QuestionMultipleChoiceViewModel);
+                    return new QuestionMultipleChoicePage(viewModel as QuestionMultipleChoiceViewModel ?? DI.GetInjectedPageViewModel<QuestionMultipleChoiceViewModel>());
 
                 case ApplicationPage.QuestionSingleTextBox:
-                    return new QuestionSingleTextBoxPage(viewModel as QuestionSingleTextBoxViewModel);
+                    return new QuestionSingleTextBoxPage(viewModel as QuestionSingleTextBoxViewModel ?? DI.GetInjectedPageViewModel<QuestionSingleTextBoxViewModel>());
 
                 case ApplicationPage.ResultQuestions:
-                    return new ResultQuestionsPage(viewModel as ResultQuestionsViewModel);
+                    return new ResultQuestionsPage(viewModel as ResultQuestionsViewModel ?? DI.GetInjectedPageViewModel<ResultQuestionsViewModel>());
 
                 case ApplicationPage.ScreenStream:
-                    return new ScreenStreamPage(viewModel as ScreenStreamViewModel);
+                    return new ScreenStreamPage(viewModel as ScreenStreamViewModel ?? DI.GetInjectedPageViewModel<ScreenStreamViewModel>());
 
                 case ApplicationPage.Settings:
                     return new SettingsPage();

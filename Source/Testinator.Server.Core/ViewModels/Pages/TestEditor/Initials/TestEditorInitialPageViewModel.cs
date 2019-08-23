@@ -8,6 +8,12 @@ namespace Testinator.Server.Core
     /// </summary>
     public class TestEditorInitialPageViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly TestEditor mTestEditor;
+
+        #endregion
+
         #region Commands
 
         /// <summary>
@@ -32,13 +38,16 @@ namespace Testinator.Server.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestEditorInitialPageViewModel()
+        public TestEditorInitialPageViewModel(TestEditor testEditor)
         {
+            // Inject DI services
+            mTestEditor = testEditor;
+
             // Create commands
             CreateNewTestCommand = new RelayCommand(() =>
             {
-                IoCServer.TestEditor.CreateNewTest();
-                IoCServer.TestEditor.Start();
+                mTestEditor.CreateNewTest();
+                mTestEditor.Start();
             });
 
             EditManageTestCommand = new RelayCommand(() => ChangePage(ApplicationPage.TestEditorTestManagmentPage));
@@ -56,7 +65,7 @@ namespace Testinator.Server.Core
         private void ChangePage(ApplicationPage page)
         {
             // Simply change page
-            IoCServer.Application.GoToPage(page);
+            DI.Application.GoToPage(page);
         }
 
         #endregion

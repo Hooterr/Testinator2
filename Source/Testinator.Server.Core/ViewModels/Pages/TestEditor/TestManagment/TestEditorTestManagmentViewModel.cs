@@ -9,6 +9,12 @@ namespace Testinator.Server.Core
     /// </summary>
     public class TestEditorTestManagmentViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly TestEditor mTestEditor;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -47,12 +53,15 @@ namespace Testinator.Server.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestEditorTestManagmentViewModel()
+        public TestEditorTestManagmentViewModel(TestEditor testEditor)
         {
+            // Inject DI services
+            mTestEditor = testEditor;
+
             // Create commands
             EnterEditingModeCommand = new RelayCommand(EnterEditingMode);
             DeleteTestCommand = new RelayCommand(DeleteTest);
-            ReturnCommand = new RelayCommand(() => IoCServer.Application.GoToPage(ApplicationPage.TestEditorInitial));
+            ReturnCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.TestEditorInitial));
 
             // Hook up to the events
             TestListViewModel.Instance.SelectionChanged += UpdateView;
@@ -70,8 +79,8 @@ namespace Testinator.Server.Core
         /// </summary>
         private void EnterEditingMode()
         {
-            IoCServer.TestEditor.EditTest(TestListViewModel.Instance.SelectedItem);
-            IoCServer.TestEditor.Start();
+            mTestEditor.EditTest(TestListViewModel.Instance.SelectedItem);
+            mTestEditor.Start();
         }
 
         /// <summary>
@@ -92,7 +101,7 @@ namespace Testinator.Server.Core
                 CancelText = LocalizationResource.No
             };
 
-            IoCServer.UI.ShowMessage(vm);
+            DI.UI.ShowMessage(vm);
 
             // No
             if (!vm.UserResponse)
@@ -106,7 +115,7 @@ namespace Testinator.Server.Core
             catch (Exception ex)
             {
                 // If an error occured, show info to the user
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Title = LocalizationResource.DeletionError,
                     Message = "Nie udało się usunąć tego testu." + "\n" +
@@ -114,7 +123,7 @@ namespace Testinator.Server.Core
                     OkText = LocalizationResource.Ok
                 });
 
-                IoCServer.Logger.Log("Unable to delete test from local folder, error message: " + ex.Message);
+                DI.Logger.Log("Unable to delete test from local folder, error message: " + ex.Message);
             }
 
             // Update test list

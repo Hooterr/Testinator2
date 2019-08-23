@@ -10,6 +10,13 @@ namespace Testinator.Client.Core
     /// </summary>
     public class ClientNetwork : ClientNetworkBase
     {
+        #region Private Members
+
+        private readonly ClientModel mClientModel;
+        private readonly TestHost mTestHost;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -24,8 +31,12 @@ namespace Testinator.Client.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ClientNetwork()
+        public ClientNetwork(ClientModel clientModel, TestHost testHost)
         {
+            // Inject DI services
+            mClientModel = clientModel;
+            mTestHost = testHost;
+
             InitializeUsingConfigFile();
         }
 
@@ -38,8 +49,8 @@ namespace Testinator.Client.Core
         /// </summary>
         public void SendClientModelUpdate()
         {
-            var dataPackage = IoCClient.Client.GetPackage();
-            IoCClient.Application.Network.SendData(dataPackage);
+            var dataPackage = mClientModel.GetPackage();
+            DI.Application.Network.SendData(dataPackage);
         }
 
         /// <summary>
@@ -65,17 +76,17 @@ namespace Testinator.Client.Core
         protected override void OnConnectionLost()
         {
             // Log it
-            IoCClient.Logger.Log("Network connection lost");
+            DI.Logger.Log("Network connection lost");
 
             // Dont'try to reconnect if in the result page, because the test result has been already sent to the server
-            if (IoCClient.TestHost.IsShowingResultPage)
+            if (mTestHost.IsShowingResultPage)
                 return;
 
             // If the test in progress
-            if (IoCClient.TestHost.IsTestInProgress)
+            if (mTestHost.IsTestInProgress)
             {
                 // Notify the test host about the disconnection
-                //IoCClient.TestHost.NetworkDisconnected();
+                //mTestHost.NetworkDisconnected();
 
                 // Set attempting to reconnect
                 AttemptingToReconnect = true;
@@ -86,7 +97,7 @@ namespace Testinator.Client.Core
 
             // In any other case return to the login page
             else
-                IoCClient.UI.DispatcherThreadAction(() => IoCClient.Application.GoToPage(ApplicationPage.Login));
+                DI.UI.DispatcherThreadAction(() => DI.Application.GoToPage(ApplicationPage.Login));
         }
 
         /// <summary>
@@ -95,15 +106,15 @@ namespace Testinator.Client.Core
         protected override void OnDisconnected()
         {
             // Log it
-            IoCClient.Logger.Log("Network disconnected");
+            DI.Logger.Log("Network disconnected");
 
             // Dont'try to reconnect if in the result page, because the test result has been already sent to the server
-            if (IoCClient.TestHost.IsShowingResultPage)
+            if (mTestHost.IsShowingResultPage)
                 return;
 
             // If not in reults page show login page
-            if (!IoCClient.TestHost.IsTestInProgress)
-                IoCClient.UI.DispatcherThreadAction(() => IoCClient.Application.GoToPage(ApplicationPage.Login));
+            if (!mTestHost.IsTestInProgress)
+                DI.UI.DispatcherThreadAction(() => DI.Application.GoToPage(ApplicationPage.Login));
         }
 
         /// <summary>
@@ -112,23 +123,23 @@ namespace Testinator.Client.Core
         protected override void OnConnectionEstablished()
         {
             // Log it
-            IoCClient.Logger.Log("Network connected");
+            DI.Logger.Log("Network connected");
 
             // Send info package with the information
-            SendData(IoCClient.Client.GetPackage());
-            IoCClient.Logger.Log("Sending client info...");
+            SendData(mClientModel.GetPackage());
+            DI.Logger.Log("Sending client info...");
 
             // Reset AttemptingToReconnect flag
             AttemptingToReconnect = false;
 
             // If we're in login page change page to the waiting for test page
-            if (IoCClient.Application.CurrentPage == ApplicationPage.Login)
+            if (DI.Application.CurrentPage == ApplicationPage.Login)
             {
-                IoCClient.UI.DispatcherThreadAction(() => IoCClient.Application.GoToPage(ApplicationPage.WaitingForTest));
+                DI.UI.DispatcherThreadAction(() => DI.Application.GoToPage(ApplicationPage.WaitingForTest));
             }
             //else
                 // Notify the test host
-                //IoCClient.TestHost.NetworkReconnected();
+                //mTestHost.NetworkReconnected();
             
             // Save current IP to the file, as connection was successful
             SaveNetworkConfigToFile();
@@ -144,19 +155,19 @@ namespace Testinator.Client.Core
             {
                 case PackageType.TestForm:
                     // Bind the newly received test
-                    IoCClient.TestHost.BindTest(DataReceived.Content as Test);
+                    mTestHost.BindTest(DataReceived.Content as Test);
                     break;
 
                 case PackageType.BeginTest:
 
                     var args = DataReceived.Content as TestStartupArgs;
 
-                    IoCClient.TestHost.SetupArguments(args);
-                    IoCClient.TestHost.StartTest();
+                    mTestHost.SetupArguments(args);
+                    mTestHost.StartTest();
                     break;
 
                 case PackageType.StopTestForcefully:
-                    IoCClient.TestHost.AbortTest();
+                    mTestHost.AbortTest();
                     break;
 
             }
@@ -200,7 +211,7 @@ namespace Testinator.Client.Core
             }
             catch
             {
-                // No need to do anything as network is already loaded with default valus
+                // No need to do anything as network is already loaded with default values
             }
             
         }
