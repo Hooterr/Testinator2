@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{72EDAAB3-63A8-46A2-8426-FB26D379AE67}</ProjectGuid>
+    <ProjectGuid>{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Testinator.Client.Core</RootNamespace>
