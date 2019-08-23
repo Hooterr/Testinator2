@@ -10,6 +10,12 @@ namespace Testinator.Client.Core
     /// </summary>
     public class QuestionSingleTextBoxViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly TestHost mTestHost;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -21,7 +27,7 @@ namespace Testinator.Client.Core
         /// The title which shows question id
         /// </summary>
         public string QuestionPageCounter =>
-            IsReadOnly ? "Pytanie " + DisplayIndex + " / " + IoCClient.TestHost.Questions.Count : "Pytanie " + IoCClient.TestHost.CurrentQuestionString;
+            IsReadOnly ? "Pytanie " + DisplayIndex + " / " + mTestHost.Questions.Count : "Pytanie " + mTestHost.CurrentQuestionString;
 
         /// <summary>
         /// Current answer for this question
@@ -98,8 +104,11 @@ namespace Testinator.Client.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public QuestionSingleTextBoxViewModel()
+        public QuestionSingleTextBoxViewModel(TestHost testHost)
         {
+            // Inject DI services
+            mTestHost = testHost;
+
             // Create commands
             SubmitCommand = new RelayCommand(Submit);
         }
@@ -128,10 +137,10 @@ namespace Testinator.Client.Core
 
             UserAnswer = answer;
 
-            IoCClient.TestHost.SaveAnswer(answer);
+            mTestHost.SaveAnswer(answer);
 
             // Go to next question page
-            IoCClient.TestHost.GoNextQuestion();
+            mTestHost.GoNextQuestion();
         }
 
         #endregion

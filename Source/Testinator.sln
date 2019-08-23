@@ -9,8 +9,6 @@ Project("{930C7802-8A8C-48F9-8165-68863BCCD9DD}") = "Testinator.Client.Installer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.UnitTests", "Testinator.UnitTests\Testinator.UnitTests.csproj", "{20605972-C365-4A30-B3B7-858F45573E73}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Client.Core", "Testinator.Client.Core\Testinator.Client.Core.csproj", "{72EDAAB3-63A8-46A2-8426-FB26D379AE67}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Server", "Testinator.Server\Testinator.Server.csproj", "{B8509009-0250-4E7F-9187-FD01A778562F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Client", "Testinator.Client\Testinator.Client.csproj", "{83039784-E5D4-4C75-B213-F11D42FC36B9}"
@@ -29,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Web.Core", "Test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Web.Database", "Testinator.Web.Database\Testinator.Web.Database.csproj", "{65A8BA1C-6947-4231-8EE9-7563CC2CCD96}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Server.Core", "Testinator.Server.Core\Testinator.Server.Core.csproj", "{E3EC550B-C480-4943-9784-36E886E79391}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.Core", "Testinator.Server.Core\Testinator.Server.Core.csproj", "{E3EC550B-C480-4943-9784-36E886E79391}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Client.Core", "Testinator.Client.Core\Testinator.Client.Core.csproj", "{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,14 +69,6 @@ Global
 		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Release|Any CPU.Build.0 = Release|Any CPU
 		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Release|x86.ActiveCfg = Release|Any CPU
 		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Release|x86.Build.0 = Release|Any CPU
-		{0629C245-6D61-4749-99B8-8123D14A53AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0629C245-6D61-4749-99B8-8123D14A53AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0629C245-6D61-4749-99B8-8123D14A53AA}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0629C245-6D61-4749-99B8-8123D14A53AA}.Debug|x86.Build.0 = Debug|Any CPU
-		{0629C245-6D61-4749-99B8-8123D14A53AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0629C245-6D61-4749-99B8-8123D14A53AA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0629C245-6D61-4749-99B8-8123D14A53AA}.Release|x86.ActiveCfg = Release|Any CPU
-		{0629C245-6D61-4749-99B8-8123D14A53AA}.Release|x86.Build.0 = Release|Any CPU
 		{B8509009-0250-4E7F-9187-FD01A778562F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B8509009-0250-4E7F-9187-FD01A778562F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8509009-0250-4E7F-9187-FD01A778562F}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -155,6 +147,14 @@ Global
 		{E3EC550B-C480-4943-9784-36E886E79391}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E3EC550B-C480-4943-9784-36E886E79391}.Release|x86.ActiveCfg = Release|Any CPU
 		{E3EC550B-C480-4943-9784-36E886E79391}.Release|x86.Build.0 = Release|Any CPU
+		{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}.Debug|x86.Build.0 = Debug|Any CPU
+		{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}.Release|x86.ActiveCfg = Release|Any CPU
+		{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

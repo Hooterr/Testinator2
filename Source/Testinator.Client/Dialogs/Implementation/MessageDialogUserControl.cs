@@ -19,7 +19,7 @@ namespace Testinator.Client
         {
             // Check if ApplicationSettings allow showing this type of dialog box
             // TODO: setting in client? If not delete this check
-            //if (!IoCClient.Settings.AreInformationMessageBoxesAllowed)
+            //if (!DI.Settings.AreInformationMessageBoxesAllowed)
             //    return Task.Delay(1);
 
             // Now we can show the message

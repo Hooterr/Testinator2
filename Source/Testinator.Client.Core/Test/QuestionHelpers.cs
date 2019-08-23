@@ -1,4 +1,5 @@
-﻿using Testinator.Core;
+﻿using Dna;
+using Testinator.Core;
 
 namespace Testinator.Client.Core
 {
@@ -19,27 +20,27 @@ namespace Testinator.Client.Core
                 case QuestionType.MultipleChoice:
                     {
                         // Get the view model of a question and pass it as a parameter to new site
-                        var questionViewModel = new QuestionMultipleChoiceViewModel();
+                        var questionViewModel = DI.GetInjectedPageViewModel<QuestionMultipleChoiceViewModel>();
                         questionViewModel.AttachQuestion(questionToShow as MultipleChoiceQuestion);
-                        IoCClient.UI.DispatcherThreadAction(() => IoCClient.Application.GoToPage(ApplicationPage.QuestionMultipleChoice, questionViewModel));
+                        DI.UI.DispatcherThreadAction(() => DI.Application.GoToPage(ApplicationPage.QuestionMultipleChoice, questionViewModel));
                         break;
                     }
 
                 case QuestionType.MultipleCheckboxes:
                     {
                         // Get the view model of a question and pass it as a parameter to new site
-                        var questionViewModel = new QuestionMultipleCheckboxesViewModel();
+                        var questionViewModel = DI.GetInjectedPageViewModel<QuestionMultipleCheckboxesViewModel> ();
                         questionViewModel.AttachQuestion(questionToShow as MultipleCheckBoxesQuestion);
-                        IoCClient.UI.DispatcherThreadAction(() => IoCClient.Application.GoToPage(ApplicationPage.QuestionMultipleCheckboxes, questionViewModel));
+                        DI.UI.DispatcherThreadAction(() => DI.Application.GoToPage(ApplicationPage.QuestionMultipleCheckboxes, questionViewModel));
                         break;
                     }
 
                 case QuestionType.SingleTextBox:
                     {
                         // Get the view model of a question and pass it as a parameter to new site
-                        var questionViewModel = new QuestionSingleTextBoxViewModel();
+                        var questionViewModel = DI.GetInjectedPageViewModel<QuestionSingleTextBoxViewModel>();
                         questionViewModel.AttachQuestion(questionToShow as SingleTextBoxQuestion);
-                        IoCClient.UI.DispatcherThreadAction(() => IoCClient.Application.GoToPage(ApplicationPage.QuestionSingleTextBox, questionViewModel));
+                        DI.UI.DispatcherThreadAction(() => DI.Application.GoToPage(ApplicationPage.QuestionSingleTextBox, questionViewModel));
                         break;
                     }
             }
@@ -58,33 +59,27 @@ namespace Testinator.Client.Core
             {
                 case QuestionType.MultipleChoice:
                 {
-                    var questionViewModel = new QuestionMultipleChoiceViewModel
-                    {
-                        UserAnswer = (MultipleChoiceAnswer)answer,
-                        Index = Index,
-                    };
+                    var questionViewModel = DI.GetInjectedPageViewModel<QuestionMultipleChoiceViewModel>();
+                    questionViewModel.UserAnswer = (MultipleChoiceAnswer)answer;
+                    questionViewModel.Index = Index;
                     questionViewModel.AttachQuestion(question as MultipleChoiceQuestion, true);
                     return questionViewModel;
                 }
 
                 case QuestionType.MultipleCheckboxes:
                 {
-                    var questionViewModel = new QuestionMultipleCheckboxesViewModel
-                    {
-                        UserAnswer = (MultipleCheckBoxesAnswer)answer,
-                        Index = Index,
-                    };
+                    var questionViewModel = DI.GetInjectedPageViewModel<QuestionMultipleCheckboxesViewModel>();
+                    questionViewModel.UserAnswer = (MultipleCheckBoxesAnswer)answer;
+                    questionViewModel.Index = Index;
                     questionViewModel.AttachQuestion(question as MultipleCheckBoxesQuestion, true);
                     return questionViewModel;
                 }
 
                 case QuestionType.SingleTextBox:
                 {
-                    var questionViewModel = new QuestionSingleTextBoxViewModel
-                    {
-                        UserAnswer = (SingleTextBoxAnswer)answer,
-                        Index = Index,
-                    };
+                    var questionViewModel = DI.GetInjectedPageViewModel<QuestionSingleTextBoxViewModel>();
+                    questionViewModel.UserAnswer = (SingleTextBoxAnswer)answer;
+                    questionViewModel.Index = Index;
                     questionViewModel.AttachQuestion(question as SingleTextBoxQuestion, true);
                     return questionViewModel;
                 }

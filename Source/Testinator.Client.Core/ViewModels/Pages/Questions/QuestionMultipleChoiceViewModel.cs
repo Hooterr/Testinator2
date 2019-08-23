@@ -10,6 +10,12 @@ namespace Testinator.Client.Core
     /// </summary>
     public class QuestionMultipleChoiceViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly TestHost mTestHost;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -21,7 +27,7 @@ namespace Testinator.Client.Core
         /// The title which shows question id
         /// </summary>
         public string QuestionPageCounter => 
-            IsReadOnly ? "Pytanie " + DisplayIndex +  " / " + IoCClient.TestHost.Questions.Count : "Pytanie " + IoCClient.TestHost.CurrentQuestionString;
+            IsReadOnly ? "Pytanie " + DisplayIndex +  " / " + mTestHost.Questions.Count : "Pytanie " + mTestHost.CurrentQuestionString;
 
         /// <summary>
         /// Options for the questions to choose from eg. A, B, C...
@@ -103,8 +109,11 @@ namespace Testinator.Client.Core
         /// <summary>
         /// Default construcotr
         /// </summary>
-        public QuestionMultipleChoiceViewModel()
+        public QuestionMultipleChoiceViewModel(TestHost testHost)
         {
+            // Inject DI services
+            mTestHost = testHost;
+
             // Create commands
             SubmitCommand = new RelayCommand(Submit);
             SelectCommand = new RelayParameterizedCommand(Select); 
@@ -134,10 +143,10 @@ namespace Testinator.Client.Core
             {
                 SelectedAnswerIndex = CurrentlySelectedIdx - 1,
             };
-            IoCClient.TestHost.SaveAnswer(answer);
+            mTestHost.SaveAnswer(answer);
 
             // Go to next question page
-            IoCClient.TestHost.GoNextQuestion();
+            mTestHost.GoNextQuestion();
         }
 
         /// <summary>

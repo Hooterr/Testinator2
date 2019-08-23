@@ -11,6 +11,13 @@ namespace Testinator.Client.Core
     /// </summary>
     public class WaitingForTestViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly TestHost mTestHost;
+        private readonly ClientModel mClientModel;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -26,23 +33,23 @@ namespace Testinator.Client.Core
         /// <summary>
         /// The name of the test
         /// </summary>
-        public string TestName => IoCClient.TestHost.IsTestReceived ? IoCClient.TestHost.CurrentTest.Info.Name : "";
+        public string TestName => mTestHost.IsTestReceived ? mTestHost.CurrentTest.Info.Name : "";
 
         /// <summary>
         /// The duration of the test
         /// </summary>
-        public TimeSpan TestDuration => IoCClient.TestHost.IsTestReceived ? IoCClient.TestHost.CurrentTest.Info.Duration : TimeSpan.Zero;
+        public TimeSpan TestDuration => mTestHost.IsTestReceived ? mTestHost.CurrentTest.Info.Duration : TimeSpan.Zero;
 
         /// <summary>
         /// How much score can user get from this test
         /// </summary>
-        public int TestPossibleScore => IoCClient.TestHost.IsTestReceived ? IoCClient.TestHost.CurrentTest.TotalPointScore : 0;
+        public int TestPossibleScore => mTestHost.IsTestReceived ? mTestHost.CurrentTest.TotalPointScore : 0;
 
         /// <summary>
         /// A flag indicating if we have any test to show,
         /// to show corresponding content in the WaitingPage
         /// </summary>
-        public bool IsTestReceived => IoCClient.TestHost.IsTestReceived;
+        public bool IsTestReceived => mTestHost.IsTestReceived;
 
         #endregion
 
@@ -51,14 +58,18 @@ namespace Testinator.Client.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public WaitingForTestViewModel()
+        public WaitingForTestViewModel(TestHost testHost, ClientModel clientModel)
         {
+            // Inject DI services
+            mTestHost = testHost;
+            mClientModel = clientModel;
+
             // Set input data
-            Name = new TextEntryViewModel { Label = "Imię", OriginalText = IoCClient.Client.Name };
-            Surname = new TextEntryViewModel { Label = "Nazwisko", OriginalText = IoCClient.Client.LastName };
+            Name = new TextEntryViewModel { Label = "Imię", OriginalText = mClientModel.Name };
+            Surname = new TextEntryViewModel { Label = "Nazwisko", OriginalText = mClientModel.LastName };
 
             // Listen out for test which will come from server
-            IoCClient.TestHost.OnTestReceived += Update;
+            mTestHost.OnTestReceived += Update;
 
             // Hook to the events
             Name.ValueChanged += Name_ValueChanged;
@@ -74,8 +85,8 @@ namespace Testinator.Client.Core
         /// </summary>
         private void Name_ValueChanged()
         {
-            IoCClient.Client.Name = Name.OriginalText;
-            IoCClient.Application.Network.SendClientModelUpdate();
+            mClientModel.Name = Name.OriginalText;
+            DI.Application.Network.SendClientModelUpdate();
         }
 
         /// <summary>
@@ -83,8 +94,8 @@ namespace Testinator.Client.Core
         /// </summary>
         private void Surname_ValueChanged()
         {
-            IoCClient.Client.LastName = Surname.OriginalText;
-            IoCClient.Application.Network.SendClientModelUpdate();
+            mClientModel.LastName = Surname.OriginalText;
+            DI.Application.Network.SendClientModelUpdate();
         }
 
         #endregion
