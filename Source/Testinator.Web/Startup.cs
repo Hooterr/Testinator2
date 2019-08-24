@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
 using Testinator.Web.Database;
@@ -52,6 +53,35 @@ namespace Testinator.Web
                 // Adds a provider that generates unique keys and hashes for things like
                 // forgot password links, phone number verification codes etc...
                 .AddDefaultTokenProviders();
+
+            // Add JWT Authentication for Api clients
+            services.AddAuthentication().
+                AddJwtBearer(options =>
+                {
+                    // Set validation parameters
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // Validate issuer
+                        ValidateIssuer = true,
+                        // Validate audience
+                        ValidateAudience = true,
+                        // Validate expiration
+                        ValidateLifetime = true,
+                        // Validate signature
+                        ValidateIssuerSigningKey = true,
+
+                        // Set issuer
+                        ValidIssuer = Framework.Construction.Configuration["Jwt:Issuer"],
+                        // Set audience
+                        ValidAudience = Framework.Construction.Configuration["Jwt:Audience"],
+
+                        // Set signing key
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            // Get our secret key from configuration
+                            Encoding.UTF8.GetBytes(Framework.Construction.Configuration["Jwt:SecretKey"])),
+                    };
+                });
+
 
             // Change password policy
             services.Configure<IdentityOptions>(options =>
