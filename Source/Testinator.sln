@@ -23,13 +23,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Updater", "Testi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Web", "Testinator.Web\Testinator.Web.csproj", "{9FE51695-25A6-4807-BED8-B72C9761929A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Web.Core", "Testinator.Web.Core\Testinator.Web.Core.csproj", "{9A77F4EF-55A5-40E5-8736-E6CF01ECCC31}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Web.Database", "Testinator.Web.Database\Testinator.Web.Database.csproj", "{65A8BA1C-6947-4231-8EE9-7563CC2CCD96}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.Core", "Testinator.Server.Core\Testinator.Server.Core.csproj", "{E3EC550B-C480-4943-9784-36E886E79391}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Client.Core", "Testinator.Client.Core\Testinator.Client.Core.csproj", "{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Client.Core", "Testinator.Client.Core\Testinator.Client.Core.csproj", "{AD1FBC2B-5A67-4FAF-AFC3-FE68C109AEDC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,14 +59,6 @@ Global
 		{20605972-C365-4A30-B3B7-858F45573E73}.Release|Any CPU.Build.0 = Release|Any CPU
 		{20605972-C365-4A30-B3B7-858F45573E73}.Release|x86.ActiveCfg = Release|Any CPU
 		{20605972-C365-4A30-B3B7-858F45573E73}.Release|x86.Build.0 = Release|Any CPU
-		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Debug|x86.Build.0 = Debug|Any CPU
-		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Release|x86.ActiveCfg = Release|Any CPU
-		{72EDAAB3-63A8-46A2-8426-FB26D379AE67}.Release|x86.Build.0 = Release|Any CPU
 		{B8509009-0250-4E7F-9187-FD01A778562F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B8509009-0250-4E7F-9187-FD01A778562F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8509009-0250-4E7F-9187-FD01A778562F}.Debug|x86.ActiveCfg = Debug|Any CPU
@@ -123,14 +113,6 @@ Global
 		{9FE51695-25A6-4807-BED8-B72C9761929A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9FE51695-25A6-4807-BED8-B72C9761929A}.Release|x86.ActiveCfg = Release|Any CPU
 		{9FE51695-25A6-4807-BED8-B72C9761929A}.Release|x86.Build.0 = Release|Any CPU
-		{9A77F4EF-55A5-40E5-8736-E6CF01ECCC31}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9A77F4EF-55A5-40E5-8736-E6CF01ECCC31}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9A77F4EF-55A5-40E5-8736-E6CF01ECCC31}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{9A77F4EF-55A5-40E5-8736-E6CF01ECCC31}.Debug|x86.Build.0 = Debug|Any CPU
-		{9A77F4EF-55A5-40E5-8736-E6CF01ECCC31}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9A77F4EF-55A5-40E5-8736-E6CF01ECCC31}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9A77F4EF-55A5-40E5-8736-E6CF01ECCC31}.Release|x86.ActiveCfg = Release|Any CPU
-		{9A77F4EF-55A5-40E5-8736-E6CF01ECCC31}.Release|x86.Build.0 = Release|Any CPU
 		{65A8BA1C-6947-4231-8EE9-7563CC2CCD96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{65A8BA1C-6947-4231-8EE9-7563CC2CCD96}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65A8BA1C-6947-4231-8EE9-7563CC2CCD96}.Debug|x86.ActiveCfg = Debug|Any CPU

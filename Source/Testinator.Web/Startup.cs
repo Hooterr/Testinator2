@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Dna;
+using Dna.AspNet;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Text;
 using Testinator.Web.Database;
 
 namespace Testinator.Web
@@ -33,8 +36,7 @@ namespace Testinator.Web
 
             // Add TestinatorWebDbContext to DI
             services.AddDbContext<TestinatorWebDbContext>(options =>
-                // TODO: Add connection string to app settings
-                options.UseSqlServer("Server=.;Database=TestinatorWebDB;Trusted_Connection=True;MultipleActiveResultSets=True;"));
+                options.UseSqlServer(Framework.Construction.Configuration.GetConnectionString("Database")));
 
             // AddIdentity adds cookie based authentication
             // Adds scoped classes for things like UserManager, SignInManager, PasswordHashers etc..
@@ -71,6 +73,9 @@ namespace Testinator.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
         {
+            // Use Dna Framework as DI
+            app.UseDnaFramework();
+
             // Setup Identity
             app.UseAuthentication();
 
