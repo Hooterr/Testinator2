@@ -11,6 +11,7 @@ namespace Testinator.Web
     /// Such as logging/registering/veryfing etc.
     /// </summary>
     [Authorize]
+    [Route(WebRoutes.AccountPrefixRoute)]
     public class AccountController : Controller
     {
         #region Private Members
@@ -37,6 +38,7 @@ namespace Testinator.Web
         #region User Login
 
         [AllowAnonymous]
+        [Route(WebRoutes.LoginRoute)]
         public IActionResult Login()
         {
             return View();
@@ -44,6 +46,7 @@ namespace Testinator.Web
         
         [HttpPost]
         [AllowAnonymous]
+        [Route(WebRoutes.LoginRoute)]
         public async Task<IActionResult> LoginAsync(LoginViewModel loginViewModel)
         {
             // If view model isn't valid one to attempt logging in
@@ -95,6 +98,7 @@ namespace Testinator.Web
         #region User Register
 
         [AllowAnonymous]
+        [Route(WebRoutes.RegisterRoute)]
         public IActionResult Register()
         {
             return View();
@@ -102,6 +106,7 @@ namespace Testinator.Web
 
         [HttpPost]
         [AllowAnonymous]
+        [Route(WebRoutes.RegisterRoute)]
         public async Task<IActionResult> RegisterAsync(RegisterViewModel registerViewModel)
         {
             // If view model isn't valid one to register new user...
