@@ -21,7 +21,7 @@ namespace Testinator.Server.TestSystem.Implementation
             mTextContent.Value.Content = text;
             mTextContent.Value.Markup = markup;
 
-            return OperationResult.Success();
+            return OperationResult.Success;
         }
 
         public TextEditor(int version)

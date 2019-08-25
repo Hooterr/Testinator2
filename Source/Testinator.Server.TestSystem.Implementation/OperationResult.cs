@@ -31,7 +31,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public static OperationResult Fail(string[] errors) => new OperationResult(errors);
 
-        public static OperationResult Success() => new OperationResult();
+        public static OperationResult Success { get; } = new OperationResult();
 
     }
 }

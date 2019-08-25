@@ -11,38 +11,61 @@ namespace Testinator.Server.TestSystem.Implementation
         private readonly int mVersion;
         private ImageContent mImageContent;
 
-        private int mMaxImageCount;
-        private int mMaxImageWidth;
-        private int mMaxImageHeight;
+        private readonly int mMaxImageCount;
+        private readonly int mMaxImageWidth;
+        private readonly int mMaxImageHeight;
 
         public OperationResult AddImage(Image img)
         {
-            return null;
+            if (mImageContent.Images.Count >= mMaxImageCount)
+                return OperationResult.Fail($"Image content cannot consist of more than {mMaxImageCount} images.");
+
+            mImageContent.Images.Add(img);
+
+            return OperationResult.Success;
         }
 
         public OperationResult DeleteAllImages()
         {
-            throw new NotImplementedException();
+            mImageContent.Images.Clear();
+            return OperationResult.Success;
         }
 
-        public OperationResult DeleteImage(Image img)
+        public OperationResult DeleteImage(Image img, bool returnFailIfImageNotFound = false)
         {
-            throw new NotImplementedException();
+            if (true == mImageContent.Images.Remove(img))
+            {
+                return OperationResult.Success;
+            }
+
+            if (returnFailIfImageNotFound)
+                return OperationResult.Fail("Image not found in the collection");
+
+            return OperationResult.Success;
         }
 
-        public OperationResult DeleteImageAt(int index)
+        public OperationResult DeleteImageAt(int index, bool returnFailIfImageNotFound = false)
         {
-            throw new NotImplementedException();
+            if (mImageContent.Images.Count > index + 1)
+            {
+                if (returnFailIfImageNotFound)
+                    return OperationResult.Fail($"There is no element at index {index}.");
+                else
+                    return OperationResult.Success;
+            }
+
+            mImageContent.Images.RemoveAt(index);
+            return OperationResult.Success;
         }
 
         public int GetCurrentCount()
         {
-            throw new NotImplementedException();
+            return mImageContent.Images.Count;
         }
 
         public int GetMaxCount()
         {
-            throw new NotImplementedException();
+            return mMaxImageCount;
         }
 
         public ImageEditor(int version)

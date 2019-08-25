@@ -8,8 +8,8 @@ namespace Testinator.Server.TestSystem.Implementation
     public interface IImageEditor
     {
         OperationResult DeleteAllImages();
-        OperationResult DeleteImage(Image img);
-        OperationResult DeleteImageAt(int index);
+        OperationResult DeleteImage(Image img, bool returnFailIfImageNotFound = false);
+        OperationResult DeleteImageAt(int index, bool returnFailIfImageNotFound = false);
         OperationResult AddImage(Image img);
 
         int GetMaxCount();

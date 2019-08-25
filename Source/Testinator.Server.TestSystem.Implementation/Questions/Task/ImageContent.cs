@@ -18,13 +18,13 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
         [MaxCollectionCount(maxCount: 1, fromVersion: 2)]
         [MaxCollectionCount(maxCount: 1, fromVersion: 4)]
         [MaxImageSize(width: 1000, height: 1000, fromVersion: 1)]
-        public ICollection<Image> Images { get; internal set; }
+        public IList<Image> Images { get; internal set; }
 
         #endregion
 
         #region Public Methods
 
-        public ICollection<Image> GetAll()
+        public IList<Image> GetAll()
         {
             return Images;
         }
