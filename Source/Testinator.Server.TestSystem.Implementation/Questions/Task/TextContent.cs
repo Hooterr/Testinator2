@@ -21,7 +21,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
         /// <summary>
         /// Describes what markup language has been used
         /// </summary>
-        public MarkupLanguage Markup { get; internal set; }
+        public MarkupLanguage Markup { get; internal set; } = MarkupLanguage.PlainText;
 
         public MarkupLanguage GetMarkup()
         {
@@ -31,11 +31,6 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
         public string GetText()
         {
             return Content;
-        }
-
-        public bool IsEmpty()
-        {
-            return string.IsNullOrEmpty(Content);
         }
     }
 }
