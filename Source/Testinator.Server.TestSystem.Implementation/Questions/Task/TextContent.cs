@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Testinator.Server.TestSystem.Implementation.Attributes;
 using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions.Task
@@ -13,6 +14,8 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
         /// <summary>
         /// The actual content
         /// </summary>
+        [MaxLenght(maxLenght: 50)]
+        [MaxLenght(max]
         public string Content { get; internal set; }
 
         /// <summary>
