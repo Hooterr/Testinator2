@@ -7,7 +7,7 @@ namespace Testinator.Server.Database
     /// <summary>
     /// The repository to access currently logged in user's data in the database
     /// </summary>
-    public class UserDataRepository : BaseRepository<UserData, int, TestinatorServerDbContext>, IUserRepository
+    public class UserRepository : BaseRepository<UserData, int, TestinatorServerDbContext>, IUserRepository
     {
         #region Protected Properties
 
@@ -24,7 +24,7 @@ namespace Testinator.Server.Database
         /// Default constructor
         /// </summary>
         /// <param name="dbContext">The database context for this application</param>
-        public UserDataRepository(TestinatorServerDbContext dbContext) : base(dbContext) { }
+        public UserRepository(TestinatorServerDbContext dbContext) : base(dbContext) { }
 
         #endregion
 
