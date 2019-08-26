@@ -27,6 +27,7 @@ namespace Testinator.Server.Core
             construction.Services.AddScoped<FileManagerBase, LogsWriter>();
             construction.Services.AddScoped<TestEditor, TestEditor>();
             construction.Services.AddScoped<ISettingsRepository, SettingsRepository>();
+            construction.Services.AddScoped<IUserRepository, UserRepository>();
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<BeginTestViewModel>();
