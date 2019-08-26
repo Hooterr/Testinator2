@@ -16,6 +16,11 @@ namespace Testinator.Server.Database
         /// </summary>
         public DbSet<Setting> Settings { get; set; }
 
+        /// <summary>
+        /// The table for current logged in user's data
+        /// </summary>
+        public DbSet<UserData> Users { get; set; }
+
         #endregion
 
         #region Database Configuration
