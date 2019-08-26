@@ -1,52 +1,51 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Testinator.TestSystem.Abstractions
+namespace Testinator.TestSystem.Abstractions.Tests
 {
-    /// <summary>
-    /// The single test that can be created/edited/sent to the clients
-    /// </summary>
-    public class Test
+    public interface ITest
     {
         /// <summary>
         /// The name of this test
         /// </summary>
-        public string Name { get; set; }
+        string Name { get; }
 
         /// <summary>
         /// The date when this test was initially created
         /// </summary>
-        public DateTime CreationDate { get; set; }
+        DateTime CreationDate { get; }
 
         /// <summary>
         /// The date when this test was last edited
         /// </summary>
-        public DateTime LastEditionDate { get; set; }
+        DateTime LastEditionDate { get; }
 
         /// <summary>
         /// The category of this test
         /// Can contain subcategories
         /// </summary>
-        public Category Category { get; set; }
+        Category Category { get; }
 
         /// <summary>
         /// The criteria attached to this test
         /// </summary>
-        public Criteria Criteria { get; set; }
+        IGrading Grading { get; }
 
         /// <summary>
         /// The list of questions attached to this test
         /// </summary>
-        public QuestionList Questions { get; set; }
+        IQuestionList Questions { get; }
 
         /// <summary>
         /// The time this test can take at most
         /// </summary>
-        public TimeSpan CompletionTime { get; set; }
+        TimeSpan CompletionTime { get; }
 
         /// <summary>
         /// The options for this test to implement
         /// Contains crucial info about how we should handle questions etc.
         /// </summary>
-        public TestOptions Options { get; set; }
+        ITestOptions Options { get; }
     }
 }

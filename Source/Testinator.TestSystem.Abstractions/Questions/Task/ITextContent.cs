@@ -6,7 +6,7 @@ namespace Testinator.TestSystem.Abstractions.Questions.Task
 {
     public interface ITextContent
     {
-        string GetText();
-        MarkupLanguage GetMarkup();
+        string Text { get; }
+        MarkupLanguage Markup { get; }
     }
 }

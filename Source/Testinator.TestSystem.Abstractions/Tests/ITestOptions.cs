@@ -3,11 +3,16 @@
     /// <summary>
     /// The options that determine how the test should be handled
     /// </summary>
-    public class TestOptions
+    public interface ITestOptions
     {
         /// <summary>
         /// Indicates if the test should use all the questions
         /// </summary>
-        public bool ShouldUseAllQuestions { get; set; }
+        bool ShouldUseAllQuestions { get; }
+
+        // And more..
+        
+
+        // Maybe do a key value thing, not sure
     }
 }

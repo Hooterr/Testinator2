@@ -4,7 +4,8 @@ using System.Text;
 
 namespace Testinator.TestSystem.Abstractions
 {
-    public interface IQuestionAnswer
+    public interface IGrade
     {
+        string Name { get; }
     }
 }
