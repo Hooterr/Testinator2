@@ -1,24 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy;
 using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions
 {
-    public class MultipleCheckboxesQuestionScoring : BaseQuestionScoring
+    public class MultipleCheckboxesQuestionScoring : BaseQuestionScoring<MultipleCheckboxesQuestionUserAnswer>
     {
-
         public List<bool> CorrectAnswer { get; }
 
-
-
-        public override int CheckAnswer(IUserAnswer userAnswer)
+        protected override int CalculateCorrectPercentage(MultipleCheckboxesQuestionUserAnswer userAnswer)
         {
-            var answerImpl = userAnswer as MultipleCheckboxesQuestionUserAnswer ?? throw new NotSupportedException($"Incompatible UserAnswer type.");
-
-            if (answerImpl.CheckedOptions.Count != CorrectAnswer.Count)
+            if (userAnswer.CheckedOptions.Count != CorrectAnswer.Count)
                 throw new ArgumentException("Incompatible user answer length.", nameof(userAnswer));
 
+            // TODO make a simple fraction class
+            var correctAnswersCount = 0;
+
+            for(var i = 0; i < CorrectAnswer.Count; i++)
+            {
+                if (CorrectAnswer[i] == userAnswer.CheckedOptions[i])
+                    correctAnswersCount++;
+            }
+
+            // Yeah really need that fraction class
+            // eg. return new Fraction(correctAnswerCount, TotalCount);
+            // or something
+            return (int)Math.Round((double)correctAnswersCount * 100 / CorrectAnswer.Count);
         }
 
         internal MultipleCheckboxesQuestionScoring(List<bool> correctAnswer)

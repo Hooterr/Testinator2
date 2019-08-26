@@ -1,14 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy;
 using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions
 {
-    public abstract class BaseQuestionScoring : IQuestionScoring
+    public abstract class BaseQuestionScoring<TQuestionUserAnswer> : IQuestionScoring
+        where TQuestionUserAnswer : class
     {
+        // TODO [MaxValue] or value range
         public int MaximumScore { get; internal set; }
 
-        public abstract int CheckAnswer(IUserAnswer answer);
+        //TODO [Required]
+        public IScoringStrategy Strategy { get; internal set; }
+
+        public int CheckAnswer(IUserAnswer userAnswer)
+        {
+            var answerImpl = userAnswer as TQuestionUserAnswer ?? throw new NotSupportedException($"UserAnswer must be of type {(typeof(TQuestionUserAnswer)).ToString()}.");
+
+            var percentageCorrect = CalculateCorrectPercentage(answerImpl);
+
+            return Strategy.Evaluate(MaximumScore, percentageCorrect);
+        }
+
+        protected abstract int CalculateCorrectPercentage(TQuestionUserAnswer userAnswer);
+
+        public BaseQuestionScoring()
+        {
+            // TODO attribute validation or somewhere else, I dunno yet
+        }
     }
 }
