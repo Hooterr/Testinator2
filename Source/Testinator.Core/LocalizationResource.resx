@@ -510,4 +510,13 @@
   <data name="MaximumAttemptsReachedMessage" xml:space="preserve">
     <value>Maximum number of attempts has beed reached. \nTry again or make sure the server is online.</value>
   </data>
+  <data name="FillEmail" xml:space="preserve">
+    <value>Enter email</value>
+  </data>
+  <data name="FillPassword" xml:space="preserve">
+    <value>Enter password</value>
+  </data>
+  <data name="UnableToConnectWithWeb" xml:space="preserve">
+    <value>Unable to connect with the server</value>
+  </data>
 </root>
