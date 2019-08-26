@@ -1,35 +1,29 @@
-﻿using Testinator.TestSystem.Abstractions;
+﻿using Testinator.Server.TestSystem.Implementation.Questions.Base;
+using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions
 {
-    public sealed class MultipleChoiceQuestion : Question
+    public sealed class MultipleChoiceQuestion : BaseQuestion
     {
         #region Private Members 
 
+        #endregion
+
+        #region Implementation
+
+        public new MultipleChoiceQuestionOptions Options { get; internal set; }
+
+        public new MultipleChoiceQuestionScoring Scoring { get; internal set; }
 
         #endregion
 
-        #region Abstract Members Implementation
-
-        public override IQuestionTask Task => TaskImpl;
-
-        public override IQuestionAnswer Answer => Options;
-
-        public override IEvaluable Scoring => PointScoring;
-
-        #endregion
-
-
-        #region Public Properties
-
-        public new int Version { get; internal set; }
-
-        public MultipleChoiceAnswer Options { get; internal set; }
-
-        public PointScoring PointScoring { get; internal set; }
-
-        public QuestionTask TaskImpl { get; internal set; }
-
-        #endregion
+        public MultipleChoiceQuestion(IQuestionTask task, MultipleChoiceQuestionScoring scoring, MultipleChoiceQuestionOptions options, string author, int version)
+        {
+            Task = task;
+            Scoring = scoring;
+            Options = options;
+            Author = author;
+            Version = version;
+        }
     }
 }

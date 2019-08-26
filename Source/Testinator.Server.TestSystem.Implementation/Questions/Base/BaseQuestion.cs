@@ -9,18 +9,18 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Base
     /// <summary>
     /// Basic implementation of a question
     /// </summary>
-    internal abstract class BaseQuestion : IQuestion
+    public abstract class BaseQuestion : IQuestion
     {
-        public IQuestionTask Task => throw new NotImplementedException();
+        public IQuestionTask Task { get; internal set; }
 
-        public IQuestionScoring Scoring => throw new NotImplementedException();
+        public IQuestionScoring Scoring { get; internal set; }
 
-        public IQuestionOptions Options => throw new NotImplementedException();
+        public IQuestionOptions Options { get; internal set; }
 
-        public string Author => throw new NotImplementedException();
+        public string Author { get; internal set; }
 
-        public Category Category => throw new NotImplementedException();
+        public Category Category { get; internal set; }
 
-        public int Version => throw new NotImplementedException();
+        public int Version { get; internal set; }
     }
 }
