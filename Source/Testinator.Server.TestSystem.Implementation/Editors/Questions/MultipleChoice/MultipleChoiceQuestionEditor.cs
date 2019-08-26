@@ -15,6 +15,14 @@ namespace Testinator.Server.TestSystem.Implementation
             throw new NotImplementedException();
         }
 
+        public MultipleChoiceQuestion GetQuestion()
+        {
+            var question = new MultipleChoiceQuestion();
+            var task = mTaskEditor.AssembleQuestionContent();
+            question.TaskImpl = task;
+            return question;
+        }
+
         public int GetVersion()
         {
             return Version;

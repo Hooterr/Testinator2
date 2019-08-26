@@ -11,7 +11,7 @@ namespace Testinator.Server.TestSystem.Implementation
     {
 
         internal TQuestion mQuestion;
-        protected ITaskEditor mTaskEditor;
+        protected TaskEditor mTaskEditor;
 
 
         public int Version => mQuestion == null ? -1 : mQuestion.Version;

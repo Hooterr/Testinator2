@@ -2,9 +2,10 @@
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    public interface IQuestionEditor
+    public interface IQuestionEditor<TQuestion>
     {
         ITaskEditor Task { get; }
-        
+        TQuestion GetQuestion();
+                
     }
 }

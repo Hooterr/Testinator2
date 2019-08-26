@@ -29,5 +29,13 @@ namespace Testinator.Server.TestSystem.Implementation
             mImageEditor = new ImageEditor(version);
             mTask = new QuestionTask();
         }
+
+        internal QuestionTask AssembleQuestionContent()
+        {
+            var qt = new QuestionTask();
+            qt.SetImageContent(mImageEditor.AssembleContent());
+            qt.SetTextContent(mTextEditor.AssembleContent());
+            return qt;
+        }
     }
 }

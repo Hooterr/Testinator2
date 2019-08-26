@@ -85,5 +85,11 @@ namespace Testinator.Server.TestSystem.Implementation
             mMaxImageHeight = ImageSizeAttr.Height;
             mMaxImageWidth = ImageSizeAttr.Width;
         }
+
+        public ImageContent AssembleContent()
+        {
+            // maybe some validation will be required
+            return mImageContent;
+        }
     }
 }

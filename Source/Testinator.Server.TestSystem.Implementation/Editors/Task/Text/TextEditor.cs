@@ -33,5 +33,10 @@ namespace Testinator.Server.TestSystem.Implementation
 
             mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Content, a => a.MaxLength, mVersion);
         }
+
+        public TextContent AssembleContent()
+        {
+            return mTextContent.IsValueCreated ? mTextContent.Value : null;
+        }
     }
 }
