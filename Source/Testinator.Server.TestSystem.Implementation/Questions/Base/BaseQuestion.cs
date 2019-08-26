@@ -22,5 +22,15 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Base
         public Category Category { get; internal set; }
 
         public int Version { get; internal set; }
+
+        protected BaseQuestion(IQuestionTask task, IQuestionScoring scoring, IQuestionOptions options, string author, Category category, int version)
+        {
+            Task = task;
+            Scoring = scoring;
+            Options = options;
+            Author = author;
+            Category = category;
+            Version = version;
+        }
     }
 }
