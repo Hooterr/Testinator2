@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,6 +11,11 @@ namespace Testinator.TestSystem.Abstractions
         /// The name of this grading
         /// </summary>
         string Name { get; }
+
+        /// <summary>
+        /// Grading strategy
+        /// </summary>
+        IGradingStrategy Strategy { get; }
 
         /// <summary>
         /// The date when this criteria was created
