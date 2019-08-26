@@ -11,26 +11,14 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
     /// </summary>
     public class TextContent : ITextContent
     {
-        /// <summary>
-        /// The actual content
-        /// </summary>
-        [MaxLenght(maxLenght: 500)]
-        [MaxLenght(maxLenght: 400, fromVersion: 2)]
-        public string Content { get; internal set; }
 
         /// <summary>
         /// Describes what markup language has been used
         /// </summary>
         public MarkupLanguage Markup { get; internal set; } = MarkupLanguage.PlainText;
 
-        public MarkupLanguage GetMarkup()
-        {
-            return Markup;
-        }
-
-        public string GetText()
-        {
-            return Content;
-        }
+        [MaxLenght(maxLenght: 500)]
+        [MaxLenght(maxLenght: 400, fromVersion: 2)]
+        public string Text { get; internal set; }
     }
 }

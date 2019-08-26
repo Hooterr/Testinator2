@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
-using System.Text;
 using Testinator.Server.TestSystem.Implementation.Attributes;
 using Testinator.TestSystem.Abstractions.Questions.Task;
 
@@ -19,15 +17,6 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
         [MaxCollectionCount(maxCount: 1, fromVersion: 4)]
         [MaxImageSize(width: 1000, height: 1000, fromVersion: 1)]
         public IList<Image> Images { get; internal set; }
-
-        #endregion
-
-        #region Public Methods
-
-        public IList<Image> GetAll()
-        {
-            return Images;
-        }
 
         #endregion
 
