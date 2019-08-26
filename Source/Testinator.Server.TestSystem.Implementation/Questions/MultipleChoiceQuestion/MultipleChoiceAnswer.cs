@@ -5,6 +5,9 @@ using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions
 {
+
+    // TODO: move building logic to editor class
+
     public class MultipleChoiceAnswer : IQuestionAnswer, IPercentageEvaluable<int>
     {
         /// <summary>
