@@ -1,6 +1,8 @@
 ﻿using Dna;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Testinator.Core;
+using Testinator.Server.Database;
 
 namespace Testinator.Server.Core
 {
@@ -20,10 +22,11 @@ namespace Testinator.Server.Core
             construction.Services.AddSingleton<ApplicationSettingsViewModel>();
 
             // Bind to a scoped instance of specified models
-            construction.Services.AddSingleton<ServerNetwork, ServerNetwork>();
-            construction.Services.AddSingleton<TestHost, TestHost>();
-            construction.Services.AddSingleton<FileManagerBase, LogsWriter>();
-            construction.Services.AddSingleton<TestEditor, TestEditor>();
+            construction.Services.AddScoped<ServerNetwork, ServerNetwork>();
+            construction.Services.AddScoped<TestHost, TestHost>();
+            construction.Services.AddScoped<FileManagerBase, LogsWriter>();
+            construction.Services.AddScoped<TestEditor, TestEditor>();
+            construction.Services.AddScoped<ISettingsRepository, SettingsRepository>();
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<BeginTestViewModel>();
@@ -41,6 +44,32 @@ namespace Testinator.Server.Core
             construction.Services.AddTransient<TestResultsDetailsViewModel>();
             construction.Services.AddTransient<TestResultsViewModel>();
             construction.Services.AddTransient<MultipleChoiceQuestionEditorViewModel>();
+
+            // Return the construction for chaining
+            return construction;
+        }
+
+        /// <summary>
+        /// Injects the database for Testinator.Server application
+        /// </summary>
+        /// <param name="construction">Framework's construction</param>
+        public static FrameworkConstruction AddDbContext(this FrameworkConstruction construction)
+        {
+            // Use Sqlite library
+            construction.Services.AddEntityFrameworkSqlite();
+
+            // Bind a db context to access in this application
+            construction.Services.AddDbContext<TestinatorServerDbContext>();
+
+            // Get the service provider
+            var serviceProvider = construction.Services.BuildServiceProvider();
+            using (var scope = serviceProvider.CreateScope())
+            {
+                // Get the db service
+                var db = scope.ServiceProvider.GetRequiredService<TestinatorServerDbContext>();
+                // Make sure its created properly and do pending migrations
+                db.Database.Migrate();
+            }
 
             // Return the construction for chaining
             return construction;
