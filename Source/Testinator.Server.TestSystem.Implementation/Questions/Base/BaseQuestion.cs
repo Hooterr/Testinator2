@@ -4,7 +4,7 @@ using System.Text;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Questions;
 
-namespace Testinator.Server.TestSystem.Implementation.Questions.Base
+namespace Testinator.Server.TestSystem.Implementation.Questions
 {
     /// <summary>
     /// Basic implementation of a question

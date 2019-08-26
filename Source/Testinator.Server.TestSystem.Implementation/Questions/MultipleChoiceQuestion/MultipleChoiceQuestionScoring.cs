@@ -15,7 +15,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
         
         public override int CheckAnswer(IUserAnswer answer)
         {
-            var answerImpl = answer as MultipleChoiceQuestionUserAnswer ?? throw new NotSupportedException($"Incompatible user answer type.");
+            var answerImpl = answer as MultipleChoiceQuestionUserAnswer ?? throw new NotSupportedException($"Incompatible UserAnswer type.");
 
             return answerImpl.SelectedAnswerIdx == CorrectAnswerIdx ? MaximumScore : 0;
         }
