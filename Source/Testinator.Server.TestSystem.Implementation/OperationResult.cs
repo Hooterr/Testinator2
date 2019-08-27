@@ -34,4 +34,21 @@ namespace Testinator.Server.TestSystem.Implementation
         public static OperationResult Success { get; } = new OperationResult();
 
     }
+
+    public class OperationResult<TOut> : OperationResult
+    {
+        public readonly TOut Object;
+
+        public OperationResult(string error) : base(error) { }
+
+
+        public OperationResult(string[] errors) : base(errors) { }
+        public OperationResult(TOut obj)
+        {
+            Object = obj;
+        }
+
+        public static new OperationResult<TOut> Success(TOut obj) => new OperationResult<TOut>(obj);
+
+    }
 }
