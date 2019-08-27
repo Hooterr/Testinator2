@@ -7,7 +7,7 @@ namespace Testinator.Server.TestSystem.Implementation
     public class OperationResult
     {
         public List<string> Errors { get; private set; } = new List<string>();
-        public bool Succeeded => Errors.Count == 0;
+        public bool Succeeded { get; private set; }
         public bool Failed => !Succeeded;
 
         public OperationResult()
@@ -16,10 +16,17 @@ namespace Testinator.Server.TestSystem.Implementation
         public OperationResult(string error)
         {
             Errors.Add(error);
+            Succeeded = false;
         }
         public OperationResult(string[] error)
         {
             Errors.AddRange(error);
+            Succeeded = false;
+        }
+
+        public OperationResult(bool success)
+        {
+            Succeeded = success;
         }
 
         public void AddError(string msg)
@@ -27,28 +34,32 @@ namespace Testinator.Server.TestSystem.Implementation
             Errors.Add(msg);
         }
 
+
         public static OperationResult Fail(string error) => new OperationResult(error);
 
         public static OperationResult Fail(string[] errors) => new OperationResult(errors);
 
-        public static OperationResult Success { get; } = new OperationResult();
+        public static OperationResult Fail() => new OperationResult(false);
+
+        public static OperationResult Succes() => new OperationResult(true);
 
     }
 
     public class OperationResult<TOut> : OperationResult
     {
-        public readonly TOut Object;
+        public readonly TOut Result;
 
         public OperationResult(string error) : base(error) { }
 
 
         public OperationResult(string[] errors) : base(errors) { }
-        public OperationResult(TOut obj)
+
+        public OperationResult(TOut obj, bool success) : base(success)
         {
-            Object = obj;
+            Result = obj;;
         }
 
-        public static new OperationResult<TOut> Success(TOut obj) => new OperationResult<TOut>(obj);
+        public static OperationResult<TOut> Success(TOut obj) => new OperationResult<TOut>(obj, true);
 
     }
 }
