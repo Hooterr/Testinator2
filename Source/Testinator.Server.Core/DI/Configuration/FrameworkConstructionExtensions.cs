@@ -26,10 +26,10 @@ namespace Testinator.Server.Core
             construction.Services.AddScoped<TestHost, TestHost>();
             construction.Services.AddScoped<FileManagerBase, LogsWriter>();
             construction.Services.AddScoped<TestEditor, TestEditor>();
-            construction.Services.AddScoped<IUserAccountService, UserAccountService>();
             construction.Services.AddScoped<UserMapper>();
             construction.Services.AddScoped<ISettingsRepository, SettingsRepository>();
             construction.Services.AddScoped<IUserRepository, UserRepository>();
+            construction.Services.AddScoped<IUserAccountService, UserAccountService>();
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<BeginTestViewModel>();

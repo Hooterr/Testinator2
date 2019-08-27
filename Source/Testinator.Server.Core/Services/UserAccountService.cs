@@ -1,6 +1,7 @@
 ﻿using Dna;
 using System.Threading.Tasks;
 using Testinator.Core;
+using Testinator.Server.Database;
 
 namespace Testinator.Server.Core
 {
@@ -11,13 +12,35 @@ namespace Testinator.Server.Core
     {
         #region Private Members
 
-        /// <summary>
-        /// TODO: Make this a model with all the user data
-        /// For now we're just testing stuff
-        /// </summary>
-        private string mUserFirstName;
+        private readonly UserMapper mUserMapper;
+        private readonly IUserRepository mUserRepository;
 
         #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public UserAccountService(UserMapper userMapper, IUserRepository userRepository)
+        {
+            // Inject DI services
+            mUserMapper = userMapper;
+            mUserRepository = userRepository;
+
+            // Setup the application view model based on if we are logged in
+            DI.Application.GoToPage(
+                // If we are logged in...
+                mUserRepository.ContainsUserData() ?
+                // Go to home page
+                ApplicationPage.Home :
+                // Otherwise, go to login page
+                ApplicationPage.Login);
+        }
+
+        #endregion
+
+        #region Interface Implementation
 
         /// <summary>
         /// Tries to log the user in by making an API call to our website
@@ -50,9 +73,9 @@ namespace Testinator.Server.Core
             // We got the response, check if we successfully logged in
             if (result.Successful)
             {
-                // User is logged in, store the data
-                var userData = result.ServerResponse.Response;
-                mUserFirstName = userData.FirstName;
+                // User is logged in, store the data in database
+                var user = mUserMapper.Map(result.ServerResponse.Response);
+                mUserRepository.SaveNewUserData(user);
 
                 // Return no error
                 return null;
