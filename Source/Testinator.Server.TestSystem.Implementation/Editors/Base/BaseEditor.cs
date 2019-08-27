@@ -1,25 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Testinator.Server.TestSystem.Implementation;
-using Testinator.TestSystem.Abstractions;
+using Testinator.Server.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal abstract class BaseEditor<TQuestion>
-        where TQuestion : Question, new()
+    internal abstract class BaseEditor<TQuestion> : IQuestionEditor<TQuestion>
+        where TQuestion : BaseQuestion
     {
 
-        internal TQuestion mQuestion;
+        private TQuestion mQuestion;
         protected TaskEditor mTaskEditor;
 
 
         public int Version => mQuestion == null ? -1 : mQuestion.Version;
 
-        internal void CompleteSetup()
-        {
-            mTaskEditor = new TaskEditor(Version);
-        }
+        public ITaskEditor Task => throw new NotImplementedException();
+
 
         internal void EditExisting(TQuestion question)
         {
@@ -28,10 +23,12 @@ namespace Testinator.Server.TestSystem.Implementation
 
         internal void CreateNew(int version)
         {
-            mQuestion = new TQuestion
-            {
-                Version = version 
-            };
+            // TODO
+        }
+
+        public TQuestion Build()
+        {
+            throw new NotImplementedException();
         }
     }
 }
