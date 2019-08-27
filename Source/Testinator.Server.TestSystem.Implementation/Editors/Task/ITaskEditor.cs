@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Text;
-using Testinator.TestSystem.Abstractions.Questions.Task;
+﻿using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation
-{ 
-    public interface ITaskEditor
+{
+    public interface ITaskEditor : IValidatable
     {
         ITextEditor Text { get; }
 

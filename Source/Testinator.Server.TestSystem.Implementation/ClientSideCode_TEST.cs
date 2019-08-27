@@ -12,8 +12,8 @@ namespace Testinator.Server.TestSystem.Implementation
 
             // OK, I know what you're thinking. How do I know what editor to pick when I got IQuestion.
             // No need to do a type matching. We will have a editor different page in WPF for every question.
-            // In the view model constructor of said page we know what type of question we expect so we can choose an editor no problem.
-            // When wee got a list of IQuestion, and user chooses a question to edit it, now it gets a bit tricky. 
+            // In the view model constructor of said page we know what type of question we expect so we can choose an editor, no problem.
+            // When we got a list of IQuestion, and user chooses a question to edit, now it gets a bit tricky. 
             // What I would like to do is for every editor page (or view model for that page) put an attribute such as [EditorFor(typeof(MultipleChoiceQuestion))].
             // Then write a simple class that holds a key value pairs of [questionType, editorPage]. That collection would be generated at runtime using reflection.
             // Then we just ask it for the corresponding editor: var editorPageType = EditorLocalizer.Resolve(question) and 
@@ -24,10 +24,11 @@ namespace Testinator.Server.TestSystem.Implementation
                 .UseNewestVersion()
                 .Build();
 
-            //listOfQuestions[0]
-            //editor.Task.Images.
+            var TaskErrorMessage = string.Empty;
 
+            editor.Task.Text.OnValidationError((msg) => TaskErrorMessage = msg);
 
+            var question = editor.Build();
         }
     }
 }

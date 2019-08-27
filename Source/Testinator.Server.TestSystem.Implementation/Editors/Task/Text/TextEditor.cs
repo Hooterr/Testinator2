@@ -7,7 +7,7 @@ using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal class TextEditor : ITextEditor
+    internal class TextEditor : ITextEditor, IEditor<ITextContent>
     {
         private readonly int mVersion;
         private Lazy<TextContent> mTextContent = new Lazy<TextContent>(() => new TextContent());
@@ -18,7 +18,7 @@ namespace Testinator.Server.TestSystem.Implementation
             if (text.Length > mMaxTextLength)
                 return OperationResult.Fail($"Text content is too long. Maximum text length is set to {mMaxTextLength} characters.");
 
-            mTextContent.Value.Content = text;
+            mTextContent.Value.Text = text;
             mTextContent.Value.Markup = markup;
 
             return OperationResult.Success;
@@ -31,10 +31,15 @@ namespace Testinator.Server.TestSystem.Implementation
 
             mVersion = version;
 
-            mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Content, a => a.MaxLength, mVersion);
+            mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Text, a => a.MaxLength, mVersion);
         }
 
-        public TextContent AssembleContent()
+        public void OnValidationError(Action<string> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public ITextContent Build()
         {
             return mTextContent.IsValueCreated ? mTextContent.Value : null;
         }

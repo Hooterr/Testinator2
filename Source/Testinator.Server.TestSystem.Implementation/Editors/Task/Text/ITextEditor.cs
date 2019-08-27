@@ -5,7 +5,7 @@ using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    public interface ITextEditor
+    public interface ITextEditor : IValidatable
     {
         OperationResult Add(string text, MarkupLanguage markup = MarkupLanguage.PlainText);
     }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Drawing;
 using Testinator.Server.TestSystem.Implementation.Attributes;
 using Testinator.Server.TestSystem.Implementation.Questions.Task;
+using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal class ImageEditor : IImageEditor
+    internal class ImageEditor : IImageEditor, IEditor<IImageContent>
     {
         private readonly int mVersion;
         private ImageContent mImageContent;
@@ -90,6 +91,16 @@ namespace Testinator.Server.TestSystem.Implementation
         {
             // maybe some validation will be required
             return mImageContent;
+        }
+
+        public void OnValidationError(Action<string> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IImageContent Build()
+        {
+            throw new NotImplementedException();
         }
     }
 }

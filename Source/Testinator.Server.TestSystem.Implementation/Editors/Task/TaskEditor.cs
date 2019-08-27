@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Drawing;
 using Testinator.Server.TestSystem.Implementation.Questions;
-using Testinator.TestSystem.Abstractions.Questions.Task;
+using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal class TaskEditor : ITaskEditor
-{
+    internal class TaskEditor : ITaskEditor, IEditor<IQuestionTask>
+    {
         private readonly int mVersion;
-
-        private QuestionTask mTask;
-
         private readonly TextEditor mTextEditor;
         private readonly ImageEditor mImageEditor;
 
@@ -27,15 +23,27 @@ namespace Testinator.Server.TestSystem.Implementation
             mVersion = version;
             mTextEditor = new TextEditor(version);
             mImageEditor = new ImageEditor(version);
-            mTask = new QuestionTask();
         }
 
         internal QuestionTask AssembleQuestionContent()
         {
-            var qt = new QuestionTask();
-            qt.SetImageContent(mImageEditor.AssembleContent());
-            qt.SetTextContent(mTextEditor.AssembleContent());
+            var textContent = mTextEditor.Build();
+            var qt = new QuestionTask
+            {
+                Images = mImageEditor.AssembleContent(),
+                Text = textContent
+            };
             return qt;
+        }
+
+        public void OnValidationError(Action<string> action)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IQuestionTask Build()
+        {
+            throw new NotImplementedException();
         }
     }
 }
