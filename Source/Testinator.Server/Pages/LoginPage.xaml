@@ -43,9 +43,10 @@
                              Style="{StaticResource BigInputTextBox}" />
 
                     <!-- Error if login failed -->
-                    <TextBlock Text="{Binding ErrorMessage,FallbackValue=AAA}"
+                    <TextBlock Text="{Binding ErrorMessage}"
                                Margin="0 0 0 10"
                                Foreground="{StaticResource RedLightBrush}"
+                               HorizontalAlignment="Center"
                                Style="{StaticResource QuestionTextBlockStyle}" />
 
                     <!-- Submit button -->
@@ -56,6 +57,17 @@
                             Style="{StaticResource BaseUIButton}"
                             local:IsBusyProperty.Value="{Binding LoggingIsRunning}"
                             />
+
+                    <!-- Enter without logging in button-text -->
+                    <TextBlock Text="{x:Static core:LocalizationResource.EnterWithoutLogin}"
+                               Margin="0 10"
+                               Cursor="Hand"
+                               HorizontalAlignment="Center"
+                               Style="{StaticResource QuestionTextBlockStyle}">
+                        <TextBlock.InputBindings>
+                            <MouseBinding MouseAction="LeftClick" Command="{Binding EnterWithoutLoginCommand}" />
+                        </TextBlock.InputBindings>
+                    </TextBlock>
 
                 </StackPanel>
 

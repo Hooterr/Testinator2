@@ -519,4 +519,7 @@
   <data name="UnableToConnectWithWeb" xml:space="preserve">
     <value>Unable to connect with the server</value>
   </data>
+  <data name="EnterWithoutLogin" xml:space="preserve">
+    <value>Enter without login</value>
+  </data>
 </root>

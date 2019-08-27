@@ -45,6 +45,11 @@ namespace Testinator.Server.Core
         /// </summary>
         public ICommand LoginCommand { get; private set; }
 
+        /// <summary>
+        /// The command to go to next page without logging in
+        /// </summary>
+        public ICommand EnterWithoutLoginCommand { get; private set; }
+
         #endregion
 
         #region Constructor
@@ -59,6 +64,7 @@ namespace Testinator.Server.Core
 
             // Create commands
             LoginCommand = new RelayCommand(LogInAsync);
+            EnterWithoutLoginCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.Home));
         }
 
         #endregion
@@ -75,14 +81,6 @@ namespace Testinator.Server.Core
             {
                 // Empty the error message for the operation
                 ErrorMessage = string.Empty;
-
-                // TODO: Delete this once server is up and running 24/7
-                //       For now tho, by typing "test" as an email we can log in to test the app
-                if (UserEmail == "test")
-                {
-                    DI.Application.GoToPage(ApplicationPage.Home);
-                    return;
-                }
 
                 // Try to log the user in
                 var error = await mUserService.LogInAsync(UserEmail, UserPassword);

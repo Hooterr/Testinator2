@@ -430,6 +430,15 @@ namespace Testinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter without login.
+        /// </summary>
+        public static string EnterWithoutLogin {
+            get {
+                return ResourceManager.GetString("EnterWithoutLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error message: .
         /// </summary>
         public static string ErrorContentSemicolon {

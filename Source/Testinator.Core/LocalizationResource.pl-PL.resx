@@ -507,4 +507,7 @@
   <data name="UnableToConnectWithWeb" xml:space="preserve">
     <value>Brak połączenia z serwerem</value>
   </data>
+  <data name="EnterWithoutLogin" xml:space="preserve">
+    <value>Otwórz bez logowania</value>
+  </data>
 </root>
