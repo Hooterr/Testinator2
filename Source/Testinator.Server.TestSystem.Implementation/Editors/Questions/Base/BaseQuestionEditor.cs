@@ -3,7 +3,7 @@ using Testinator.Server.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal abstract class BaseEditor<TQuestion> : IQuestionEditor<TQuestion>
+    internal abstract class BaseQuestionEditor<TQuestion> : IQuestionEditor<TQuestion>
         where TQuestion : BaseQuestion
     {
 

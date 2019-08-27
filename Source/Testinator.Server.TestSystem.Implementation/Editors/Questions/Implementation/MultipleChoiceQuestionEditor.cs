@@ -5,7 +5,7 @@ using Testinator.Server.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal class MultipleChoiceQuestionEditor : BaseEditor<MultipleChoiceQuestion>, IMultipleChoiceQuestionEditor
+    internal class MultipleChoiceQuestionEditor : BaseQuestionEditor<MultipleChoiceQuestion>, IMultipleChoiceQuestionEditor
     {
 
         public OperationResult AddOption(string option)

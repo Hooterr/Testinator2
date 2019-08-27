@@ -15,7 +15,7 @@ namespace Testinator.Server.TestSystem.Implementation
     internal class EditorBuilder<TEditorImpl, TEditorInterface, TQuestion> : IEditorBuilder<TEditorInterface, TQuestion>
         where TQuestion : BaseQuestion
         where TEditorInterface : IQuestionEditor<TQuestion>
-        where TEditorImpl : BaseEditor<TQuestion>, TEditorInterface, new()
+        where TEditorImpl : BaseQuestionEditor<TQuestion>, TEditorInterface, new()
     {
 
         #region Private Members
