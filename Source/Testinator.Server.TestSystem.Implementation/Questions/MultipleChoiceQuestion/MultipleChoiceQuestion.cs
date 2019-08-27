@@ -1,5 +1,4 @@
-﻿using Testinator.Server.TestSystem.Implementation.Questions.Base;
-using Testinator.TestSystem.Abstractions;
+﻿using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions
 {
