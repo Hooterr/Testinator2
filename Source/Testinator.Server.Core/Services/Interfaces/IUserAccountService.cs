@@ -8,5 +8,6 @@ namespace Testinator.Server.Core
     public interface IUserAccountService
     {
         Task<string> LogInAsync(string email, string password);
+        UserContext GetCurrentUserData();
     }
 }

@@ -84,5 +84,28 @@ namespace Testinator.Server.Core
             // We got the response, but logging in didnt succeed, return the error
             return result.ErrorMessage;
         }
+
+        /// <summary>
+        /// Gets currently logged in user
+        /// If no user was found, logs out of the account and goes back to login page
+        /// </summary>
+        /// <returns>Logged in user's data</returns>
+        public UserContext GetCurrentUserData()
+        {
+            // Get currently saved user from the database
+            var user = mUserRepository.GetCurrentUserData();
+
+            // If it was not found...
+            if (user == null)
+            {
+                // TODO: Instead of throwing exception, simply just logout the user and go back to login page
+                throw new System.Exception("User was not found");
+            }
+
+            // Return it mapped as context
+            return mUserMapper.Map(user);
+        }
+
+        #endregion
     }
 }
