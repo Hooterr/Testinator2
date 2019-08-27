@@ -7,17 +7,20 @@ namespace Testinator.Server.TestSystem.Implementation.Grading
 {
     public class Grading : IGrading
     {
-        public string Name { get; internal set; }
+        public string Name { get; private set; }
 
-        public DateTime CreationDate { get; internal set; }
 
-        public DateTime LastEditionDate { get; internal set; }
-
-        public IGradingStrategy Strategy { get; internal set; }
+        public IGradingStrategy Strategy { get; private set; }
 
         public IGrade GetGrade(int score)
         {
             return Strategy.GetGrade(score);
+        }
+
+        public Grading(string name, IGradingStrategy strategy)
+        {
+            Name = name;
+            Strategy = strategy;
         }
     }
 }

@@ -16,22 +16,13 @@ namespace Testinator.TestSystem.Abstractions
         /// Grading strategy
         /// </summary>
         IGradingStrategy Strategy { get; }
-
-        /// <summary>
-        /// The date when this criteria was created
-        /// </summary>
-        DateTime CreationDate { get; }
-
-        /// <summary>
-        /// The date when this criteria was last edited
-        /// </summary>
-        DateTime LastEditionDate { get; }
         
         /// <summary>
         /// Gets grade based on the point score 
         /// </summary>
         /// <param name="score">The score</param>
         /// <returns>Corresponding grade</returns>
+        // TODO replace int with complex type with question catergories etc.
         IGrade GetGrade(int score);
     }
 }
