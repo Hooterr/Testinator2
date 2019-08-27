@@ -27,6 +27,7 @@ namespace Testinator.Server.Core
             construction.Services.AddScoped<FileManagerBase, LogsWriter>();
             construction.Services.AddScoped<TestEditor, TestEditor>();
             construction.Services.AddScoped<IUserAccountService, UserAccountService>();
+            construction.Services.AddScoped<UserMapper>();
             construction.Services.AddScoped<ISettingsRepository, SettingsRepository>();
             construction.Services.AddScoped<IUserRepository, UserRepository>();
 
