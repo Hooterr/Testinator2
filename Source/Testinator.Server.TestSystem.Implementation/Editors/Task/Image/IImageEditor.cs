@@ -12,7 +12,6 @@ namespace Testinator.Server.TestSystem.Implementation
         OperationResult DeleteImage(Image img, bool returnFailIfImageNotFound = false);
         OperationResult DeleteImageAt(int index, bool returnFailIfImageNotFound = false);
         OperationResult AddImage(Image img);
-
         int GetMaxCount();
         int GetCurrentCount();
     }

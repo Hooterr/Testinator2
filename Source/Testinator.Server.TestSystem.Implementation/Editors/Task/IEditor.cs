@@ -6,6 +6,6 @@ namespace Testinator.Server.TestSystem.Implementation
 {
     public interface IEditor<T>
     {
-        T Build();
+        OperationResult<T> Build();
     }
 }

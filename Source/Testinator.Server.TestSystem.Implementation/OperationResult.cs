@@ -77,6 +77,11 @@ namespace Testinator.Server.TestSystem.Implementation
             Succeeded = success;
         }
 
+        public void Merge<T>(OperationResult<T> result)
+        {
+            Errors.AddRange(result.Errors);
+        }
+
         public static OperationResult<TOut> Fail(string error) => new OperationResult<TOut>(error);
 
         public static OperationResult<TOut> Fail(string[] errors) => new OperationResult<TOut>(errors);

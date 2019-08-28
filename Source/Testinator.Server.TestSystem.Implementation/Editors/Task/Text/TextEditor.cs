@@ -10,18 +10,29 @@ namespace Testinator.Server.TestSystem.Implementation
     internal class TextEditor : ITextEditor, IEditor<ITextContent>
     {
         private readonly int mVersion;
-        private Lazy<TextContent> mTextContent = new Lazy<TextContent>(() => new TextContent());
         private readonly int mMaxTextLength;
+        private Action<string> mDisplayError;
+        private string mErrorMessgae;
+        private string mText;
+        private MarkupLanguage mMarkup;
 
-        public OperationResult Add(string text, MarkupLanguage markup = MarkupLanguage.PlainText)
+        public void Add(string text, MarkupLanguage markup = MarkupLanguage.PlainText)
         {
             if (text.Length > mMaxTextLength)
-                return OperationResult.Fail($"Text content is too long. Maximum text length is set to {mMaxTextLength} characters.");
+            {
+                var error = $"Text content is too long. Maximum text length is set to {mMaxTextLength} characters.";
 
-            mTextContent.Value.Text = text;
-            mTextContent.Value.Markup = markup;
-
-            return OperationResult.Success;
+                if (mDisplayError != null)
+                    mDisplayError.Invoke(error);
+                else
+                    mErrorMessgae = error;
+            }
+            else
+            {
+                mText = text;
+                mMarkup = markup;
+                mErrorMessgae = string.Empty;
+            }
         }
 
         public TextEditor(int version)
@@ -36,12 +47,25 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public void OnValidationError(Action<string> action)
         {
-            throw new NotImplementedException();
+            mDisplayError = action;
         }
 
-        public ITextContent Build()
+        public OperationResult<ITextContent> Build()
         {
-            return mTextContent.IsValueCreated ? mTextContent.Value : null;
+            // There are no errors
+            if (string.IsNullOrEmpty(mErrorMessgae))
+            {
+                // We can return the text content
+                var result = new TextContent()
+                {
+                    Text = mText,
+                    Markup = mMarkup,
+                };
+
+                return OperationResult<ITextContent>.Success(result);
+            }
+            else
+                return OperationResult<ITextContent>.Fail(mErrorMessgae);
         }
     }
 }

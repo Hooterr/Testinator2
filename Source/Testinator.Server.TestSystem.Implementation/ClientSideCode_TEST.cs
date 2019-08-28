@@ -28,7 +28,18 @@ namespace Testinator.Server.TestSystem.Implementation
 
             editor.Task.Text.OnValidationError((msg) => TaskErrorMessage = msg);
 
-            var question = editor.Build();
+            var operation = editor.Build();
+
+            if (operation.Succeeded)
+            {
+                listOfQuestions.Add(operation.Result);
+            }
+            else
+            {
+                // When building fails this list contains all the error messages 
+                // that haven't already been handled by OnValidationError() method
+                var errorlist = operation.Errors;
+            }
         }
     }
 }

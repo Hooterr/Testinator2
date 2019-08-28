@@ -7,6 +7,6 @@ namespace Testinator.Server.TestSystem.Implementation
 {
     public interface ITextEditor : IValidatable
     {
-        OperationResult Add(string text, MarkupLanguage markup = MarkupLanguage.PlainText);
+        void Add(string text, MarkupLanguage markup = MarkupLanguage.PlainText);
     }
 }

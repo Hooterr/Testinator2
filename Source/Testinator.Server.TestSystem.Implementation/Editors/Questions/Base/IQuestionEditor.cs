@@ -15,6 +15,6 @@
         /// Finalize the editing process
         /// </summary>
         /// <returns>The result of the editing process of type <see cref="TQuestion"/></returns>
-        TQuestion Build();          
+        OperationResult<TQuestion> Build();          
     }
 }

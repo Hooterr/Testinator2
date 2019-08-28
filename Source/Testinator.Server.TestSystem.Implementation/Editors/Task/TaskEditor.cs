@@ -25,25 +25,33 @@ namespace Testinator.Server.TestSystem.Implementation
             mImageEditor = new ImageEditor(version);
         }
 
-        internal QuestionTask AssembleQuestionContent()
-        {
-            var textContent = mTextEditor.Build();
-            var qt = new QuestionTask
-            {
-                Images = mImageEditor.AssembleContent(),
-                Text = textContent
-            };
-            return qt;
-        }
-
         public void OnValidationError(Action<string> action)
         {
             throw new NotImplementedException();
         }
 
-        public IQuestionTask Build()
+        public OperationResult<IQuestionTask> Build()
         {
-            throw new NotImplementedException();
+            var textOperation = mTextEditor.Build();
+            var imageOperation = mImageEditor.Build();
+
+            // If one of the builds failed
+            if(textOperation.Failed || imageOperation.Failed)
+            {
+                // Combine the error messages
+                var taskBuildOperation = OperationResult<IQuestionTask>.Fail();
+                taskBuildOperation.Merge(textOperation);
+                taskBuildOperation.Merge(imageOperation);
+                return taskBuildOperation;
+            }
+
+            var task = new QuestionTask()
+            {
+                Text = textOperation.Result,
+                Images = imageOperation.Result,
+            };
+
+            return OperationResult<IQuestionTask>.Success(task);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Testinator.Server.TestSystem.Implementation
     internal class ImageEditor : IImageEditor, IEditor<IImageContent>
     {
         private readonly int mVersion;
-        private ImageContent mImageContent;
+        private IList<Image> mImages;
 
         private readonly int mMaxImageCount;
         private readonly int mMaxImageWidth;
@@ -18,50 +18,50 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public OperationResult AddImage(Image img)
         {
-            if (mImageContent.Images.Count >= mMaxImageCount)
+            if (mImages.Count >= mMaxImageCount)
                 return OperationResult.Fail($"Image content cannot consist of more than {mMaxImageCount} images.");
 
-            mImageContent.Images.Add(img);
+            mImages.Add(img);
 
-            return OperationResult.Success;
+            return OperationResult.Success();
         }
 
         public OperationResult DeleteAllImages()
         {
-            mImageContent.Images.Clear();
-            return OperationResult.Success;
+            mImages.Clear();
+            return OperationResult.Success();
         }
 
         public OperationResult DeleteImage(Image img, bool returnFailIfImageNotFound = false)
         {
-            if (true == mImageContent.Images.Remove(img))
+            if (true == mImages.Remove(img))
             {
-                return OperationResult.Success;
+                return OperationResult.Success();
             }
 
             if (returnFailIfImageNotFound)
                 return OperationResult.Fail("Image not found in the collection");
 
-            return OperationResult.Success;
+            return OperationResult.Success();
         }
 
         public OperationResult DeleteImageAt(int index, bool returnFailIfImageNotFound = false)
         {
-            if (mImageContent.Images.Count > index + 1)
+            if (mImages.Count > index + 1)
             {
                 if (returnFailIfImageNotFound)
                     return OperationResult.Fail($"There is no element at index {index}.");
                 else
-                    return OperationResult.Success;
+                    return OperationResult.Success();
             }
 
-            mImageContent.Images.RemoveAt(index);
-            return OperationResult.Success;
+            mImages.RemoveAt(index);
+            return OperationResult.Success();
         }
 
         public int GetCurrentCount()
         {
-            return mImageContent.Images.Count;
+            return mImages.Count;
         }
 
         public int GetMaxCount()
@@ -75,7 +75,6 @@ namespace Testinator.Server.TestSystem.Implementation
                 throw new ArgumentOutOfRangeException(nameof(version));
 
             mVersion = version;
-            mImageContent = new ImageContent();
 
             var mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContent, ICollection<Image>, MaxCollectionCountAttribute, int>
                 (obj => obj.Images, attr => attr.MaxCount, mVersion);
@@ -87,20 +86,19 @@ namespace Testinator.Server.TestSystem.Implementation
             mMaxImageWidth = ImageSizeAttr.Width;
         }
 
-        public ImageContent AssembleContent()
-        {
-            // maybe some validation will be required
-            return mImageContent;
-        }
-
         public void OnValidationError(Action<string> action)
         {
             throw new NotImplementedException();
         }
 
-        public IImageContent Build()
+        public OperationResult<IImageContent> Build()
         {
-            throw new NotImplementedException();
+            var result = new ImageContent()
+            {
+                Images = mImages,
+            };
+
+            return OperationResult<IImageContent>.Success(result);
         }
     }
 }
