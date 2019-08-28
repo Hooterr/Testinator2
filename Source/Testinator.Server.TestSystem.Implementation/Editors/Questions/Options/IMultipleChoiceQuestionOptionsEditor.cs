@@ -5,8 +5,7 @@ using Testinator.Server.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    public interface IMultipleChoiceQuestionEditor : IQuestionEditor<MultipleChoiceQuestion>
+    public interface IMultipleChoiceQuestionOptionsEditor : IOptionsEditor
     {
-        OperationResult AddOption(string option);
     }
 }

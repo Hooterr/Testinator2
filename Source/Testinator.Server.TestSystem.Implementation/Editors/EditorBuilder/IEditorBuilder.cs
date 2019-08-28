@@ -8,8 +8,6 @@ namespace Testinator.Server.TestSystem.Implementation
     /// <typeparam name="TEditor">The type of editor to build</typeparam>
     /// <typeparam name="TQuestion">The type of question the editor is going to operate on</typeparam>
     public interface IEditorBuilder<TEditor, TQuestion>
-        where TQuestion : BaseQuestion
-        where TEditor : IQuestionEditor<TQuestion>
     {
         /// <summary>
         /// Creates the object using configuration provided

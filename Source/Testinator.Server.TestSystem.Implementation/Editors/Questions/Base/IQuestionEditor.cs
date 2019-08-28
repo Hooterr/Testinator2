@@ -3,18 +3,16 @@
     /// <summary>
     /// Basic interface to edit or create any question
     /// </summary>
-    /// <typeparam name="TQuestion">The type of question that to edit/create </typeparam>
-    public interface IQuestionEditor<TQuestion>
+    /// <typeparam name="TQuestion">The type of question to edit/create</typeparam>
+    public interface IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : IEditor<TQuestion>
     {
         /// <summary>
         /// Editor for the task of the question
         /// </summary>
         ITaskEditor Task { get; }
 
-        /// <summary>
-        /// Finalize the editing process
-        /// </summary>
-        /// <returns>The result of the editing process of type <see cref="TQuestion"/></returns>
-        OperationResult<TQuestion> Build();          
+        TOptionsEditor Options { get; }
+
+        TScoringEditor Scoring { get; }
     }
 }

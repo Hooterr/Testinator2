@@ -2,6 +2,8 @@
 
 namespace Testinator.Server.TestSystem.Implementation
 {
+    using ABCQuestionEditor = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IQuestionScoringEditor>;
+    
     /// <summary>
     /// Provides editor builders for every question type
     /// </summary>
@@ -10,7 +12,8 @@ namespace Testinator.Server.TestSystem.Implementation
         /// <summary>
         /// The editor for <see cref="Questions.MultipleChoiceQuestion"/>
         /// </summary>
-        public static IEditorBuilder<IMultipleChoiceQuestionEditor, MultipleChoiceQuestion> MultipleChoiceQuestion
-            => new EditorBuilder<MultipleChoiceQuestionEditor, IMultipleChoiceQuestionEditor, MultipleChoiceQuestion>();
+        /// 
+        public static IEditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion> MultipleChoiceQuestion
+            => new EditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion>();
     }
 }

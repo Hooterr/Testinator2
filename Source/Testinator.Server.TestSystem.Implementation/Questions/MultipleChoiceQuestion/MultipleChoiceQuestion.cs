@@ -13,7 +13,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
 
         #endregion
 
-        internal MultipleChoiceQuestion() { }
+        public MultipleChoiceQuestion() { }
 
     }
 }

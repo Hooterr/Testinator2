@@ -12,10 +12,8 @@ namespace Testinator.Server.TestSystem.Implementation
     /// <typeparam name="TEditorImpl">Implementation of the editor that is being built</typeparam>
     /// <typeparam name="TEditorInterface">Interface behind which the implementation is hidden</typeparam>
     /// <typeparam name="TQuestion">The type of question that the editor we're building will be producing</typeparam>
-    internal class EditorBuilder<TEditorImpl, TEditorInterface, TQuestion> : IEditorBuilder<TEditorInterface, TQuestion>
+    internal class EditorBuilder<TEditor, TQuestion> : IEditorBuilder<TEditor, TQuestion>
         where TQuestion : BaseQuestion
-        where TEditorInterface : IQuestionEditor<TQuestion>
-        where TEditorImpl : BaseQuestionEditor<TQuestion>, TEditorInterface, new()
     {
 
         #region Private Members
@@ -38,7 +36,7 @@ namespace Testinator.Server.TestSystem.Implementation
         /// <summary>
         /// Default constructor
         /// </summary>
-        internal EditorBuilder()
+        public EditorBuilder()
         {
             // Setup new question at the start
             NewQuestion();
@@ -48,27 +46,34 @@ namespace Testinator.Server.TestSystem.Implementation
 
         #region Public Builder Methods
 
-        public TEditorInterface Build()
+        public TEditor Build()
         {
-            var ConcreteEditor = new TEditorImpl();
 
-            // New question is being created
+            var genericTypes = typeof(TEditor).GetGenericArguments();
+            var concreteEditorType = typeof(QuestionEditor<,,>).MakeGenericType(genericTypes);
+
+            object parameter;
+
             if (mQuestion == null)
-                ConcreteEditor.CreateNew(mVersion);
+                // New question is being created
+                parameter = mVersion;
             else
-                ConcreteEditor.EditExisting(mQuestion);
+                // We're editing an existing question
+                parameter = mQuestion;
+
+            var ConcreteEditor = (TEditor)Activator.CreateInstance(concreteEditorType, parameter);
 
             return ConcreteEditor;
         }
 
-        public IEditorBuilder<TEditorInterface, TQuestion> NewQuestion()
+        public IEditorBuilder<TEditor, TQuestion> NewQuestion()
         {
             mQuestion = null;
             mVersion = Versions.Highest;
             return this;
         }
 
-        public IEditorBuilder<TEditorInterface, TQuestion> SetInitialQuestion(TQuestion question)
+        public IEditorBuilder<TEditor, TQuestion> SetInitialQuestion(TQuestion question)
         {
             if (question == null)
                 return NewQuestion();
@@ -79,7 +84,7 @@ namespace Testinator.Server.TestSystem.Implementation
             return this;
         }
 
-        public IEditorBuilder<TEditorInterface, TQuestion> SetVersion(int version)
+        public IEditorBuilder<TEditor, TQuestion> SetVersion(int version)
         {
             if (mQuestion != null && mQuestion.Version != version)
             {
@@ -96,7 +101,7 @@ namespace Testinator.Server.TestSystem.Implementation
             return this;
         }
 
-        public IEditorBuilder<TEditorInterface, TQuestion> UseNewestVersion()
+        public IEditorBuilder<TEditor, TQuestion> UseNewestVersion()
         {
             if (mQuestion != null && mQuestion.Version != Versions.Highest)
             {
