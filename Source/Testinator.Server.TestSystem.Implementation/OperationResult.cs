@@ -83,6 +83,15 @@ namespace Testinator.Server.TestSystem.Implementation
             return this;
         }
 
+        public void AddError(string msg)
+        {
+            Errors.Add(msg);
+        }
+        public void AddErrors(List<string> errors)
+        {
+            Errors.AddRange(errors);
+        }
+
         public static OperationResult<TOut> Fail(string error) => new OperationResult<TOut>(error);
 
         public static OperationResult<TOut> Fail(string[] errors) => new OperationResult<TOut>(errors);
@@ -90,6 +99,14 @@ namespace Testinator.Server.TestSystem.Implementation
         public static OperationResult<TOut> Fail() => new OperationResult<TOut>(false);
 
         public static OperationResult<TOut> Success(TOut obj) => new OperationResult<TOut>(obj, true);
+
+        public static OperationResult<TTo> Convert<TTo, TFrom>(OperationResult<TFrom> originalOperation)
+        {
+            var newResultObject = (TTo)System.Convert.ChangeType(originalOperation.Result, typeof(TTo));
+            var newResult = new OperationResult<TTo>(newResultObject, originalOperation.Succeeded);
+            newResult.AddErrors(originalOperation.Errors);
+            return newResult;
+        }
 
     }
 }

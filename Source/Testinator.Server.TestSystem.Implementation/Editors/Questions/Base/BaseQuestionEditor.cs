@@ -144,8 +144,9 @@ namespace Testinator.Server.TestSystem.Implementation
             if (Options == null)
                 throw new NotSupportedException("Options editor has not been initialized.");
 
-            if (Scoring == null)
-                throw new NotSupportedException("Options scoring has not been initialized.");
+            // TODO uncomment this when scoring editor shall be implemented
+            //if (Scoring == null)
+            //    throw new NotSupportedException("Options scoring has not been initialized.");
         }
 
         #endregion
