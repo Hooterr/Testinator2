@@ -7,12 +7,18 @@
     public interface IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : IEditor<TQuestion>
     {
         /// <summary>
-        /// Editor for the task of the question
+        /// Editor for the task part of the question
         /// </summary>
         ITaskEditor Task { get; }
 
+        /// <summary>
+        /// Editor for the options part of the question
+        /// </summary>
         TOptionsEditor Options { get; }
 
+        /// <summary>
+        /// Editor for the scoring part of the question
+        /// </summary>
         TScoringEditor Scoring { get; }
     }
 }

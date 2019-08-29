@@ -1,45 +1,76 @@
 ﻿using System;
 using Testinator.Server.TestSystem.Implementation.Questions;
+using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
+    /// <summary>
+    /// Provides base functionality for any question editor
+    /// </summary>
+    /// <typeparam name="TQuestion">The type of question this editor will be operating on</typeparam>
+    /// <typeparam name="TOptionsEditor">The type of editor to use for the options part of the question</typeparam>
+    /// <typeparam name="TScoringEditor">The type of editor to use for the scoring part of the question</typeparam>
     internal abstract class BaseQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>
         where TQuestion : BaseQuestion, new()//get rid of this new
         where TOptionsEditor : IOptionsEditor
         where TScoringEditor : IQuestionScoringEditor
     {
+
+        #region Private Members
+
         /// <summary>
         /// The question we're building/editing
         /// </summary>
         private TQuestion mQuestion;
 
-        private TaskEditor mTask;
-
         /// <summary>
-        /// The editor for the task part of the question
+        /// The editor for task part of the question
         /// </summary>
-        public ITaskEditor Task => mTask;
+        private TaskEditor mTaskEditor;
 
+        #endregion
+
+        #region Public Properties
+
+        public ITaskEditor Task => mTaskEditor;
+
+        // These two are question-specific
         public abstract TOptionsEditor Options { get; }
-
         public abstract TScoringEditor Scoring { get; }
+
+        #endregion
+
+        #region Public Methods
 
         public OperationResult<TQuestion> Build()
         {
-            var taskBuildOperation = mTask.Build();
-            if (taskBuildOperation.Failed)
+            // Build all the parts of the question
+            var taskBuildOperation = mTaskEditor.Build();
+            var optionsBuildOperation = BuildOptions();
+            var scoringBuildOperation = BuildScoring();
+
+            // If any of the operations failed
+            if (Helpers.AnyTrue(taskBuildOperation.Failed, optionsBuildOperation.Failed, scoringBuildOperation.Failed))
             {
+                // Merge all of the errors together
                 var questionBuildResult = OperationResult<TQuestion>.Fail();
-                questionBuildResult.Merge(taskBuildOperation);
+                questionBuildResult.Merge(taskBuildOperation)
+                                   .Merge(optionsBuildOperation)
+                                   .Merge(scoringBuildOperation);
+
                 return questionBuildResult;
             }
 
+            // Assemble question
+            // TODO maybe some additional checks will be required
             mQuestion.Task = taskBuildOperation.Result;
+            mQuestion.Options = optionsBuildOperation.Result;
+            mQuestion.Scoring = scoringBuildOperation.Result;
 
             return OperationResult<TQuestion>.Success(mQuestion);
         }
 
-        protected abstract void InitializeEditor();
+        #endregion
 
         #region All Constructors 
 
@@ -56,8 +87,6 @@ namespace Testinator.Server.TestSystem.Implementation
 #pragma warning restore IDE0016 // Use 'throw' expression
 
             mQuestion = question;
-            // Create task editor
-            mTask = new TaskEditor(mQuestion.Version);
 
             InitializeEditor();
         }
@@ -72,17 +101,51 @@ namespace Testinator.Server.TestSystem.Implementation
                 throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
 
             // Set up a new question
-
             // TODO use a factory method
             mQuestion = new TQuestion()
             {
                 Version = version
             };
 
-            // Create task editor
-            mTask = new TaskEditor(mQuestion.Version);
-
             InitializeEditor();
+        }
+
+        #endregion
+
+        #region Protected
+
+        /// <summary>
+        /// Fired when the editor is initializing
+        /// In this method editors for options and scoring MUST be created
+        /// </summary>
+        protected abstract void OnInitializing();
+
+        protected abstract OperationResult<IQuestionOptions> BuildOptions();
+
+        protected abstract OperationResult<IQuestionScoring> BuildScoring();
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        /// Performs initialization
+        /// </summary>
+        private void InitializeEditor()
+        {
+            // Create task editor
+            mTaskEditor = new TaskEditor(mQuestion.Version);
+
+            // Let the implementer initialize as well 
+            OnInitializing();
+
+            // Check if the implementer initialized editors
+
+            if (Options == null)
+                throw new NotSupportedException("Options editor has not been initialized.");
+
+            if (Scoring == null)
+                throw new NotSupportedException("Options scoring has not been initialized.");
         }
 
         #endregion
