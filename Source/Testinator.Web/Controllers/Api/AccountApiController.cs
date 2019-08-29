@@ -12,7 +12,6 @@ namespace Testinator.Web
     /// Accessed by API calls, typically from Server App
     /// </summary>
     [AuthorizeToken]
-    [Route(ApiRoutes.AccountPrefixRoute)]
     public class AccountApiController : Controller
     {
         #region Private Members

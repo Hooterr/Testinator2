@@ -79,6 +79,9 @@ namespace Testinator.Server
 
             // Build the final DI
             Framework.Construction.Build();
+
+            // Initialize first application's page
+            Framework.Service<IUserAccountService>().InitializeApplicationPageBasedOnUser();
         }
 
         /// <summary>

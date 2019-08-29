@@ -27,7 +27,19 @@ namespace Testinator.Server.Core
             // Inject DI services
             mUserMapper = userMapper;
             mUserRepository = userRepository;
+        }
 
+        #endregion
+
+        #region Interface Implementation
+
+        /// <summary>
+        /// Initializes first page in the application by looking if we have user logged in
+        /// If we have, goes to home page
+        /// If we don't, goes to login page
+        /// </summary>
+        public void InitializeApplicationPageBasedOnUser()
+        {
             // Setup the application view model based on if we are logged in
             DI.Application.GoToPage(
                 // If we are logged in...
@@ -36,11 +48,8 @@ namespace Testinator.Server.Core
                 ApplicationPage.Home :
                 // Otherwise, go to login page
                 ApplicationPage.Login);
+
         }
-
-        #endregion
-
-        #region Interface Implementation
 
         /// <summary>
         /// Tries to log the user in by making an API call to our website
@@ -54,7 +63,7 @@ namespace Testinator.Server.Core
         public async Task<string> LogInAsync(string email, string password)
         {
             // Prepare user data to send
-            var url = "http://localhost:53838/" + ApiRoutes.LoginRoute; // TODO: Put host in configuration
+            var url = "https://localhost:44306/" + ApiRoutes.LoginRoute; // TODO: Put host in configuration
             var credentials = new LoginCredentialsApiModel
             {
                 Email = email,
@@ -71,7 +80,7 @@ namespace Testinator.Server.Core
             }
 
             // We got the response, check if we successfully logged in
-            if (result.Successful)
+            if (result.ServerResponse.Successful)
             {
                 // User is logged in, store the data in database
                 var user = mUserMapper.Map(result.ServerResponse.Response);
@@ -82,7 +91,7 @@ namespace Testinator.Server.Core
             }
 
             // We got the response, but logging in didnt succeed, return the error
-            return result.ErrorMessage;
+            return result.ServerResponse.ErrorMessage;
         }
 
         /// <summary>

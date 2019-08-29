@@ -9,5 +9,6 @@ namespace Testinator.Server.Core
     {
         Task<string> LogInAsync(string email, string password);
         UserContext GetCurrentUserData();
+        void InitializeApplicationPageBasedOnUser();
     }
 }
