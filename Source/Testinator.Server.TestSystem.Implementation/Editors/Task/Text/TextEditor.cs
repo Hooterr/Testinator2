@@ -5,23 +5,21 @@ using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal class TextEditor : BaseErrorListener<ITextEditor>, ITextEditor, IEditor<ITextContent>
+    internal class TextEditor : BaseEditor<ITextContent, ITextEditor>, ITextEditor, IEditor<ITextContent>
     {
-        private readonly int mVersion;
-        private readonly int mMaxTextLength;
+        private int mMaxTextLength;
 
         public string Content { get; set; }
         public MarkupLanguage Markup { get; set; }
 
 
-        public TextEditor(int version)
+        public TextEditor(int version) : base(version) { }
+
+        public TextEditor(ITextContent objToEdit, int version) : base(objToEdit, version) { }
+
+        protected override void OnInitialize()
         {
-            if (Versions.NotInRange(version))
-                throw new ArgumentOutOfRangeException(nameof(version));
-
-            mVersion = version;
-
-            mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Text, a => a.MaxLength, mVersion);
+            mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Text, a => a.MaxLength, Version);
         }
 
         public OperationResult<ITextContent> Build()

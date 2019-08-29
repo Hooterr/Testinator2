@@ -31,7 +31,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
             editor.Task.Text.Content = "";
             editor.Task.Text.Markup = Testinator.TestSystem.Abstractions.Questions.Task.MarkupLanguage.Html;
-
+            editor.Task.Images.AddImage(null);
 
             var operation = editor.Build();
 

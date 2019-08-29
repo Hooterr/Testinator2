@@ -7,14 +7,16 @@ using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal class ImageEditor : IImageEditor, IEditor<IImageContent>
+    /// <summary>
+    /// Implementation of the editor for the image part of the question task
+    /// </summary>
+    internal class ImageEditor : BaseEditor<IImageContent, IImageEditor>, IImageEditor, IEditor<IImageContent>
     {
-        private readonly int mVersion;
         private IList<Image> mImages;
 
-        private readonly int mMaxImageCount;
-        private readonly int mMaxImageWidth;
-        private readonly int mMaxImageHeight;
+        private int mMaxImageCount;
+        private int mMaxImageWidth;
+        private int mMaxImageHeight;
 
         public OperationResult AddImage(Image img)
         {
@@ -69,26 +71,20 @@ namespace Testinator.Server.TestSystem.Implementation
             return mMaxImageCount;
         }
 
-        public ImageEditor(int version)
+        public ImageEditor(int version) : base(version) { }
+
+        public ImageEditor(IImageContent objToEdit, int version) : base(objToEdit, version) { }
+
+        protected override void OnInitialize()
         {
-            if (Versions.NotInRange(version))
-                throw new ArgumentOutOfRangeException(nameof(version));
-
-            mVersion = version;
-
             var mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContent, ICollection<Image>, MaxCollectionCountAttribute, int>
-                (obj => obj.Images, attr => attr.MaxCount, mVersion);
+                (obj => obj.Images, attr => attr.MaxCount, Version);
 
             var ImageSizeAttr = AttributeHelper.GetPropertyAttribute<ImageContent, ICollection<Image>, MaxImageSizeAttribute>
-                (x => x.Images, mVersion);
+                (x => x.Images, Version);
 
             mMaxImageHeight = ImageSizeAttr.Height;
             mMaxImageWidth = ImageSizeAttr.Width;
-        }
-
-        public void OnError(Action<string> action)
-        {
-            throw new NotImplementedException();
         }
 
         public OperationResult<IImageContent> Build()

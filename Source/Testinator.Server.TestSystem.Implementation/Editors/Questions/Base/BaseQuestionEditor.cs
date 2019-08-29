@@ -24,6 +24,11 @@ namespace Testinator.Server.TestSystem.Implementation
         private TQuestion mQuestion;
 
         /// <summary>
+        /// The version of question model we're using
+        /// </summary>
+        private readonly int mVersion;
+
+        /// <summary>
         /// The editor for task part of the question
         /// </summary>
         private TaskEditor mTaskEditor;
@@ -86,7 +91,9 @@ namespace Testinator.Server.TestSystem.Implementation
                     "When editing cannot use a null question. If you want to create a new question call the constructor that accepts question model version.");
 #pragma warning restore IDE0016 // Use 'throw' expression
 
+            // Set the question and version
             mQuestion = question;
+            mVersion = question.Version;
 
             InitializeEditor();
         }
@@ -100,12 +107,7 @@ namespace Testinator.Server.TestSystem.Implementation
             if (Versions.NotInRange(version))
                 throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
 
-            // Set up a new question
-            // TODO use a factory method
-            mQuestion = new TQuestion()
-            {
-                Version = version
-            };
+            mVersion = version;
 
             InitializeEditor();
         }
