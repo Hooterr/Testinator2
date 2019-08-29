@@ -5,7 +5,6 @@ using Testinator.Server.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    [ImplementedInterface(typeof(IMultipleChoiceQuestionOptionsEditor))]
     internal class MultipleChoiceQuestionOptionsEditor : IEditor<MultipleChoiceQuestionOptions>, IMultipleChoiceQuestionOptionsEditor
     {
         public OperationResult<MultipleChoiceQuestionOptions> Build()

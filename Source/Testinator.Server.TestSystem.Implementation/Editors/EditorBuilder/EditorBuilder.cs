@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Reflection;
 using Testinator.Server.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.TestSystem.Implementation
@@ -48,20 +50,34 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public TEditor Build()
         {
+            // TODO move this somewhere 
+            var EditorImplementations = Assembly.GetExecutingAssembly()
+                .GetTypes()
+                .Where(type => type.GetCustomAttributes(typeof(ConcreteEditorForAttribute), false).Any())
+                .Select(type => new
+                {
+                    Type = type,
+                    Attribute = (ConcreteEditorForAttribute)type.GetCustomAttribute(typeof(ConcreteEditorForAttribute), false)
+                })
+                .Where(x => x.Attribute.QuestionType == typeof(TQuestion));
 
-            var genericTypes = typeof(TEditor).GetGenericArguments();
-            var concreteEditorType = typeof(QuestionEditor<,,>).MakeGenericType(genericTypes);
+            if (EditorImplementations.Count() == 0)
+                throw new NotSupportedException($"Editor for {typeof(TQuestion).Name} is not implemented!");
 
-            object parameter;
+            if (EditorImplementations.Count() > 1)
+                throw new AmbiguousMatchException($"Multiple editor implementations for {typeof(TQuestion).Name} were found.");
 
+            var concreteEditorType = EditorImplementations.First().Type;
+
+            TEditor ConcreteEditor;
+
+            // Could've used Activator but for some reason it wasn't able to find the constructor
             if (mQuestion == null)
                 // New question is being created
-                parameter = mVersion;
+                ConcreteEditor = (TEditor)concreteEditorType.GetConstructor(new[] { typeof(int) }).Invoke(new object[] { mVersion } );
             else
                 // We're editing an existing question
-                parameter = mQuestion;
-
-            var ConcreteEditor = (TEditor)Activator.CreateInstance(concreteEditorType, parameter);
+                ConcreteEditor = (TEditor)concreteEditorType.GetConstructor(new[] { typeof(TQuestion) }).Invoke(new object[] { mQuestion });
 
             return ConcreteEditor;
         }

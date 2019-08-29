@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Testinator.Core;
+using Testinator.Server.TestSystem.Implementation;
 
 namespace Testinator.Server.Core
 {
@@ -89,6 +90,7 @@ namespace Testinator.Server.Core
         /// </summary>
         public ApplicationViewModel()
         {
+            ClientSideCode_TEST.A();
             // Get the current version from assebly
             var assebly = Assembly.LoadFrom("Testinator.Server.Core.dll");
             Version = assebly.GetName().Version;
