@@ -16,22 +16,22 @@ namespace Testinator.Server.TestSystem.Implementation
         where TScoringEditor : IQuestionScoringEditor
     {
 
-        #region Private Members
+        #region Protected Members
 
         /// <summary>
         /// The question we're building/editing
         /// </summary>
-        private TQuestion mQuestion;
+        protected TQuestion mQuestion;
 
         /// <summary>
         /// The version of question model we're using
         /// </summary>
-        private readonly int mVersion;
+        protected readonly int mVersion;
 
         /// <summary>
         /// The editor for task part of the question
         /// </summary>
-        private TaskEditor mTaskEditor;
+        protected TaskEditor mTaskEditor;
 
         #endregion
 
@@ -136,7 +136,11 @@ namespace Testinator.Server.TestSystem.Implementation
         private void InitializeEditor()
         {
             // Create task editor
-            mTaskEditor = new TaskEditor(mQuestion.Version);
+            if (mQuestion == null)
+
+                mTaskEditor = new TaskEditor(mVersion);
+            else
+                mTaskEditor = new TaskEditor(mQuestion.Task, mVersion);
 
             // Let the implementer initialize as well 
             OnInitializing();

@@ -37,7 +37,11 @@ namespace Testinator.Server.TestSystem.Implementation
         protected override void OnInitializing()
         {
             // Create editors
-            mOptionsEditor = new MultipleChoiceQuestionOptionsEditor();
+            if (mQuestion == null)
+                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mVersion);
+            else
+                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mQuestion.Options, mVersion);
+
             // TODO implement scoring editor
         }
 
