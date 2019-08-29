@@ -2,7 +2,7 @@
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    public interface ITaskEditor : IValidatable
+    public interface ITaskEditor //: IErrorListener
     {
         ITextEditor Text { get; }
 

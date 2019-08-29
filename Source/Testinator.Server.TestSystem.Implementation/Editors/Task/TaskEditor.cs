@@ -25,7 +25,7 @@ namespace Testinator.Server.TestSystem.Implementation
             mImageEditor = new ImageEditor(version);
         }
 
-        public void OnValidationError(Action<string> action)
+        public void OnError(Action<string> action)
         {
             throw new NotImplementedException();
         }

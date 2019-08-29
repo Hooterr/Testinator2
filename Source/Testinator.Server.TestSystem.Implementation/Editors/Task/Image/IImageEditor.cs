@@ -6,7 +6,7 @@ using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    public interface IImageEditor : IValidatable
+    public interface IImageEditor //: IErrorListener
     {
         OperationResult DeleteAllImages();
         OperationResult DeleteImage(Image img, bool returnFailIfImageNotFound = false);

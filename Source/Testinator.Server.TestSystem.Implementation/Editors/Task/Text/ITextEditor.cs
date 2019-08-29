@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Testinator.Server.TestSystem.Implementation.Attributes;
 using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    public interface ITextEditor : IValidatable
+    public interface ITextEditor : IErrorListener<ITextEditor>
     {
-        void Add(string text, MarkupLanguage markup = MarkupLanguage.PlainText);
+        [EditorField]
+        string Content { get; set; }
+
+        [EditorField]
+        MarkupLanguage Markup { get; set; }
     }
 }

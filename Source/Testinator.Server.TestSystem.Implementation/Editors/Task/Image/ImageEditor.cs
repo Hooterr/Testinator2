@@ -86,7 +86,7 @@ namespace Testinator.Server.TestSystem.Implementation
             mMaxImageWidth = ImageSizeAttr.Width;
         }
 
-        public void OnValidationError(Action<string> action)
+        public void OnError(Action<string> action)
         {
             throw new NotImplementedException();
         }

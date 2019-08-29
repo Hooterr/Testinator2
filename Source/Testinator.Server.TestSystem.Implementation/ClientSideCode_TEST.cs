@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Testinator.TestSystem.Abstractions.Questions;
 
 namespace Testinator.Server.TestSystem.Implementation
@@ -26,7 +27,11 @@ namespace Testinator.Server.TestSystem.Implementation
 
             var TaskErrorMessage = string.Empty;
 
-            editor.Task.Text.OnValidationError((msg) => TaskErrorMessage = msg);
+            editor.Task.Text.OnErrorFor(x => x.Content, (msg) => TaskErrorMessage = msg);
+
+            editor.Task.Text.Content = "";
+            editor.Task.Text.Markup = Testinator.TestSystem.Abstractions.Questions.Task.MarkupLanguage.Html;
+
 
             var operation = editor.Build();
 
@@ -35,9 +40,9 @@ namespace Testinator.Server.TestSystem.Implementation
                 listOfQuestions.Add(operation.Result);
             }
             else
-            {
+            { 
                 // When building fails this list contains all the error messages 
-                // that haven't already been handled by OnValidationError() method
+                // that haven't already been handled
                 var errorlist = operation.Errors;
             }
         }
