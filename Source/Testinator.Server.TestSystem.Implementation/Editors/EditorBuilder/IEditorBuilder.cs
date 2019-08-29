@@ -24,7 +24,7 @@ namespace Testinator.Server.TestSystem.Implementation
         /// <summary>
         /// Setup the editor to edit a given question
         /// </summary>
-        /// <param name="question">The question to edit</param>
+        /// <param name="question">The question to edit. If null calls <see cref="NewQuestion"/></param>
         /// <returns>Fluid interface</returns>
         IEditorBuilder<TEditor, TQuestion> SetInitialQuestion(TQuestion question);
 

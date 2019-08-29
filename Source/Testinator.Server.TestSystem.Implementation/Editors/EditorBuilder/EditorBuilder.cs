@@ -9,15 +9,11 @@ namespace Testinator.Server.TestSystem.Implementation
     /// Configures and builds a question editor 
     /// Hide this implementation and let the client communicate using <see cref="IEditorBuilder{TEditor, TQuestion}"/> interface
     /// </summary>
-    /// NOTE: there are many generic parameters with many constrains but it is easier to do that once instead of 
-    /// spending time (more importantly runtime time) get all of that information through reflection
-    /// <typeparam name="TEditorImpl">Implementation of the editor that is being built</typeparam>
-    /// <typeparam name="TEditorInterface">Interface behind which the implementation is hidden</typeparam>
     /// <typeparam name="TQuestion">The type of question that the editor we're building will be producing</typeparam>
+    /// <typeparam name="TEditor">The type of editor to configure and build</typeparam>
     internal class EditorBuilder<TEditor, TQuestion> : IEditorBuilder<TEditor, TQuestion>
         where TQuestion : BaseQuestion
     {
-
         #region Private Members
 
         /// <summary>
@@ -27,7 +23,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         /// <summary>
         /// The question to edit
-        /// If null create a new question
+        /// If null, create a new question
         /// </summary>
         private TQuestion mQuestion;
 
@@ -50,24 +46,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public TEditor Build()
         {
-            // TODO move this somewhere 
-            var EditorImplementations = Assembly.GetExecutingAssembly()
-                .GetTypes()
-                .Where(type => type.GetCustomAttributes(typeof(ConcreteEditorForAttribute), false).Any())
-                .Select(type => new
-                {
-                    Type = type,
-                    Attribute = (ConcreteEditorForAttribute)type.GetCustomAttribute(typeof(ConcreteEditorForAttribute), false)
-                })
-                .Where(x => x.Attribute.QuestionType == typeof(TQuestion));
-
-            if (EditorImplementations.Count() == 0)
-                throw new NotSupportedException($"Editor for {typeof(TQuestion).Name} is not implemented!");
-
-            if (EditorImplementations.Count() > 1)
-                throw new AmbiguousMatchException($"Multiple editor implementations for {typeof(TQuestion).Name} were found.");
-
-            var concreteEditorType = EditorImplementations.First().Type;
+            var concreteEditorType = EditorImplementationLocalizer.FindImplementation(typeof(TQuestion));
 
             TEditor ConcreteEditor;
 
@@ -85,7 +64,10 @@ namespace Testinator.Server.TestSystem.Implementation
         public IEditorBuilder<TEditor, TQuestion> NewQuestion()
         {
             mQuestion = null;
+            // By default use the highest version
+            // Can be changed
             mVersion = Versions.Highest;
+
             return this;
         }
 
@@ -102,9 +84,12 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public IEditorBuilder<TEditor, TQuestion> SetVersion(int version)
         {
+            // There already is a question to edit and the caller wants to change the version
             if (mQuestion != null && mQuestion.Version != version)
             {
+
                 throw new NotSupportedException("Changing question version is not supported yet.");
+                // Tho it may be one day
             }
 
             if (Versions.NotInRange(version))
@@ -119,17 +104,10 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public IEditorBuilder<TEditor, TQuestion> UseNewestVersion()
         {
-            if (mQuestion != null && mQuestion.Version != Versions.Highest)
-            {
-                throw new NotSupportedException("Changing question version is not supported yet.");
-            }
-            else
-                mVersion = Versions.Highest;
-
-            return this;
+            return SetVersion(Versions.Highest);
         }
 
         #endregion
     }
     
-}
+} 
