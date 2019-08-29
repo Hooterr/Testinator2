@@ -4,30 +4,32 @@ using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal class TaskEditor : ITaskEditor, IEditor<IQuestionTask>
+    internal class TaskEditor : BaseEditor<IQuestionTask, ITaskEditor>, ITaskEditor, IEditor<IQuestionTask>
     {
-        private readonly int mVersion;
-        private readonly TextEditor mTextEditor;
-        private readonly ImageEditor mImageEditor;
+        private TextEditor mTextEditor;
+        private ImageEditor mImageEditor;
 
 
         public ITextEditor Text => mTextEditor;
 
         public IImageEditor Images => mImageEditor;
 
-        public TaskEditor(int version)
-        {
-            if (Versions.NotInRange(version))
-                throw new ArgumentOutOfRangeException(nameof(version));
+        public TaskEditor(int version) : base(version) { }
 
-            mVersion = version;
-            mTextEditor = new TextEditor(version);
-            mImageEditor = new ImageEditor(version);
-        }
+        public TaskEditor(IQuestionTask objToEdit, int version) : base(objToEdit, version) { }
 
-        public void OnError(Action<string> action)
+        protected override void OnInitialize()
         {
-            throw new NotImplementedException();
+            if (OriginalObject == null)
+            {
+                mTextEditor = new TextEditor(Version);
+                mImageEditor = new ImageEditor(Version);
+            }
+            else
+            {
+                mTextEditor = new TextEditor(OriginalObject.Text, Version);
+                mImageEditor = new ImageEditor(OriginalObject.Images, Version);
+            }
         }
 
         public OperationResult<IQuestionTask> Build()

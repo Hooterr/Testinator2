@@ -7,7 +7,7 @@ namespace Testinator.Server.TestSystem.Implementation
     internal abstract class BaseEditor<TObjectToCreate, TInterface> : BaseErrorListener<TInterface>
     {
         protected int Version { get; private set; }
-        protected TObjectToCreate mOriginalObject;
+        protected TObjectToCreate OriginalObject { get; private set; }
 
         protected BaseEditor(int version)
         {
@@ -23,7 +23,7 @@ namespace Testinator.Server.TestSystem.Implementation
             if (baseObject == null)
                 throw new ArgumentNullException(nameof(baseObject), $"When in editing mode, starting object for the editor cannot be null");
 
-            mOriginalObject = baseObject;
+            OriginalObject = baseObject;
 
             if (Versions.NotInRange(version))
                 throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
