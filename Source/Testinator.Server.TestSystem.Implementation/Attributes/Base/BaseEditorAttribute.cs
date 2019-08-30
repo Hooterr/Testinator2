@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Testinator.Server.TestSystem.Implementation.Attributes
 {
-    [AttributeUsage(AttributeTargets.All, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = true)]
     internal abstract class BaseEditorAttribute : Attribute
     {
         public int FromVersion { get; protected set; }

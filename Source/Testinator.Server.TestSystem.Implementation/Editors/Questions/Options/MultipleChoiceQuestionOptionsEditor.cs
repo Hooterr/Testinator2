@@ -1,21 +1,73 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Testinator.Server.TestSystem.Implementation.Attributes;
 using Testinator.Server.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
     internal class MultipleChoiceQuestionOptionsEditor : BaseEditor<MultipleChoiceQuestionOptions, IMultipleChoiceQuestionOptionsEditor>, IEditor<MultipleChoiceQuestionOptions>, IMultipleChoiceQuestionOptionsEditor
     {
+        private int mMaxCount;
+        private int mMinCount;
+        private int mMaxOptionLen;
+        private int mMinOptionLen;
+        private bool mOnlyDistinct;
+
         public List<string> Options { get; set; }
 
         public OperationResult<MultipleChoiceQuestionOptions> Build()
         {
-            throw new NotImplementedException();
+            var validationPassed = true;
+            if(mOnlyDistinct)
+            {
+                if (Options.Distinct().Count() != Options.Count())
+                {
+                    HandleErrorFor(x => x.Options, "Options must be unique");
+                    validationPassed = false;
+                }
+            }
+
+            if(Options.Count() < mMinCount || Options.Count() > mMaxCount)
+            {
+                HandleErrorFor(x => x.Options, $"There must be from {mMinCount} to {mMaxCount} options.");
+                validationPassed = false;
+            }
+
+            if(!Options.All(str => (str.Length >= mMinOptionLen) && (str.Length <= mMaxOptionLen)))
+            {
+                HandleErrorFor(x => x.Options, $"Every options must be from {mMinOptionLen} to {mMaxOptionLen} characters long.");
+                validationPassed = false;
+            }
+
+            if(validationPassed)
+            {
+                MultipleChoiceQuestionOptions questionOptions;
+                if (IsInCreationMode())
+                {
+                    questionOptions = new MultipleChoiceQuestionOptions()
+                    {
+                        Options = this.Options,
+                    };
+                }
+                else
+                {
+                    questionOptions = OriginalObject;
+                    questionOptions.Options = this.Options;
+                }
+
+                return OperationResult<MultipleChoiceQuestionOptions>.Success(questionOptions);
+            }
+            else
+            {
+                // Automate this
+                return OperationResult<MultipleChoiceQuestionOptions>.Fail(GetUnhandledErrors().ToArray());
+            }
         }
 
         public int GetMaximumCount()
         {
-            throw new NotImplementedException();
+            return mMaxCount;
         }
 
         protected override void OnInitialize()
@@ -24,6 +76,19 @@ namespace Testinator.Server.TestSystem.Implementation
                 Options = new List<string>();
             else
                 Options = new List<string>(OriginalObject.Options);
+
+            var collectionCountAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, List<string>, CollectionCountAttribute>
+                (x => x.Options, Version);
+            mMaxCount = collectionCountAttr.Max;
+            mMinCount = collectionCountAttr.Min;
+
+            mOnlyDistinct = AttributeHelper.GetPropertyAttributeValue<MultipleChoiceQuestionOptions, List<string>, CollectionItemsOnlyDistinctAttribute, bool>
+                (x => x.Options, attr => attr.Value, Version);
+
+            var stringLenAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, List<string>, StringLengthAttribute>
+                    (x => x.Options, Version);
+            mMaxOptionLen = stringLenAttr.Max;
+            mMinOptionLen = stringLenAttr.Min;
         }
 
         public MultipleChoiceQuestionOptionsEditor(int version) : base(version) { }

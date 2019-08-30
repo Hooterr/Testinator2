@@ -11,8 +11,9 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
         /// <summary>
         /// ABC options for this question
         /// </summary>
-        [MaxCollectionCount(maxCount: 5)]
-        // TODO minimum collection count
+        [CollectionCount(max: 5, min: 5, fromVersion: 1)]
+        [StringLength(max: 150, min: 1, fromVersion: 1)]
+        [CollectionItemsOnlyDistinct(value: true, fromVersion: 1)]
         public List<string> Options { get; internal set; }
     }
 }
