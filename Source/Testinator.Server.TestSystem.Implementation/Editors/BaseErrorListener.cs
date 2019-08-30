@@ -17,7 +17,7 @@ namespace Testinator.Server.TestSystem.Implementation
             var expression = (MemberExpression)propertyExpression.Body;
             var propertyInfo = (PropertyInfo)expression.Member;
 
-            if (propertyInfo.GetCustomAttributes<EditorFieldAttribute>().Any() == false)
+            if (propertyInfo.GetCustomAttributes<EditorPropertyAttribute>().Any() == false)
                 throw new ArgumentException($"This property is not an editor property.");
 
             mErrorHandlers[propertyInfo.Name] = action;
@@ -30,7 +30,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
             // Get all editor methods and create the error handlers map
             var methodNames = typeof(TIntereface).GetProperties()
-                              .Where(field => field.GetCustomAttributes<EditorFieldAttribute>().Any())
+                              .Where(field => field.GetCustomAttributes<EditorPropertyAttribute>().Any())
                               .Select(field => field.Name)
                               .ToList();
 
