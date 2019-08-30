@@ -77,6 +77,15 @@ namespace Testinator.Server.TestSystem.Implementation
 
         protected override void OnInitialize()
         {
+            if(IsInCreationMode())
+            {
+                mImages = new List<Image>();
+            }
+            else
+            {
+                mImages = new List<Image>(OriginalObject.Images);
+            }
+
             var mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContent, ICollection<Image>, MaxCollectionCountAttribute, int>
                 (obj => obj.Images, attr => attr.MaxCount, Version);
 
