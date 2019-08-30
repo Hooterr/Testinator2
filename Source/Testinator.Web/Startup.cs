@@ -137,8 +137,11 @@ namespace Testinator.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // Make sure we have the database
-            serviceProvider.GetService<TestinatorWebDbContext>().Database.EnsureCreated();
+            // Get current database context
+            var databaseContext = serviceProvider.GetService<TestinatorWebDbContext>();
+
+            // Make sure we have the database and do any pending migrations
+            databaseContext.Database.Migrate();
         }
     }
 }
