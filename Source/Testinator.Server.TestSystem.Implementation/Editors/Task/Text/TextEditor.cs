@@ -20,6 +20,16 @@ namespace Testinator.Server.TestSystem.Implementation
         protected override void OnInitialize()
         {
             mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Text, a => a.MaxLength, Version);
+            if (IsInCreationMode())
+            {
+                Content = string.Empty;
+                Markup = MarkupLanguage.PlainText;
+            }
+            else
+            {
+                Content = OriginalObject.Text;
+                Markup = OriginalObject.Markup;
+            }
         }
 
         public OperationResult<ITextContent> Build()

@@ -4,9 +4,10 @@ using System.Text;
 
 namespace Testinator.Server.TestSystem.Implementation.Attributes
 {
-    public class EditorFieldAttribute : Attribute
+    [AttributeUsage(AttributeTargets.Property)]
+    public class EditorPropertyAttribute : Attribute
     {
-        public EditorFieldAttribute()
+        public EditorPropertyAttribute()
         {
 
         }

@@ -8,10 +8,10 @@ namespace Testinator.Server.TestSystem.Implementation
 {
     public interface ITextEditor : IErrorListener<ITextEditor>
     {
-        [EditorField]
+        [EditorProperty]
         string Content { get; set; }
 
-        [EditorField]
+        [EditorProperty]
         MarkupLanguage Markup { get; set; }
     }
 }

@@ -18,6 +18,10 @@ namespace Testinator.Server.TestSystem.Implementation
             OnInitialize();
         }
 
+        protected bool IsInEditorMode() => !IsInCreationMode();
+
+        protected bool IsInCreationMode() => OriginalObject == null;
+
         protected BaseEditor(TObjectToCreate baseObject, int version)
         {
             if (baseObject == null)
