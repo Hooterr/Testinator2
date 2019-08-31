@@ -1,6 +1,7 @@
 ﻿using System;
 using Testinator.Server.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
@@ -8,7 +9,6 @@ namespace Testinator.Server.TestSystem.Implementation
     {
         private TextEditor mTextEditor;
         private ImageEditor mImageEditor;
-
 
         public ITextEditor Text => mTextEditor;
 
@@ -31,29 +31,62 @@ namespace Testinator.Server.TestSystem.Implementation
                 mImageEditor = new ImageEditor(OriginalObject.Images, Version);
             }
         }
+        internal override bool Validate()
+        {
+            var validationPassed = true;
+            return validationPassed;
+        }
 
-        public OperationResult<IQuestionTask> Build()
+        protected override IQuestionTask BuildObject()
+        {
+            // Method not used
+            throw new NotImplementedException("This method is not used.");
+        }
+
+        public override OperationResult<IQuestionTask> Build()
         {
             var textOperation = mTextEditor.Build();
             var imageOperation = mImageEditor.Build();
 
-            // If one of the builds failed
-            if(textOperation.Failed || imageOperation.Failed)
+            // Check if all the builds were successful
+            if(Helpers.AnyTrue(textOperation.Failed, imageOperation.Failed))
             {
-                // Combine the error messages
-                var taskBuildOperation = OperationResult<IQuestionTask>.Fail();
-                taskBuildOperation.Merge(textOperation);
-                taskBuildOperation.Merge(imageOperation);
-                return taskBuildOperation;
+                var result = OperationResult<IQuestionTask>.Fail()
+                    .Merge(textOperation)
+                    .Merge(imageOperation);
+
+                return result;
             }
-
-            var task = new QuestionTask()
+            else
             {
-                Text = textOperation.Result,
-                Images = imageOperation.Result,
-            };
+                // Both builds succeeded
+                // Do the final validation
+                if(Validate())
+                {
+                    IQuestionTask task;
 
-            return OperationResult<IQuestionTask>.Success(task);
+                    if (IsInEditorMode())
+                    {
+                        task = OriginalObject;
+                    }
+                    else
+                    {
+                        task = new QuestionTask()
+                        {
+                            Text = textOperation.Result,
+                            Images = imageOperation.Result,
+                        };
+                    }
+
+                    return OperationResult<IQuestionTask>.Success(task);
+                }
+                else
+                {
+                    var result = OperationResult<IQuestionTask>.Fail();
+                    // TODO result.AddError
+                    return result;
+                }
+            }
         }
     }
 }

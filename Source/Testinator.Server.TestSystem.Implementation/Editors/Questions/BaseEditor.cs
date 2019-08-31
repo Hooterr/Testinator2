@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal abstract class BaseEditor<TObjectToCreate, TInterface> : BaseErrorListener<TInterface>
+    internal abstract class BaseEditor<TObjectToCreate, TInterface> : BaseErrorListener<TInterface>, IEditor<TObjectToCreate>
     {
         protected int Version { get; private set; }
         protected TObjectToCreate OriginalObject { get; private set; }
@@ -37,5 +37,27 @@ namespace Testinator.Server.TestSystem.Implementation
         }
 
         protected virtual void OnInitialize() { }
+
+        public virtual OperationResult<TObjectToCreate> Build()
+        {
+            if(Validate())
+            {
+                var builtObjet = BuildObject();
+                return OperationResult<TObjectToCreate>.Success(builtObjet);
+            }
+            else
+            {
+                var unhandledErrors = GetUnhandledErrors();
+                return OperationResult<TObjectToCreate>.Fail(unhandledErrors);
+            }
+
+        }
+
+        internal virtual bool Validate()
+        {
+            return true;
+        }
+
+        protected abstract TObjectToCreate BuildObject();
     }
 }

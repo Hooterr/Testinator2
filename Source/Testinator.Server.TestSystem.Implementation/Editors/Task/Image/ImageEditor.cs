@@ -96,14 +96,27 @@ namespace Testinator.Server.TestSystem.Implementation
             mMaxImageWidth = ImageSizeAttr.Width;
         }
 
-        public OperationResult<IImageContent> Build()
+        internal override bool Validate()
+        {
+            var validationPassed = true;
+
+            if(mImages.Count > mMaxImageCount) // TODO add min count validation
+            {
+                // TODO add a list of general errors
+                //HandleErrorFor(x => x.)
+                validationPassed = false;
+            }
+
+            return validationPassed;
+        }
+
+        protected override IImageContent BuildObject()
         {
             var result = new ImageContent()
             {
                 Images = mImages,
             };
-
-            return OperationResult<IImageContent>.Success(result);
+            return result;
         }
     }
 }

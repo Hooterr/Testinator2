@@ -66,6 +66,12 @@ namespace Testinator.Server.TestSystem.Implementation
             Succeeded = false;
         }
 
+        public OperationResult(List<string> errors)
+        {
+            Errors = new List<string>(errors);
+            Succeeded = false;
+        }
+
         public OperationResult(TOut obj, bool success)
         {
             Result = obj;;
@@ -95,6 +101,8 @@ namespace Testinator.Server.TestSystem.Implementation
         public static OperationResult<TOut> Fail(string error) => new OperationResult<TOut>(error);
 
         public static OperationResult<TOut> Fail(string[] errors) => new OperationResult<TOut>(errors);
+
+        public static OperationResult<TOut> Fail(List<string> errors) => new OperationResult<TOut>(errors);
 
         public static OperationResult<TOut> Fail() => new OperationResult<TOut>(false);
 
