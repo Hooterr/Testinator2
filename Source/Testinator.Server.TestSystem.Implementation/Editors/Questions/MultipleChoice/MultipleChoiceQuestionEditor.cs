@@ -7,7 +7,7 @@ namespace Testinator.Server.TestSystem.Implementation
     /// <summary>
     /// Editor implementation for <see cref="MultipleChoiceQuestion"/>
     /// </summary>
-    [ConcreteEditorFor(typeof(MultipleChoiceQuestion))]
+    [EditorFor(typeof(MultipleChoiceQuestion))]
     internal class MultipleChoiceQuestionEditor : BaseQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IQuestionScoringEditor>
     {
         #region Private Members

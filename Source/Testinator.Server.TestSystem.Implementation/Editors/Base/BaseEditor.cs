@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal abstract class BaseEditor<TObjectToCreate, TInterface> : BaseErrorListener<TInterface>, IEditor<TObjectToCreate>
+    internal abstract class BaseEditor<TObjectToCreate, TInterface> : ErrorListener<TInterface>, IBuildable<TObjectToCreate>
     {
         protected int Version { get; private set; }
         protected TObjectToCreate OriginalObject { get; private set; }

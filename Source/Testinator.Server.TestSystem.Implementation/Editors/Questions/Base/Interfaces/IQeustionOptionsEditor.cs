@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    public interface IOptionsEditor
+    public interface IQeustionOptionsEditor
     {
     }
 }

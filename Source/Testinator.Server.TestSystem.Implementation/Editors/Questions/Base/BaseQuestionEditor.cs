@@ -12,7 +12,7 @@ namespace Testinator.Server.TestSystem.Implementation
     /// <typeparam name="TScoringEditor">The type of editor to use for the scoring part of the question</typeparam>
     internal abstract class BaseQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>
         where TQuestion : BaseQuestion, new()
-        where TOptionsEditor : IOptionsEditor
+        where TOptionsEditor : IQeustionOptionsEditor
         where TScoringEditor : IQuestionScoringEditor
     {
 

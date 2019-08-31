@@ -7,7 +7,7 @@ using Testinator.Server.TestSystem.Implementation.Attributes;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal abstract class BaseErrorListener<TIntereface> : IErrorListener<TIntereface>
+    internal abstract class ErrorListener<TIntereface> : IErrorListener<TIntereface>
     {
         private readonly Dictionary<string, Action<string>> mErrorHandlers;
         private readonly List<string> mUnHandledErrorMessages;
@@ -23,7 +23,7 @@ namespace Testinator.Server.TestSystem.Implementation
             mErrorHandlers[propertyInfo.Name] = action;
         }
 
-        protected BaseErrorListener()
+        protected ErrorListener()
         {
             mErrorHandlers = new Dictionary<string, Action<string>>();
             mUnHandledErrorMessages = new List<string>();

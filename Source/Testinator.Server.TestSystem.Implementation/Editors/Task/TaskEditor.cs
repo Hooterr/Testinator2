@@ -4,7 +4,7 @@ using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal class TaskEditor : BaseEditor<IQuestionTask, ITaskEditor>, ITaskEditor, IEditor<IQuestionTask>
+    internal class TaskEditor : BaseEditor<IQuestionTask, ITaskEditor>, ITaskEditor, IBuildable<IQuestionTask>
     {
         private TextEditor mTextEditor;
         private ImageEditor mImageEditor;

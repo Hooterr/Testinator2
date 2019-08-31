@@ -10,7 +10,7 @@ namespace Testinator.Server.TestSystem.Implementation
     /// <summary>
     /// Implementation of the editor for the image part of the question task
     /// </summary>
-    internal class ImageEditor : BaseEditor<IImageContent, IImageEditor>, IImageEditor, IEditor<IImageContent>
+    internal class ImageEditor : BaseEditor<IImageContent, IImageEditor>, IImageEditor, IBuildable<IImageContent>
     {
         private IList<Image> mImages;
 

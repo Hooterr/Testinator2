@@ -46,7 +46,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public TEditor Build()
         {
-            var concreteEditorType = EditorImplementationLocalizer.FindImplementation(typeof(TQuestion));
+            var concreteEditorType = EditorLocalizer.FindImplementation(typeof(TQuestion));
 
             TEditor ConcreteEditor;
 

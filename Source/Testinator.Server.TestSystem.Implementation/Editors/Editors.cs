@@ -12,7 +12,6 @@ namespace Testinator.Server.TestSystem.Implementation
         /// <summary>
         /// The editor for <see cref="Questions.MultipleChoiceQuestion"/>
         /// </summary>
-        /// 
         public static IEditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion> MultipleChoiceQuestion
             => new EditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion>();
     }

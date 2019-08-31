@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    public interface IEditor<T>
+    public interface IBuildable<T>
     {
         OperationResult<T> Build();
     }

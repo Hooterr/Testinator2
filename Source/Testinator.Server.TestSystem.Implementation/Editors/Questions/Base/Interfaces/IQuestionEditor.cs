@@ -4,7 +4,7 @@
     /// Basic interface to edit or create any question
     /// </summary>
     /// <typeparam name="TQuestion">The type of question to edit/create</typeparam>
-    public interface IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : IEditor<TQuestion>
+    public interface IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : IBuildable<TQuestion>
     {
         /// <summary>
         /// Editor for the task part of the question

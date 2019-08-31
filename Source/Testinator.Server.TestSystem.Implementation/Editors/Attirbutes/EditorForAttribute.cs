@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    public class ConcreteEditorForAttribute : Attribute
+    public class EditorForAttribute : Attribute
     {
         public readonly Type QuestionType;
-        public ConcreteEditorForAttribute(Type questionType)
+        public EditorForAttribute(Type questionType)
         {
             QuestionType = questionType;
         }

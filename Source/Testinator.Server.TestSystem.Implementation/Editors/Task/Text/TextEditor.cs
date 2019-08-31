@@ -5,7 +5,7 @@ using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    internal class TextEditor : BaseEditor<ITextContent, ITextEditor>, ITextEditor, IEditor<ITextContent>
+    internal class TextEditor : BaseEditor<ITextContent, ITextEditor>, ITextEditor, IBuildable<ITextContent>
     {
         private int mMaxTextLength;
 
