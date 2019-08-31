@@ -10,7 +10,7 @@ namespace Testinator.Server.TestSystem.Implementation
     internal abstract class BaseErrorListener<TIntereface> : IErrorListener<TIntereface>
     {
         private readonly Dictionary<string, Action<string>> mErrorHandlers;
-        private readonly Dictionary<string, string> mUnHandledErrorMessages;
+        private readonly List<string> mUnHandledErrorMessages;
 
         public void OnErrorFor(Expression<Func<TIntereface, object>> propertyExpression, Action<string> action)
         {
@@ -26,7 +26,7 @@ namespace Testinator.Server.TestSystem.Implementation
         protected BaseErrorListener()
         {
             mErrorHandlers = new Dictionary<string, Action<string>>();
-            mUnHandledErrorMessages = new Dictionary<string, string>();
+            mUnHandledErrorMessages = new List<string>();
 
             // Get all editor methods and create the error handlers map
             var methodNames = typeof(TIntereface).GetProperties()
@@ -35,7 +35,6 @@ namespace Testinator.Server.TestSystem.Implementation
                               .ToList();
 
             mErrorHandlers = methodNames.ToDictionary(k => k, v => default(Action<string>));
-            mUnHandledErrorMessages = methodNames.ToDictionary(k => k, v => default(string));
         }
 
         protected void HandleErrorFor(Expression<Func<TIntereface, object>> propertyExpression, string message)
@@ -45,18 +44,22 @@ namespace Testinator.Server.TestSystem.Implementation
             if (mErrorHandlers[propertyName] != null)
                 mErrorHandlers[propertyName].Invoke(message);
             else
-                mUnHandledErrorMessages[propertyName] = message;
+                mUnHandledErrorMessages.Add(message);
+        }
+
+        protected void HandleError(string message)
+        {
+            mUnHandledErrorMessages.Add(message);
         }
 
         protected List<string> GetUnhandledErrors()
         {
-            var UnhanledErrorMessages = mUnHandledErrorMessages.Values.Where(x => !string.IsNullOrEmpty(x)).ToList();
-            return UnhanledErrorMessages;
+            return mUnHandledErrorMessages;
         }
 
         protected void ClearAllErrors()
         {
-            mUnHandledErrorMessages.Keys.ToList().ForEach(k => mUnHandledErrorMessages[k] = default);
+            mUnHandledErrorMessages.Clear();
         }
     }
 }
