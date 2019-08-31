@@ -13,7 +13,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
         [IntegerValueRange(min: 1, max:100, fromVersion: 1)]
         public int MaximumScore { get; internal set; }
 
-        //TODO [Required]
+        [Required(fromVersion: 1)]
         public IScoringStrategy Strategy { get; internal set; }
 
         public int CheckAnswer(IUserAnswer userAnswer)
@@ -26,10 +26,5 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
         }
 
         protected abstract int CalculateCorrectPercentage(TQuestionUserAnswer userAnswer);
-
-        public BaseQuestionScoring()
-        {
-            // TODO attribute validation or somewhere else, I dunno yet
-        }
     }
 }
