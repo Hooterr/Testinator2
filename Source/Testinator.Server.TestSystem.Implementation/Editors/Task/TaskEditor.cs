@@ -1,7 +1,6 @@
 ﻿using System;
 using Testinator.Server.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Abstractions;
-using Testinator.TestSystem.Abstractions.Questions.Task;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
@@ -34,6 +33,7 @@ namespace Testinator.Server.TestSystem.Implementation
         internal override bool Validate()
         {
             var validationPassed = true;
+            // TODO check if both text and images are not empty
             return validationPassed;
         }
 
@@ -45,6 +45,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public override OperationResult<IQuestionTask> Build()
         {
+            ClearAllErrors();
             var textOperation = mTextEditor.Build();
             var imageOperation = mImageEditor.Build();
 
@@ -83,7 +84,7 @@ namespace Testinator.Server.TestSystem.Implementation
                 else
                 {
                     var result = OperationResult<IQuestionTask>.Fail();
-                    // TODO result.AddError
+                    result.AddErrors(GetUnhandledErrors());
                     return result;
                 }
             }

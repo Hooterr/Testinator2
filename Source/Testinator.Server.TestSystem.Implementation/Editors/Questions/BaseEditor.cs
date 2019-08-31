@@ -31,6 +31,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
             if (Versions.NotInRange(version))
                 throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
+
             Version = version;
 
             OnInitialize();
@@ -40,17 +41,18 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public virtual OperationResult<TObjectToCreate> Build()
         {
-            if(Validate())
+            ClearAllErrors();
+            if (Validate())
             {
-                var builtObjet = BuildObject();
-                return OperationResult<TObjectToCreate>.Success(builtObjet);
+                var builtObject = BuildObject();
+                return OperationResult<TObjectToCreate>.Success(builtObject);
             }
             else
             {
                 var unhandledErrors = GetUnhandledErrors();
-                return OperationResult<TObjectToCreate>.Fail(unhandledErrors);
+                var result = OperationResult<TObjectToCreate>.Fail(unhandledErrors);
+                return result;
             }
-
         }
 
         internal virtual bool Validate()
