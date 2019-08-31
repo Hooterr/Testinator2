@@ -101,7 +101,7 @@ namespace Testinator.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider, UserManager<ApplicationUser> userManager)
         {
             // Use Dna Framework as DI
             app.UseDnaFramework();
@@ -142,6 +142,9 @@ namespace Testinator.Web
 
             // Make sure we have the database and do any pending migrations
             databaseContext.Database.Migrate();
+
+            // Seed initial database data
+            databaseContext.SeedDatabaseData(userManager);
         }
     }
 }
