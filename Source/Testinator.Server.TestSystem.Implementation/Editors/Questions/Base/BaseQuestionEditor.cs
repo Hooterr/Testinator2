@@ -11,7 +11,7 @@ namespace Testinator.Server.TestSystem.Implementation
     /// <typeparam name="TOptionsEditor">The type of editor to use for the options part of the question</typeparam>
     /// <typeparam name="TScoringEditor">The type of editor to use for the scoring part of the question</typeparam>
     internal abstract class BaseQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>
-        where TQuestion : BaseQuestion, new()//get rid of this new
+        where TQuestion : BaseQuestion, new()
         where TOptionsEditor : IOptionsEditor
         where TScoringEditor : IQuestionScoringEditor
     {
@@ -66,8 +66,14 @@ namespace Testinator.Server.TestSystem.Implementation
                 return questionBuildResult;
             }
 
+
             // Assemble question
             // TODO maybe some additional checks will be required
+            if(mQuestion == null)
+            {
+                mQuestion = new TQuestion();
+            }
+
             mQuestion.Task = taskBuildOperation.Result;
             mQuestion.Options = optionsBuildOperation.Result;
             mQuestion.Scoring = scoringBuildOperation.Result;
@@ -148,7 +154,7 @@ namespace Testinator.Server.TestSystem.Implementation
             // Check if the implementer initialized editors
 
             if (Options == null)
-                throw new NotSupportedException("Options editor has not been initialized.");
+                throw new NotImplementedException("Options editor has not been initialized.");
 
             // TODO uncomment this when scoring editor shall be implemented
             //if (Scoring == null)
