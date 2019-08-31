@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Testinator.Server.TestSystem.Implementation.Attributes;
 using Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy;
 using Testinator.TestSystem.Abstractions;
 
@@ -9,7 +10,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
     public abstract class BaseQuestionScoring<TQuestionUserAnswer> : IQuestionScoring
         where TQuestionUserAnswer : class
     {
-        // TODO [MaxValue] or value range
+        [IntegerValueRange(min: 1, max:100, fromVersion: 1)]
         public int MaximumScore { get; internal set; }
 
         //TODO [Required]
