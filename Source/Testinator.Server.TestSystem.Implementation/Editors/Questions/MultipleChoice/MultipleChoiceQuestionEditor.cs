@@ -20,15 +20,15 @@ namespace Testinator.Server.TestSystem.Implementation
         /// <summary>
         /// Concrete scoring editor for this question
         /// </summary>
-        //private TBD mScoringEditor;
-
+        private MultipleChoiceQuestionScoringEditor mScoringEditor;
+        
         #endregion
 
         #region Public Properties
 
         public override IMultipleChoiceQuestionOptionsEditor Options => mOptionsEditor;
 
-        public override IQuestionScoringEditor Scoring => throw new NotImplementedException();
+        public override IQuestionScoringEditor Scoring => mScoringEditor;
 
         #endregion
 
@@ -38,11 +38,15 @@ namespace Testinator.Server.TestSystem.Implementation
         {
             // Create editors
             if (mQuestion == null)
+            {
                 mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mVersion);
+                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mVersion);
+            }
             else
+            {
                 mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mQuestion.Options, mVersion);
-
-            // TODO implement scoring editor
+                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mQuestion.Scoring, mVersion);
+            }
         }
 
         protected override OperationResult<IQuestionOptions> BuildOptions()
@@ -54,8 +58,20 @@ namespace Testinator.Server.TestSystem.Implementation
 
         protected override OperationResult<IQuestionScoring> BuildScoring()
         {
-            throw new NotImplementedException();
-        } 
+            var scoringBuildResult = mScoringEditor.Build();
+            return OperationResult<IQuestionScoring>.Convert<IQuestionScoring, MultipleChoiceQuestionScoring>(scoringBuildResult);
+        }
+
+        protected override bool PostBuildValidation()
+        {
+            var validationPassed = true;
+            if (mScoringEditor.CorrectAnswerIdx < 0 || mScoringEditor.CorrectAnswerIdx > mOptionsEditor.Options.Count)
+            {
+                HandleError("Correct answer must be matched to the number of options.");
+                validationPassed = false;
+            }
+            return validationPassed;
+        }
 
         #endregion
 

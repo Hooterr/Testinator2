@@ -66,6 +66,11 @@ namespace Testinator.Server.TestSystem.Implementation
                 return questionBuildResult;
             }
 
+            if(PostBuildValidation() == false)
+            {
+                // TODO add errors
+                return OperationResult<TQuestion>.Fail();
+            }
 
             // Assemble question
             // TODO maybe some additional checks will be required
@@ -131,6 +136,13 @@ namespace Testinator.Server.TestSystem.Implementation
         protected abstract OperationResult<IQuestionOptions> BuildOptions();
 
         protected abstract OperationResult<IQuestionScoring> BuildScoring();
+
+        protected abstract bool PostBuildValidation();
+
+        protected void HandleError(string messgae)
+        {
+            // TOOD implement
+        }
 
         #endregion
 
