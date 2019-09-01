@@ -141,7 +141,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         protected abstract OperationResult<IQuestionScoring> BuildScoring();
 
-        protected abstract bool PostBuildValidation();
+        protected virtual bool PostBuildValidation() => true;
 
         protected void HandleError(string messgae)
         {
