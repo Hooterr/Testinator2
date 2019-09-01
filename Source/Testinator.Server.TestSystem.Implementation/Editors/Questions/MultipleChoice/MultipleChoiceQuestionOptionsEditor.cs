@@ -16,7 +16,6 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public List<string> Options { get; set; }
 
-
         public int GetMaximumCount()
         {
             return mMaxCount;

@@ -13,7 +13,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
         [IntegerValueRange(min: 1, max:100, fromVersion: 1)]
         public int MaximumScore { get; internal set; }
 
-        [Required(fromVersion: 1)]
+        [DefaultStrategy(typeof(AllCorrectScoringStrategy), fromVersion: 1)]
         public IScoringStrategy Strategy { get; internal set; }
 
         public int CheckAnswer(IUserAnswer userAnswer)
