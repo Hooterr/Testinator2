@@ -56,7 +56,7 @@ namespace Testinator.Server.TestSystem.Implementation
                 ConcreteEditor = (TEditor)concreteEditorType.GetConstructor(new[] { typeof(int) }).Invoke(new object[] { mVersion } );
             else
                 // We're editing an existing question
-                ConcreteEditor = (TEditor)concreteEditorType.GetConstructor(new[] { typeof(TQuestion) }).Invoke(new object[] { mQuestion });
+                ConcreteEditor = (TEditor)concreteEditorType.GetConstructor(new[] { typeof(TQuestion) }).Invoke(new object[] { mQuestion, mVersion });
 
             return ConcreteEditor;
         }
