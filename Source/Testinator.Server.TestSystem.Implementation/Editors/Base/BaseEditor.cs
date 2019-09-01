@@ -22,11 +22,9 @@ namespace Testinator.Server.TestSystem.Implementation
 
         protected bool IsInCreationMode() => OriginalObject == null;
 
+        // allow null for base object
         protected BaseEditor(TObjectToCreate baseObject, int version)
         {
-            if (baseObject == null)
-                throw new ArgumentNullException(nameof(baseObject), $"When in editing mode, starting object for the editor cannot be null");
-
             OriginalObject = baseObject;
 
             if (Versions.NotInRange(version))
