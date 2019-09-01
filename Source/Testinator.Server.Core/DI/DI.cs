@@ -47,6 +47,7 @@ namespace Testinator.Server.Core
         {
             Framework.Construct<DefaultFrameworkConstruction>()
                                                 .AddFileLogger()
+                                                .AddDbContext()
                                                 .AddApplicationServices();
         }
 

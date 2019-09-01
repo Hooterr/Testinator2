@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Dna;
+using Dna.AspNet;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -6,7 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Text;
 using Testinator.Web.Database;
 
 namespace Testinator.Web
@@ -33,8 +37,7 @@ namespace Testinator.Web
 
             // Add TestinatorWebDbContext to DI
             services.AddDbContext<TestinatorWebDbContext>(options =>
-                // TODO: Add connection string to app settings
-                options.UseSqlServer("Server=.;Database=TestinatorWebDB;Trusted_Connection=True;MultipleActiveResultSets=True;"));
+                options.UseSqlServer(Framework.Construction.Configuration.GetConnectionString("Database")));
 
             // AddIdentity adds cookie based authentication
             // Adds scoped classes for things like UserManager, SignInManager, PasswordHashers etc..
@@ -50,6 +53,35 @@ namespace Testinator.Web
                 // Adds a provider that generates unique keys and hashes for things like
                 // forgot password links, phone number verification codes etc...
                 .AddDefaultTokenProviders();
+
+            // Add JWT Authentication for Api clients
+            services.AddAuthentication().
+                AddJwtBearer(options =>
+                {
+                    // Set validation parameters
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        // Validate issuer
+                        ValidateIssuer = true,
+                        // Validate audience
+                        ValidateAudience = true,
+                        // Validate expiration
+                        ValidateLifetime = true,
+                        // Validate signature
+                        ValidateIssuerSigningKey = true,
+
+                        // Set issuer
+                        ValidIssuer = Framework.Construction.Configuration["Jwt:Issuer"],
+                        // Set audience
+                        ValidAudience = Framework.Construction.Configuration["Jwt:Audience"],
+
+                        // Set signing key
+                        IssuerSigningKey = new SymmetricSecurityKey(
+                            // Get our secret key from configuration
+                            Encoding.UTF8.GetBytes(Framework.Construction.Configuration["Jwt:SecretKey"])),
+                    };
+                });
+
 
             // Change password policy
             services.Configure<IdentityOptions>(options =>
@@ -69,8 +101,11 @@ namespace Testinator.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider, UserManager<ApplicationUser> userManager)
         {
+            // Use Dna Framework as DI
+            app.UseDnaFramework();
+
             // Setup Identity
             app.UseAuthentication();
 
@@ -102,8 +137,14 @@ namespace Testinator.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            // Make sure we have the database
-            serviceProvider.GetService<TestinatorWebDbContext>().Database.EnsureCreated();
+            // Get current database context
+            var databaseContext = serviceProvider.GetService<TestinatorWebDbContext>();
+
+            // Make sure we have the database and do any pending migrations
+            databaseContext.Database.Migrate();
+
+            // Seed initial database data
+            databaseContext.SeedDatabaseData(userManager);
         }
     }
 }

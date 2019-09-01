@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Testinator.Core;
 
 namespace Testinator.Server.Core
@@ -9,27 +8,23 @@ namespace Testinator.Server.Core
     /// </summary>
     public class LoginViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly IUserAccountService mUserService;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
-        /// User's input PIN
+        /// The email user has entered in the input box
         /// </summary>
-        public string PIN { get; set; }
+        public string UserEmail { get; set; }
 
         /// <summary>
-        /// Repeated PIN from user's input, should match the original PIN
+        /// The password user has entered in the input box
         /// </summary>
-        public string RepeatedPIN { get; set; }
-
-        /// <summary>
-        /// Indicates if saved PIN number was found on the computer
-        /// </summary>
-        public bool PINFound { get; private set; }
-
-        /// <summary>
-        /// The actual saved PIN (if found)
-        /// </summary>
-        public string FoundPIN { get; private set; }
+        public string UserPassword { get; set; }
 
         /// <summary>
         /// Indicates if user clicked submit button and is currently logging in
@@ -46,14 +41,14 @@ namespace Testinator.Server.Core
         #region Commands
 
         /// <summary>
-        /// The command to log the user in by PIN
+        /// The command to log the user in
         /// </summary>
         public ICommand LoginCommand { get; private set; }
 
         /// <summary>
-        /// The command to create brand new PIN
+        /// The command to go to next page without logging in
         /// </summary>
-        public ICommand CreatePINCommand { get; private set; }
+        public ICommand EnterWithoutLoginCommand { get; private set; }
 
         #endregion
 
@@ -62,20 +57,14 @@ namespace Testinator.Server.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public LoginViewModel()
+        public LoginViewModel(IUserAccountService userService)
         {
+            // Inject DI services
+            mUserService = userService;
+
             // Create commands
-            LoginCommand = new RelayCommand(Login);
-            CreatePINCommand = new RelayCommand(CreatePIN);
-
-            // Check if pin is set
-            // TODO: Something is wrong with nuget packages, fix it later
-            FoundPIN = "1111";//FileDataHasher.ReadAndUnhashString();
-
-            // If its not empty and has 4 characters to ensure its not modified
-            if (!string.IsNullOrEmpty(FoundPIN) && FoundPIN.Length == 4)
-                // Valid PIN was found
-                PINFound = true;
+            LoginCommand = new RelayCommand(LogInAsync);
+            EnterWithoutLoginCommand = new RelayCommand(() => DI.Application.GoToPage(ApplicationPage.Home));
         }
 
         #endregion
@@ -83,49 +72,32 @@ namespace Testinator.Server.Core
         #region Command Methods
 
         /// <summary>
-        /// Creates new PIN by storing it in hashed file
+        /// Tries to log the user in using provided data
         /// </summary>
-        private void CreatePIN()
+        private async void LogInAsync()
         {
-            // Check if both PIN matches
-            if (!DoesRepeatedPINMatch())
+            // Set the logging flag until logging in is finished
+            await RunCommandAsync(() => LoggingIsRunning, async () =>
             {
-                ErrorMessage = LocalizationResource.RepeatedPINNotSame;
-                return;
-            }
+                // Empty the error message for the operation
+                ErrorMessage = string.Empty;
 
-            // Save the PIN
-            FileDataHasher.HashAndSaveString(PIN);
+                // Try to log the user in
+                var error = await mUserService.LogInAsync(UserEmail, UserPassword);
 
-            // Log the user in by changing the page
-            DI.Application.GoToPage(ApplicationPage.Home);
+                // If there are no errors...
+                if (string.IsNullOrEmpty(error))
+                {
+                    // We successfully logged in, so change the page
+                    DI.Application.GoToPage(ApplicationPage.Home);
+                    return;
+                }
+
+                // Otherwise login failed, show the error to the user
+                ErrorMessage = error;
+            });
+            
         }
-
-        /// <summary>
-        /// Tries to log the user in by provided PIN
-        /// </summary>
-        private void Login()
-        {
-            // If both PINs don't match themselves...
-            if (PIN != FoundPIN)
-            {
-                // Show the error and do not login
-                ErrorMessage = LocalizationResource.ProvidedPINNotValid;
-                return;
-            }
-
-            // Otherwise login the user in by changing the page
-            DI.Application.GoToPage(ApplicationPage.Home);
-        }
-
-        #endregion
-
-        #region Private Helpers
-
-        /// <summary>
-        /// Checks if both input PINs match themselves
-        /// </summary>
-        private bool DoesRepeatedPINMatch() => PIN == RepeatedPIN;
 
         #endregion
     }

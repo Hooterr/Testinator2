@@ -430,6 +430,15 @@ namespace Testinator.Core {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter without login.
+        /// </summary>
+        public static string EnterWithoutLogin {
+            get {
+                return ResourceManager.GetString("EnterWithoutLogin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Error message: .
         /// </summary>
         public static string ErrorContentSemicolon {
@@ -444,6 +453,24 @@ namespace Testinator.Core {
         public static string FillData {
             get {
                 return ResourceManager.GetString("FillData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter email.
+        /// </summary>
+        public static string FillEmail {
+            get {
+                return ResourceManager.GetString("FillEmail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter password.
+        /// </summary>
+        public static string FillPassword {
+            get {
+                return ResourceManager.GetString("FillPassword", resourceCulture);
             }
         }
         
@@ -1101,6 +1128,15 @@ namespace Testinator.Core {
         public static string TrySemicolon {
             get {
                 return ResourceManager.GetString("TrySemicolon", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to connect with the server.
+        /// </summary>
+        public static string UnableToConnectWithWeb {
+            get {
+                return ResourceManager.GetString("UnableToConnectWithWeb", resourceCulture);
             }
         }
         

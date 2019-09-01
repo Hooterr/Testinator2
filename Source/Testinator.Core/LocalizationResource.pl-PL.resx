@@ -498,4 +498,16 @@
   <data name="MaximumAttemptsReachedMessage" xml:space="preserve">
     <value>Maksymalna liczba prób została osiągnięta. \nSpróbuj ponownie  lub sprawdź stan serwera.</value>
   </data>
+  <data name="FillEmail" xml:space="preserve">
+    <value>Wpisz email</value>
+  </data>
+  <data name="FillPassword" xml:space="preserve">
+    <value>Wpisz hasło</value>
+  </data>
+  <data name="UnableToConnectWithWeb" xml:space="preserve">
+    <value>Brak połączenia z serwerem</value>
+  </data>
+  <data name="EnterWithoutLogin" xml:space="preserve">
+    <value>Otwórz bez logowania</value>
+  </data>
 </root>
