@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Testinator.Server.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Abstractions;
 
@@ -15,7 +16,6 @@ namespace Testinator.Server.TestSystem.Implementation
         where TOptionsEditor : IQeustionOptionsEditor
         where TScoringEditor : IQuestionScoringEditor
     {
-
         #region Protected Members
 
         /// <summary>
@@ -32,6 +32,12 @@ namespace Testinator.Server.TestSystem.Implementation
         /// The editor for task part of the question
         /// </summary>
         protected TaskEditor mTaskEditor;
+
+        #endregion
+
+        #region Private
+
+        private List<string> mErrors;
 
         #endregion
 
@@ -66,14 +72,12 @@ namespace Testinator.Server.TestSystem.Implementation
                 return questionBuildResult;
             }
 
-            if(PostBuildValidation() == false)
+            if(!PostBuildValidation())
             {
-                // TODO add errors
-                return OperationResult<TQuestion>.Fail();
+                return OperationResult<TQuestion>.Fail(mErrors);
             }
 
             // Assemble question
-            // TODO maybe some additional checks will be required
             if(mQuestion == null)
             {
                 mQuestion = new TQuestion();
@@ -141,7 +145,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         protected void HandleError(string messgae)
         {
-            // TOOD implement
+            mErrors.Add(messgae);
         }
 
         #endregion
@@ -164,13 +168,13 @@ namespace Testinator.Server.TestSystem.Implementation
             OnInitializing();
 
             // Check if the implementer initialized editors
-
             if (Options == null)
                 throw new NotImplementedException("Options editor has not been initialized.");
 
-            // TODO uncomment this when scoring editor shall be implemented
-            //if (Scoring == null)
-            //    throw new NotSupportedException("Options scoring has not been initialized.");
+            if (Scoring == null)
+                throw new NotSupportedException("Options scoring has not been initialized.");
+
+            mErrors = new List<string>();
         }
 
         #endregion
