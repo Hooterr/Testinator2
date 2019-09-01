@@ -5,7 +5,10 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
+
+// For unit testing
 [assembly: InternalsVisibleTo("Testinator.TestSystem.Implementation.Test")]
+
 [assembly: AssemblyTitle("Testinator.Server.TestSystem.Implementation")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
