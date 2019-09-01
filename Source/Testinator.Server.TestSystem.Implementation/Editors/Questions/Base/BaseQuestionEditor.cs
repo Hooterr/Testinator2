@@ -158,8 +158,7 @@ namespace Testinator.Server.TestSystem.Implementation
         private void InitializeEditor()
         {
             // Create task editor
-            if (mQuestion == null)
-
+            if (mQuestion == null || mQuestion.Task == null)
                 mTaskEditor = new TaskEditor(mVersion);
             else
                 mTaskEditor = new TaskEditor(mQuestion.Task, mVersion);
