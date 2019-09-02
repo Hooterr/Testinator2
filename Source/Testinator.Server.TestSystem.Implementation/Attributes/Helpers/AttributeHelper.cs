@@ -10,6 +10,31 @@ namespace Testinator.Server.TestSystem.Implementation.Attributes
 {
     public static class AttributeHelper
     {
+        internal static TValue GetPropertyAttributeValue<TIn, TAttribute, TValue>(
+            Expression<Func<TIn, object>> propertyExpression,
+            Func<TAttribute, TValue> valueSelector,
+            int currentVersion)
+            where TAttribute : BaseEditorAttribute
+        {
+            var propertyInfo = ExpressionHelpers.GetPropertyInfo(propertyExpression);
+            var filtered = 
+                 Filter<TAttribute>(propertyInfo, currentVersion)
+                .Select(x => new
+                {
+                    x.Key,
+                    Values = x.Select(attr => valueSelector(attr))
+                })
+                .FirstOrDefault();
+
+            if (filtered == null)
+                return default;
+
+            if (filtered.Values.Count() > 1)
+                throw new VersioningAmbiguityException(typeof(TAttribute).ToString());
+
+            return filtered.Values.FirstOrDefault();
+        }
+
         internal static TValue GetPropertyAttributeValue<TIn, TOut, TAttribute, TValue>(
             Expression<Func<TIn, TOut>> propertyExpression,
             Func<TAttribute, TValue> valueSelector,
