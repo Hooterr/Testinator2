@@ -18,7 +18,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
 
         public int CheckAnswer(IUserAnswer userAnswer)
         {
-            var answerImpl = userAnswer as TQuestionUserAnswer ?? throw new ArgumentException($"UserAnswer must be of type {typeof(TQuestionUserAnswer).Name}.", nameof(userAnswer);
+            var answerImpl = userAnswer as TQuestionUserAnswer ?? throw new ArgumentException($"UserAnswer must be of type {typeof(TQuestionUserAnswer).Name}.", nameof(userAnswer));
 
             var percentageCorrect = CalculateCorrectPercentage(answerImpl);
 

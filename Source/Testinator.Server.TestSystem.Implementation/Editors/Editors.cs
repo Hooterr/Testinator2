@@ -2,7 +2,7 @@
 
 namespace Testinator.Server.TestSystem.Implementation
 {
-    using ABCQuestionEditor = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IQuestionScoringEditor>;
+    using ABCQuestionEditor = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
     
     /// <summary>
     /// Provides editor builders for every question type

@@ -23,12 +23,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Updater", "Testi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.TestSystem.Abstractions", "Testinator.TestSystem.Abstractions\Testinator.TestSystem.Abstractions.csproj", "{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Server.TestSystem.Implementation", "Testinator.Server.TestSystem.Implementation\Testinator.Server.TestSystem.Implementation.csproj", "{7710DF93-A84A-4073-8358-B4AE051C3942}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.TestSystem.Implementation", "Testinator.Server.TestSystem.Implementation\Testinator.Server.TestSystem.Implementation.csproj", "{7710DF93-A84A-4073-8358-B4AE051C3942}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{AFDCBB19-9D71-49B1-B256-8E2F0DA3729D}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Web", "Testinator.Web\Testinator.Web.csproj", "{9FE51695-25A6-4807-BED8-B72C9761929A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Web.Database", "Testinator.Web.Database\Testinator.Web.Database.csproj", "{65A8BA1C-6947-4231-8EE9-7563CC2CCD96}"
@@ -49,7 +50,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{EFA7EA
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{7C1087B8-3FD4-4006-AD80-DA059382D7BB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Server.Database", "Testinator.Server.Database\Testinator.Server.Database.csproj", "{D4954A2F-015A-4346-913E-4D9CAA8D5829}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.Database", "Testinator.Server.Database\Testinator.Server.Database.csproj", "{D4954A2F-015A-4346-913E-4D9CAA8D5829}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TestSystem", "TestSystem", "{ABDC55BB-B539-4C5A-9285-E5A3BF060E17}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -197,6 +200,8 @@ Global
 		{6D071206-3DC3-4547-AC08-43345E3BF786} = {FF875F7D-171B-43B5-928E-1B92432AF5CD}
 		{2E0E2554-DA07-45A6-9647-8F2907851472} = {371B15B0-F9C8-4BD5-8095-C46C98F6DF6B}
 		{2A2D8211-B3C3-492C-A4BD-75BD1F837D1A} = {6F3D15E5-6E3B-4FDF-BD25-608DCBA6D838}
+		{59D71CE1-C6DD-4320-ACE4-0D3C89B74A5D} = {ABDC55BB-B539-4C5A-9285-E5A3BF060E17}
+		{7710DF93-A84A-4073-8358-B4AE051C3942} = {ABDC55BB-B539-4C5A-9285-E5A3BF060E17}
 		{9FE51695-25A6-4807-BED8-B72C9761929A} = {7C1087B8-3FD4-4006-AD80-DA059382D7BB}
 		{65A8BA1C-6947-4231-8EE9-7563CC2CCD96} = {7C1087B8-3FD4-4006-AD80-DA059382D7BB}
 		{E3EC550B-C480-4943-9784-36E886E79391} = {EFA7EAE9-954F-48D5-8DE8-81B5B6D2A213}
