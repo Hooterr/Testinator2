@@ -54,6 +54,18 @@ namespace Testinator.TestSystem.Implementation.Test.EditorsTests
             Assert.False(result.Succeeded);
             Assert.Contains("Correct answer must be matched to the number of options.", result.Errors);
         }
+
+        [Fact]
+        public void PostBuildValidationAllGood()
+        {
+            var editor = NewEditor();
+            editor.Options.Options.Add("ddd");
+            editor.Options.Options.Add("22");
+            editor.Options.Options.Add("dd");
+            editor.Scoring.CorrectAnswerIdx = 2;
+            var result = editor.Build();
+            Assert.DoesNotContain("Correct answer must be matched to the number of options.", result.Errors);
+        }
     }
 
     public class ABCOptionsMock : IQuestionOptions
