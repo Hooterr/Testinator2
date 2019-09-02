@@ -40,6 +40,9 @@ namespace Testinator.Server.TestSystem.Implementation
         {
             var propertyName = ExpressionHelpers.GetCorrectPropertyName(propertyExpression);
 
+            if (false == mErrorHandlers.ContainsKey(propertyName))
+                throw new ArgumentException($"{propertyName} doesn't have {nameof(EditorPropertyAttribute)} thus it can't be used in {nameof(HandleErrorFor)} method.");
+
             // If there is handler for that method
             if (mErrorHandlers[propertyName] != null)
                 mErrorHandlers[propertyName].Invoke(message);
