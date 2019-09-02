@@ -41,8 +41,8 @@ namespace Testinator.Server.TestSystem.Implementation
             mMaxScore = scoreRangeAttr.Max;
             mMinScore = scoreRangeAttr.Min;
 
-            mDefaultStrategyType = AttributeHelper.GetPropertyAttributeValue<MultipleChoiceQuestionScoring, int, DefaultStrategyAttribute, Type>
-                (x => x.MaximumScore, attr => attr.DefaultStrategyType, Version);
+            mDefaultStrategyType = AttributeHelper.GetPropertyAttributeValue<MultipleChoiceQuestionScoring, DefaultStrategyAttribute, Type>
+                (x => x.Strategy, attr => attr.DefaultStrategyType, Version);
 
             if (mDefaultStrategyType != null)
             {
