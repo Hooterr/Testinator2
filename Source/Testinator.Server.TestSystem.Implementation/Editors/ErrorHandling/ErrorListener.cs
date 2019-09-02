@@ -16,7 +16,7 @@ namespace Testinator.Server.TestSystem.Implementation
         {
             var propertyInfo = ExpressionHelpers.GetPropertyInfo(propertyExpression);
 
-            if (propertyInfo.GetCustomAttributes<EditorPropertyAttribute>().Any() == false)
+            if (propertyInfo.GetCustomAttributes<EditorPropertyAttribute>(true).Any() == false)
                 throw new ArgumentException($"This property is not an editor property.");
 
             mErrorHandlers[propertyInfo.Name] = action;
@@ -27,13 +27,13 @@ namespace Testinator.Server.TestSystem.Implementation
             mErrorHandlers = new Dictionary<string, Action<string>>();
             mUnHandledErrorMessages = new List<string>();
 
-            // Get all editor methods and create the error handlers map
-            var methodNames = typeof(TIntereface).GetProperties()
-                              .Where(field => field.GetCustomAttributes<EditorPropertyAttribute>().Any())
+            // Get all editor properties and create the error handlers map
+            var methodProperties = typeof(TIntereface).GetAllProperties()
+                              .Where(field => field.GetCustomAttributes<EditorPropertyAttribute>(true).Any())
                               .Select(field => field.Name)
                               .ToList();
 
-            mErrorHandlers = methodNames.ToDictionary(k => k, v => default(Action<string>));
+            mErrorHandlers = methodProperties.ToDictionary(k => k, v => default(Action<string>));
         }
 
         protected void HandleErrorFor(Expression<Func<TIntereface, object>> propertyExpression, string message)
