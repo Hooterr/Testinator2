@@ -14,19 +14,8 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public void OnErrorFor(Expression<Func<TIntereface, object>> propertyExpression, Action<string> action)
         {
-            PropertyInfo propertyInfo = null;
-            try
-            {
-                propertyInfo = ExpressionHelpers.GetPropertyInfo(propertyExpression);
-            }
-            catch(Exception ex)
-            {
-                throw new NotSupportedException("Specified property was not found.", ex);
-            }
+            var propertyInfo = ExpressionHelpers.GetPropertyInfo(propertyExpression);
 
-            if (propertyInfo == null)
-                throw new NotSupportedException("Specified property was not found.");
-                    
             if (propertyInfo.GetCustomAttributes<EditorPropertyAttribute>().Any() == false)
                 throw new ArgumentException($"This property is not an editor property.");
 
@@ -49,18 +38,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         protected void HandleErrorFor(Expression<Func<TIntereface, object>> propertyExpression, string message)
         {
-            var propertyName = string.Empty;
-            try
-            {
-                propertyName = ExpressionHelpers.GetCorrectPropertyName(propertyExpression);
-            }
-            catch (Exception ex)
-            {
-                throw new NotSupportedException("Specified property was not a property.", ex);
-            }
-
-            if(string.IsNullOrEmpty(propertyName))
-                throw new NotSupportedException("Specified property was not a property.");
+            var propertyName = ExpressionHelpers.GetCorrectPropertyName(propertyExpression);
 
             // If there is handler for that method
             if (mErrorHandlers[propertyName] != null)
