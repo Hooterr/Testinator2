@@ -59,22 +59,19 @@ namespace Testinator.Server.TestSystem.Implementation
             var taskBuildOperation = mTaskEditor.Build();
             var optionsBuildOperation = BuildOptions();
             var scoringBuildOperation = BuildScoring();
+            var postValidationSuccess = PostBuildValidation();
 
             // If any of the operations failed
-            if (Helpers.AnyTrue(taskBuildOperation.Failed, optionsBuildOperation.Failed, scoringBuildOperation.Failed))
+            if (Helpers.AnyFalse(taskBuildOperation.Succeeded, optionsBuildOperation.Succeeded, scoringBuildOperation.Succeeded, postValidationSuccess))
             {
                 // Merge all of the errors together
                 var questionBuildResult = OperationResult<TQuestion>.Fail();
                 questionBuildResult.Merge(taskBuildOperation)
                                    .Merge(optionsBuildOperation)
-                                   .Merge(scoringBuildOperation);
+                                   .Merge(scoringBuildOperation)
+                                   .AddErrors(mErrors);
 
                 return questionBuildResult;
-            }
-
-            if(!PostBuildValidation())
-            {
-                return OperationResult<TQuestion>.Fail(mErrors);
             }
 
             // Assemble question

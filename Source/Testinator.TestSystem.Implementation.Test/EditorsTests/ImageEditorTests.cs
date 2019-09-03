@@ -29,7 +29,7 @@ namespace Testinator.TestSystem.Implementation.Test.EditorsTests
         {
         }
 
-        protected override void LoadAttributeValues()
+        /*protected override void LoadAttributeValues()
         {
             var mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContentMock, ICollection<Image>, MaxCollectionCountAttribute, int>
                 (obj => obj.Images, attr => attr.MaxCount, Version);
@@ -39,7 +39,7 @@ namespace Testinator.TestSystem.Implementation.Test.EditorsTests
             
             mMaxImageHeight = ImageSizeAttr.Height;
             mMaxImageWidth = ImageSizeAttr.Width;
-        }
+        }*/
     }
 
     public class ImageContentMock : IImageContent

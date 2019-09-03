@@ -87,7 +87,7 @@ namespace Testinator.Server.Core
                 return;
             }
 
-            // Otherwise, question builded successfully, add it to the test
+            // Otherwise, question built successfully, add it to the test
             // TODO:
         }
 
