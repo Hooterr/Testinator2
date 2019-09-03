@@ -8,6 +8,8 @@ namespace Testinator.Server.TestSystem.Implementation
         [EditorProperty]
         List<string> Options { get; set; }
 
+        void SetOptions(params string[] options);
+
         int GetMaximumCount();
     }
 }

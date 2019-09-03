@@ -88,6 +88,12 @@ namespace Testinator.Server.TestSystem.Implementation
             return questionOptions;
         }
 
+        public void SetOptions(params string[] options)
+        {
+            Options.Clear();
+            Options.AddRange(options);
+        }
+
         public MultipleChoiceQuestionOptionsEditor(int version) : base(version) { }
 
         public MultipleChoiceQuestionOptionsEditor(MultipleChoiceQuestionOptions objToEdit, int version) : base(objToEdit, version) { }

@@ -69,10 +69,11 @@ namespace Testinator.Server.Core
         {
             // Copy all the question properties to the editor to validate
             mQuestionEditor.Task.Text.Content = Task;
-            mQuestionEditor.Options.Options.Add(AnswerA);
-            mQuestionEditor.Options.Options.Add(AnswerB);
-            mQuestionEditor.Options.Options.Add(AnswerC);
-            mQuestionEditor.Options.Options.Add(AnswerD);
+            //mQuestionEditor.Options.Options.Add(AnswerA);
+            //mQuestionEditor.Options.Options.Add(AnswerB);
+            //mQuestionEditor.Options.Options.Add(AnswerC);
+            //mQuestionEditor.Options.Options.Add(AnswerD);
+            mQuestionEditor.Options.SetOptions(AnswerA, AnswerB, AnswerC, AnswerD);
             mQuestionEditor.Scoring.CorrectAnswerIdx = RightAnswerIndex;
             mQuestionEditor.Scoring.MaximumScore = PointsForRightAnswer;
 
