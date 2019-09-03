@@ -109,8 +109,9 @@ namespace Testinator.Server.TestSystem.Implementation
         public static OperationResult<TOut> Success(TOut obj) => new OperationResult<TOut>(obj, true);
 
         public static OperationResult<TTo> Convert<TTo, TFrom>(OperationResult<TFrom> originalOperation)
+            where TFrom : TTo
         {
-            var newResultObject = (TTo)System.Convert.ChangeType(originalOperation.Result, typeof(TTo));
+            var newResultObject = (TTo)originalOperation.Result;
             var newResult = new OperationResult<TTo>(newResultObject, originalOperation.Succeeded);
             newResult.AddErrors(originalOperation.Errors);
             return newResult;

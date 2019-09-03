@@ -76,6 +76,9 @@ namespace Testinator.Server.TestSystem.Implementation
             if (question == null)
                 return NewQuestion();
 
+            if (Versions.NotInRange(question.Version))
+                throw new NotSupportedException("This version of question model is no longer supported.");
+
             mQuestion = question;
             mVersion = question.Version;
 

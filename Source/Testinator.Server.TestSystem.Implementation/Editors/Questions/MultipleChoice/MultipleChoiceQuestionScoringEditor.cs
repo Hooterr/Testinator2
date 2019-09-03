@@ -35,14 +35,14 @@ namespace Testinator.Server.TestSystem.Implementation
 
         protected override void OnInitialize()
         {
-            var scoreRangeAttr = AttributeHelper.GetPropertyAttribute<IMultipleChoiceQuestionScoringEditor, int, IntegerValueRangeAttribute>
+            var scoreRangeAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionScoring, int, IntegerValueRangeAttribute>
                 (x => x.MaximumScore, Version);
 
             mMaxScore = scoreRangeAttr.Max;
             mMinScore = scoreRangeAttr.Min;
 
-            mDefaultStrategyType = AttributeHelper.GetPropertyAttributeValue<IMultipleChoiceQuestionScoringEditor, int, DefaultStrategyAttribute, Type>
-                (x => x.MaximumScore, attr => attr.DefaultStrategyType, Version);
+            mDefaultStrategyType = AttributeHelper.GetPropertyAttributeValue<MultipleChoiceQuestionScoring, DefaultStrategyAttribute, Type>
+                (x => x.Strategy, attr => attr.DefaultStrategyType, Version);
 
             if (mDefaultStrategyType != null)
             {

@@ -8,7 +8,7 @@ namespace Testinator.Server.TestSystem.Implementation
     /// Editor implementation for <see cref="MultipleChoiceQuestion"/>
     /// </summary>
     [EditorFor(typeof(MultipleChoiceQuestion))]
-    internal class MultipleChoiceQuestionEditor : BaseQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IQuestionScoringEditor>
+    internal class MultipleChoiceQuestionEditor : BaseQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>
     {
         #region Private Members
 
@@ -28,7 +28,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public override IMultipleChoiceQuestionOptionsEditor Options => mOptionsEditor;
 
-        public override IQuestionScoringEditor Scoring => mScoringEditor;
+        public override IMultipleChoiceQuestionScoringEditor Scoring => mScoringEditor;
 
         #endregion
 

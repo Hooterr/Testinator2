@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 
 namespace Testinator.Server.TestSystem.Implementation
@@ -9,15 +10,39 @@ namespace Testinator.Server.TestSystem.Implementation
     {
         public static string GetCorrectPropertyName<T>(Expression<Func<T, object>> expression)
         {
-            if (expression.Body is MemberExpression)
+            var memberInfo = GetMemberInfoFromExpression(expression);
+            return memberInfo.MemberType == MemberTypes.Property 
+                ? ((PropertyInfo)memberInfo).Name : throw new NotSupportedException("Expression doesn't point to property.");
+        }
+
+        public static PropertyInfo GetPropertyInfo<T> (Expression<Func<T, object>> expression)
+        {
+            var memberInfo = GetMemberInfoFromExpression(expression);
+            return memberInfo.MemberType == MemberTypes.Property 
+                ? (PropertyInfo)memberInfo : throw new NotSupportedException("Expression doesn't point to property.");
+        }
+
+        private static MemberInfo GetMemberInfoFromExpression<T> (Expression<Func<T,object>> expression)
+        {
+            MemberInfo memberInfo = null;
+            try
             {
-                return ((MemberExpression)expression.Body).Member.Name;
+                if (expression.Body is MemberExpression)
+                {
+                    memberInfo = ((MemberExpression)expression.Body).Member;
+                }
+                else
+                {
+                    var op = ((UnaryExpression)expression.Body).Operand;
+                    memberInfo = ((MemberExpression)op).Member;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                var op = ((UnaryExpression)expression.Body).Operand;
-                return ((MemberExpression)op).Member.Name;
+                throw new NotSupportedException("Expression doesn't point to property.", ex);
             }
+
+            return memberInfo;
         }
     }
 }

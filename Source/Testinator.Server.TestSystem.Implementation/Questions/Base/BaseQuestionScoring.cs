@@ -10,9 +10,11 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
     public abstract class BaseQuestionScoring<TQuestionUserAnswer> : IQuestionScoring
         where TQuestionUserAnswer : class
     {
+        [EditorProperty]
         [IntegerValueRange(min: 1, max:100, fromVersion: 1)]
         public int MaximumScore { get; internal set; }
 
+        [EditorProperty]
         [DefaultStrategy(typeof(AllCorrectScoringStrategy), fromVersion: 1)]
         public IScoringStrategy Strategy { get; internal set; }
 

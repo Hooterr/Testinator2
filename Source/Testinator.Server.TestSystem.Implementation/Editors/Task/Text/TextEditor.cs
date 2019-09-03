@@ -7,7 +7,7 @@ namespace Testinator.Server.TestSystem.Implementation
 {
     internal class TextEditor : BaseEditor<ITextContent, ITextEditor>, ITextEditor, IBuildable<ITextContent>
     {
-        private int mMaxTextLength;
+        protected int mMaxTextLength;
 
         public string Content { get; set; }
         public MarkupLanguage Markup { get; set; }
@@ -17,9 +17,15 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public TextEditor(ITextContent objToEdit, int version) : base(objToEdit, version) { }
 
-        protected override void OnInitialize()
+        // For testing
+        protected virtual void LoadAttributeValues()
         {
             mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Text, a => a.MaxLength, Version);
+        }
+
+        protected override void OnInitialize()
+        {
+            LoadAttributeValues();
             if (IsInCreationMode())
             {
                 Content = string.Empty;
