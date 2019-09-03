@@ -60,13 +60,21 @@ namespace Testinator.Server.TestSystem.Implementation
                 validationPassed = false;
             }
 
-            if (!Options.All(str => (str.Length >= mMinOptionLen) && (str.Length <= mMaxOptionLen)))
+            if (!Options.All(str => OptionsLengthInRange(str)))
             {
                 HandleErrorFor(x => x.Options, $"Every options must be from {mMinOptionLen} to {mMaxOptionLen} characters long.");
                 validationPassed = false;
             }
 
             return validationPassed;
+        }
+
+        private bool OptionsLengthInRange(string option)
+        {
+            if (option == null)
+                return false;
+
+            return (option.Length >= mMinOptionLen) && (option.Length <= mMaxOptionLen);
         }
 
         protected override MultipleChoiceQuestionOptions BuildObject()
