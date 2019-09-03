@@ -45,6 +45,10 @@ namespace Testinator.Server.TestSystem.Implementation
         internal override bool Validate()
         {
             var validationPassed = true;
+
+            // Delete last options that are null or empty
+            Options.RemoveAllLast(x => string.IsNullOrEmpty(x));
+
             if (mOnlyDistinct)
             {
                 if (Options.Count > 1 && (Options.Distinct().Count() != Options.Count()))
