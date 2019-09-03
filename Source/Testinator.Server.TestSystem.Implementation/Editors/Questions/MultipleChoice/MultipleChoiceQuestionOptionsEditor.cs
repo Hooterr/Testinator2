@@ -47,7 +47,7 @@ namespace Testinator.Server.TestSystem.Implementation
             var validationPassed = true;
             if (mOnlyDistinct)
             {
-                if (Options.Distinct().Count() != Options.Count())
+                if (Options.Count > 1 && (Options.Distinct().Count() != Options.Count()))
                 {
                     HandleErrorFor(x => x.Options, "Options must be unique");
                     validationPassed = false;
