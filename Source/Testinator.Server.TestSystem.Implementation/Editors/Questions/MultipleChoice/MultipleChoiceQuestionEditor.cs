@@ -64,6 +64,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         protected override bool PostBuildValidation()
         {
+            ClearAllErrors();
             var validationPassed = true;
             if (mScoringEditor.CorrectAnswerIdx < 0 || mScoringEditor.CorrectAnswerIdx > mOptionsEditor.Options.Count)
             {

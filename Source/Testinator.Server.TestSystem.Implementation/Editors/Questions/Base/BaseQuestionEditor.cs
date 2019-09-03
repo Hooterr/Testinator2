@@ -145,6 +145,11 @@ namespace Testinator.Server.TestSystem.Implementation
             mErrors.Add(messgae);
         }
 
+        protected void ClearAllErrors()
+        {
+            mErrors.Clear();
+        }
+
         #endregion
 
         #region Private Methods
