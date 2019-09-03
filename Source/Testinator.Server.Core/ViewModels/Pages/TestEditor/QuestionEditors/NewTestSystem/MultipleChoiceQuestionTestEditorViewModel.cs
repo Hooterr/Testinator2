@@ -84,7 +84,7 @@ namespace Testinator.Server.Core
             if (operation.Failed)
             {
                 // Show them and do not submit anything
-                ErrorMessage = operation.Errors.ToString();
+                ErrorMessage = string.Join("\n", operation.Errors.ToArray());
                 return;
             }
 
