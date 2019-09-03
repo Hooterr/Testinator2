@@ -66,7 +66,7 @@ namespace Testinator.Server.TestSystem.Implementation
         {
             ClearAllErrors();
             var validationPassed = true;
-            if (mScoringEditor.CorrectAnswerIdx < 0 || mScoringEditor.CorrectAnswerIdx > mOptionsEditor.Options.Count)
+            if (mScoringEditor.CorrectAnswerIdx < 0 || mScoringEditor.CorrectAnswerIdx + 1 > mOptionsEditor.Options.Count)
             {
                 HandleError("Correct answer must be matched to the number of options.");
                 validationPassed = false;
