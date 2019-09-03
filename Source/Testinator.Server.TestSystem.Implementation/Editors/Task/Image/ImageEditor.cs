@@ -12,14 +12,20 @@ namespace Testinator.Server.TestSystem.Implementation
     /// </summary>
     internal class ImageEditor : BaseEditor<IImageContent, IImageEditor>, IImageEditor, IBuildable<IImageContent>
     {
-        private IList<Image> mImages;
+        protected IList<Image> mImages;
 
-        private int mMaxImageCount;
-        private int mMaxImageWidth;
-        private int mMaxImageHeight;
+        protected int mMaxImageCount;
+        protected int mMaxImageWidth;
+        protected int mMaxImageHeight;
 
         public OperationResult AddImage(Image img)
         {
+            if (img.Width == 0 || img.Height == 0)
+                return OperationResult.Fail("Image height and width cannot be 0");
+
+            if (img.Width > mMaxImageWidth || img.Height > mMaxImageHeight)
+                return OperationResult.Fail("Image is too big");
+
             if (mImages.Count >= mMaxImageCount)
                 return OperationResult.Fail($"Image content cannot consist of more than {mMaxImageCount} images.");
 
@@ -49,7 +55,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public OperationResult DeleteImageAt(int index, bool returnFailIfImageNotFound = false)
         {
-            if (mImages.Count > index + 1)
+            if (index >= mImages.Count)
             {
                 if (returnFailIfImageNotFound)
                     return OperationResult.Fail($"There is no element at index {index}.");
@@ -86,7 +92,12 @@ namespace Testinator.Server.TestSystem.Implementation
                 mImages = new List<Image>(OriginalObject.Images);
             }
 
-            var mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContent, ICollection<Image>, MaxCollectionCountAttribute, int>
+            LoadAttributeValues();
+        }
+
+        protected virtual void LoadAttributeValues()
+        {
+            mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContent, ICollection<Image>, MaxCollectionCountAttribute, int>
                 (obj => obj.Images, attr => attr.MaxCount, Version);
 
             var ImageSizeAttr = AttributeHelper.GetPropertyAttribute<ImageContent, ICollection<Image>, MaxImageSizeAttribute>
