@@ -33,7 +33,12 @@ namespace Testinator.Server.TestSystem.Implementation
         internal override bool Validate()
         {
             var validationPassed = true;
-            // TODO check if both text and images are not empty
+
+            if(string.IsNullOrEmpty(mTextEditor.Content) && mImageEditor.GetCurrentCount() == 0)
+            {
+                HandleError("Both text content and images cannot be empty.");
+                validationPassed = false;
+            }
             return validationPassed;
         }
 
