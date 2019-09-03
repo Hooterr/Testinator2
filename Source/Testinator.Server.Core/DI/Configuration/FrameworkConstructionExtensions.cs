@@ -34,6 +34,7 @@ namespace Testinator.Server.Core
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<BeginTestViewModel>();
             construction.Services.AddTransient<HomeViewModel>();
+            construction.Services.AddTransient<MultipleChoiceQuestionTestEditorViewModel>();
             construction.Services.AddTransient<LoginViewModel>();
             construction.Services.AddTransient<ScreenStreamViewModel>();
             construction.Services.AddTransient<AboutViewModel>();

@@ -21,6 +21,11 @@
         Home,
 
         /// <summary>
+        /// TODO: Remove once testing's done
+        /// </summary>
+        Demo,
+
+        /// <summary>
         /// The page to begin the whole test system
         /// </summary>
         BeginTest,

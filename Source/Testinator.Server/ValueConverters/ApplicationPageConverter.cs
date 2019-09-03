@@ -26,6 +26,9 @@ namespace Testinator.Server
                 case ApplicationPage.Home:
                     return new HomePage(viewModel as HomeViewModel ?? DI.GetInjectedPageViewModel<HomeViewModel>());
 
+                case ApplicationPage.Demo:
+                    return new DemoABCD(viewModel as MultipleChoiceQuestionTestEditorViewModel ?? DI.GetInjectedPageViewModel<MultipleChoiceQuestionTestEditorViewModel>());
+
                 case ApplicationPage.BeginTest:
                     return new BeginTestPage(viewModel as BeginTestViewModel ?? DI.GetInjectedPageViewModel<BeginTestViewModel>());
 
@@ -120,6 +123,9 @@ namespace Testinator.Server
 
             if (page is HomePage)
                 return ApplicationPage.Home;
+
+            if (page is DemoABCD)
+                return ApplicationPage.Demo;
 
             if (page is BeginTestPage)
                 return ApplicationPage.BeginTest;
