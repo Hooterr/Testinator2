@@ -42,8 +42,8 @@ namespace Testinator.Server.TestSystem.Implementation
         {
             var veryficationPassed = true;
 
-            // Verify text
-            if (Content.Length > mMaxTextLength)
+            // Null content is OK,
+            if (Content != null && (Content.Length > mMaxTextLength))
             {
                 HandleErrorFor(x => x.Content, $"Text content is too long. Maximum text length is set to {mMaxTextLength} characters.");
                 veryficationPassed = false;

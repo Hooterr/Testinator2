@@ -33,6 +33,14 @@ namespace Testinator.TestSystem.Implementation.Test.EditorsTests
         }
 
         [Fact]
+        public void ValidateNullText()
+        {
+            var editor = GetEditor();
+            editor.Content = null;
+            Assert.True(editor.Build().Succeeded);
+        }
+
+        [Fact]
         public void ValidateHtmlNotSupported()
         {
             var editor = GetEditor();
