@@ -1,13 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Testinator.Server.TestSystem.Implementation.Attributes;
-using Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy;
+﻿using Testinator.Server.TestSystem.Implementation.Attributes;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
+    /// <summary>
+    /// The base question scoring editor interface
+    /// </summary>
     public interface IQuestionScoringEditor
     {
+        /// <summary>
+        /// Maximum point score that is granted for the correct answer
+        /// </summary>
         [EditorProperty]
         int MaximumScore { get; set; }
     }

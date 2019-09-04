@@ -26,8 +26,14 @@ namespace Testinator.Server.TestSystem.Implementation
 
         #region Public Properties
 
+        /// <summary>
+        /// Editor for options part of the question
+        /// </summary>
         public override IMultipleChoiceQuestionOptionsEditor Options => mOptionsEditor;
 
+        /// <summary>
+        /// Editor for scoring part of the question
+        /// </summary>
         public override IMultipleChoiceQuestionScoringEditor Scoring => mScoringEditor;
 
         #endregion
@@ -62,13 +68,14 @@ namespace Testinator.Server.TestSystem.Implementation
             return OperationResult<IQuestionScoring>.Convert<IQuestionScoring, MultipleChoiceQuestionScoring>(scoringBuildResult);
         }
 
-        protected override bool PostBuildValidation()
+        protected override bool FinalValidation()
         {
+            // Important to clear all errors
             ClearAllErrors();
             var validationPassed = true;
             if (mScoringEditor.CorrectAnswerIdx < 0 || mScoringEditor.CorrectAnswerIdx + 1 > mOptionsEditor.Options.Count)
             {
-                HandleError("Correct answer must be matched to the number of options.");
+                HandleErrorFor(x => x.Scoring, "Correct answer must be matched to the number of options.");
                 validationPassed = false;
             }
             return validationPassed;

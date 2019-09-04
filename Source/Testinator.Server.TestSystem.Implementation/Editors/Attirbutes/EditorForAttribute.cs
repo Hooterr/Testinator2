@@ -1,12 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
+    /// <summary>
+    /// Informs the system what type of question this editor is made for
+    /// </summary>
+    [AttributeUsage(AttributeTargets.Class)]
     public class EditorForAttribute : Attribute
     {
-        public readonly Type QuestionType;
+        /// <summary>
+        /// The type of question the editor is made to operate on
+        /// </summary>
+        public Type QuestionType { get; private set; }
+
+        /// <summary>
+        /// Initializes the attribute
+        /// </summary>
+        /// <param name="questionType">Type of question the editor will operate on</param>
         public EditorForAttribute(Type questionType)
         {
             QuestionType = questionType;

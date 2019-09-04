@@ -11,7 +11,7 @@ namespace Testinator.Server.TestSystem.Implementation
     /// <typeparam name="TQuestion">The type of question this editor will be operating on</typeparam>
     /// <typeparam name="TOptionsEditor">The type of editor to use for the options part of the question</typeparam>
     /// <typeparam name="TScoringEditor">The type of editor to use for the scoring part of the question</typeparam>
-    internal abstract class BaseQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>
+    internal abstract class BaseQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : ErrorListener<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>>,                                                                                                    IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>
         where TQuestion : BaseQuestion, new()
         where TOptionsEditor : IQeustionOptionsEditor
         where TScoringEditor : IQuestionScoringEditor
@@ -35,18 +35,21 @@ namespace Testinator.Server.TestSystem.Implementation
 
         #endregion
 
-        #region Private
-
-        private List<string> mErrors;
-
-        #endregion
-
         #region Public Properties
 
+        /// <summary>
+        /// The editor for the task part of the question
+        /// </summary>
         public ITaskEditor Task => mTaskEditor;
 
-        // These two are question-specific
+        /// <summary>
+        /// The editor for the options part of the question
+        /// </summary>
         public abstract TOptionsEditor Options { get; }
+
+        /// <summary>
+        /// The editor for the scoring part of the question
+        /// </summary>
         public abstract TScoringEditor Scoring { get; }
 
         #endregion
@@ -59,7 +62,7 @@ namespace Testinator.Server.TestSystem.Implementation
             var taskBuildOperation = mTaskEditor.Build();
             var optionsBuildOperation = BuildOptions();
             var scoringBuildOperation = BuildScoring();
-            var postValidationSuccess = PostBuildValidation();
+            var postValidationSuccess = FinalValidation();
 
             // If any of the operations failed
             if (Helpers.AnyFalse(taskBuildOperation.Succeeded, optionsBuildOperation.Succeeded, scoringBuildOperation.Succeeded, postValidationSuccess))
@@ -69,7 +72,7 @@ namespace Testinator.Server.TestSystem.Implementation
                 questionBuildResult.Merge(taskBuildOperation)
                                    .Merge(optionsBuildOperation)
                                    .Merge(scoringBuildOperation)
-                                   .AddErrors(mErrors);
+                                   .AddErrors(GetUnhandledErrors());
 
                 return questionBuildResult;
             }
@@ -129,26 +132,29 @@ namespace Testinator.Server.TestSystem.Implementation
         #region Protected
 
         /// <summary>
-        /// Fired when the editor is initializing
+        /// Called when the editor is initializing
         /// In this method editors for options and scoring MUST be created
         /// </summary>
         protected abstract void OnInitializing();
 
+        /// <summary>
+        /// Builds the options for the question
+        /// </summary>
+        /// <returns>The result of the operation</returns>
         protected abstract OperationResult<IQuestionOptions> BuildOptions();
 
+        /// <summary>
+        /// Builds the scoring for the question
+        /// </summary>
+        /// <returns>The result of the operation</returns>
         protected abstract OperationResult<IQuestionScoring> BuildScoring();
 
-        protected virtual bool PostBuildValidation() => true;
-
-        protected void HandleError(string messgae)
-        {
-            mErrors.Add(messgae);
-        }
-
-        protected void ClearAllErrors()
-        {
-            mErrors.Clear();
-        }
+        /// <summary>
+        /// Final validation for the question
+        /// Called when task, options and scoring are built successfully 
+        /// </summary>
+        /// <returns>True if the validation passed, otherwise false</returns>
+        protected virtual bool FinalValidation() => true;
 
         #endregion
 
@@ -169,14 +175,12 @@ namespace Testinator.Server.TestSystem.Implementation
             // Let the implementer initialize as well 
             OnInitializing();
 
-            // Check if the implementer initialized editors
+            // Check if the implementer initialized all the editors
             if (Options == null)
                 throw new NotImplementedException("Options editor has not been initialized.");
 
             if (Scoring == null)
                 throw new NotSupportedException("Options scoring has not been initialized.");
-
-            mErrors = new List<string>();
         }
 
         #endregion
