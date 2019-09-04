@@ -5,15 +5,67 @@ using Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
+    /// <summary>
+    /// Implementation of ABC question scoring editor
+    /// </summary>
     internal class MultipleChoiceQuestionScoringEditor : BaseEditor<MultipleChoiceQuestionScoring, IMultipleChoiceQuestionScoringEditor>, IMultipleChoiceQuestionScoringEditor
     {
+        #region Private Members
+
+        /// <summary>
+        /// The type of default strategy to use
+        /// </summary>
         private Type mDefaultStrategyType;
+
+        /// <summary>
+        /// The maximum point score 
+        /// </summary>
         private int mMaxScore;
+
+        /// <summary>
+        /// The minimum point score
+        /// </summary>
         private int mMinScore;
+
+        /// <summary>
+        /// The scoring strategy to use
+        /// </summary>
         private IScoringStrategy mScoringStrategy;
 
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Maximum point score
+        /// </summary>
         public int MaximumScore { get; set; }
+
+        /// <summary>
+        /// The index of a correct answer
+        /// </summary>
         public int CorrectAnswerIdx { get; set; }
+
+        #endregion
+
+        #region All Constructors
+
+        /// <summary>
+        /// Initializes this editor to create new scoring guidelines
+        /// </summary>
+        /// <param name="version">The question model version to use</param>
+        public MultipleChoiceQuestionScoringEditor(int version) : base(version) { }
+
+        /// <summary>
+        /// Initializes this editor to edit an existing scoring
+        /// </summary>
+        /// <param name="scoring">The scoring to edit</param>
+        /// <param name="version">The question model version to use</param>
+        public MultipleChoiceQuestionScoringEditor(MultipleChoiceQuestionScoring scoring, int version) : base(scoring, version) { }
+
+        #endregion
+
+        #region Overridden
 
         protected override MultipleChoiceQuestionScoring BuildObject()
         {
@@ -28,10 +80,6 @@ namespace Testinator.Server.TestSystem.Implementation
             scoring.Strategy = mScoringStrategy;
             return scoring;
         }
-
-        public MultipleChoiceQuestionScoringEditor(int version) : base(version) { }
-
-        public MultipleChoiceQuestionScoringEditor(MultipleChoiceQuestionScoring scoring, int version) : base(scoring, version) { }
 
         protected override void OnInitialize()
         {
@@ -71,5 +119,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
             return validationPassed;
         }
+
+        #endregion
     }
 }

@@ -1,4 +1,6 @@
-﻿namespace Testinator.Server.TestSystem.Implementation
+﻿using Testinator.Server.TestSystem.Implementation.Attributes;
+
+namespace Testinator.Server.TestSystem.Implementation
 {
     /// <summary>
     /// Basic interface to edit or create any question
@@ -9,16 +11,19 @@
         /// <summary>
         /// Editor for the task part of the question
         /// </summary>
+        [EditorProperty]
         ITaskEditor Task { get; }
 
         /// <summary>
         /// Editor for the options part of the question
         /// </summary>
+        [EditorProperty]
         TOptionsEditor Options { get; }
 
         /// <summary>
         /// Editor for the scoring part of the question
         /// </summary>
+        [EditorProperty]
         TScoringEditor Scoring { get; }
     }
 }
