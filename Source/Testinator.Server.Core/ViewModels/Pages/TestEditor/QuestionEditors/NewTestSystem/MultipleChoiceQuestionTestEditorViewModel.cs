@@ -25,8 +25,8 @@ namespace Testinator.Server.Core
         public string AnswerB { get; set; }
         public string AnswerC { get; set; }
         public string AnswerD { get; set; }
-        public int RightAnswerIndex { get; set; }
-        public int PointsForRightAnswer { get; set; }
+        public string RightAnswerIndex { get; set; }
+        public string PointsForRightAnswer { get; set; }
 
         public string ErrorMessage { get; set; }
 
@@ -74,8 +74,8 @@ namespace Testinator.Server.Core
             //mQuestionEditor.Options.Options.Add(AnswerC);
             //mQuestionEditor.Options.Options.Add(AnswerD);
             mQuestionEditor.Options.SetOptions(AnswerA, AnswerB, AnswerC, AnswerD);
-            mQuestionEditor.Scoring.CorrectAnswerIdx = RightAnswerIndex;
-            mQuestionEditor.Scoring.MaximumScore = PointsForRightAnswer;
+            mQuestionEditor.Scoring.CorrectAnswerIdx = int.Parse(RightAnswerIndex);
+            mQuestionEditor.Scoring.MaximumScore = int.Parse(PointsForRightAnswer);
 
             // Build the question in the editor
             var operation = mQuestionEditor.Build();

@@ -317,6 +317,7 @@
     <Compile Include="Controls\Questions\QuestionEditors\MultipleChoiceQuestionEditor.xaml.cs">
       <DependentUpon>MultipleChoiceQuestionEditor.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\RegexTextBox.cs" />
     <Compile Include="Controls\SideMenuControl.xaml.cs">
       <DependentUpon>SideMenuControl.xaml</DependentUpon>
     </Compile>

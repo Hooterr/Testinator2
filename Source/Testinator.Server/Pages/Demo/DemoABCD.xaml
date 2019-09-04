@@ -16,7 +16,10 @@
             <TextBox Tag="Odpowiedz C" Text="{Binding AnswerC, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TestEditorInputField}" />
             <TextBox Tag="Odpowiedz D" Text="{Binding AnswerD, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TestEditorInputField}" />
             <TextBox Tag="Indeks poprawnej" Text="{Binding RightAnswerIndex, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TestEditorInputField}" />
-            <TextBox Tag="Punkty" Text="{Binding PointsForRightAnswer, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource TestEditorInputField}" />
+            <local:RegexTextBox Regex="^(\d?[1-9]|[1-9]0)$" 
+                                Tag="Punkty" 
+                                Text="{Binding PointsForRightAnswer, UpdateSourceTrigger=PropertyChanged}" 
+                                Style="{StaticResource TestEditorInputField}" />
             <TextBlock Text="{Binding ErrorMessage}" Foreground="Black" FontFamily="Bold"/>
             <Button Content="Submit" Command="{Binding SubmitCommand}" Style="{StaticResource BaseUIButton}" />
         </StackPanel>
