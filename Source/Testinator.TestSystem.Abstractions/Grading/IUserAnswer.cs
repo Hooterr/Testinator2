@@ -6,6 +6,6 @@ namespace Testinator.TestSystem.Abstractions
 {
     public interface IUserAnswer
     {
-
+        int QuestionId { get; set; }
     }
 }

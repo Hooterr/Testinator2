@@ -12,6 +12,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
         /// 0-A, 1-B etc...
         /// </summary>
         public int SelectedAnswerIdx { get; set; }
+        public int QuestionId { get; set; }
 
         public MultipleChoiceQuestionUserAnswer(int answerIdx)
         {

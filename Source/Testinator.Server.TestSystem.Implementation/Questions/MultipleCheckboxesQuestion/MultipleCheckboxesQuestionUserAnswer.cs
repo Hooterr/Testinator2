@@ -11,6 +11,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
         /// Selected/not selected list of user answer
         /// </summary>
         public List<bool> CheckedOptions { get; set; }
+        public int QuestionId { get; set; }
 
         public MultipleCheckboxesQuestionUserAnswer()
         {

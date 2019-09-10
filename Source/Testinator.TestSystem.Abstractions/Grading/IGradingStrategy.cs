@@ -6,6 +6,6 @@ namespace Testinator.TestSystem.Abstractions
 {
     public interface IGradingStrategy 
     {
-        IGrade GetGrade(int pointScore);
+        IGrade GetGrade(int pointScore, int maxPointScore);
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Testinator.TestSystem.Abstractions.Questions;
 
 namespace Testinator.TestSystem.Abstractions
 {
     public interface IQuestionProvider
     {
+        IQuestion GetQuestion();
     }
 }

@@ -13,6 +13,11 @@ namespace Testinator.TestSystem.Abstractions
         string Name { get; }
 
         /// <summary>
+        /// The maximum point score someone can get for this test
+        /// </summary>
+        int MaxPointScore { get; }
+
+        /// <summary>
         /// Grading strategy
         /// </summary>
         IGradingStrategy Strategy { get; }
@@ -22,7 +27,7 @@ namespace Testinator.TestSystem.Abstractions
         /// </summary>
         /// <param name="score">The score</param>
         /// <returns>Corresponding grade</returns>
-        // TODO replace int with complex type with question catergories etc.
+        // TODO replace int with complex type with question categories etc.
         IGrade GetGrade(int score);
     }
 }
