@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Testinator.TestSystem.Abstractions.Tests
+namespace Testinator.TestSystem.Abstractions
 {
     public interface ITest
     {
         /// <summary>
-        /// The name of this test
+        /// The basic data about current test
         /// </summary>
-        string Name { get; }
+        ITestInfo TestInfo { get; }
 
         /// <summary>
         /// The date when this test was initially created

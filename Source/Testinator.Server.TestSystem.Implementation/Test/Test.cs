@@ -1,6 +1,5 @@
 ﻿using System;
 using Testinator.TestSystem.Abstractions;
-using Testinator.TestSystem.Abstractions.Tests;
 
 namespace Testinator.Server.TestSystem.Implementation
 {
@@ -8,13 +7,14 @@ namespace Testinator.Server.TestSystem.Implementation
     {
         #region Internal Members
 
+        internal TestInfo mTestInfo;
         internal QuestionList mQuestionList;
         internal TestOptions mTestOptions;
         internal Grading mGrading;
 
         #endregion
 
-        public string Name { get; internal set; }
+        public ITestInfo TestInfo => mTestInfo;
 
         public DateTime CreationDate { get; internal set; }
 
