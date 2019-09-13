@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using Testinator.Core;
+using Testinator.Server.TestSystem.Implementation;
 
 namespace Testinator.UnitTests
 {

@@ -9,37 +9,43 @@ namespace Testinator.Client.Core
     /// </summary>
     public class ResultOverviewViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly TestHost mTestHost;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
         /// The name of the test user has completed
         /// </summary>
-        public string TestName => IoCClient.TestHost.CurrentTest.Info.Name;
+        public string TestName => mTestHost.CurrentTest.Info.Name;
 
         /// <summary>
         /// The time in which user has completed the test
         /// </summary>
-        public TimeSpan CompletionTime => IoCClient.TestHost.CurrentTest.Info.Duration - IoCClient.Application.TimeLeft;
+        public TimeSpan CompletionTime => mTestHost.CurrentTest.Info.Duration - DI.Application.TimeLeft;
 
         /// <summary>
         /// The score user achieved in a string format
         /// </summary>
-        public string UserScore => $"{IoCClient.TestHost.UserScore} / {IoCClient.TestHost.CurrentTest.TotalPointScore}";
+        public string UserScore => $"{mTestHost.UserScore} / {mTestHost.CurrentTest.TotalPointScore}";
 
         /// <summary>
         /// Indicates if the server app has allowed user to check his answers just after he finishes his test
         /// </summary>
-        public bool IsResultPageAllowed => IoCClient.TestHost.AreResultsAllowed;
+        public bool IsResultPageAllowed => mTestHost.AreResultsAllowed;
 
         /// <summary>
         /// The tooltip string for the "See results" button
         /// </summary>
-        public string ToolTipResultPage => IoCClient.TestHost.AreResultsAllowed ? "" : "Wgląd do wyników został wyłączony przez administratora";
+        public string ToolTipResultPage => mTestHost.AreResultsAllowed ? "" : "Wgląd do wyników został wyłączony przez administratora";
 
         /// <summary>
         /// The mark user has achieved by doing the test
         /// </summary>
-        public Marks UserMark => IoCClient.TestHost.UserMark;
+        public Marks UserMark => mTestHost.UserMark;
 
         #endregion
 
@@ -62,8 +68,11 @@ namespace Testinator.Client.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ResultOverviewViewModel()
+        public ResultOverviewViewModel(TestHost testHost)
         {
+            // Inject DI services
+            mTestHost = testHost;
+
             // Create commands
             ExitCommand = new RelayCommand(Exit);
             GoToQuestionsCommand = new RelayCommand(GoToQuestions);
@@ -79,12 +88,12 @@ namespace Testinator.Client.Core
         private void Exit()
         {
             // Reset the test host
-            IoCClient.TestHost.Reset();
+            mTestHost.Reset();
 
-            IoCClient.Application.ReturnMainScreen();
+            DI.Application.ReturnMainScreen();
 
             // Indicate we are ready for another test now
-            IoCClient.Application.Network.SendData(new DataPackage(PackageType.ReadyForTest));
+            DI.Application.Network.SendData(new DataPackage(PackageType.ReadyForTest));
         }
 
         /// <summary>
@@ -96,7 +105,7 @@ namespace Testinator.Client.Core
             if (!IsResultPageAllowed)
             {
                 // Show the message box with this info and don't change page
-                IoCClient.UI.ShowMessage(new MessageBoxDialogViewModel
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Title = "Wstęp wzbroniony",
                     Message = "Dostęp do szczegółowych wyników testu został zabroniony przez serwer.",
@@ -107,10 +116,10 @@ namespace Testinator.Client.Core
             }
 
             // Create view model for the page
-            var viewmodel = new ResultQuestionsViewModel();
+            var viewmodel = Dna.Framework.Service<ResultQuestionsViewModel>();
 
             // Change the page
-            IoCClient.Application.GoToPage(ApplicationPage.ResultQuestionsPage, viewmodel);
+            DI.Application.GoToPage(ApplicationPage.ResultQuestionsPage, viewmodel);
 
             // And show the first question
             viewmodel.ShowFirstQuestion();

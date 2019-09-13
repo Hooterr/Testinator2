@@ -101,7 +101,7 @@ namespace Testinator.Server.Core
         /// </summary>
         private void ReturnPreviousPage()
         {
-            IoCServer.Application.GoToPage(ApplicationPage.TestResultsInitial);
+            DI.Application.GoToPage(ApplicationPage.TestResultsInitial);
         }
 
         /// <summary>
@@ -138,7 +138,7 @@ namespace Testinator.Server.Core
             var totalScore = 0;
 
             // Log what we are doing
-            IoCServer.Logger.Log("Preparing view data to show user's answers");
+            DI.Logger.Log("Preparing view data to show user's answers");
 
             // Get the questions from the test
             var Questions = mTestResults.Test.Questions;
@@ -247,7 +247,7 @@ namespace Testinator.Server.Core
                 QuestionListItems = QuestionListItemsViewModels,
             };
 
-            IoCServer.Application.GoToPage(ApplicationPage.ResultQuestions, questionsViewmodel);
+            DI.Application.GoToPage(ApplicationPage.ResultQuestions, questionsViewmodel);
 
             questionsViewmodel.ShowFirstQuestion();
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dna;
+using System;
 using System.Reflection;
 
 namespace Testinator.Client.Core
@@ -8,12 +9,18 @@ namespace Testinator.Client.Core
     /// </summary>
     public class ApplicationViewModel : PageHostViewModel
     {
+        #region Private Members
+
+        private readonly TestHost mTestHost;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
         /// Handles network communication in the application
         /// </summary>
-        public ClientNetwork Network { get; set; } = new ClientNetwork();
+        public ClientNetwork Network { get; set; } = Framework.Service<ClientNetwork>();
 
         /// <summary>
         /// Current version of the application
@@ -23,7 +30,7 @@ namespace Testinator.Client.Core
         /// <summary>
         /// Indicates how much time is left 
         /// </summary>
-        public TimeSpan TimeLeft => IoCClient.TestHost.TimeLeft;
+        public TimeSpan TimeLeft => mTestHost.TimeLeft;
 
         #endregion
 
@@ -42,8 +49,11 @@ namespace Testinator.Client.Core
         /// <summary>
         /// Default construcotr
         /// </summary>
-        public ApplicationViewModel()
+        public ApplicationViewModel(TestHost testHost)
         {
+            // Inject DI services
+            mTestHost = testHost;
+
             // Get the current version from assebly
             var assebly = Assembly.LoadFrom("Testinator.Client.Core.dll");
             Version = assebly.GetName().Version;
@@ -61,10 +71,10 @@ namespace Testinator.Client.Core
         {
             if (Network.IsConnected)
             {
-                IoCClient.UI.DispatcherThreadAction(() => IoCClient.Application.GoToPage(ApplicationPage.WaitingForTest));
+                DI.UI.DispatcherThreadAction(() => DI.Application.GoToPage(ApplicationPage.WaitingForTest));
             }
             else
-                IoCClient.UI.DispatcherThreadAction(() => IoCClient.Application.GoToPage(ApplicationPage.Login));
+                DI.UI.DispatcherThreadAction(() => DI.Application.GoToPage(ApplicationPage.Login));
         }
 
         /// <summary>
@@ -83,12 +93,12 @@ namespace Testinator.Client.Core
         {
             // In both cases we need small format
             if (newPage == ApplicationPage.Login || newPage == ApplicationPage.WaitingForTest)
-                IoCClient.UI.EnableSmallApplicationView();
+                DI.UI.EnableSmallApplicationView();
 
             // NOTE: If there was only 'else' here it would cause useless calls to UIManager to disable login screen view 
             //       that has already been disabled
             else if (newPage > ApplicationPage.WaitingForTest)
-                IoCClient.UI.DisableSmallApplicationView();
+                DI.UI.DisableSmallApplicationView();
         }
 
         #endregion

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 using Testinator.Core;
+using Testinator.Server.Database;
 
 namespace Testinator.Server.Core
 {
@@ -10,6 +11,8 @@ namespace Testinator.Server.Core
     public class ApplicationSettingsViewModel : BaseViewModel
     {
         #region Private Members
+
+        private readonly ISettingsRepository mSettingsRepository;
 
         /// <summary>
         /// Index of the language used in this application
@@ -80,12 +83,12 @@ namespace Testinator.Server.Core
                 switch(mLanguageIndex)
                 {
                     case 1:
-                        IoCServer.UI.ChangeLanguage("en-US");
+                        DI.UI.ChangeLanguage("en-US");
                         break;
 
                     // 0 or any not found index is default - Polish language
                     default:
-                        IoCServer.UI.ChangeLanguage("pl-PL");
+                        DI.UI.ChangeLanguage("pl-PL");
                         break;
                 }
             }
@@ -98,90 +101,67 @@ namespace Testinator.Server.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ApplicationSettingsViewModel()
+        public ApplicationSettingsViewModel(ISettingsRepository settingsRepository)
         {
-            // Load every property data from config file
-            ReadDataFromConfig();
+            // Inject DI services
+            mSettingsRepository = settingsRepository;
 
-            // Hook to property changed event, so everytime settings are being changed, we save it to the file
-            PropertyChanged += SaveSettingsStateToFile;
+            // Load initial settings configuration from database
+            InitializeSettings();
+
+            // Hook to property changed event, so everytime settings are being changed, we save it to the database
+            PropertyChanged += SettingValueChanged;
         }
 
         #endregion
 
-        #region Private Helpers
+        #region Private Methods
 
         /// <summary>
-        /// Loads every property from config file to this view model at the start
+        /// Initializes this view model state with values that are currently saved in the database
         /// </summary>
-        private void ReadDataFromConfig()
+        private void InitializeSettings()
         {
-            try
-            { 
-                // Check if config file exists
-                if (!ConfigFileReader.FileExists("config.xml"))
-                    // If not, create brand-new one from current view model state
-                    ConfigFileWriter.WriteToFile(this);
+            // Get every setting from database
+            var settingList = mSettingsRepository.GetAllSettings();
 
-                // Get the list of every property saved in the config file
-                var propertyList = ConfigFileReader.LoadConfig();
-
-                // For each property...
-                foreach (var property in propertyList)
-                {
-                    // Set saved value from config
-                    this[property.Name] = property.Value;
-                }
-            }
-            catch (Exception ex)
+            // For each one...
+            foreach (var setting in settingList)
             {
-                // If an error occured, show info to the user
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel
+                try
                 {
-                    Title = LocalizationResource.LoadingError,
-                    Message = LocalizationResource.UnableToLoadConfigFile + "\n" +
-                              LocalizationResource.ErrorContentSemicolon + ex.Message,
-                    OkText = LocalizationResource.Ok
-                });
-
-                IoCServer.Logger.Log("Unable to read config from local folder, error message: " + ex.Message);
+                    // Save its value to appropriate property
+                    this[setting.Name] = Convert.ChangeType(setting.Value, setting.Type);
+                }
+                // If something fails, that means the setting in database is broken
+                // Therefore, default value of a property will be used and future changes will repair database failures
+                // So no need to do anything after catching the exception
+                catch { }
             }
         }
 
         /// <summary>
-        /// Saves current application settings state to the configuration file
+        /// Fired everytime any of this view model's properties get changed
         /// </summary>
-        private void SaveSettingsStateToFile(object sender, PropertyChangedEventArgs e)
+        private void SettingValueChanged(object sender, PropertyChangedEventArgs e)
         {
-            // Catch the name of the property that changed
+            // Get changed property's name
             var propertyName = e.PropertyName;
 
-            // Replicate the property
-            var property = new SettingsPropertyInfo
+            // Get its type and value based on that
+            var propertyValue = this[propertyName];
+            var propertyType = this[propertyName].GetType();
+
+            // Create new property info
+            var propertyInfo = new SettingsPropertyInfo
             {
                 Name = propertyName,
-                Type = this[propertyName].GetType(),
-                Value = this[propertyName]
+                Type = propertyType,
+                Value = propertyValue
             };
 
-            try
-            { 
-                // Send the property to the XmlWriter
-                ConfigFileWriter.WriteToFile(property);
-            }
-            catch (Exception ex)
-            {
-                // If an error occured, show info to the user
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel
-                {
-                    Title = LocalizationResource.SavingError,
-                    Message = LocalizationResource.UnableToSaveConfigFile + "\n" +
-                              LocalizationResource.ErrorContentSemicolon + ex.Message,
-                    OkText = LocalizationResource.Ok
-                });
-
-                IoCServer.Logger.Log("Unable to write new property value to the config, error message: " + ex.Message);
-            }
+            // Save it to the database
+            mSettingsRepository.SaveSetting(propertyInfo);
         }
 
         #endregion

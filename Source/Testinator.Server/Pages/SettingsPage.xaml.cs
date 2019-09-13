@@ -18,7 +18,7 @@ namespace Testinator.Server
             InitializeComponent();
 
             // Attach the single instance of IoC view model to this page
-            DataContext = IoCServer.Settings;
+            DataContext = DI.Settings;
         }
 
         #endregion

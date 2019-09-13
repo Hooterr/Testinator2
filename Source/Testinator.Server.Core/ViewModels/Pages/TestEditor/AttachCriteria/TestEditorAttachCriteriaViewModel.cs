@@ -9,6 +9,14 @@ namespace Testinator.Server.Core
     /// </summary>
     public class TestEditorAttachCriteriaViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly TestHost mTestHost;
+        private readonly ServerNetwork mServerNetwork;
+        private readonly TestEditor mTestEditor;
+
+        #endregion
+
         #region Public Properties 
 
         /// <summary>
@@ -72,7 +80,7 @@ namespace Testinator.Server.Core
         /// </summary>
         private void GoPreviousPage()
         {
-            IoCServer.TestEditor.GoPreviousPage();
+            mTestEditor.GoPreviousPage();
         }
 
         /// <summary>
@@ -114,11 +122,11 @@ namespace Testinator.Server.Core
             }
             try
             {
-                IoCServer.TestEditor.Builder.AddGrading(PointsGrading);
+                mTestEditor.Builder.AddGrading(PointsGrading);
             }
             catch (Exception ex)
             {
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel()
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel()
                 {
                     Title = "Test editor",
                     Message = $"Nieznany bład. {ex.Message}",
@@ -127,7 +135,7 @@ namespace Testinator.Server.Core
                 return;
             }
 
-            IoCServer.TestEditor.GoNextPhase();
+            mTestEditor.GoNextPhase();
         }
 
         /// <summary>
@@ -136,7 +144,7 @@ namespace Testinator.Server.Core
         /// <param name="newGrading">Item that has been clicked</param>
         private void CriteriaItemSelected(GradingPercentage newGrading)
         {
-            PointsGrading = newGrading.ToPoints(IoCServer.TestEditor.Builder.CurrentPointScore);
+            PointsGrading = newGrading.ToPoints(mTestEditor.Builder.CurrentPointScore);
             IsCriteriaEditModeOn = false;
             ErrorMessage = "";
             MatchPropertiesWithCriteria();
@@ -157,8 +165,13 @@ namespace Testinator.Server.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestEditorAttachCriteriaViewModel()
+        public TestEditorAttachCriteriaViewModel(ServerNetwork serverNetwork, TestHost testHost, TestEditor testEditor)
         {
+            // Inject DI services
+            mServerNetwork = serverNetwork;
+            mTestHost = testHost;
+            mTestEditor = testEditor;
+
             // Create commands
             GoPreviousPageCommand = new RelayCommand(GoPreviousPage);
             SubmitCriteriaCommand = new RelayCommand(SubmitCriteria);
@@ -168,7 +181,7 @@ namespace Testinator.Server.Core
             CriteriaListViewModel.Instance.ShouldSelectIndicatorBeVisible = false;
             CriteriaListViewModel.Instance.ItemSelected += CriteriaItemSelected;
 
-            PointsGrading =  new GradingPercentage().ToPoints(IoCServer.TestEditor.CurrentPointScore);
+            PointsGrading =  new GradingPercentage().ToPoints(mTestEditor.CurrentPointScore);
 
             MatchPropertiesWithCriteria();
         }
@@ -207,13 +220,13 @@ namespace Testinator.Server.Core
                 if (PointsGrading.IsMarkAIncluded)
                 {
                     // The highest value must be test's max points
-                    if (topMarkA != IoCServer.TestEditor.Builder.CurrentPointScore) throw new Exception();
+                    if (topMarkA != mTestEditor.Builder.CurrentPointScore) throw new Exception();
                     if (bottomMarkA <= topMarkB) throw new Exception();
                 }
                 else
                 {
                     // The highest value must be test's max points
-                    if (topMarkB != IoCServer.TestEditor.Builder.CurrentPointScore) throw new Exception();
+                    if (topMarkB != mTestEditor.Builder.CurrentPointScore) throw new Exception();
                 }
                 if (bottomMarkB <= topMarkC) throw new Exception();
                 if (bottomMarkC <= topMarkD) throw new Exception();

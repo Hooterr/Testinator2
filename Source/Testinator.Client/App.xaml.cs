@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dna;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Globalization;
 using System.Windows;
 using Testinator.Client.Core;
@@ -24,14 +26,14 @@ namespace Testinator.Client
             ApplicationSetup();
 
             // Log that application is starting
-            IoCClient.Logger.Log("Application starting...");
+            DI.Logger.Log("Application starting...");
 
             // Show the main window
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
 
             // Go to the first page
-            IoCClient.Application.GoToPage(ApplicationPage.Login);
+            DI.Application.GoToPage(ApplicationPage.Login);
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace Testinator.Client
         /// <param name="e"></param>
         protected override void OnExit(ExitEventArgs e)
         {
-            IoCClient.Application.Close();
+            DI.Application.Close();
         }
 
         /// <summary>
@@ -52,24 +54,22 @@ namespace Testinator.Client
             LocalizationResource.Culture = new CultureInfo("pl-PL");
 
             // Setup IoC
-            IoCClient.Setup();
+            DI.InitialSetup();
 
-            // Bind a logger
-            IoCClient.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory(new[]
+            // Inject WPF specific services
+            Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
+            Framework.Construction.Services.AddSingleton<ILogFactory>(new BaseLogFactory(new[]
             {
                 // TODO: Add ApplicationSettings so we can set/edit a log location
                 //       For now just log to the path where this application is running
 
                 // TODO: Make log files ordered by a date, week-wise
                 //       For now - random numbers for testing as it allows running multiple clients
-                new FileLogger(($"log{new Random().Next(100000, 99999999).ToString()}.txt")),
+                new Core.FileLogger(($"log{new Random().Next(100000, 99999999).ToString()}.txt"))
             }));
 
-            // Bind a File Writer
-            IoCClient.Kernel.Bind<FileManagerBase>().ToConstant(new LogsWriter());
-
-            // Bind a UI Manager
-            IoCClient.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
+            // Build the final DI
+            Framework.Construction.Build();
         }
     }
 }

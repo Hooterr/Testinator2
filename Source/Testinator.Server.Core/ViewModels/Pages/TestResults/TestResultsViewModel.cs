@@ -105,7 +105,7 @@ namespace Testinator.Server.Core
                 return;
 
             var viewmodel = new TestResultsDetailsViewModel(selectedItem);
-            IoCServer.Application.GoToPage(ApplicationPage.TestResultsDetails, viewmodel);
+            DI.Application.GoToPage(ApplicationPage.TestResultsDetails, viewmodel);
         }
 
         /// <summary>
@@ -134,7 +134,7 @@ namespace Testinator.Server.Core
                 AcceptText = LocalizationResource.Yes,
                 CancelText = LocalizationResource.No,
             };
-            IoCServer.UI.ShowMessage(vm);
+            DI.UI.ShowMessage(vm);
 
             if (vm.UserResponse == false)
                 return;
@@ -147,7 +147,7 @@ namespace Testinator.Server.Core
             catch (Exception ex)
             {
                 // If an error occured, show info to the user
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Title = LocalizationResource.DeletionError,
                     Message = "Nie udało się usunąć tego rezultatu." + "\n" +
@@ -155,7 +155,7 @@ namespace Testinator.Server.Core
                     OkText = LocalizationResource.Ok
                 });
 
-                IoCServer.Logger.Log("Unable to delete result from local folder, error message: " + ex.Message);
+                DI.Logger.Log("Unable to delete result from local folder, error message: " + ex.Message);
             }
 
             // Reload items

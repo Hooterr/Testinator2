@@ -113,7 +113,7 @@ namespace Testinator.Server.Core
         private void Return()
         {
             var viewmodel = new TestResultsDetailsViewModel(Results);
-            IoCServer.Application.GoToPage(ApplicationPage.TestResultsDetails, viewmodel); 
+            DI.Application.GoToPage(ApplicationPage.TestResultsDetails, viewmodel); 
         }
 
         #endregion

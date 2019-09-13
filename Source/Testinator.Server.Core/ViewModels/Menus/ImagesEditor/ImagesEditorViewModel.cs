@@ -170,7 +170,7 @@ namespace Testinator.Server.Core
             if (CanAddImages)
             {
                 // Move file types somewhere else
-                var fileName = IoCServer.UI.ShowSingleFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "png files (*.png)|*.png|jpg files (*.jpg)|*.jpg|bmp files (*.bmp)|*.bm/p");
+                var fileName = DI.UI.ShowSingleFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "png files (*.png)|*.png|jpg files (*.jpg)|*.jpg|bmp files (*.bmp)|*.bm/p");
 
                 // The user did not selected any files
                 if (string.IsNullOrEmpty(fileName))
@@ -185,7 +185,7 @@ namespace Testinator.Server.Core
                 }
                 catch (FileNotFoundException ex)
                 {
-                    IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel()
+                    DI.UI.ShowMessage(new MessageBoxDialogViewModel()
                     {
                         Message = $"Nie można wczytać pliku. Błąd: {ex.Message}",
                         OkText = "OK",
@@ -195,7 +195,7 @@ namespace Testinator.Server.Core
                 }
                 catch (Exception ex)
                 {
-                    IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel()
+                    DI.UI.ShowMessage(new MessageBoxDialogViewModel()
                     {
                         Message = ex.Message,
                         OkText = "OK",
@@ -335,7 +335,7 @@ namespace Testinator.Server.Core
             }
             catch
             {
-                IoCServer.Logger.Log("Developer error. Code: 2");
+                DI.Logger.Log("Developer error. Code: 2");
                 return -1;
             }
             return index;

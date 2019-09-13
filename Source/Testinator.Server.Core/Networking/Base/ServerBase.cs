@@ -61,23 +61,23 @@ namespace Testinator.Server.Core
         {
             if (Target == null)
             {
-                IoCServer.Logger.Log("Could not send the data. Target socket was null");
+                DI.Logger.Log("Could not send the data. Target socket was null");
                 throw new ServerException(LocalizationResource.CouldNotSendData, "Target socket was null");
             }
 
             if (Data == null)
             {
-                IoCServer.Logger.Log("Could not send the data as it was null");
+                DI.Logger.Log("Could not send the data as it was null");
                 throw new ServerException(LocalizationResource.CouldNotSendData, "Data package was null");
             }
 
             if (!DataPackageDescriptor.TryConvertToBin(out var senderBuffor, Data))
             {
-                IoCServer.Logger.Log("Could not send the data. Binary conversion failed");
+                DI.Logger.Log("Could not send the data. Binary conversion failed");
                 throw new ServerException(LocalizationResource.CouldNotSendData, "Binary conversion failed");
             }
 
-            IoCServer.Logger.Log("Sending data...");
+            DI.Logger.Log("Sending data...");
 
             try
             {
@@ -85,11 +85,11 @@ namespace Testinator.Server.Core
             }
             catch (Exception ex)
             {
-                IoCServer.Logger.Log($"Failed to send the data. Error: {ex.Message}");
+                DI.Logger.Log($"Failed to send the data. Error: {ex.Message}");
                 throw new ServerException("Failed to send the data", ex);
             }
 
-            IoCServer.Logger.Log("Data sent successfully");
+            DI.Logger.Log("Data sent successfully");
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace Testinator.Server.Core
             if (IsRunning)
                 return;
 
-            IoCServer.Logger.Log("Server starting...");
+            DI.Logger.Log("Server starting...");
             try
             {
                 // Initialize the socket
@@ -212,12 +212,12 @@ namespace Testinator.Server.Core
             {
                 IsRunning = false;
 
-                IoCServer.Logger.Log($"Failed to start the server. Error: {ex.Message}");
+                DI.Logger.Log($"Failed to start the server. Error: {ex.Message}");
 
                 throw new ServerException(LocalizationResource.CouldNotStartServer, ex);
             }
 
-            IoCServer.Logger.Log("Server has been started correctly");
+            DI.Logger.Log("Server has been started correctly");
 
             // If server has been started crrectly raise the event
             if (IsRunning == true)
@@ -232,12 +232,12 @@ namespace Testinator.Server.Core
             if (!IsRunning)
                 return;
 
-            IoCServer.Logger.Log("Attempting to shut the server down...");
+            DI.Logger.Log("Attempting to shut the server down...");
 
             // Create a package that contains disconnect request 
             var DisconnectRequestPackage = new DataPackage(PackageType.DisconnectRequest, null);
 
-            IoCServer.Logger.Log("Sending disconnection requests and closing sockets..");
+            DI.Logger.Log("Sending disconnection requests and closing sockets..");
 
             try
             {
@@ -256,18 +256,18 @@ namespace Testinator.Server.Core
             }
             catch (Exception ex)
             {
-                IoCServer.Logger.Log($"Server shutdown error: {ex.Message}");
+                DI.Logger.Log($"Server shutdown error: {ex.Message}");
                 
                 // Clear the clients 
                 mClients.Clear();
             }
 
-            IoCServer.Logger.Log("All connected sockets closed\nClosing server socket...");
+            DI.Logger.Log("All connected sockets closed\nClosing server socket...");
 
             // Also close the server socket to prevent from accepting new clients
             mServerSocket.Close();
 
-            IoCServer.Logger.Log("Server socket closed");
+            DI.Logger.Log("Server socket closed");
 
             // Save status
             IsRunning = false;
@@ -294,7 +294,7 @@ namespace Testinator.Server.Core
             catch (ServerException ex)
             {
                 // Notify about the failure
-                IoCServer.Logger.Log(ex.Message + ex.Reason);
+                DI.Logger.Log(ex.Message + ex.Reason);
             }
         }
 
@@ -312,7 +312,7 @@ namespace Testinator.Server.Core
             if (!IsRunning)
                 return;
 
-            IoCServer.Logger.Log("Server: New connection. Trying to get the socket...");
+            DI.Logger.Log("Server: New connection. Trying to get the socket...");
 
             // Prapare socket for the new client
             Socket clientSocket;
@@ -323,7 +323,7 @@ namespace Testinator.Server.Core
             }
             catch
             {
-                IoCServer.Logger.Log("Failed to extract the socket");
+                DI.Logger.Log("Failed to extract the socket");
                 return;
             }
 
@@ -333,7 +333,7 @@ namespace Testinator.Server.Core
             // Begin reciving on this socket
             clientSocket.BeginReceive(mReciverBuffer, 0, BufferSize, SocketFlags.None, ReceiveCallback, clientSocket);
 
-            IoCServer.Logger.Log("Socket connected succesfully.");
+            DI.Logger.Log("Socket connected succesfully.");
 
             // Continue accepting new clients
             mServerSocket.BeginAccept(AcceptCallback, null);
@@ -422,7 +422,7 @@ namespace Testinator.Server.Core
                     DataReceived(mClients[senderSocket], ReceivedPackage);
             }
             else
-                IoCServer.Logger.Log("Skipping data package. Binary conversion failed.");
+                DI.Logger.Log("Skipping data package. Binary conversion failed.");
 
             // Continue receiving
             try

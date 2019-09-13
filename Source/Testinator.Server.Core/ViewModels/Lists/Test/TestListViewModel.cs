@@ -150,7 +150,7 @@ namespace Testinator.Server.Core
             catch (Exception ex)
             {
                 // If an error occured, show info to the user
-                IoCServer.UI.ShowMessage(new MessageBoxDialogViewModel
+                DI.UI.ShowMessage(new MessageBoxDialogViewModel
                 {
                     Title = "Błąd wczytywania",
                     Message = "Nie udało się wczytać dostępnych testów." +
@@ -158,7 +158,7 @@ namespace Testinator.Server.Core
                     OkText = "Ok"
                 });
 
-                IoCServer.Logger.Log("Unable to read tests from local folder, error message: " + ex.Message);
+                DI.Logger.Log("Unable to read tests from local folder, error message: " + ex.Message);
             }
 
             // Rewrite list to the collection

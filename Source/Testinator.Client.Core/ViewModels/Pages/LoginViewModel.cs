@@ -13,6 +13,12 @@ namespace Testinator.Client.Core
     /// </summary>
     public class LoginViewModel : BaseViewModel
     {
+        #region Private Members
+
+        private readonly ClientModel mClientModel;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -20,8 +26,8 @@ namespace Testinator.Client.Core
         /// </summary>
         public string Name
         {
-            get => IoCClient.Client.Name;
-            set => IoCClient.Client.Name = value;
+            get => mClientModel.Name;
+            set => mClientModel.Name = value;
         }
 
         /// <summary>
@@ -29,19 +35,19 @@ namespace Testinator.Client.Core
         /// </summary>
         public string Surname
         {
-            get => IoCClient.Client.LastName;
-            set => IoCClient.Client.LastName = value;
+            get => mClientModel.LastName;
+            set => mClientModel.LastName = value;
         }
 
         /// <summary>
         /// IP of the server we are connecting to
         /// </summary>
-        public string ServerIP { get; set; } = IoCClient.Application.Network.IPString;
+        public string ServerIP { get; set; } = DI.Application.Network.IPString;
 
         /// <summary>
         /// Port of the server we are connecting to
         /// </summary>
-        public string ServerPort { get; set; } = IoCClient.Application.Network.Port.ToString();
+        public string ServerPort { get; set; } = DI.Application.Network.Port.ToString();
 
         /// <summary>
         /// Indicates if settings menu is opened
@@ -51,7 +57,7 @@ namespace Testinator.Client.Core
         /// <summary>
         /// A flag indicating if the connect command is running
         /// </summary>
-        public bool ConnectingIsRunning => IoCClient.Application.Network.IsTryingToConnect;
+        public bool ConnectingIsRunning => DI.Application.Network.IsTryingToConnect;
 
         /// <summary>
         /// If any error occur, show this message
@@ -76,7 +82,7 @@ namespace Testinator.Client.Core
         /// <summary>
         /// Number of attempts taken to connect to the server
         /// </summary>
-        public int Attempts => IoCClient.Application.Network.Attempts;
+        public int Attempts => DI.Application.Network.Attempts;
 
         /// <summary>
         /// Indicates if dark overlay should visible
@@ -134,8 +140,11 @@ namespace Testinator.Client.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public LoginViewModel()
+        public LoginViewModel(ClientModel clientModel)
         {
+            // Inject DI services
+            mClientModel = clientModel;
+
             // Create commands
             TryConnectingCommand = new RelayCommand(Connect);
             SettingsMenuExpandCommand = new RelayCommand(ExpandMenu);
@@ -146,9 +155,9 @@ namespace Testinator.Client.Core
             SettingsMenuLoadDefaultValuesCommand = new RelayCommand(SettingsMenuLoadDefaultValues);
             QuoteAuthorClickedCommand = new RelayCommand(QuoteAuthorClicked);
 
-            IoCClient.Application.Network.AttemptCounterUpdated += Network_OnAttemptUpdate;
-            IoCClient.Application.Network.AttemptsTimeout += Network_AttemptsTimeout;
-            IoCClient.Application.Network.ConnectionFinished += Network_ConnectionFinished;
+            DI.Application.Network.AttemptCounterUpdated += Network_OnAttemptUpdate;
+            DI.Application.Network.AttemptsTimeout += Network_AttemptsTimeout;
+            DI.Application.Network.ConnectionFinished += Network_ConnectionFinished;
             PropertyChanged += LoginViewModel_PropertyChanged;
         }
 
@@ -157,9 +166,9 @@ namespace Testinator.Client.Core
         /// </summary>
         public override void Dispose()
         {
-            IoCClient.Application.Network.AttemptCounterUpdated -= Network_OnAttemptUpdate;
-            IoCClient.Application.Network.AttemptsTimeout -= Network_AttemptsTimeout;
-            IoCClient.Application.Network.ConnectionFinished -= Network_ConnectionFinished;
+            DI.Application.Network.AttemptCounterUpdated -= Network_OnAttemptUpdate;
+            DI.Application.Network.AttemptsTimeout -= Network_AttemptsTimeout;
+            DI.Application.Network.ConnectionFinished -= Network_ConnectionFinished;
             PropertyChanged -= LoginViewModel_PropertyChanged;
         }
 
@@ -183,11 +192,11 @@ namespace Testinator.Client.Core
             }
             
             // Setup client and start connecting
-            IoCClient.Application.Network.Initialize(ServerIP, int.Parse(ServerPort));
-            IoCClient.Application.Network.Connect();
+            DI.Application.Network.Initialize(ServerIP, int.Parse(ServerPort));
+            DI.Application.Network.Connect();
             
             // Log it
-            IoCClient.Logger.Log("Attempting to connect to the server");
+            DI.Logger.Log("Attempting to connect to the server");
 
             OnPropertyChanged(nameof(ConnectingIsRunning));
             OnPropertyChanged(nameof(OverlayVisible));
@@ -207,8 +216,8 @@ namespace Testinator.Client.Core
                 return;
 
             // Load initial values
-            ServerIP = IoCClient.Application.Network.IPString;
-            ServerPort = IoCClient.Application.Network.Port.ToString();
+            ServerIP = DI.Application.Network.IPString;
+            ServerPort = DI.Application.Network.Port.ToString();
 
             // Simply expand menu
             IsSettingsMenuOpened = true;
@@ -289,10 +298,10 @@ namespace Testinator.Client.Core
         private void StopConnecting()
         {
             // Disconnect
-            IoCClient.Application.Network.Disconnect();
+            DI.Application.Network.Disconnect();
 
             // Log it
-            IoCClient.Logger.Log("User disconnected");
+            DI.Logger.Log("User disconnected");
 
             IsCancelling = true;
         }
@@ -344,7 +353,7 @@ namespace Testinator.Client.Core
         {
             OnPropertyChanged(nameof(ConnectingIsRunning));
             OnPropertyChanged(nameof(OverlayVisible));
-            IoCClient.UI.ShowMessage(new MessageBoxDialogViewModel()
+            DI.UI.ShowMessage(new MessageBoxDialogViewModel()
             {
                 Message = LocalizationResource.MaximumAttemptsReachedMessage,
                 Title = LocalizationResource.ConnectionFalied,

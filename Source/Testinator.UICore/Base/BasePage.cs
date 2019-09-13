@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using Dna;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using Testinator.AnimationFramework;
@@ -123,7 +124,7 @@ namespace Testinator.UICore
     /// A base page with added ViewModel support
     /// </summary>
     public class BasePage<VM> : BasePage
-        where VM : BaseViewModel, new()
+        where VM : BaseViewModel
     {
         #region Public Properties
 
@@ -150,7 +151,7 @@ namespace Testinator.UICore
                 return;
 
             // Create a default view model
-            ViewModel = IoC.Get<VM>();
+            ViewModel = Framework.Service<VM>();
         }
 
         /// <summary>
@@ -168,7 +169,7 @@ namespace Testinator.UICore
                 ViewModel = specificViewModel;
             else
                 // Create a default view model
-                ViewModel = IoC.Get<VM>();
+                ViewModel = Framework.Service<VM>();
         }
 
         #endregion

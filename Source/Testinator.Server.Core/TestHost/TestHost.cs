@@ -12,7 +12,9 @@ namespace Testinator.Server.Core
     /// </summary>
     public class TestHost : BaseViewModel
     {
-        #region Private Members 
+        #region Private Members
+
+        private readonly ServerNetwork mServerNetwork;
 
         /// <summary>
         /// Timer to handle cutdown
@@ -89,7 +91,7 @@ namespace Testinator.Server.Core
             foreach (var client in ClientsInTest)
             {
                 // Send start command with args
-                IoCServer.Network.Send(client, TestStartPackage);
+                mServerNetwork.Send(client, TestStartPackage);
 
                 // Reset the client for new test
                 client.ResetForNewTest(CurrentTest.Questions.Count);
@@ -119,7 +121,7 @@ namespace Testinator.Server.Core
             foreach (var client in ClientsInTest)
             {
                 client.CanStartTest = true;
-                IoCServer.Network.Send(client, stopTestPackage);
+                mServerNetwork.Send(client, stopTestPackage);
             }
 
             IsTestInProgress = false;
@@ -178,9 +180,9 @@ namespace Testinator.Server.Core
             {
                 ClientsInTest.Add(client);
 
-                IoCServer.Network.Send(client, packageWithTest);
+                mServerNetwork.Send(client, packageWithTest);
 
-                IoCServer.Network.Send(client, packageWithArgs);
+                mServerNetwork.Send(client, packageWithArgs);
 
                 client.ResetForNewTest(CurrentTest.Questions.Count);
             }
@@ -298,7 +300,7 @@ namespace Testinator.Server.Core
                             CancelText = "No, wait for them",
                         };
 
-                        IoCServer.UI.ShowMessage(vm);
+                        DI.UI.ShowMessage(vm);
 
                         // Stop before time
                         if (vm.UserResponse)
@@ -319,13 +321,16 @@ namespace Testinator.Server.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestHost()
+        public TestHost(ServerNetwork serverNetwork)
         {
+            // Inject DI services
+            mServerNetwork = serverNetwork;
+
             // Initialize timer
             mTestTimer.Elapsed += HandleTimer;
 
-            IoCServer.Network.OnClientDataUpdated += ServerNetwork_OnClientDataUpdated;
-            IoCServer.Network.OnDataReceived += OnDataReceived;
+            mServerNetwork.OnClientDataUpdated += ServerNetwork_OnClientDataUpdated;
+            mServerNetwork.OnDataReceived += OnDataReceived;
         }
 
         #endregion
@@ -393,7 +398,7 @@ namespace Testinator.Server.Core
         private void FinishTest()
         {
             IsTestInProgress = false;
-            IoCServer.Application.GoToPage(ApplicationPage.BeginTestResults);
+            DI.Application.GoToPage(ApplicationPage.BeginTestResults);
 
             // Clear guid
             CurrentSessionIdentifier = default(Guid);
@@ -465,7 +470,7 @@ namespace Testinator.Server.Core
         {
             // Send it to all clients
             foreach (var client in ClientsInTest)
-                IoCServer.Network.Send(client, data);
+                mServerNetwork.Send(client, data);
         }
 
         /// <summary>

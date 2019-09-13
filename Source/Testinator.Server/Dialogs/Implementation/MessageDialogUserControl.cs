@@ -20,7 +20,7 @@ namespace Testinator.Server
         public override Task ShowDialog<T>(T viewmodel)
         {
             // Check if ApplicationSettings allow showing this type of dialog box
-            if (!IoCServer.Settings.AreInformationMessageBoxesAllowed)
+            if (!DI.Settings.AreInformationMessageBoxesAllowed)
                 return Task.Delay(1);
 
             // Now we can show the message

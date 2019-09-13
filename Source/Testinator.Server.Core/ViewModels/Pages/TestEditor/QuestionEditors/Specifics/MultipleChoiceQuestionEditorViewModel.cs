@@ -6,11 +6,11 @@ using Testinator.Core;
 namespace Testinator.Server.Core
 {
     /// <summary>
-    /// Viewmodel for specific question editor page, multiplechoice question in this case
+    /// View model for specific question editor page, multiplechoice question in this case
     /// </summary>
     public class MultipleChoiceQuestionEditorViewModel : BaseQuestionEditorViewModel
     {
-        #region Protected Memebers
+        #region Protected Members
 
         /// <summary>
         /// Properties that can cause any unsaved changes

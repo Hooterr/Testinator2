@@ -53,7 +53,7 @@ namespace Testinator.Server
             // If we are in DesignMode, show the current page
             // as the dependency property does not fire
             if (DesignerProperties.GetIsInDesignMode(this))
-                NewPage.Content = IoCServer.Application.CurrentPage.ToBasePage();
+                NewPage.Content = DI.Application.CurrentPage.ToBasePage();
         }
 
         #endregion

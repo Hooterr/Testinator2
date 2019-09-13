@@ -7,7 +7,7 @@ namespace Testinator.Core
     /// A multiple choice question, A, B, C...
     /// </summary>
     [Serializable]
-    public class MultipleChoiceQuestion: Question
+    public class MultipleChoiceQuestion : Question
     {
         #region Public Properties
 
