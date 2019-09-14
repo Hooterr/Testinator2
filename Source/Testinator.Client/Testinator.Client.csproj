@@ -207,6 +207,7 @@
     </Compile>
     <Compile Include="DI\Configuration\FrameworkConstructionExtensions.cs" />
     <Compile Include="DI\DI.cs" />
+    <Compile Include="DI\Implementations\ViewModelProvider.cs" />
     <Compile Include="Extensions\IconTypeExtensions.cs" />
     <Compile Include="DI\Implementations\UIManager.cs" />
     <Compile Include="Pages\Questions\QuestionMultipleCheckboxesPage.xaml.cs">
@@ -364,7 +365,7 @@
       <Name>Testinator.AnimationFramework</Name>
     </ProjectReference>
     <ProjectReference Include="..\Testinator.Client.Domain\Testinator.Client.Domain.csproj">
-      <Project>{8BB35CDF-5C80-4863-BA94-948911F35883}</Project>
+      <Project>{8bb35cdf-5c80-4863-ba94-948911f35883}</Project>
       <Name>Testinator.Client.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Testinator.Client.Logging\Testinator.Client.Logging.csproj">
@@ -378,6 +379,10 @@
     <ProjectReference Include="..\Testinator.Client.Test\Testinator.Client.Test.csproj">
       <Project>{297fb79c-1ebc-4b8a-8c57-5701ca6744d3}</Project>
       <Name>Testinator.Client.Test</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Testinator.Core\Testinator.Core.csproj">
+      <Project>{F592FA60-030D-440B-BB00-ED4EA5A919F6}</Project>
+      <Name>Testinator.Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\Testinator.UICore\Testinator.UICore.csproj">
       <Project>{90c0ca2b-3524-49da-a58a-0df92f7eaed8}</Project>

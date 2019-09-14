@@ -2,7 +2,7 @@
 using System.Globalization;
 using Testinator.UICore;
 using Testinator.Core;
-using Testinator.Client.Core;
+using Testinator.Client.Domain;
 
 namespace Testinator.Client
 {

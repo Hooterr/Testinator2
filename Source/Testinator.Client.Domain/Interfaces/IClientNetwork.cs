@@ -21,7 +21,7 @@ namespace Testinator.Client.Domain
         /// <summary>
         /// Connects to the remote server
         /// </summary>
-        void Connect();
+        void ConnectAsync();
 
         /// <summary>
         /// Disconnects from the remote server if connected

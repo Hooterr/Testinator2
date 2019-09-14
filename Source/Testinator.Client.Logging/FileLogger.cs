@@ -8,6 +8,12 @@ namespace Testinator.Client.Logging
     /// </summary>
     public class FileLogger : ILogger
     {
+        #region Private Members
+
+        private readonly FileManagerBase mFileManager;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -28,8 +34,11 @@ namespace Testinator.Client.Logging
         /// Default constructor
         /// </summary>
         /// <param name="filePath">The path to log to</param>
-        public FileLogger(string filePath)
+        public FileLogger(string filePath, FileManagerBase fileManager)
         {
+            // Inject DI services
+            mFileManager = fileManager;
+
             // Set the file path property
             FilePath = filePath;
         }
@@ -47,8 +56,7 @@ namespace Testinator.Client.Logging
             var timeLogString = LogTime ? $"[{ currentTime}] " : "";
 
             // Write the message
-            // TODO: Fix
-            //Dna.Framework.Service<FileManagerBase>().WriteToFile($"{timeLogString}{message}{Environment.NewLine}", FilePath);
+            mFileManager.WriteToFile($"{timeLogString}{message}{Environment.NewLine}", FilePath);
         }
 
         #endregion

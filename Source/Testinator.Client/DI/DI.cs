@@ -1,7 +1,8 @@
 ﻿using Dna;
+using Testinator.Client.Domain;
 using Testinator.Core;
 
-namespace Testinator.Client.Core
+namespace Testinator.Client
 {
     /// <summary>
     /// Dependency Injection container for Testinator.Client application
@@ -25,12 +26,6 @@ namespace Testinator.Client.Core
         /// </summary>
         public static IUIManager UI => Framework.Service<IUIManager>();
 
-        /// <summary>
-        /// A shortcut to get appropriate view model for page with injected dependiencies by DI
-        /// </summary>
-        /// <typeparam name="T">Any view model that inherites <see cref="BaseViewModel"/></typeparam>
-        public static T GetInjectedPageViewModel<T>() where T : BaseViewModel => Framework.Service<T>();
-
         #endregion
 
         #region Public Methods
@@ -42,7 +37,8 @@ namespace Testinator.Client.Core
         {
             Framework.Construct<DefaultFrameworkConstruction>()
                                                 .AddFileLogger()
-                                                .AddApplicationServices();
+                                                .AddApplicationServices()
+                                                .Build();
         }
 
         #endregion

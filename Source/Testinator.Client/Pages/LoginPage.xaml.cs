@@ -1,4 +1,4 @@
-﻿using Testinator.Client.Core;
+﻿using Testinator.Client.Domain;
 using Testinator.UICore;
 using System.Windows;
 using Testinator.AnimationFramework;

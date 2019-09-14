@@ -1,9 +1,6 @@
-﻿using Dna;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Windows;
-using Testinator.Client.Core;
+using Testinator.Client.Domain;
 using Testinator.Core;
 
 namespace Testinator.Client
@@ -53,23 +50,8 @@ namespace Testinator.Client
             // Set default language
             LocalizationResource.Culture = new CultureInfo("pl-PL");
 
-            // Setup IoC
+            // Setup Dependency Injection
             DI.InitialSetup();
-
-            // Inject WPF specific services
-            Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
-            Framework.Construction.Services.AddSingleton<ILogFactory>(new BaseLogFactory(new[]
-            {
-                // TODO: Add ApplicationSettings so we can set/edit a log location
-                //       For now just log to the path where this application is running
-
-                // TODO: Make log files ordered by a date, week-wise
-                //       For now - random numbers for testing as it allows running multiple clients
-                new Core.FileLogger(($"log{new Random().Next(100000, 99999999).ToString()}.txt"))
-            }));
-
-            // Build the final DI
-            Framework.Construction.Build();
         }
     }
 }

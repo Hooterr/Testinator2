@@ -201,7 +201,7 @@ namespace Testinator.Client.Domain
 
             // Setup client and start connecting
             mClientNetwork.Initialize(ServerIP, int.Parse(ServerPort));
-            mClientNetwork.Connect();
+            mClientNetwork.ConnectAsync();
 
             // Log it
             mLogger.Log("Attempting to connect to the server");

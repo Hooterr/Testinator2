@@ -190,7 +190,7 @@ namespace Testinator.Client.Network
         /// <summary>
         /// Starts the connecting sequence
         /// </summary>
-        public async void Connect()
+        public async void ConnectAsync()
         {
             if (IsConnected || IsTryingToConnect || mConnetionLoopInProgress)
                 return;

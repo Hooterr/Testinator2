@@ -1,9 +1,13 @@
 ﻿using Dna;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 using Testinator.Client.Domain;
+using Testinator.Client.Logging;
+using Testinator.Client.Network;
+using Testinator.Client.Test;
 using Testinator.Core;
 
-namespace Testinator.Client.Core
+namespace Testinator.Client
 {
     /// <summary>
     /// Extension methods for the <see cref="FrameworkConstruction"/>
@@ -18,12 +22,21 @@ namespace Testinator.Client.Core
         {
             // Bind to a single instance of specified models
             construction.Services.AddSingleton<ApplicationViewModel>();
-
-            // Bind to a scoped instance of specified models
-            construction.Services.AddSingleton<TestHost, TestHost>();
+            construction.Services.AddSingleton<ITestHost, TestHost>();
             construction.Services.AddSingleton<FileManagerBase, LogsWriter>();
-            construction.Services.AddSingleton<ClientModel, ClientModel>();
-            construction.Services.AddSingleton<ClientNetwork, ClientNetwork>();
+            construction.Services.AddSingleton<IClientModel, ClientModel>();
+            construction.Services.AddSingleton<IClientNetwork, ClientNetwork>();
+            construction.Services.AddSingleton<IViewModelProvider, ViewModelProvider>();
+            construction.Services.AddSingleton<IUIManager, UIManager>();
+            construction.Services.AddSingleton<ILogFactory>(new BaseLogFactory(new[]
+            {
+                // TODO: Add ApplicationSettings so we can set/edit a log location
+                //       For now just log to the path where this application is running
+
+                // TODO: Make log files ordered by a date, week-wise
+                //       For now - random numbers for testing as it allows running multiple clients
+                new Logging.FileLogger(($"log{new Random().Next(100000, 99999999).ToString()}.txt"), Framework.Service<FileManagerBase>())
+            }));
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<LoginViewModel>();

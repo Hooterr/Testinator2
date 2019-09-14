@@ -103,7 +103,7 @@ namespace Testinator.Client.Network
                 AttemptingToReconnect = true;
 
                 // Start connecting to the server
-                Connect();
+                ConnectAsync();
             }
 
             // In any other case return to the login page

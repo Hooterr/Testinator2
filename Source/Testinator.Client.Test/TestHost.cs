@@ -260,7 +260,7 @@ namespace Testinator.Client.Test
             CurrentTest = null;
             UserAnswers = new List<Answer>();
             UserScore = 0;
-            UserMark = default(Marks);
+            UserMark = default;
             QuestionViewModels = new List<BaseViewModel>();
 
             // Clear flags

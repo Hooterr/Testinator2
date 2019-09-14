@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
-using Testinator.Client.Core;
+using Testinator.Client.Domain;
 using Testinator.Core;
 
 namespace Testinator.Client

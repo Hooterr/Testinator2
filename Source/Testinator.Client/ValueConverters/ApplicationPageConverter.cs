@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using Testinator.Client.Core;
+using Testinator.Client.Domain;
 using Testinator.UICore;
 
 namespace Testinator.Client
