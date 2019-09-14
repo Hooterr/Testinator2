@@ -205,8 +205,10 @@
     <Compile Include="DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DI\Configuration\FrameworkConstructionExtensions.cs" />
+    <Compile Include="DI\DI.cs" />
     <Compile Include="Extensions\IconTypeExtensions.cs" />
-    <Compile Include="IoC\UIManager.cs" />
+    <Compile Include="DI\Implementations\UIManager.cs" />
     <Compile Include="Pages\Questions\QuestionMultipleCheckboxesPage.xaml.cs">
       <DependentUpon>QuestionMultipleCheckboxesPage.xaml</DependentUpon>
     </Compile>
@@ -361,17 +363,21 @@
       <Project>{2e0e2554-da07-45a6-9647-8f2907851472}</Project>
       <Name>Testinator.AnimationFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Testinator.Client.Core\Testinator.Client.Core.csproj">
-      <Project>{ad1fbc2b-5a67-4faf-afc3-fe68c109aedc}</Project>
-      <Name>Testinator.Client.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Testinator.Client.Domain\Testinator.Client.Domain.csproj">
       <Project>{8BB35CDF-5C80-4863-BA94-948911F35883}</Project>
       <Name>Testinator.Client.Domain</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Testinator.Core\Testinator.Core.csproj">
-      <Project>{f592fa60-030d-440b-bb00-ed4ea5a919f6}</Project>
-      <Name>Testinator.Core</Name>
+    <ProjectReference Include="..\Testinator.Client.Logging\Testinator.Client.Logging.csproj">
+      <Project>{43436d55-161b-445c-b155-6db1c6fd34b9}</Project>
+      <Name>Testinator.Client.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Testinator.Client.Network\Testinator.Client.Network.csproj">
+      <Project>{b7d59be8-6226-4967-af46-8dbacc9c8fc6}</Project>
+      <Name>Testinator.Client.Network</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Testinator.Client.Test\Testinator.Client.Test.csproj">
+      <Project>{297fb79c-1ebc-4b8a-8c57-5701ca6744d3}</Project>
+      <Name>Testinator.Client.Test</Name>
     </ProjectReference>
     <ProjectReference Include="..\Testinator.UICore\Testinator.UICore.csproj">
       <Project>{90c0ca2b-3524-49da-a58a-0df92f7eaed8}</Project>

@@ -47,7 +47,8 @@ namespace Testinator.Client.Logging
             var timeLogString = LogTime ? $"[{ currentTime}] " : "";
 
             // Write the message
-            Dna.Framework.Service<FileManagerBase>().WriteToFile($"{timeLogString}{message}{Environment.NewLine}", FilePath);
+            // TODO: Fix
+            //Dna.Framework.Service<FileManagerBase>().WriteToFile($"{timeLogString}{message}{Environment.NewLine}", FilePath);
         }
 
         #endregion

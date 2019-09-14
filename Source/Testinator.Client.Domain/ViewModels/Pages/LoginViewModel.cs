@@ -44,12 +44,12 @@ namespace Testinator.Client.Domain
         /// <summary>
         /// IP of the server we are connecting to
         /// </summary>
-        public string ServerIP { get; set; } = mClientNetwork.IPString;
+        public string ServerIP { get; set; }
 
         /// <summary>
         /// Port of the server we are connecting to
         /// </summary>
-        public string ServerPort { get; set; } = mClientNetwork.Port.ToString();
+        public string ServerPort { get; set; }
 
         /// <summary>
         /// Indicates if settings menu is opened
@@ -159,6 +159,9 @@ namespace Testinator.Client.Domain
             LinkClickedCommand = new RelayCommand(TestinatorWebLinkClicked);
             SettingsMenuLoadDefaultValuesCommand = new RelayCommand(SettingsMenuLoadDefaultValues);
             QuoteAuthorClickedCommand = new RelayCommand(QuoteAuthorClicked);
+
+            ServerIP = mClientNetwork.IPString;
+            ServerPort = mClientNetwork.Port.ToString();
 
             mClientNetwork.AttemptCounterUpdated += Network_OnAttemptUpdate;
             mClientNetwork.AttemptsTimeout += Network_AttemptsTimeout;

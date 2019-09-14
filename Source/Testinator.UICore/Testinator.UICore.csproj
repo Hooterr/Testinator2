@@ -222,10 +222,6 @@
       <Project>{2e0e2554-da07-45a6-9647-8f2907851472}</Project>
       <Name>Testinator.AnimationFramework</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Testinator.Client.Core\Testinator.Client.Core.csproj">
-      <Project>{72EDAAB3-63A8-46A2-8426-FB26D379AE67}</Project>
-      <Name>Testinator.Client.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Testinator.Core\Testinator.Core.csproj">
       <Project>{f592fa60-030d-440b-bb00-ed4ea5a919f6}</Project>
       <Name>Testinator.Core</Name>
