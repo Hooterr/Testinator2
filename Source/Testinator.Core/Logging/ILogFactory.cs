@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
-using Testinator.Core;
 
-namespace Testinator.Client.Core
+namespace Testinator.Core
 {
     /// <summary>
     /// Holds a bunch of loggers to log messages for the user

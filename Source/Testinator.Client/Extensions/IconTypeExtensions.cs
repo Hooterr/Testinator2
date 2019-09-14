@@ -1,4 +1,6 @@
-﻿namespace Testinator.Client.Core
+﻿using Testinator.Client.Domain;
+
+namespace Testinator.Client
 {
     /// <summary>
     /// Helper functions for <see cref="IconType"/>

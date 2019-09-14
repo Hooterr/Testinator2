@@ -205,6 +205,7 @@
     <Compile Include="DialogWindow.xaml.cs">
       <DependentUpon>DialogWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Extensions\IconTypeExtensions.cs" />
     <Compile Include="IoC\UIManager.cs" />
     <Compile Include="Pages\Questions\QuestionMultipleCheckboxesPage.xaml.cs">
       <DependentUpon>QuestionMultipleCheckboxesPage.xaml</DependentUpon>
@@ -363,6 +364,10 @@
     <ProjectReference Include="..\Testinator.Client.Core\Testinator.Client.Core.csproj">
       <Project>{ad1fbc2b-5a67-4faf-afc3-fe68c109aedc}</Project>
       <Name>Testinator.Client.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Testinator.Client.Domain\Testinator.Client.Domain.csproj">
+      <Project>{8BB35CDF-5C80-4863-BA94-948911F35883}</Project>
+      <Name>Testinator.Client.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Testinator.Core\Testinator.Core.csproj">
       <Project>{f592fa60-030d-440b-bb00-ed4ea5a919f6}</Project>

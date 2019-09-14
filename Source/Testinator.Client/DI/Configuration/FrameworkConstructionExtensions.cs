@@ -1,5 +1,6 @@
 ﻿using Dna;
 using Microsoft.Extensions.DependencyInjection;
+using Testinator.Client.Domain;
 using Testinator.Core;
 
 namespace Testinator.Client.Core
