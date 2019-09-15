@@ -35,7 +35,7 @@ namespace Testinator.Client
 
                 // TODO: Make log files ordered by a date, week-wise
                 //       For now - random numbers for testing as it allows running multiple clients
-                new Logging.FileLogger(($"log{new Random().Next(100000, 99999999).ToString()}.txt"), Framework.Service<FileManagerBase>())
+                new Logging.FileLogger(($"log{new Random().Next(100000, 99999999).ToString()}.txt"), new LogsWriter())
             }));
 
             // Inject dependiencies into every page's view model
