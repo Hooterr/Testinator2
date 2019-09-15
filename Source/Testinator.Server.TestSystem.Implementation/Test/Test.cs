@@ -23,8 +23,6 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public IList<IQuestionProvider> Questions => mQuestionList;
 
-        public TimeSpan CompletionTime { get; internal set; }
-
         public ITestOptions Options => mTestOptions;
 
     }
