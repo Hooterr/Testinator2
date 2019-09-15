@@ -28,15 +28,15 @@ namespace Testinator.Client
             construction.Services.AddSingleton<IClientNetwork, ClientNetwork>();
             construction.Services.AddSingleton<IViewModelProvider, ViewModelProvider>();
             construction.Services.AddSingleton<IUIManager, UIManager>();
-            construction.Services.AddSingleton<ILogFactory>(new BaseLogFactory(new[]
-            {
-                // TODO: Add ApplicationSettings so we can set/edit a log location
-                //       For now just log to the path where this application is running
+            construction.Services.AddSingleton<ILogFactory>(new BaseLogFactory
+                (
+                    // TODO: Add ApplicationSettings so we can set/edit a log location
+                    //       For now just log to the path where this application is running
 
-                // TODO: Make log files ordered by a date, week-wise
-                //       For now - random numbers for testing as it allows running multiple clients
-                new Logging.FileLogger(($"log{new Random().Next(100000, 99999999).ToString()}.txt"), new LogsWriter())
-            }));
+                    // TODO: Make log files ordered by a date, week-wise
+                    //       For now - random numbers for testing as it allows running multiple clients
+                    new Logging.FileLogger(($"log{new Random().Next(100000, 99999999).ToString()}.txt"), new LogsWriter())
+                ));
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<LoginViewModel>();

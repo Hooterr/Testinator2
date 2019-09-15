@@ -37,7 +37,7 @@ namespace Testinator.Client.Test
         /// <summary>
         /// The test that is currently hosted
         /// </summary>
-        public Testinator.Core.Test CurrentTest { get; private set; }
+        public Core.Test CurrentTest { get; private set; }
 
         /// <summary>
         /// List of all questions in the test
@@ -224,7 +224,7 @@ namespace Testinator.Client.Test
         /// Binds the test to this view model 
         /// </summary>
         /// <param name="test">Test to be hosted</param>
-        public void BindTest(Testinator.Core.Test test)
+        public void BindTest(Core.Test test)
         {
             // Don't do anything in this case
             if (IsTestInProgress || IsShowingResultPage)

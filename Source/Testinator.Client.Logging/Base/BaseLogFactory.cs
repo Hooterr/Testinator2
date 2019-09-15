@@ -56,13 +56,13 @@ namespace Testinator.Client.Logging
         /// Default constructor
         /// </summary>
         /// <param name="loggers">The loggers to add to the factory, on top of the stock loggers already included</param>
-        public BaseLogFactory(ILogger[] loggers = null)
+        public BaseLogFactory(params ILogger[] loggers)
         {
             // Add console logger
             AddLogger(new DebugLogger());
 
             // Add any others passed in
-            if (loggers != null)
+            if (loggers.Length > 0)
                 foreach (var logger in loggers)
                     AddLogger(logger);
         }
