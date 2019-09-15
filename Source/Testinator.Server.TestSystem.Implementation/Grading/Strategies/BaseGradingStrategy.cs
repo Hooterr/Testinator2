@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation
@@ -11,25 +10,26 @@ namespace Testinator.Server.TestSystem.Implementation
 
     public abstract class BaseGradingStrategy : IGradingStrategy
     {
-        public virtual bool ThresholdsContainPercentage() => true;
+        protected int mMaxPointScore;
 
-        public SortedList<int, IGrade> Thresholds { get; internal set; }
+        // key: upper limit (inclusive)
+        // value : grade
+        public SortedList<int, IGrade> PointThresholds { get; private set; }
 
-        public virtual IGrade GetGrade(int pointScore, int maxPointScore)
+        public virtual IGrade GetGrade(int pointScore)
         {
-            var percentageCorrect = (double)pointScore / maxPointScore * 100;
 
-            IGrade grade = null;
+            if (PointThresholds == null)
+                throw new NullReferenceException($"{nameof(PointThresholds)} were null.");
 
-            if (Thresholds == null)
-                throw new NullReferenceException($"{nameof(Thresholds)} were null.");
+            if (PointThresholds.Count == 0)
+                throw new InvalidOperationException($"{nameof(PointThresholds)} cannot be empty.");
 
-            if (Thresholds.Count == 0)
-                throw new InvalidOperationException($"{nameof(Thresholds)} cannot be empty.");
+            var grade = PointThresholds[0];
 
-            foreach(var threshold in Thresholds)
+            foreach(var threshold in PointThresholds)
             {
-                if (threshold.Key > percentageCorrect)
+                if (threshold.Key > pointScore)
                     break;
 
                 grade = threshold.Value;
@@ -39,6 +39,12 @@ namespace Testinator.Server.TestSystem.Implementation
                 throw new InvalidOperationException("There was no grade for this point score.");
 
             return grade;
+        }
+
+        public BaseGradingStrategy(int maxPointScore)
+        {
+            mMaxPointScore = maxPointScore;
+            PointThresholds = new SortedList<int, IGrade>();
         }
     }
 }

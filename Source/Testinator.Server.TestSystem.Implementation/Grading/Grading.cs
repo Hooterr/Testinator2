@@ -9,14 +9,13 @@ namespace Testinator.Server.TestSystem.Implementation
     {
         public string Name { get; internal set; }
 
-        // Strategies are not complete
         public IGradingStrategy Strategy { get; internal set; }
 
         public int MaxPointScore { get; internal set; }
 
         public IGrade GetGrade(int score)
         {
-            return Strategy.GetGrade(score, MaxPointScore);
+            return Strategy.GetGrade(score);
         }
     }
 }
