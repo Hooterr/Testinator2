@@ -44,13 +44,13 @@ namespace Testinator.Server.TestSystem.Implementation
                 validationPassed = false;
                 HandleErrorFor(x => x.Name, "The name must not be empty");
             }
-            else if(Name.Length > mNameMaxLen || Name.Length < mNameMinLen)
+            else if (Name.Length > mNameMaxLen || Name.Length < mNameMinLen)
             {
                 validationPassed = false;
                 HandleErrorFor(x => x.Name, $"The name must be from within the range of {mNameMinLen} to {mNameMaxLen} characters.");
             }
 
-            if(TimeLimit == null)
+            if (TimeLimit == null)
             {
                 validationPassed = false;
                 HandleErrorFor(x => x.TimeLimit, "Time limit cannot be null");
