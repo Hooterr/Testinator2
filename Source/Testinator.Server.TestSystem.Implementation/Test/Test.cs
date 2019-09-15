@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Tests;
 
@@ -8,7 +9,7 @@ namespace Testinator.Server.TestSystem.Implementation
     {
         #region Internal Members
 
-        internal QuestionList mQuestionList;
+        internal List<IQuestionProvider> mQuestionList;
         internal TestOptions mTestOptions;
         internal Grading mGrading;
 
@@ -24,7 +25,7 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public IGrading Grading => mGrading;
 
-        public IQuestionList Questions => mQuestionList;
+        public IList<IQuestionProvider> Questions => mQuestionList;
 
         public TimeSpan CompletionTime { get; internal set; }
 

@@ -35,7 +35,7 @@ namespace Testinator.TestSystem.Abstractions.Tests
         /// <summary>
         /// The list of questions attached to this test
         /// </summary>
-        IQuestionList Questions { get; }
+        IList<IQuestionProvider> Questions { get; }
 
         /// <summary>
         /// The time this test can take at most
