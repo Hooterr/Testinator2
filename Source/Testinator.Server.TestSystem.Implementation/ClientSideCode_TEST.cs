@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Testinator.TestSystem.Abstractions.Questions;
 
@@ -28,10 +29,11 @@ namespace Testinator.Server.TestSystem.Implementation
             var TaskErrorMessage = string.Empty;
 
             editor.Task.Text.OnErrorFor(x => x.Content, (msg) => TaskErrorMessage = msg);
-
-            editor.Task.Text.Content = "";
-            editor.Task.Text.Markup = Testinator.TestSystem.Abstractions.Questions.Task.MarkupLanguage.Html;
-            editor.Task.Images.AddImage(null);
+            editor.Options.SetOptions("AAAA", "BBBB", "CCCCCC", "DDDDDD");
+            editor.Scoring.MaximumScore = 100;
+            editor.Scoring.CorrectAnswerIdx = 3;
+            editor.Task.Text.Content = "kkkkkkkkkk";
+            //editor.Task.Images.AddImage(null);
 
             var operation = editor.Build();
 
@@ -45,6 +47,14 @@ namespace Testinator.Server.TestSystem.Implementation
                 // that haven't already been handled
                 var errorlist = operation.Errors;
             }
+
+            var testEditor = new TestEditor(1);
+            testEditor.Info.Name = "Amazingly cool name";
+            testEditor.Questions.Add(operation.Result);
+            testEditor.Grading.Name = "Ludicrous name";
+            testEditor.Info.TimeLimit = TimeSpan.FromSeconds(30 * 60);
+            var testBuildOperation = testEditor.Build();
+            var test = testBuildOperation.Result;
         }
     }
 }

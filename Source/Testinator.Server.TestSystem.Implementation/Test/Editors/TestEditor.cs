@@ -20,7 +20,14 @@ namespace Testinator.Server.TestSystem.Implementation
 
         public ITestOptionsEditor Options => mOptions;
 
-        public IGradingEditor Grading => mGrading;
+        public IGradingEditor Grading
+        {
+            get
+            {
+                mGrading.mMaxPointScore = mQuestions.Sum(x => x.Scoring.MaximumScore);
+                return mGrading;
+            }
+        }
         
         public IQuestionEditorCollection Questions => mQuestions;
 
