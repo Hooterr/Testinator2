@@ -25,6 +25,7 @@ namespace Testinator.Server.TestSystem.Implementation
             // TODO, default for now
             result.Strategy = new Standard6GradesPercentageStrategy(mMaxPointScore);
             result.MaxPointScore = mMaxPointScore;
+            result.Name = Name;
 
             return result;
         }
