@@ -1,5 +1,5 @@
 ﻿using System;
-using Testinator.Server.TestSystem.Implementation.Questions;
+using Testinator.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Editors

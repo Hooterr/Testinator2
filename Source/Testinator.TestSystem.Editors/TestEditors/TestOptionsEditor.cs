@@ -1,4 +1,4 @@
-﻿using Testinator.Server.TestSystem.Implementation;
+﻿using Testinator.TestSystem.Implementation;
 
 namespace Testinator.TestSystem.Editors
 {

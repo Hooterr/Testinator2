@@ -11,11 +11,11 @@ using System.Runtime.InteropServices;
 // For the editors
 [assembly: InternalsVisibleTo("Testinator.TestSystem.Editors")]
 
-[assembly: AssemblyTitle("Testinator.Server.TestSystem.Implementation")]
+[assembly: AssemblyTitle("Testinator.TestSystem.Implementation")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Testinator.Server.TestSystem.Implementation")]
+[assembly: AssemblyProduct("Testinator.TestSystem.Implementation")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

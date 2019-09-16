@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using Testinator.Server.TestSystem.Implementation.Questions.Task;
+using Testinator.TestSystem.Implementation.Questions.Task;
 using Testinator.TestSystem.Abstractions.Questions.Task;
 using Testinator.TestSystem.Editors.Attributes;
 

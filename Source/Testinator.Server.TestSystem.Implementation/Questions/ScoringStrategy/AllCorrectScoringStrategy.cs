@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy
+namespace Testinator.TestSystem.Implementation.Questions.ScoringStrategy
 {
     /// <summary>
     /// The strategy that requires 100% correct answer to give full point score, otherwise 0

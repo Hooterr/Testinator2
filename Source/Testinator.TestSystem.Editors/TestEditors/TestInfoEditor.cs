@@ -1,5 +1,5 @@
 ﻿using System;
-using Testinator.Server.TestSystem.Implementation;
+using Testinator.TestSystem.Implementation;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors.Attributes;
 

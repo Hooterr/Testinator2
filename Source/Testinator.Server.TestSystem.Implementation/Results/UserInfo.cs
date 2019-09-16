@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Testinator.TestSystem.Abstractions.Results;
 
-namespace Testinator.Server.TestSystem.Implementation.Results
+namespace Testinator.TestSystem.Implementation.Results
 {
     public class UserInfo : IUserInfo
     {

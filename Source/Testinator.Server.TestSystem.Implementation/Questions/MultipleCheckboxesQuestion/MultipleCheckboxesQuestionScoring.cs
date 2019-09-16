@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy;
+using Testinator.TestSystem.Implementation.Questions.ScoringStrategy;
 using Testinator.TestSystem.Abstractions;
 
-namespace Testinator.Server.TestSystem.Implementation.Questions
+namespace Testinator.TestSystem.Implementation.Questions
 {
     public class MultipleCheckboxesQuestionScoring : BaseQuestionScoring<MultipleCheckboxesQuestionUserAnswer>
     {

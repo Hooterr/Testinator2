@@ -1,6 +1,6 @@
 ﻿using Testinator.TestSystem.Abstractions;
 
-namespace Testinator.Server.TestSystem.Implementation
+namespace Testinator.TestSystem.Implementation
 {
     public class Grade : IGrade
     {

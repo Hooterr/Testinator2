@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Testinator.Server.TestSystem.Implementation.Questions;
+using Testinator.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Editors

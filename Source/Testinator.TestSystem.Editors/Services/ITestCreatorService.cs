@@ -1,7 +1,7 @@
 ﻿using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Tests;
 
-namespace Testinator.TestCreator
+namespace Testinator.TestSystem.Editors
 {
     public interface ITestCreatorService
     {

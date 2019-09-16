@@ -1,6 +1,6 @@
 ﻿using System;
-using Testinator.Server.TestSystem.Implementation.Questions;
-using Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy;
+using Testinator.TestSystem.Implementation.Questions;
+using Testinator.TestSystem.Implementation.Questions.ScoringStrategy;
 using Testinator.TestSystem.Editors.Attributes;
 
 namespace Testinator.TestSystem.Editors

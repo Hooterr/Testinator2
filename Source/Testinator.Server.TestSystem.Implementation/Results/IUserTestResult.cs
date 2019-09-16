@@ -4,7 +4,7 @@ using System.Text;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Results;
 
-namespace Testinator.Server.TestSystem.Implementation.Results
+namespace Testinator.TestSystem.Implementation.Results
 {
     public class UserTestResult : IUserTestResult
     {

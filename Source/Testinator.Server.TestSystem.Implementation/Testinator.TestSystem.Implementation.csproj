@@ -3,6 +3,8 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <AssemblyName>Testinator.TestSystem.Implementation</AssemblyName>
+    <RootNamespace>Testinator.TestSystem.Implementation</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

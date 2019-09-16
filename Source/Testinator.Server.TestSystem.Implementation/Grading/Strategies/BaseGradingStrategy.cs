@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Testinator.TestSystem.Abstractions;
 
-namespace Testinator.Server.TestSystem.Implementation
+namespace Testinator.TestSystem.Implementation
 {
     //
     // WORK IN PROGRESS

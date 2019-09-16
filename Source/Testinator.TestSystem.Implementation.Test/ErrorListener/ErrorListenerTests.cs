@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Testinator.Server.TestSystem.Implementation;
+using Testinator.TestSystem.Implementation;
 using Xunit;
 
 namespace Testinator.TestSystem.Implementation.Test.ErrorListener

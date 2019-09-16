@@ -4,7 +4,7 @@ using System.Text;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Questions;
 
-namespace Testinator.Server.TestSystem.Implementation
+namespace Testinator.TestSystem.Implementation
 {
     public class InMemoryQuestionProvider : IQuestionProvider
     {

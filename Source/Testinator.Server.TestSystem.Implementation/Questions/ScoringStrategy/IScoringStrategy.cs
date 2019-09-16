@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy
+namespace Testinator.TestSystem.Implementation.Questions.ScoringStrategy
 {
     public interface IScoringStrategy
     {

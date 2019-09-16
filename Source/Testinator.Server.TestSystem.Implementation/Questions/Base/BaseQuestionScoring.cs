@@ -1,9 +1,9 @@
 ﻿using System;
-using Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy;
+using Testinator.TestSystem.Implementation.Questions.ScoringStrategy;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors.Attributes;
 
-namespace Testinator.Server.TestSystem.Implementation.Questions
+namespace Testinator.TestSystem.Implementation.Questions
 {
     public abstract class BaseQuestionScoring<TQuestionUserAnswer> : IQuestionScoring
         where TQuestionUserAnswer : class

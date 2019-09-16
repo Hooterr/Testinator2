@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Tests;
 
-namespace Testinator.Server.TestSystem.Implementation
+namespace Testinator.TestSystem.Implementation
 {
     public class Test : ITest
     {

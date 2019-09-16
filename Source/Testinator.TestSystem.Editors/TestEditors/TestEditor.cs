@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using Testinator.Server.TestSystem.Implementation;
+using Testinator.TestSystem.Implementation;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Tests;
 

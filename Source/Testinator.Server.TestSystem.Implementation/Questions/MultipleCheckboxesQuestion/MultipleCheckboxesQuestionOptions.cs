@@ -2,7 +2,7 @@
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors.Attributes;
 
-namespace Testinator.Server.TestSystem.Implementation.Questions
+namespace Testinator.TestSystem.Implementation.Questions
 {
     public class MultipleCheckboxesQuestionOptions : IQuestionOptions
     {

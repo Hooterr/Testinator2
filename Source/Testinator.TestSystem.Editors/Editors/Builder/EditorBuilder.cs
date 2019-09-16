@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using Testinator.Server.TestSystem.Implementation.Questions;
+using Testinator.TestSystem.Implementation.Questions;
 
 namespace Testinator.TestSystem.Editors
 {

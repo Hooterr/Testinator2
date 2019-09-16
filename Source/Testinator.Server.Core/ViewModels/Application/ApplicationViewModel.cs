@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 using Testinator.Core;
-using Testinator.Server.TestSystem.Implementation;
+using Testinator.TestSystem.Implementation;
 
 namespace Testinator.Server.Core
 {

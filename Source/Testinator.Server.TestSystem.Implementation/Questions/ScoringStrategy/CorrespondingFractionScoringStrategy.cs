@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy
+namespace Testinator.TestSystem.Implementation.Questions.ScoringStrategy
 {
     /// <summary>
     /// For each part of the answer that is correct give appropriate fraction of the point score

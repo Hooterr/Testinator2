@@ -1,6 +1,6 @@
 ﻿using Testinator.TestSystem.Abstractions;
 
-namespace Testinator.Server.TestSystem.Implementation.Questions
+namespace Testinator.TestSystem.Implementation.Questions
 {
     public sealed class MultipleChoiceQuestion : BaseQuestion
     {

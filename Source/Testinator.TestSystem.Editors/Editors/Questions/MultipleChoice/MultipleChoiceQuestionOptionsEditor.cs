@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Testinator.Server.TestSystem.Implementation.Questions;
+using Testinator.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Editors.Attributes;
 
 namespace Testinator.TestSystem.Editors

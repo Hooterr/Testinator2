@@ -1,5 +1,5 @@
 ﻿using System;
-using Testinator.Server.TestSystem.Implementation.Questions;
+using Testinator.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Editors;
 using Xunit;
 
