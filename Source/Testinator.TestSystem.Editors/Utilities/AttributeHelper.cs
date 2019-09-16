@@ -6,7 +6,7 @@ using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Editors
 {
-    public static class AttributeHelper
+    internal static class AttributeHelper
     {
         internal static TValue GetPropertyAttributeValue<TIn, TAttribute, TValue>(
             Expression<Func<TIn, object>> propertyExpression,
