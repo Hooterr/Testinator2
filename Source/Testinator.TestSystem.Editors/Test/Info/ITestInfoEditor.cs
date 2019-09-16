@@ -4,7 +4,7 @@ using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Editors
 {
-    public interface ITestInfoEditor
+    public interface ITestInfoEditor : IErrorListener<ITestInfoEditor>
     {
         /// <summary>
         /// The name of this test

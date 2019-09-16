@@ -33,7 +33,6 @@ namespace Testinator.TestSystem.Editors
             editor.Scoring.CorrectAnswerIdx = 3;
             editor.Task.Text.Content = "kkkkkkkkkk";
             //editor.Task.Images.AddImage(null);
-
             var operation = editor.Build();
 
             if (operation.Succeeded)

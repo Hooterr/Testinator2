@@ -2,7 +2,7 @@
 
 namespace Testinator.TestSystem.Editors
 {
-    public interface IGradingEditor
+    public interface IGradingEditor : IErrorListener<IGradingEditor>
     {
         [EditorProperty]
         string Name { get; set; }
