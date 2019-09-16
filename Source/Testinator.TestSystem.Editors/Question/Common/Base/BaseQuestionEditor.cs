@@ -13,7 +13,7 @@ namespace Testinator.TestSystem.Editors
     /// <typeparam name="TScoringEditor">The type of editor to use for the scoring part of the question</typeparam>
     internal abstract class BaseQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : ErrorListener<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>>,                                                                                                    IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>
         where TQuestion : BaseQuestion, new()
-        where TOptionsEditor : IQeustionOptionsEditor
+        where TOptionsEditor : IQuestionOptionsEditor
         where TScoringEditor : IQuestionScoringEditor
     {
         #region Protected Members

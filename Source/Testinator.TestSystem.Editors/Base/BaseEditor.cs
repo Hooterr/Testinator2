@@ -10,7 +10,6 @@ namespace Testinator.TestSystem.Editors
     internal abstract class BaseEditor<TObjectToCreate, TInterface> : ErrorListener<TInterface>, IBuildable<TObjectToCreate>
     {
         #region Protected Members
-        // TODO check if this variables can be private
 
         /// <summary>
         /// The question model version to use

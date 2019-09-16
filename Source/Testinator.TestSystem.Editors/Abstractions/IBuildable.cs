@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Testinator.TestSystem.Editors
+﻿namespace Testinator.TestSystem.Editors
 {
     /// <summary>
-    /// Represents a the ability to finalize a process by building the object
+    /// Represents the ability of finalizing a process by building the object
     /// </summary>
     /// <typeparam name="T"></typeparam>
     public interface IBuildable<T>

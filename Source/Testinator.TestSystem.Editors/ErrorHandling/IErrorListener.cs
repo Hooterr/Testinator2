@@ -9,8 +9,9 @@ namespace Testinator.TestSystem.Editors
     public interface IErrorListener<T>
     {
         /// <summary>
-        /// Add method to execute when an error occurs
+        /// Adds a method to execute when an error for a given property occurs
         /// </summary>
+        /// <param name="propertyExpression">The property</param>
         /// <param name="action">The method</param>
         void OnErrorFor(Expression<Func<T, object>> propertyExpression, Action<string> action);
     }
