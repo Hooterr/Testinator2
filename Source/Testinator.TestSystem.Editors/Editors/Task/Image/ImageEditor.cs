@@ -2,7 +2,7 @@
 using System.Drawing;
 using Testinator.TestSystem.Implementation.Questions.Task;
 using Testinator.TestSystem.Abstractions.Questions.Task;
-using Testinator.TestSystem.Editors.Attributes;
+using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Editors
 {

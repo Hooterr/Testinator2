@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Testinator.TestSystem.Implementation.Questions;
-using Testinator.TestSystem.Editors.Attributes;
+using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Editors
 {

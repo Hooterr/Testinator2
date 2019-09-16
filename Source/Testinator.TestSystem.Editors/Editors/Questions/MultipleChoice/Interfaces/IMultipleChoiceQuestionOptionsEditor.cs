@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Testinator.TestSystem.Editors.Attributes;
+using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Editors
 {

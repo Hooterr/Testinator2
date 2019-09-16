@@ -2,7 +2,7 @@
 using System.Drawing;
 using Testinator.TestSystem.Abstractions.Questions.Task;
 using Testinator.TestSystem.Editors;
-using Testinator.TestSystem.Editors.Attributes;
+using Testinator.TestSystem.Attributes;
 using Xunit;
 
 namespace Testinator.TestSystem.Implementation.Test.EditorsTests

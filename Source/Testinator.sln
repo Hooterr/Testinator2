@@ -60,9 +60,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.TestCreat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.TestSystem.Editors", "Testinator.TestSystem.Editors\Testinator.TestSystem.Editors.csproj", "{D0C626C9-8D16-41FC-8CFA-D5524C98C8EE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.TestSystem.Editors.Attributes", "Testinator.TestSystem.Editors.Attributes\Testinator.TestSystem.Editors.Attributes.csproj", "{15F68C82-B0B8-4F80-9505-02FEDB46A560}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.TestSystem.Attributes", "Testinator.TestSystem.Editors.Attributes\Testinator.TestSystem.Attributes.csproj", "{15F68C82-B0B8-4F80-9505-02FEDB46A560}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Client.TestSystem.Implementation", "Testinator.Client.TestSystem.Implementation\Testinator.Client.TestSystem.Implementation.csproj", "{706273DD-7C80-475A-A0B2-C1AF77554DCA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Client.TestSystem.Implementation", "Testinator.Client.TestSystem.Implementation\Testinator.Client.TestSystem.Implementation.csproj", "{706273DD-7C80-475A-A0B2-C1AF77554DCA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
