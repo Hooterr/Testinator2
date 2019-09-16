@@ -31,8 +31,12 @@ namespace Testinator.TestSystem.Editors
             editor.Options.SetOptions("AAAA", "BBBB", "CCCCCC", "DDDDDD");
             editor.Scoring.MaximumScore = 100;
             editor.Scoring.CorrectAnswerIdx = 3;
-            editor.Task.Text.Content = "kkkkkkkkkk";
-            //editor.Task.Images.AddImage(null);
+            editor.Task.Text.Content = "A, B, C or D?";
+            editor.OnErrorFor(x => x.Task, (m) => 
+            {
+                
+            });
+
             var operation = editor.Build();
 
             if (operation.Succeeded)

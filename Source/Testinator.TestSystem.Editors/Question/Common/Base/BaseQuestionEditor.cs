@@ -181,6 +181,21 @@ namespace Testinator.TestSystem.Editors
 
             if (Scoring == null)
                 throw new NotSupportedException("Options scoring has not been initialized.");
+
+            if(HasHandlerFor(x => x.Task) == false)
+            {
+                mTaskEditor.OnUnhandledError((msg) => HandleErrorFor(x => x.Task, msg));
+            }
+
+            if (HasHandlerFor(x => x.Scoring) == false)
+            {
+                mTaskEditor.OnUnhandledError((msg) => HandleErrorFor(x => x.Scoring, msg));
+            }
+
+            if (HasHandlerFor(x => x.Options) == false)
+            {
+                mTaskEditor.OnUnhandledError((msg) => HandleErrorFor(x => x.Options, msg));
+            }
         }
 
         #endregion

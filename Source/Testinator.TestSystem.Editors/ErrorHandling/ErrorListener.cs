@@ -25,6 +25,16 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         private readonly List<string> mUnHandledErrorMessages;
 
+        private Action<string> mInterceptUnhandledErrorHandler;
+        #endregion
+
+        #region Internal Methods
+
+        internal void OnUnhandledError(Action<string> handler)
+        {
+            mInterceptUnhandledErrorHandler = handler;
+        }
+
         #endregion
 
         #region Public Methods
@@ -42,6 +52,12 @@ namespace Testinator.TestSystem.Editors
                 throw new ArgumentException($"This property is not an editor property.");
 
             mErrorHandlers[propertyInfo.Name] = action;
+        }
+
+        protected bool HasHandlerFor(Expression<Func<TIntereface, object>> propertyExpression)
+        {
+            var propertyName = ExpressionHelpers.GetCorrectPropertyName(propertyExpression);
+            return mErrorHandlers.ContainsKey(propertyName);
         }
 
         #endregion
@@ -86,9 +102,15 @@ namespace Testinator.TestSystem.Editors
             // If there is handler for that method execute the associated action
             if (mErrorHandlers[propertyName] != null)
                 mErrorHandlers[propertyName].Invoke(message);
-            // If there isn't one add this message to the general list of errors
-            else
-                mUnHandledErrorMessages.Add(message);
+            // If we got an intercept handler
+            else if (mInterceptUnhandledErrorHandler != null)
+            {
+                // Handle the error and quit
+                mInterceptUnhandledErrorHandler.Invoke(message);
+                return;
+            }
+            // The error has not been handled, add it to the list
+            mUnHandledErrorMessages.Add(message);
         }
 
         /// <summary>
@@ -97,6 +119,14 @@ namespace Testinator.TestSystem.Editors
         /// <param name="message">The error message</param>
         protected void HandleError(string message)
         {
+            // If we got an intercept handler
+            if (mInterceptUnhandledErrorHandler != null)
+            {
+                // Handle the error and quit
+                mInterceptUnhandledErrorHandler.Invoke(message);
+                return;
+            }
+
             mUnHandledErrorMessages.Add(message);
         }
 
