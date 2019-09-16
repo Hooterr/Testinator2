@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Testinator.TestSystem.Abstractions.Tests;
 
 namespace Testinator.TestSystem.Abstractions.Results
 {

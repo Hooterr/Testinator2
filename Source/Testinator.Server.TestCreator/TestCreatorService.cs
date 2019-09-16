@@ -4,6 +4,8 @@ using Testinator.Server.TestSystem.Implementation;
 using Testinator.Server.TestSystem.Implementation.Questions;
 using Testinator.TestCreator;
 using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Abstractions.Tests;
+using Testinator.TestSystem.Editors;
 
 namespace Testinator.Server.TestCreator
 {
@@ -67,7 +69,7 @@ namespace Testinator.Server.TestCreator
         public QuestionEditorMultipleChoice GetEditorMultipleChoice()
         {
             // Get the editor for this type of question
-            return Editors.MultipleChoiceQuestion
+            return AllEditors.MultipleChoiceQuestion
                 // No pre-data provided, so create new question
                 .NewQuestion()
                 // Use latest version since its new question
@@ -87,7 +89,7 @@ namespace Testinator.Server.TestCreator
             var question = GetQuestionFromTestAt(questionNumber) as MultipleChoiceQuestion;
 
             // Get the editor for this type of question
-            return Editors.MultipleChoiceQuestion
+            return AllEditors.MultipleChoiceQuestion
                 // Preload given question
                 .SetInitialQuestion(question)
                 // TODO: Check question's version to use, for now just UseNewestVersion
@@ -135,7 +137,7 @@ namespace Testinator.Server.TestCreator
         /// </summary>
         /// <param name="index">The index of a question to take from test</param>
         /// <returns>Question object as <see cref="IQuestion"/></returns>
-        private IQuestion GetQuestionFromTestAt(int index) => CurrentTest.Questions.Questions.ElementAt(index).GetQuestion();
+        private IQuestion GetQuestionFromTestAt(int index) => CurrentTest.Questions.ElementAt(index).GetQuestion();
 
         #endregion
     }

@@ -7,6 +7,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Testinator.Server.TestSystem.Implementation\Testinator.Server.TestSystem.Implementation.csproj" />
     <ProjectReference Include="..\Testinator.TestCreator\Testinator.TestCreator.csproj" />
+    <ProjectReference Include="..\Testinator.TestSystem.Editors\Testinator.TestSystem.Editors.csproj" />
   </ItemGroup>
 
 </Project>
