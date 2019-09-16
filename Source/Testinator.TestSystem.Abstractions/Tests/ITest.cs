@@ -24,5 +24,7 @@ namespace Testinator.TestSystem.Abstractions.Tests
         /// Contains crucial info about how we should handle questions etc.
         /// </summary>
         ITestOptions Options { get; }
+
+        int Version { get; }
     }
 }

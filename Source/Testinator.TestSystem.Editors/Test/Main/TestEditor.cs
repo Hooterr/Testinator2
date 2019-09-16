@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using Testinator.TestSystem.Implementation;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Tests;
+using Testinator.TestSystem.Implementation;
 
 namespace Testinator.TestSystem.Editors
 {
-    internal class TestEditor : BaseEditor<Test, ITestEditor>, ITestEditor
+    internal class TestEditor : BaseEditor<Implementation.Test, ITestEditor>, ITestEditor
     {
         private TestInfoEditor mInfo;
         private TestOptionsEditor mOptions;
@@ -33,7 +33,7 @@ namespace Testinator.TestSystem.Editors
 
         #region Constructors
 
-        public TestEditor(Test test, int version) : base(test, version) { }
+        public TestEditor(Implementation.Test test, int version) : base(test, version) { }
 
         public TestEditor(int version) : base(version) { }
 
@@ -57,7 +57,7 @@ namespace Testinator.TestSystem.Editors
             }
         }
 
-        protected override Test BuildObject()
+        protected override Implementation.Test BuildObject()
         {
             var infoBuildOperation = mInfo.Build();
             var optionsBuildOperation = mOptions.Build();
@@ -68,11 +68,11 @@ namespace Testinator.TestSystem.Editors
                 return null;
             }
 
-            Test test = null;
+            Implementation.Test test = null;
             if (IsInEditorMode())
                 test = OriginalObject;
             else
-                test = new Test();
+                test = new Implementation.Test();
 
             test.mInfo = infoBuildOperation.Result;
             test.mTestOptions = optionsBuildOperation.Result;

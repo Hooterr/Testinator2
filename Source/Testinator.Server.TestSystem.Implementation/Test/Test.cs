@@ -25,5 +25,6 @@ namespace Testinator.TestSystem.Implementation
 
         public ITestOptions Options => mTestOptions;
 
+        public int Version { get; internal set; }
     }
 }

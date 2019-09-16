@@ -50,7 +50,11 @@ namespace Testinator.TestSystem.Editors
                 var errorlist = operation.Errors;
             }
 
-            var testEditor = AllEditors.TestEditor;
+            var testEditor = AllEditors.TestEditor
+                .New()
+                .UseNewestVersion()
+                .Build();
+
             testEditor.Info.Name = "Amazingly cool name";
             testEditor.Questions.Add(operation.Result);
             testEditor.Grading.Name = "Ludicrous name";

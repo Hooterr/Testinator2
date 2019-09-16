@@ -1,4 +1,5 @@
-﻿using Testinator.TestSystem.Implementation.Questions;
+﻿using Testinator.TestSystem.Editors.Test.Builder;
+using Testinator.TestSystem.Implementation.Questions;
 
 namespace Testinator.TestSystem.Editors
 {
@@ -15,7 +16,6 @@ namespace Testinator.TestSystem.Editors
         public static IEditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion> MultipleChoiceQuestion
             => new EditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion>();
 
-        // TODO create a builder
-        public static ITestEditor TestEditor => new TestEditor(1);
+        public static ITestEditorBuilder TestEditor => new TestEditorBuilder();
     }
 }
