@@ -14,7 +14,7 @@ namespace Testinator.TestSystem.Editors
             int currentVersion)
             where TAttribute : BaseEditorAttribute
         {
-            var propertyInfo = ExpressionHelpers.GetPropertyInfo(propertyExpression);
+            var propertyInfo = propertyExpression.GetPropertyInfo();
             var filtered = 
                  Filter<TAttribute>(propertyInfo, currentVersion)
                 .Select(x => new
