@@ -14,13 +14,12 @@ namespace Testinator.TestSystem.Editors
 
         private TimeSpan mTimeLimitMin;
         private TimeSpan mTimeLimitMax;
+
         #endregion
 
         #region Public Properties
 
         public string Name { get; set; }
-
-        public DateTime LastEditionDate { get; set; }
 
         public TimeSpan TimeLimit { get; set; }
 
@@ -79,7 +78,6 @@ namespace Testinator.TestSystem.Editors
                 };
 
             info.Name = Name;
-            info.LastEditionDate = LastEditionDate;
             info.TimeLimit = TimeLimit;
             return info;
         }

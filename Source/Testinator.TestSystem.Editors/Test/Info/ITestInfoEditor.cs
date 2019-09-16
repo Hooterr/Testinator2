@@ -13,17 +13,14 @@ namespace Testinator.TestSystem.Editors
         string Name { get; set; }
 
         /// <summary>
-        /// The date when this test was last edited
-        /// </summary>
-        [EditorProperty]
-        DateTime LastEditionDate { get; set; }
-
-        /// <summary>
         /// The time limit for this test
         /// </summary>
         [EditorProperty]
         TimeSpan TimeLimit { get; set; }
 
+        /// <summary>
+        /// Categories for this test
+        /// </summary>
         [EditorProperty]
         Category Category { get; set; }
     }
