@@ -46,7 +46,7 @@ namespace Testinator.TestSystem.Editors
         /// <param name="action">The action to execute when an error occurs of the editor property</param>
         public void OnErrorFor(Expression<Func<TIntereface, object>> propertyExpression, Action<string> action)
         {
-            var propertyInfo = ExpressionHelpers.GetPropertyInfo(propertyExpression);
+            var propertyInfo = propertyExpression.GetPropertyInfo();
 
             if (propertyInfo.GetCustomAttributes<EditorPropertyAttribute>(true).Any() == false)
                 throw new ArgumentException($"This property is not an editor property.");
@@ -56,7 +56,7 @@ namespace Testinator.TestSystem.Editors
 
         protected bool HasHandlerFor(Expression<Func<TIntereface, object>> propertyExpression)
         {
-            var propertyName = ExpressionHelpers.GetCorrectPropertyName(propertyExpression);
+            var propertyName = propertyExpression.GetCorrectPropertyName();
             return mErrorHandlers.ContainsKey(propertyName);
         }
 
@@ -94,7 +94,7 @@ namespace Testinator.TestSystem.Editors
         /// <param name="message">The error message</param>
         protected void HandleErrorFor(Expression<Func<TIntereface, object>> propertyExpression, string message)
         {
-            var propertyName = ExpressionHelpers.GetCorrectPropertyName(propertyExpression);
+            var propertyName = propertyExpression.GetCorrectPropertyName();
 
             if (false == mErrorHandlers.ContainsKey(propertyName))
                 throw new ArgumentException($"{propertyName} doesn't have {nameof(EditorPropertyAttribute)} thus it can't be used in {nameof(HandleErrorFor)} method.");
