@@ -8,6 +8,8 @@ using System.Runtime.InteropServices;
 
 // For unit testing
 [assembly: InternalsVisibleTo("Testinator.TestSystem.Implementation.Test")]
+// For the editors
+[assembly: InternalsVisibleTo("Testinator.TestSystem.Editors")]
 
 [assembly: AssemblyTitle("Testinator.Server.TestSystem.Implementation")]
 [assembly: AssemblyDescription("")]

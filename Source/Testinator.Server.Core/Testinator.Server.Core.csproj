@@ -18,6 +18,7 @@
     <ProjectReference Include="..\Testinator.Core\Testinator.Core.csproj" />
     <ProjectReference Include="..\Testinator.Server.Database\Testinator.Server.Database.csproj" />
     <ProjectReference Include="..\Testinator.Server.TestSystem.Implementation\Testinator.Server.TestSystem.Implementation.csproj" />
+    <ProjectReference Include="..\Testinator.TestSystem.Editors\Testinator.TestSystem.Editors.csproj" />
   </ItemGroup>
 
 </Project>

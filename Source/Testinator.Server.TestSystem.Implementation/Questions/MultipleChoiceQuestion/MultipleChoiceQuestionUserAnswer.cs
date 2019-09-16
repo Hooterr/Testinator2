@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Testinator.TestSystem.Abstractions;
+﻿using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions
 {

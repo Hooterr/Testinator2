@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Testinator.Server.TestSystem.Implementation.Attributes;
-using Testinator.TestSystem.Abstractions.Questions.Task;
+﻿using Testinator.TestSystem.Abstractions.Questions.Task;
+using Testinator.TestSystem.Editors.Attributes;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions.Task
 {
@@ -17,7 +14,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
         /// </summary>
         public MarkupLanguage Markup { get; internal set; } = MarkupLanguage.PlainText;
 
-        [MaxLenght(maxLenght: 500)]
+        [MaxLenght(maxLenght: 500, fromVersion: 1)]
         [MaxLenght(maxLenght: 400, fromVersion: 2)]
         public string Text { get; internal set; }
     }

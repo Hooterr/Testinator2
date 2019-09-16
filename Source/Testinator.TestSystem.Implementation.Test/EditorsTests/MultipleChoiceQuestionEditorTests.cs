@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Testinator.Server.TestSystem.Implementation;
-using Testinator.Server.TestSystem.Implementation.Attributes;
+﻿using System.Collections.Generic;
 using Testinator.Server.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Editors;
+using Testinator.TestSystem.Editors.Attributes;
 using Xunit;
 
 namespace Testinator.TestSystem.Implementation.Test.EditorsTests

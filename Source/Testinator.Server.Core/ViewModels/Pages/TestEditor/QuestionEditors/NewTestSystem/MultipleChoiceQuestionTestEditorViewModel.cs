@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using Testinator.Core;
-using Testinator.Server.TestSystem.Implementation;
+using Testinator.TestSystem.Editors;
 
 namespace Testinator.Server.Core
 {
@@ -52,7 +51,7 @@ namespace Testinator.Server.Core
             SubmitCommand = new RelayCommand(Submit);
 
             // Create editor for this type of question
-            mQuestionEditor = Editors.MultipleChoiceQuestion
+            mQuestionEditor = AllEditors.MultipleChoiceQuestion
                 .NewQuestion()
                 .UseNewestVersion()
                 .Build();

@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using Testinator.Server.TestSystem.Implementation.Attributes;
+using Testinator.TestSystem.Editors;
+using Testinator.TestSystem.Editors.Attributes;
 
 namespace Testinator.TestSystem.Implementation.Test.ErrorListener
 {
-    internal class ErrorListenerTestImplementation : Server.TestSystem.Implementation.ErrorListener<IListener_TEST>
+    internal class ErrorListenerTestImplementation : ErrorListener<IListener_TEST>
     {
         public void HandleErrorFor(Expression<Func<IListener_TEST, object>> propertyExpression, string message)
         {

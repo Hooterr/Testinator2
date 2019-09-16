@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
-using Testinator.Server.TestSystem.Implementation.Attributes;
 using Testinator.TestSystem.Abstractions.Questions.Task;
+using Testinator.TestSystem.Editors.Attributes;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions.Task
 {
@@ -11,7 +11,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions.Task
     public class ImageContent : IImageContent
     {
 
-        [MaxCollectionCount(maxCount: 5)]
+        [MaxCollectionCount(maxCount: 5, fromVersion: 1)]
         [MaxCollectionCount(maxCount: 1, fromVersion: 2)]
         [MaxCollectionCount(maxCount: 1, fromVersion: 4)]
         [MaxImageSize(width: 1000, height: 1000, fromVersion: 1)]

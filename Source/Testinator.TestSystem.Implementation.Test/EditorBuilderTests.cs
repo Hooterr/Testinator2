@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Testinator.Server.TestSystem.Implementation;
 using Testinator.Server.TestSystem.Implementation.Questions;
+using Testinator.TestSystem.Editors;
 using Xunit;
 
 namespace Testinator.TestSystem.Implementation.Test
@@ -14,15 +10,15 @@ namespace Testinator.TestSystem.Implementation.Test
         [Fact]
         public void AlwaysNewInstance()
         {
-            var editor1 = Editors.MultipleChoiceQuestion;
-            var editor2 = Editors.MultipleChoiceQuestion;
+            var editor1 = AllEditors.MultipleChoiceQuestion;
+            var editor2 = AllEditors.MultipleChoiceQuestion;
             Assert.False(editor1.Equals(editor2));
         }
 
         [Fact]
         public void ChangingVersionThrowsException()
         {
-            var builder = Editors.MultipleChoiceQuestion;
+            var builder = AllEditors.MultipleChoiceQuestion;
             builder.SetInitialQuestion(new MultipleChoiceQuestion()
             {
                 Version = 1,
@@ -33,7 +29,7 @@ namespace Testinator.TestSystem.Implementation.Test
         [Fact]
         public void TooHighVersionThrowsException()
         {
-            var builder = Editors.MultipleChoiceQuestion;
+            var builder = AllEditors.MultipleChoiceQuestion;
             var tooHighVersion = Versions.Highest + 1;
             Assert.Throws<ArgumentException>(() => builder.SetVersion(tooHighVersion));
         }
@@ -41,7 +37,7 @@ namespace Testinator.TestSystem.Implementation.Test
         [Fact]
         public void TooLowVersionThrowsException()
         {
-            var builder = Editors.MultipleChoiceQuestion;
+            var builder = AllEditors.MultipleChoiceQuestion;
             var tooLowVersion = Versions.Lowest - 1;
             Assert.Throws<ArgumentException>(() => builder.SetVersion(tooLowVersion));
         }
@@ -49,7 +45,7 @@ namespace Testinator.TestSystem.Implementation.Test
         [Fact]
         public void BuildNewQuestionNoMethodsUsed()
         {
-            var builder = Editors.MultipleChoiceQuestion;
+            var builder = AllEditors.MultipleChoiceQuestion;
             var result = builder.Build();
             Assert.NotNull(result);
         }
@@ -57,7 +53,7 @@ namespace Testinator.TestSystem.Implementation.Test
         [Fact]
         public void BuildNewQuestion()
         {
-            var builder = Editors.MultipleChoiceQuestion;
+            var builder = AllEditors.MultipleChoiceQuestion;
             var result = builder
                 .NewQuestion()
                 .Build();
@@ -67,7 +63,7 @@ namespace Testinator.TestSystem.Implementation.Test
         [Fact]
         public void EditExisting()
         {
-            var builder = Editors.MultipleChoiceQuestion;
+            var builder = AllEditors.MultipleChoiceQuestion;
             var result = builder
                 .SetInitialQuestion(new MultipleChoiceQuestion() { Version = 1 })
                 .Build();
@@ -77,7 +73,7 @@ namespace Testinator.TestSystem.Implementation.Test
         [Fact]
         public void EditNoLongerSupportedQuestionModelVersion()
         {
-            var builder = Editors.MultipleChoiceQuestion;
+            var builder = AllEditors.MultipleChoiceQuestion;
             Assert.Throws<NotSupportedException>(() 
                 => builder.SetInitialQuestion(new MultipleChoiceQuestion() { Version = Versions.Lowest - 1 }));   
         }

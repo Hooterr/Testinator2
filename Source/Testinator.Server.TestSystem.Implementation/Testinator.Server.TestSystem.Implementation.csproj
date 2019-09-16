@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Testinator.TestSystem.Abstractions\Testinator.TestSystem.Abstractions.csproj" />
+    <ProjectReference Include="..\Testinator.TestSystem.Editors.Attributes\Testinator.TestSystem.Editors.Attributes.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,16 @@
+﻿using Testinator.TestSystem.Editors.Attributes;
+
+namespace Testinator.TestSystem.Editors
+{
+    /// <summary>
+    /// The editor for scoring part of the question
+    /// </summary>
+    public interface IMultipleChoiceQuestionScoringEditor : IQuestionScoringEditor
+    {
+        /// <summary>
+        /// 0-based index of the correct answer for this question
+        /// </summary>
+        [EditorProperty]
+        int CorrectAnswerIdx { get; set; }
+    }
+}

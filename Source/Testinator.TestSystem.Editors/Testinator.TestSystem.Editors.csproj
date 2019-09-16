@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="4.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Testinator.Server.TestSystem.Implementation\Testinator.Server.TestSystem.Implementation.csproj" />
+    <ProjectReference Include="..\Testinator.TestSystem.Abstractions\Testinator.TestSystem.Abstractions.csproj" />
+    <ProjectReference Include="..\Testinator.TestSystem.Editors.Attributes\Testinator.TestSystem.Editors.Attributes.csproj" />
+  </ItemGroup>
+
+</Project>

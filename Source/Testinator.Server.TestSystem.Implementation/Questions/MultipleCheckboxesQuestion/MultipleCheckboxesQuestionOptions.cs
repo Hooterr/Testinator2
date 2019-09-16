@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Testinator.Server.TestSystem.Implementation.Attributes;
+﻿using System.Collections.Generic;
 using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Editors.Attributes;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions
 {
@@ -14,7 +12,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
         /// checkbox - text
         /// etc..
         /// </summary>
-        [MaxCollectionCount(maxCount: 5)]
+        [MaxCollectionCount(maxCount: 5, fromVersion: 1)]
         // TODO minimum count
         public List<string> Options { get; internal set; }
     }

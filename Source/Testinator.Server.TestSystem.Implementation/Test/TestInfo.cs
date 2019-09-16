@@ -1,7 +1,7 @@
 ﻿using System;
-using Testinator.Server.TestSystem.Implementation.Attributes;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Tests;
+using Testinator.TestSystem.Editors.Attributes;
 
 namespace Testinator.Server.TestSystem.Implementation
 {

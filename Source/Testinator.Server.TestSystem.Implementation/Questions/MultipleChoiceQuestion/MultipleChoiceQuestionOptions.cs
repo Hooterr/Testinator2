@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Testinator.Server.TestSystem.Implementation.Attributes;
+﻿using System.Collections.Generic;
 using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Editors.Attributes;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions
 {

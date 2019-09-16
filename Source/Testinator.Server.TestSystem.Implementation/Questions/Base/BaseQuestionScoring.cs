@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Testinator.Server.TestSystem.Implementation.Attributes;
 using Testinator.Server.TestSystem.Implementation.Questions.ScoringStrategy;
 using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Editors.Attributes;
 
 namespace Testinator.Server.TestSystem.Implementation.Questions
 {
@@ -11,7 +9,7 @@ namespace Testinator.Server.TestSystem.Implementation.Questions
         where TQuestionUserAnswer : class
     {
         [EditorProperty]
-        [IntegerValueRange(min: 1, max:100, fromVersion: 1)]
+        [IntegerValueRange(min: 1, max: 100, fromVersion: 1)]
         public int MaximumScore { get; internal set; }
 
         [EditorProperty]
