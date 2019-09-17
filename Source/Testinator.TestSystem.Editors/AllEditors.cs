@@ -16,6 +16,12 @@ namespace Testinator.TestSystem.Editors
         public static IEditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion> MultipleChoiceQuestion
             => new EditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion>();
 
-        public static ITestEditorBuilder TestEditor => new TestEditorBuilder();
+        // TODO create a builder
+        public static ITestEditor TestEditor => new TestEditor(1);
+
+        // TODO: Porób tutaj buildery implementacje itp., byleby metody zostaly te same
+        public static ITestInfoEditor InfoEditor => new TestInfoEditor(1);
+        public static IGradingEditor GradingEditor => new GradingEditor(1);
+        public static ITestOptionsEditor OptionsEditor => new TestOptionsEditor(1);
     }
 }
