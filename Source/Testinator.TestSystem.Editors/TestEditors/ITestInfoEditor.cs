@@ -26,5 +26,8 @@ namespace Testinator.TestSystem.Editors
 
         [EditorProperty]
         Category Category { get; set; }
+
+        [EditorProperty]
+        DateTime CreationDate { get; set; }
     }
 }
