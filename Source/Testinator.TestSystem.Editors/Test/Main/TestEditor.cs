@@ -78,7 +78,7 @@ namespace Testinator.TestSystem.Editors
             test.mTestOptions = optionsBuildOperation.Result;
             test.mGrading = gradingBuildOperation.Result;
 
-            // TODO validate questions' list length 
+            // TODO validate questions list length 
             test.mQuestionList = mQuestions.Select(x => new InMemoryQuestionProvider(x)).Cast<IQuestionProvider>().ToList();
 
             return test;

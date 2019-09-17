@@ -14,11 +14,5 @@ namespace Testinator.TestSystem.Editors
         ITestInfoEditor GetEditorTestInfo(ITestInfo testInfo = null);
         ITestOptionsEditor GetEditorTestOptions(ITestOptions testOptions = null);
         ICollection<IQuestion> GetPossibleQuestionsFromPool();
-        void InitializeNewTest(ITest test = null);
-        void SubmitGrading(IGrading grading);
-        void SubmitQuestion(IQuestion question);
-        ITest SubmitTest();
-        void SubmitTestInfo(ITestInfo testInfo);
-        void SubmitTestOptions(ITestOptions testOptions);
     }
 }

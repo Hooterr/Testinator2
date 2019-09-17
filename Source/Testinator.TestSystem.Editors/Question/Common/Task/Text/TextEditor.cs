@@ -73,7 +73,7 @@ namespace Testinator.TestSystem.Editors
             }
         }
 
-        internal override bool Validate()
+        public override bool Validate()
         {
             var veryficationPassed = true;
 

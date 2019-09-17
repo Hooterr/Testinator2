@@ -35,7 +35,7 @@ namespace Testinator.TestSystem.Editors
 
         #endregion
 
-        internal override bool Validate()
+        public override bool Validate()
         {
             var validationPassed = true;
 

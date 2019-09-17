@@ -151,7 +151,18 @@ namespace Testinator.TestSystem.Editors
 
             // Clear the unhandled errors too
             mUnHandledErrorMessages.Clear();
-        } 
+        }
+
+        /// <summary>
+        /// Validates the current state of the editor.
+        /// Called during build process. During this validation implementer should call HandleError/HandleErrorFor to populate error messages
+        /// </summary>
+        /// <returns>True if validation was successful, otherwise false</returns>
+        public virtual bool Validate()
+        {
+            return true;
+        }
+
 
         #endregion
     }

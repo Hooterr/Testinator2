@@ -100,16 +100,6 @@ namespace Testinator.TestSystem.Editors
             }
         }
 
-        /// <summary>
-        /// Validates the current state of the editor.
-        /// Called during build process. During this validation implementer should call HandleError/HandleErrorFor to populate error messages
-        /// </summary>
-        /// <returns>True if validation was successful, otherwise false</returns>
-        internal virtual bool Validate()
-        {
-            return true;
-        } 
-
         #endregion
 
         #region Abstract
