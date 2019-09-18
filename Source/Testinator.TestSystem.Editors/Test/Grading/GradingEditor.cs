@@ -3,21 +3,44 @@ using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Editors
 {
+    /// <summary>
+    /// Default implementation of <see cref="IGradingEditor"/>
+    /// </summary>
     internal class GradingEditor : BaseEditor<Grading, IGradingEditor>, IGradingEditor
     {
+        #region Editor Properties
+
+        public string Name { get; set; }
+
+        #endregion
+
         public IGradingStrategy Strategy { get; internal set; }
 
         internal int mMaxPointScore;
 
-        public string Name { get; set; }
-         
+
+        #region All Constructors
+
+        /// <summary>
+        /// Initializes the editor to create a new grading
+        /// </summary>
+        /// <param name="version">The version of test system to use</param>
         public GradingEditor(int version) : base(version) { }
 
+        /// <summary>
+        /// Initializes the editor to edit an existing grading
+        /// </summary>
+        /// <param name="grading">The grading to edit</param>
+        /// <param name="version">The version of test system to use</param>
         public GradingEditor(Grading grading, int version) : base(grading, version) { }
+
+        #endregion
+
+        #region Overridden
 
         protected override Grading BuildObject()
         {
-            Grading result = null;
+            Grading result;
             if (IsInEditorMode())
                 result = OriginalObject;
             else
@@ -30,5 +53,7 @@ namespace Testinator.TestSystem.Editors
 
             return result;
         }
+
+        #endregion
     }
 }
