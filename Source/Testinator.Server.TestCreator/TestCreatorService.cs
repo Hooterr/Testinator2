@@ -147,6 +147,16 @@ namespace Testinator.Server.TestCreator
             return mCurrentTestEditor.Grading;
         }
 
+        public ITest BuildTest()
+        {
+            // Make sure we have ready editor
+            if (mCurrentTestEditor == null)
+                throw new InvalidOperationException("Editor not initialized.");
+
+            // Return the test object from editor
+            return mCurrentTestEditor.Build().Result;
+        }
+
         /// <summary>
         /// Checks the pool of current user and returns all the questions inside that they can include in the test
         /// </summary>

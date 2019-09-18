@@ -15,5 +15,6 @@ namespace Testinator.TestSystem.Editors
         ITestOptionsEditor GetEditorTestOptions();
         ICollection<IQuestion> GetPossibleQuestionsFromPool();
         void InitializeNewTest(ITest test = null);
+        ITest BuildTest();
     }
 }

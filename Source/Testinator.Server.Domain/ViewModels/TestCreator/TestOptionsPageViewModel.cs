@@ -10,7 +10,7 @@ namespace Testinator.Server.Domain
     {
         #region Private Members
 
-        private ITestCreatorService mTestCreator;
+        private readonly ITestCreatorService mTestCreator;
 
         #endregion
 
