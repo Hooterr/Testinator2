@@ -14,11 +14,6 @@ namespace Testinator.TestSystem.Editors.Test.Builder
 
         #endregion
 
-        public TestEditorBuilder()
-        {
-            New();
-        }
-
         public ITestEditor Build()
         {
             if (mInitialTest == null)
@@ -27,14 +22,14 @@ namespace Testinator.TestSystem.Editors.Test.Builder
             return new TestEditor(mVersion);
         }
 
-        public ITestEditorBuilder Edit(Implementation.Test test)
+        public ITestEditorBuilder SetInitialTest(Implementation.Test test)
         {
             mInitialTest = test;
             mVersion = test.Version;
             return this;
         }
 
-        public ITestEditorBuilder New()
+        public ITestEditorBuilder NewTest()
         {
             mInitialTest = null;
             mVersion = Versions.Highest;

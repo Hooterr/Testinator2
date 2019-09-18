@@ -6,9 +6,9 @@ namespace Testinator.TestSystem.Editors.Test.Builder
     {
         ITestEditor Build();
 
-        ITestEditorBuilder Edit(Implementation.Test test);
+        ITestEditorBuilder SetInitialTest(Implementation.Test test);
 
-        ITestEditorBuilder New();
+        ITestEditorBuilder NewTest();
 
         ITestEditorBuilder SetVersion(int version);
 
