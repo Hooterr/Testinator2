@@ -28,6 +28,7 @@ namespace Testinator.Server.TestCreator
         /// As editor, which after building can return finished Test object
         /// </summary>
         private ITestEditor mCurrentTestEditor;
+
         #endregion
 
         #region Constructor
@@ -48,44 +49,56 @@ namespace Testinator.Server.TestCreator
         /// <summary>
         /// Initializes new test in test creator
         /// </summary>
-        public void InitializeNewTest()
+        /// <param name="test">The test that can be provided to pre-load in the editor</param>
+        public void InitializeNewTest(ITest test = null)
         {
-            mCurrentTestEditor = AllEditors.TestEditor
-                .New()
-                .UseNewestVersion()
-                .Build();
-        }
-
-        public void InitializeEditTest(Test test)
-        {
-            mCurrentTestEditor = AllEditors.TestEditor
-                .Edit(test)
-                .Build();
+            // If we dont have test provided...
+            if (test == null)
+            {
+                // Setup the test editor
+                mCurrentTestEditor = AllEditors.TestEditor
+                    // Create brand-new test
+                    .NewTest()
+                    // Use newest version since its new test
+                    .UseNewestVersion()
+                    // Build the editor
+                    .Build();
+            }
+            // Otherwise...
+            else
+            {
+                // Setup the test editor
+                mCurrentTestEditor = AllEditors.TestEditor
+                    // Pre-load given test
+                    .SetInitialTest(test as Test)
+                    // Build the editor
+                    .Build();
+            }
         }
 
         /// <summary>
         /// Gets the editor for <see cref="ITestInfo"/>
         /// </summary>
-        /// <param name="testInfo">The instance of <see cref="ITestInfo"/> that can be preloaded in the editor</param>
-        /// <returns>The editor for <see cref="ITestInfo"/></returns>
-        public ITestInfoEditor GetEditorTestInfo(ITestInfo testInfo = null)
+        public ITestInfoEditor GetEditorTestInfo()
         {
+            // Make sure we have ready editor
             if (mCurrentTestEditor == null)
                 throw new InvalidOperationException("Editor not initialized.");
 
+            // Return specific editor for test info
             return mCurrentTestEditor.Info;
         }
 
         /// <summary>
         /// Gets the editor for <see cref="ITestOptions"/>
         /// </summary>
-        /// <param name="testOptions">The instance of <see cref="ITestOptions"/> that can be preloaded in the editor</param>
-        /// <returns>The editor for <see cref="ITestOptions"/></returns>
-        public ITestOptionsEditor GetEditorTestOptions(ITestOptions testOptions = null)
+        public ITestOptionsEditor GetEditorTestOptions()
         {
+            // Make sure we have ready editor
             if (mCurrentTestEditor == null)
                 throw new InvalidOperationException("Editor not initialized.");
 
+            // Return specific editor for test options
             return mCurrentTestEditor.Options;
         }
 
@@ -104,7 +117,9 @@ namespace Testinator.Server.TestCreator
 
                 // Get the editor for this type of question
                 return AllEditors.MultipleChoiceQuestion
+                    // Pre-load the question
                     .SetInitialQuestion(question)
+                    // Return built editor
                     .Build();
             }
 
@@ -122,14 +137,24 @@ namespace Testinator.Server.TestCreator
         /// <summary>
         /// Gets the editor for <see cref="IGrading"/>
         /// </summary>
-        /// <param name="grading">The instance of <see cref="IGrading"/> that can be preloaded in the editor</param>
-        /// <returns>The editor for <see cref="IGrading"/></returns>
-        public IGradingEditor GetEditorGrading(IGrading grading = null)
+        public IGradingEditor GetEditorGrading()
         {
+            // Make sure we have ready editor
             if (mCurrentTestEditor == null)
                 throw new InvalidOperationException("Editor not initialized.");
 
+            // Return specific editor for grading
             return mCurrentTestEditor.Grading;
+        }
+
+        public ITest BuildTest()
+        {
+            // Make sure we have ready editor
+            if (mCurrentTestEditor == null)
+                throw new InvalidOperationException("Editor not initialized.");
+
+            // Return the test object from editor
+            return mCurrentTestEditor.Build().Result;
         }
 
         /// <summary>

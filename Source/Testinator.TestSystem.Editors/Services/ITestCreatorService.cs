@@ -9,10 +9,12 @@ namespace Testinator.TestSystem.Editors
 
     public interface ITestCreatorService
     {
-        IGradingEditor GetEditorGrading(IGrading grading = null);
+        IGradingEditor GetEditorGrading();
         QuestionEditorMultipleChoice GetEditorMultipleChoice(int? questionNumber = null);
-        ITestInfoEditor GetEditorTestInfo(ITestInfo testInfo = null);
-        ITestOptionsEditor GetEditorTestOptions(ITestOptions testOptions = null);
+        ITestInfoEditor GetEditorTestInfo();
+        ITestOptionsEditor GetEditorTestOptions();
         ICollection<IQuestion> GetPossibleQuestionsFromPool();
+        void InitializeNewTest(ITest test = null);
+        ITest BuildTest();
     }
 }

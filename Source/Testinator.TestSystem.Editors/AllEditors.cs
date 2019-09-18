@@ -6,7 +6,7 @@ namespace Testinator.TestSystem.Editors
     using ABCQuestionEditor = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
 
     /// <summary>
-    /// Provides editor builders for every question type
+    /// Provides editor builders
     /// </summary>
     public static class AllEditors
     {
@@ -16,13 +16,9 @@ namespace Testinator.TestSystem.Editors
         public static IEditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion> MultipleChoiceQuestion
             => new EditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion>();
 
-        // TODO create a builder
+        /// <summary>
+        /// The editor for <see cref="ITest"/>
+        /// </summary>
         public static ITestEditorBuilder TestEditor => new TestEditorBuilder();
-
-        /*
-        // TODO: Porób tutaj buildery implementacje itp., byleby metody zostaly te same
-        public static ITestInfoEditor InfoEditor => new TestInfoEditor(1);
-        public static IGradingEditor GradingEditor => new GradingEditor(1);
-        public static ITestOptionsEditor OptionsEditor => new TestOptionsEditor(1);*/
     }
 }

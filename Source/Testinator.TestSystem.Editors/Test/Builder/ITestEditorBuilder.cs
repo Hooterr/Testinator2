@@ -16,13 +16,13 @@
         /// </summary>
         /// <param name="test">The test to edit</param>
         /// <returns>Fluid interface</returns>
-        ITestEditorBuilder Edit(Implementation.Test test);
+        ITestEditorBuilder SetInitialTest(Implementation.Test test);
 
         /// <summary>
         /// Create a new test
         /// </summary>
         /// <returns>Fluid interface</returns>
-        ITestEditorBuilder New();
+        ITestEditorBuilder NewTest();
 
         /// <summary>
         /// Set the test system version to use
