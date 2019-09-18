@@ -1,23 +1,40 @@
 ﻿using System;
-using Testinator.TestSystem.Abstractions.Tests;
-using Testinator.TestSystem.Implementation;
 
 namespace Testinator.TestSystem.Editors.Test.Builder
 {
+    /// <summary>
+    /// Default implementation of <see cref="ITestEditorBuilder"/>
+    /// </summary>
     internal class TestEditorBuilder : ITestEditorBuilder
     {
         #region Private Members
 
+        /// <summary>
+        /// The version of test system model to use
+        /// </summary>
         private int mVersion;
 
+        /// <summary>
+        /// Initial object to edit
+        /// If null, create a new one
+        /// </summary>
         private Implementation.Test mInitialTest;
 
         #endregion
 
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public TestEditorBuilder()
         {
             New();
         }
+
+        #endregion
+
+        #region Public Methods
 
         public ITestEditor Build()
         {
@@ -47,7 +64,7 @@ namespace Testinator.TestSystem.Editors.Test.Builder
             if (mInitialTest != null && mInitialTest.Version != version)
             {
                 throw new NotSupportedException("Changing test version is not supported yet.");
-                                              // Tho it may be one day
+                // Tho it may be one day
             }
 
             if (Versions.NotInRange(version))
@@ -60,6 +77,8 @@ namespace Testinator.TestSystem.Editors.Test.Builder
         public ITestEditorBuilder UseNewestVersion()
         {
             return SetVersion(Versions.Highest);
-        }
+        } 
+
+        #endregion
     }
 }
