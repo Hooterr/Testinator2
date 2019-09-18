@@ -5,6 +5,9 @@ using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Editors
 {
+    /// <summary>
+    /// Default implementation of <see cref="ITestInfoEditor"/>
+    /// </summary>
     internal class TestInfoEditor : BaseEditor<TestInfo, ITestInfoEditor>, ITestInfoEditor
     {
         #region Private Members
@@ -29,11 +32,22 @@ namespace Testinator.TestSystem.Editors
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes the editor to create a new object
+        /// </summary>
+        /// <param name="version">The version of test system to use</param>
         public TestInfoEditor(int version) : base(version) { }
 
+        /// <summary>
+        /// Initializes the editor to edit an existing info
+        /// </summary>
+        /// <param name="originalObj">The object to edit</param>
+        /// <param name="version">The version of test system to use</param>
         public TestInfoEditor(TestInfo originalObj, int version) : base(originalObj, version) { }
 
         #endregion
+
+        #region Public Method
 
         public override bool Validate()
         {
@@ -62,9 +76,12 @@ namespace Testinator.TestSystem.Editors
             }
 
             // TODO possibly more to come (?)
-
             return validationPassed;
         }
+
+        #endregion
+
+        #region Protected Methods
 
         protected override TestInfo BuildObject()
         {
@@ -87,8 +104,13 @@ namespace Testinator.TestSystem.Editors
             LoadAttributes();
         }
 
+        #endregion
+
         #region Private Methods
 
+        /// <summary>
+        /// Loads values from the attributes
+        /// </summary>
         private void LoadAttributes()
         {
             var nameConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, string, StringLengthAttribute>
