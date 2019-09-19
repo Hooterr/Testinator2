@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Testinator.TestSystem.Abstractions
@@ -12,7 +13,6 @@ namespace Testinator.TestSystem.Abstractions
 
         DateTime LastEdited { get; }
 
-        // read-only stuff here
-        SortedList<int, IGrade> PercentageThresholds { get; }
+        ReadOnlyCollection<KeyValuePair<int, IGrade>> PercentageThresholds { get; }
     }
 }

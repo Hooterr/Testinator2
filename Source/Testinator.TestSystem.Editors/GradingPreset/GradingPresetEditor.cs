@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Implementation;
@@ -79,8 +80,13 @@ namespace Testinator.TestSystem.Editors
 
             preset.Name = Name;
             preset.LastEdited = DateTime.Now;
-            preset.PercentageThresholds = new SortedList<int, IGrade>(Thresholds.Count);
-            Thresholds.ForEach(x => preset.PercentageThresholds.Add(x.Key, x.Value));
+            var list = new List<KeyValuePair<int, IGrade>>(Thresholds.Count);
+            Thresholds
+                .OrderBy(x => x.Key)
+                .ToList()
+                .ForEach(x => list.Add(new KeyValuePair<int, IGrade>(x.Key, x.Value)));
+
+            preset.PercentageThresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(list);
 
             return preset;
         }
