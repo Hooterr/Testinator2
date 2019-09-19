@@ -10,14 +10,11 @@ namespace Testinator.TestSystem.Editors
     {
         #region Editor Properties
 
-        public string Name { get; set; }
-
         #endregion
 
         public IGradingStrategy Strategy { get; internal set; }
 
         internal int mMaxPointScore;
-
 
         #region All Constructors
 
@@ -49,7 +46,6 @@ namespace Testinator.TestSystem.Editors
             // TODO, default for now
             result.Strategy = new Standard6GradesPercentageStrategy(mMaxPointScore);
             result.MaxPointScore = mMaxPointScore;
-            result.Name = Name;
 
             return result;
         }

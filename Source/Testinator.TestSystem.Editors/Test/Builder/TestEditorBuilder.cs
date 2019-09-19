@@ -29,7 +29,7 @@ namespace Testinator.TestSystem.Editors.Test.Builder
         /// </summary>
         public TestEditorBuilder()
         {
-            New();
+            NewTest();
         }
 
         #endregion

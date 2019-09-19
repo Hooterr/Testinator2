@@ -1,17 +1,18 @@
-﻿using Testinator.TestSystem.Attributes;
+﻿using System.Collections.Generic;
+using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Editors
 {
     /// <summary>
-    /// The editor for grading for the test
+    /// The editor for the grading part for the test
     /// </summary>
     public interface IGradingEditor : IErrorListener<IGradingEditor>
     {
-        /// <summary>
-        /// The name of this grading preset
-        /// </summary>
         [EditorProperty]
-        string Name { get; set; }
+        IGradingPreset Preset { get; set; }
 
+        [EditorProperty]
+        List<KeyValuePair<int, IGrade>> Thresholds { get; set; }
     }
 }
