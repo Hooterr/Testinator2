@@ -4,8 +4,6 @@ namespace Testinator.TestSystem.Implementation
 {
     internal class Grading : IGrading
     {
-        public string Name { get; internal set; }
-
         public IGradingStrategy Strategy { get; internal set; }
 
         public int MaxPointScore { get; internal set; }

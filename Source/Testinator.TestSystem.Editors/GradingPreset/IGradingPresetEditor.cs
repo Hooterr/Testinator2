@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Attributes;
+using Testinator.TestSystem.Implementation;
 
 namespace Testinator.TestSystem.Editors
 {
