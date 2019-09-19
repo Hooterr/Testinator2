@@ -4,19 +4,14 @@ using System.Drawing;
 using Testinator.TestSystem.Abstractions.Questions.Task;
 using Testinator.TestSystem.Attributes;
 
-namespace Testinator.TestSystem.Implementation.Questions.Task
+namespace Demo.Task
 {
     /// <summary>
     /// Represents all the images in <see cref="QuestionTask"/>
     /// </summary>
     [Serializable]
-    public class ImageContent : IImageContent
+    public class ImageContent
     {
-
-        [MaxCollectionCount(maxCount: 5, fromVersion: 1)]
-        [MaxCollectionCount(maxCount: 1, fromVersion: 2)]
-        [MaxCollectionCount(maxCount: 1, fromVersion: 4)]
-        [MaxImageSize(width: 1000, height: 1000, fromVersion: 1)]
         public IList<Image> Images { get; internal set; }
 
     }

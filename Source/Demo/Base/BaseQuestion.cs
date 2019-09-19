@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Testinator.TestSystem.Abstractions;
-using Testinator.TestSystem.Abstractions.Questions;
 
-namespace Testinator.TestSystem.Implementation.Questions
+namespace Demo
 {
     /// <summary>
     /// Basic implementation of a question
     /// </summary>
     [Serializable]
-    public abstract class BaseQuestion : IQuestion
+    public abstract class BaseQuestion
     {
         public IQuestionTask Task { get; internal set; }
 

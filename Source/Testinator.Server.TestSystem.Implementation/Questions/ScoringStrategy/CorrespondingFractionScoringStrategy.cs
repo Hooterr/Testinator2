@@ -7,6 +7,7 @@ namespace Testinator.TestSystem.Implementation.Questions.ScoringStrategy
     /// <summary>
     /// For each part of the answer that is correct give appropriate fraction of the point score
     /// </summary>
+    [Serializable]
     public class CorrespondingFractionScoringStrategy : IScoringStrategy
     {
         public int Evaluate(int maxPointScore, int percentageDoneCorrect)

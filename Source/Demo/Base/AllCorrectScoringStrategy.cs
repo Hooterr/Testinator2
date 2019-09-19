@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Testinator.TestSystem.Implementation.Questions.ScoringStrategy;
 
-namespace Testinator.TestSystem.Implementation.Questions.ScoringStrategy
+namespace Demo
 {
     /// <summary>
     /// The strategy that requires 100% correct answer to give full point score, otherwise 0

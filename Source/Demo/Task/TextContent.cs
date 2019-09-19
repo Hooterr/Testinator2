@@ -2,7 +2,7 @@
 using Testinator.TestSystem.Abstractions.Questions.Task;
 using Testinator.TestSystem.Attributes;
 
-namespace Testinator.TestSystem.Implementation.Questions.Task
+namespace Demo.Task
 {
     /// <summary>
     /// Represents the string content of the question task
@@ -14,10 +14,7 @@ namespace Testinator.TestSystem.Implementation.Questions.Task
         /// <summary>
         /// Describes what markup language has been used
         /// </summary>
-        public MarkupLanguage Markup { get; internal set; } = MarkupLanguage.PlainText;
-
-        [MaxLenght(maxLenght: 500, fromVersion: 1)]
-        [MaxLenght(maxLenght: 400, fromVersion: 2)]
+        public MarkupLanguage Markup { get; internal set; }
         public string Text { get; internal set; }
     }
 }

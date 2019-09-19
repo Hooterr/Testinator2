@@ -1,5 +1,8 @@
-﻿namespace Testinator.TestSystem.Implementation.Questions
+﻿using System;
+
+namespace Testinator.TestSystem.Implementation.Questions
 {
+    [Serializable]
     public sealed class MultipleChoiceQuestionScoring : BaseQuestionScoring<MultipleChoiceQuestionUserAnswer>
     {
         /// <summary>

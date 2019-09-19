@@ -10,6 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("Testinator.TestSystem.Implementation.Test")]
 // For the editors
 [assembly: InternalsVisibleTo("Testinator.TestSystem.Editors")]
+[assembly: InternalsVisibleTo("Demo")]
 
 [assembly: AssemblyTitle("Testinator.TestSystem.Implementation")]
 [assembly: AssemblyDescription("")]

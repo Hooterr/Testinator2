@@ -2,7 +2,7 @@
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Questions.Task;
 
-namespace Testinator.TestSystem.Implementation.Questions
+namespace Demo
 {
     /// <summary>
     /// Implementation of the question task

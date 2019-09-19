@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Testinator.TestSystem.Implementation.Questions.ScoringStrategy
 {
+    [Serializable]
     public class CustomPercentageThresholdsScoringStrategy : IScoringStrategy
     {
         /// <summary>
