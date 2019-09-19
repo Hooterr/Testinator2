@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using Testinator.Server.Core;
+using Testinator.Server.Domain;
 using Testinator.UICore;
 
 namespace Testinator.Server
@@ -27,7 +28,7 @@ namespace Testinator.Server
                     return new HomePage(viewModel as HomeViewModel ?? DI.GetInjectedPageViewModel<HomeViewModel>());
 
                 case ApplicationPage.Demo:
-                    return new DemoABCD(viewModel as MultipleChoiceQuestionTestEditorViewModel ?? DI.GetInjectedPageViewModel<MultipleChoiceQuestionTestEditorViewModel>());
+                    return new DemoInfo(viewModel as TestInfoPageViewModel ?? DI.GetInjectedPageViewModel<TestInfoPageViewModel>());
 
                 case ApplicationPage.BeginTest:
                     return new BeginTestPage(viewModel as BeginTestViewModel ?? DI.GetInjectedPageViewModel<BeginTestViewModel>());
@@ -124,7 +125,7 @@ namespace Testinator.Server
             if (page is HomePage)
                 return ApplicationPage.Home;
 
-            if (page is DemoABCD)
+            if (page is DemoInfo)
                 return ApplicationPage.Demo;
 
             if (page is BeginTestPage)

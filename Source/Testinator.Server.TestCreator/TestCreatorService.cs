@@ -36,11 +36,11 @@ namespace Testinator.Server.TestCreator
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorService(IPoolManager poolManager)
+        /*public TestCreatorService(IPoolManager poolManager)
         {
             // Inject DI services
             mPoolManager = poolManager;
-        }
+        }*/
 
         #endregion
 

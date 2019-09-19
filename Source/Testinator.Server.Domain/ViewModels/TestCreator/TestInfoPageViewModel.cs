@@ -27,28 +27,23 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// The name of the test
         /// </summary>
-        public string Name { get; set; }
+        public InputField<string> Name { get; set; }
 
         /// <summary>
         /// The description of the test
         /// </summary>
-        public string Description { get; set; }
+        public InputField<string> Description { get; set; }
 
         /// <summary>
         /// The category of the test as raw string
         /// TODO: Decide the delimiter, make converter to <see cref="Category"/>
         /// </summary>
-        public string CategoryString { get; set; }
+        public InputField<string> CategoryString { get; set; }
 
         /// <summary>
         /// The time allowed for this test to be completed within
         /// </summary>
-        public TimeSpan CompletionTime { get; set; }
-
-        /// <summary>
-        /// The error message to display in case of validation failure
-        /// </summary>
-        public string ErrorMessage { get; set; }
+        public InputField<TimeSpan> CompletionTime { get; set; }
 
         #endregion
 
@@ -70,6 +65,7 @@ namespace Testinator.Server.Domain
         {
             // Inject DI services
             mTestCreator = testCreatorService;
+            mTestCreator.InitializeNewTest(); // TODO: Remove once demo is not needed
 
             // Create commands
             SubmitCommand = new RelayCommand(Submit);
@@ -78,8 +74,9 @@ namespace Testinator.Server.Domain
             mEditor = mTestCreator.GetEditorTestInfo();
 
             // Catch all the errors and display them
-            mEditor.OnErrorFor(x => x.Name, (e) => ErrorMessage = e);
-            mEditor.OnErrorFor(x => x.TimeLimit, (e) => ErrorMessage = e);
+            // TODO: Add other values here after they are done in editor
+            mEditor.OnErrorFor(x => x.Name, (e) => Name.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.TimeLimit, (e) => CompletionTime.ErrorMessage = e);
 
             // And initialize the data we display
             InitializeInputData();

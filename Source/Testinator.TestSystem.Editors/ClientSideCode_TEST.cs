@@ -51,7 +51,7 @@ namespace Testinator.TestSystem.Editors
             }
 
             var testEditor = AllEditors.TestEditor
-                .New()
+                .NewTest()
                 .UseNewestVersion()
                 .Build();
 

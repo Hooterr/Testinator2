@@ -365,6 +365,9 @@
     <Compile Include="Pages\BeginTest\BeginTestResultsPage.xaml.cs">
       <DependentUpon>BeginTestResultsPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Demo\DemoInfo.xaml.cs">
+      <DependentUpon>DemoInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Demo\DemoABCD.xaml.cs">
       <DependentUpon>DemoABCD.xaml</DependentUpon>
     </Compile>
@@ -604,6 +607,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\Demo\DemoInfo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Pages\Demo\DemoABCD.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -737,6 +744,10 @@
     <ProjectReference Include="..\Testinator.Server.Core\Testinator.Server.Core.csproj">
       <Project>{e3ec550b-c480-4943-9784-36e886e79391}</Project>
       <Name>Testinator.Server.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Testinator.Server.Domain\Testinator.Server.Domain.csproj">
+      <Project>{409c10f1-b984-4a7c-b34a-0a431ff050b7}</Project>
+      <Name>Testinator.Server.Domain</Name>
     </ProjectReference>
     <ProjectReference Include="..\Testinator.UICore\Testinator.UICore.csproj">
       <Project>{90c0ca2b-3524-49da-a58a-0df92f7eaed8}</Project>

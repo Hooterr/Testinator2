@@ -1,6 +1,8 @@
-﻿namespace Testinator.Server.Domain
+﻿using Testinator.Core;
+
+namespace Testinator.Server.Domain
 {
-    public class InputField<T>
+    public class InputField<T> : BaseViewModel
     {
         public T Value { get; set; }
         public string ErrorMessage { get; set; }
@@ -22,7 +24,7 @@
 
         public override string ToString()
         {
-            return Value.ToString();
+            return Value != null ? Value.ToString() : string.Empty;
         }
     }
 }

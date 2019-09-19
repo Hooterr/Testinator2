@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Testinator.Core;
 using Testinator.Server.Database;
+using Testinator.Server.Domain;
+using Testinator.Server.TestCreator;
+using Testinator.TestSystem.Editors;
 
 namespace Testinator.Server.Core
 {
@@ -30,11 +33,13 @@ namespace Testinator.Server.Core
             construction.Services.AddScoped<ISettingsRepository, SettingsRepository>();
             construction.Services.AddScoped<IUserRepository, UserRepository>();
             construction.Services.AddScoped<IUserAccountService, UserAccountService>();
+            construction.Services.AddScoped<ITestCreatorService, TestCreatorService>();
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<BeginTestViewModel>();
             construction.Services.AddTransient<HomeViewModel>();
             construction.Services.AddTransient<MultipleChoiceQuestionTestEditorViewModel>();
+            construction.Services.AddTransient<TestInfoPageViewModel>();
             construction.Services.AddTransient<LoginViewModel>();
             construction.Services.AddTransient<ScreenStreamViewModel>();
             construction.Services.AddTransient<AboutViewModel>();
