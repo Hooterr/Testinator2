@@ -3,6 +3,8 @@ using Testinator.TestSystem.Editors;
 
 namespace Testinator.Server.Domain
 {
+    using QuestionEditorMultipleChoice = IQuestionEditor<TestSystem.Implementation.Questions.MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
+
     /// <summary>
     /// The view model for multiple choice question page in Test Creator
     /// </summary>
@@ -10,7 +12,18 @@ namespace Testinator.Server.Domain
     {
         #region Private Members
 
-        private ITestCreatorService mTestCreator;
+        private readonly ITestCreatorService mTestCreator;
+
+        /// <summary>
+        /// The editor for multiple choice question
+        /// </summary>
+        private readonly QuestionEditorMultipleChoice mEditor;
+
+        #endregion
+
+        #region Public Properties
+
+        public string Task { get; set; }
 
         #endregion
 
@@ -23,6 +36,9 @@ namespace Testinator.Server.Domain
         {
             // Inject DI services
             mTestCreator = testCreatorService;
+
+            // Get the editor associated with this page
+            mEditor = mTestCreator.GetEditorMultipleChoice();
         }
 
         #endregion
