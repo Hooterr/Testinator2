@@ -17,7 +17,7 @@ namespace Testinator.TestSystem.Editors
 
         public IGradingPreset Preset { get; set; }
 
-        public List<KeyValuePair<int, IGrade>> Thresholds { get; set; }
+        public List<KeyValuePair<int, IGrade>> CustomThresholds { get; set; }
 
         public bool Custom { get; set; }
 
@@ -53,7 +53,7 @@ namespace Testinator.TestSystem.Editors
             {
                 mMaxPointScore = OriginalObject.MaxPointScore;
                 ContainsPoints = OriginalObject.Strategy.ContainsPoints;
-                Thresholds = new List<KeyValuePair<int, IGrade>>(OriginalObject.Strategy.Thresholds);
+                CustomThresholds = new List<KeyValuePair<int, IGrade>>(OriginalObject.Strategy.Thresholds);
                 
             }
             else
@@ -101,14 +101,14 @@ namespace Testinator.TestSystem.Editors
                 {
                     strategy = new PointsGradingStrategy()
                     {
-                        Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.Thresholds),
+                        Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.CustomThresholds),
                     };
                 }
                 else
                 {
                     strategy = new PercentageGradingStrategy()
                     {
-                        Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.Thresholds),
+                        Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.CustomThresholds),
                         MaxPointScore = mMaxPointScore,
                     };
                 }
@@ -118,7 +118,7 @@ namespace Testinator.TestSystem.Editors
             {
                 strategy = new PercentageGradingStrategy()
                 {
-                    Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.Thresholds),
+                    Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.CustomThresholds),
                     MaxPointScore = mMaxPointScore,
                 };
             }
@@ -133,57 +133,61 @@ namespace Testinator.TestSystem.Editors
 
         #region Private Methods
 
+        /// <summary>
+        /// Validates <see cref="CustomThresholds"/>
+        /// </summary>
+        /// <returns>True - all good, false - there are some errors</returns>
         private bool ValidateCustomThresholds()
         {
             var passed = true;
 
             // Sort of a mess but works for now
 
-            if (Thresholds.Count < 2)
+            if (CustomThresholds.Count < 2)
             {
                 passed = false;
-                HandleErrorFor(x => x.Thresholds, "There must be at least 2 custom thresholds.");
+                HandleErrorFor(x => x.CustomThresholds, "There must be at least 2 custom thresholds.");
             }
             else
             {
                 if (ContainsPoints)
                 {
-                    if(false == Thresholds.TrueForAll(x => x.Key <= mMaxPointScore))
+                    if(false == CustomThresholds.TrueForAll(x => x.Key <= mMaxPointScore))
                     {
                         passed = false;
-                        HandleErrorFor(x => x.Thresholds, $"Not a single threshold can exceed the max point score ({mMaxPointScore}).");
+                        HandleErrorFor(x => x.CustomThresholds, $"Not a single threshold can exceed the max point score ({mMaxPointScore}).");
                     }
                     
-                    if (Thresholds.OrderByDescending(x => x.Key).First().Key != mMaxPointScore)
+                    if (CustomThresholds.OrderByDescending(x => x.Key).First().Key != mMaxPointScore)
                     {
                         passed = false;
-                        HandleErrorFor(x => x.Thresholds, $"The last threshold's upper limit must be equal to the max point score ({mMaxPointScore})");
+                        HandleErrorFor(x => x.CustomThresholds, $"The last threshold's upper limit must be equal to the max point score ({mMaxPointScore})");
                     }
                 }
                 else
                 {
-                    if (false == Thresholds.TrueForAll(x => x.Key <= 100))
+                    if (false == CustomThresholds.TrueForAll(x => x.Key <= 100))
                     {
                         passed = false;
-                        HandleErrorFor(x => x.Thresholds, $"Not a single threshold can exceed 100%.");
+                        HandleErrorFor(x => x.CustomThresholds, $"Not a single threshold can exceed 100%.");
                     }
 
-                    if(Thresholds.OrderByDescending(x => x.Key).First().Key != 100)
+                    if(CustomThresholds.OrderByDescending(x => x.Key).First().Key != 100)
                     {
                         passed = false;
-                        HandleErrorFor(x => x.Thresholds, $"The last threshold's upper limit must be a 100%");
+                        HandleErrorFor(x => x.CustomThresholds, $"The last threshold's upper limit must be a 100%");
                     }
                 }
 
-                if (Thresholds.Select(x => x.Key).Distinct().Count() != Thresholds.Count())
+                if (CustomThresholds.Select(x => x.Key).Distinct().Count() != CustomThresholds.Count())
                 {
                     passed = false;
-                    HandleErrorFor(x => x.Thresholds, $"Found multiple threshold with the same upper limit.");
+                    HandleErrorFor(x => x.CustomThresholds, $"Found multiple threshold with the same upper limit.");
                 }
-                if (Thresholds.Select(x => x.Value.Name).Distinct().Count() != Thresholds.Count())
+                if (CustomThresholds.Select(x => x.Value.Name).Distinct().Count() != CustomThresholds.Count())
                 {
                     passed = false;
-                    HandleErrorFor(x => x.Thresholds, $"Found multiple thresholds with the same grade.");
+                    HandleErrorFor(x => x.CustomThresholds, $"Found multiple thresholds with the same grade.");
                 }
             }
 

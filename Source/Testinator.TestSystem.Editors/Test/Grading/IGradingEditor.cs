@@ -19,20 +19,24 @@ namespace Testinator.TestSystem.Editors
         // TODO update comments
 
         /// <summary>
-        /// If <see cref="Preset"/> is set this contains preset translated to point values for this test
-        /// If <see cref="Custom"/> is set to true use this list to create custom point based grading
+        /// Contains custom thresholds, either percentage or points, depends on <see cref="Custom"/> flag
         /// </summary>
         [EditorProperty]
-        List<KeyValuePair<int, IGrade>> Thresholds { get; set; }
+        List<KeyValuePair<int, IGrade>> CustomThresholds { get; set; }
 
+        /// <summary>
+        /// Indicates if <see cref="CustomThresholds"/> contains points thresholds or percentage thresholds
+        /// </summary>
         bool ContainsPoints { get; set; }
 
         /// <summary>
-        /// Indicates if <see cref="Thresholds"/> contain custom point based grading
+        /// Indicates if <see cref="Preset"/> or <see cref="CustomThresholds"/> should be used
+        /// True: <see cref="CustomThresholds"/> are used
+        /// False: <see cref="Preset"/> is used
         /// </summary>
         bool Custom { get; set; } 
         
-        // TODO more to come later
+        // Don't bother for now
 
         // bool UseAllQuestions
         // some fun stuff with questions' categories
