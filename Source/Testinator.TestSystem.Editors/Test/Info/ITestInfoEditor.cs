@@ -4,6 +4,9 @@ using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Editors
 {
+    /// <summary>
+    /// The editor for the info part of a test
+    /// </summary>
     public interface ITestInfoEditor : IErrorListener<ITestInfoEditor>
     {
         /// <summary>

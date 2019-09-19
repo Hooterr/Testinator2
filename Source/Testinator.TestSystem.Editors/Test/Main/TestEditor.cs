@@ -5,12 +5,19 @@ using Testinator.TestSystem.Implementation;
 
 namespace Testinator.TestSystem.Editors
 {
+    /// <summary>
+    /// Default implementation of <see cref="ITestEditor"/>
+    /// </summary>
     internal class TestEditor : BaseEditor<Implementation.Test, ITestEditor>, ITestEditor
     {
+        #region Private Members
+
         private TestInfoEditor mInfo;
         private TestOptionsEditor mOptions;
         private GradingEditor mGrading;
         private QuestionEditorCollection mQuestions;
+
+        #endregion
 
         #region Public Properties
 
@@ -22,6 +29,7 @@ namespace Testinator.TestSystem.Editors
         {
             get
             {
+                // TODO, should to for now, but fix this later
                 mGrading.mMaxPointScore = mQuestions.Sum(x => x.Scoring.MaximumScore);
                 return mGrading;
             }
@@ -33,11 +41,22 @@ namespace Testinator.TestSystem.Editors
 
         #region Constructors
 
+        /// <summary>
+        /// Initializes the editor to edit an existing test
+        /// </summary>
+        /// <param name="test">The test to edit</param>
+        /// <param name="version">The version of test system to use</param>
         public TestEditor(Implementation.Test test, int version) : base(test, version) { }
 
+        /// <summary>
+        /// Initializes the editor to create a new test
+        /// </summary>
+        /// <param name="version">The version of test system to use</param>
         public TestEditor(int version) : base(version) { }
 
         #endregion
+
+        #region Overridden
 
         protected override void OnInitialize()
         {
@@ -63,7 +82,7 @@ namespace Testinator.TestSystem.Editors
             var optionsBuildOperation = mOptions.Build();
             var gradingBuildOperation = mGrading.Build();
 
-            if(Helpers.AnyTrue(infoBuildOperation.Failed, optionsBuildOperation.Failed, gradingBuildOperation.Failed))
+            if (Helpers.AnyTrue(infoBuildOperation.Failed, optionsBuildOperation.Failed, gradingBuildOperation.Failed))
             {
                 return null;
             }
@@ -83,7 +102,12 @@ namespace Testinator.TestSystem.Editors
 
             return test;
         }
-        OperationResult<ITest> IBuildable<ITest>.Build()
+
+        #endregion
+
+        #region Public Methods
+
+        public new OperationResult<ITest> Build()
         {
             var result = BuildObject();
             if (result == null)
@@ -92,6 +116,8 @@ namespace Testinator.TestSystem.Editors
             }
 
             return OperationResult<ITest>.Success(result);
-        }
+        } 
+
+        #endregion
     }
 }

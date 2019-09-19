@@ -57,7 +57,6 @@ namespace Testinator.TestSystem.Editors
 
             testEditor.Info.Name = "Amazingly cool name";
             testEditor.Questions.Add(operation.Result);
-            testEditor.Grading.Name = "Ludicrous name";
             testEditor.Info.TimeLimit = TimeSpan.FromSeconds(30 * 60);
             var testBuildOperation = testEditor.Build();
             var test = testBuildOperation.Result;
