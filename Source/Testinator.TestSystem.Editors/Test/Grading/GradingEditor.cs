@@ -1,4 +1,4 @@
-﻿#pragma warning disable IDE0003 // Remove qualification
+﻿#pragma warning disable IDE0003 // Remove qualification, don't complain about using this.
 
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -18,8 +18,6 @@ namespace Testinator.TestSystem.Editors
         public IGradingPreset Preset { get; set; }
 
         public List<KeyValuePair<int, IGrade>> Thresholds { get; set; }
-
-        private IGradingStrategy Strategy { get; set; }
 
         public bool Custom { get; set; }
 
@@ -54,24 +52,15 @@ namespace Testinator.TestSystem.Editors
             if (IsInEditorMode())
             {
                 mMaxPointScore = OriginalObject.MaxPointScore;
-                if (OriginalObject.Preset != null)
-                {
-                    Preset = OriginalObject.Preset;
-                    Custom = false;
-                    //PointThresholds = Convert
-
-                }
-                else
-                {
-                    ContainsPoints = OriginalObject.Strategy.ContainsPoints;
-                    Thresholds = new List<KeyValuePair<int, IGrade>>(OriginalObject.Strategy.Thresholds);
-                }
+                ContainsPoints = OriginalObject.Strategy.ContainsPoints;
+                Thresholds = new List<KeyValuePair<int, IGrade>>(OriginalObject.Strategy.Thresholds);
+                
             }
             else
             {
                 Custom = true;
                 ContainsPoints = true;
-                Strategy = null;
+                // Already null, but keep for good measure 
                 Preset = null;
             }
         }
@@ -108,26 +97,25 @@ namespace Testinator.TestSystem.Editors
             IGradingStrategy strategy;
             if (Custom)
             {
-                Preset = null;
                 if(ContainsPoints)
                 {
                     strategy = new PointsGradingStrategy()
                     {
-                        Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(Thresholds),
+                        Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.Thresholds),
                     };
                 }
                 else
                 {
                     strategy = new PercentageGradingStrategy()
                     {
-                        Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(Thresholds),
+                        Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.Thresholds),
                         MaxPointScore = mMaxPointScore,
                     };
                 }
             }
+            // Use preset
             else
             {
-                // Use preset
                 strategy = new PercentageGradingStrategy()
                 {
                     Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.Thresholds),
@@ -148,6 +136,8 @@ namespace Testinator.TestSystem.Editors
         private bool ValidateCustomThresholds()
         {
             var passed = true;
+
+            // Sort of a mess but works for now
 
             if (Thresholds.Count < 2)
             {

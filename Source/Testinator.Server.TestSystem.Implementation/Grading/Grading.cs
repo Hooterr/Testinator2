@@ -8,9 +8,6 @@ namespace Testinator.TestSystem.Implementation
 
         public int MaxPointScore { get; internal set; }
 
-        // can be null
-        public IGradingPreset Preset { get; internal set; }
-
         public IGrade GetGrade(int score)
         {
             return Strategy.GetGrade(score);
