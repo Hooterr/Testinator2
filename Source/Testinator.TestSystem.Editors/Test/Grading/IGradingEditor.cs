@@ -19,7 +19,7 @@ namespace Testinator.TestSystem.Editors
         // TODO update comments
 
         /// <summary>
-        /// Contains custom thresholds, either percentage or points, depends on <see cref="Custom"/> flag
+        /// Contains custom thresholds, either percentage or points, depends on <see cref="ContainsPoints"/> flag
         /// </summary>
         [EditorProperty]
         List<KeyValuePair<int, IGrade>> CustomThresholds { get; set; }
