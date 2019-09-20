@@ -8,9 +8,9 @@ using System;
 namespace Testinator.Server
 {
     /// <summary>
-    /// Interaction logic for PageHost.xaml
+    /// Interaction logic for ApplicationPageHost.xaml
     /// </summary>
-    public partial class PageHost : BasePageHost<ApplicationPage>
+    public partial class ApplicationPageHost : BasePageHost<ApplicationPage>
     {
         #region Singleton
 
@@ -18,7 +18,7 @@ namespace Testinator.Server
         /// Single instance of this view model
         /// NOTE: It's the only way to call abstract methods like they were static ones, as we can't declare them as static
         /// </summary>
-        public static PageHost Instance { get; set; } = new PageHost();
+        public static ApplicationPageHost Instance { get; set; } = new ApplicationPageHost();
 
         #endregion
 
@@ -37,7 +37,7 @@ namespace Testinator.Server
         /// Registers <see cref="CurrentPage"/> as a dependency property
         /// </summary>
         public static readonly DependencyProperty CurrentPageProperty =
-            DependencyProperty.Register(nameof(CurrentPage), typeof(ApplicationPage), typeof(PageHost), new UIPropertyMetadata(default(ApplicationPage), null, CurrentPagePropertyChanged));
+            DependencyProperty.Register(nameof(CurrentPage), typeof(ApplicationPage), typeof(ApplicationPageHost), new UIPropertyMetadata(default(ApplicationPage), null, CurrentPagePropertyChanged));
 
         #endregion
 
@@ -46,7 +46,7 @@ namespace Testinator.Server
         /// <summary>
         /// Default constructor
         /// </summary>
-        public PageHost() : base()
+        public ApplicationPageHost() : base()
         {
             InitializeComponent();
 
@@ -72,8 +72,8 @@ namespace Testinator.Server
             var targetPageViewModel = d.GetValue(CurrentPageViewModelProperty);
 
             // Get the frames
-            var newPageFrame = (d as PageHost).NewPage;
-            var oldPageFrame = (d as PageHost).OldPage;
+            var newPageFrame = (d as ApplicationPageHost).NewPage;
+            var oldPageFrame = (d as ApplicationPageHost).OldPage;
 
             // Change the page based on that
             Instance.ChangeFramePages(newPageFrame, oldPageFrame, targetPage, targetPageViewModel);

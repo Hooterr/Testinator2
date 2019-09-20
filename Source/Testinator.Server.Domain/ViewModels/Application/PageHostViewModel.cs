@@ -1,16 +1,17 @@
-﻿using Testinator.Core;
+﻿using System;
+using Testinator.Core;
 
 namespace Testinator.Server.Domain
 {
     /// <summary>
     /// The view model for PageHost containing informations about current page/VM of the page
     /// </summary>
-    public class PageHostViewModel : BaseViewModel
+    public class PageHostViewModel<TPages> : BaseViewModel where TPages : Enum
     {
         /// <summary>
-        /// The current page of the application
+        /// The current page of the page host
         /// </summary>
-        public ApplicationPage CurrentPage { get; private set; } = ApplicationPage.Login;
+        public TPages CurrentPage { get; private set; }
 
         /// <summary>
         /// The view model to use for the current page when the CurrentPage changes
@@ -27,7 +28,7 @@ namespace Testinator.Server.Domain
         /// </summary>
         /// <param name="page">The page to go to</param>
         /// <param name="viewModel">The view model, if any, to set explicitly to the new page</param>
-        public virtual void GoToPage(ApplicationPage page, BaseViewModel viewModel = null)
+        public virtual void GoToPage(TPages page, BaseViewModel viewModel = null)
         {
             // Set the view model
             CurrentPageViewModel = viewModel;
@@ -37,10 +38,6 @@ namespace Testinator.Server.Domain
 
             OnPropertyChanged(nameof(CurrentPage));
             OnPropertyChanged(nameof(CurrentPageViewModel));
-
-            // Log it
-            // TODO: Fix
-            //DI.Logger.Log("Changing application page to:" + page.ToString());
         }
 
         #endregion

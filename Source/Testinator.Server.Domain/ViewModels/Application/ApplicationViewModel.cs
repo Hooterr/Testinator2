@@ -7,8 +7,14 @@ namespace Testinator.Server.Domain
     /// <summary>
     /// The application state as a view model
     /// </summary>
-    public class ApplicationViewModel : PageHostViewModel
+    public class ApplicationViewModel : PageHostViewModel<ApplicationPage>
     {
+        #region Private Members
+
+        private readonly ILogFactory mLogger;
+
+        #endregion
+
         #region Public Properties
 
         /// <summary>
@@ -25,11 +31,6 @@ namespace Testinator.Server.Domain
         /// Show the side menu only if we are not on login page
         /// </summary>
         public bool SideMenuVisible => CurrentPage != ApplicationPage.Login;
-
-        /// <summary>
-        /// The current subpage of the BeginTestPage
-        /// </summary>
-        public ApplicationPage CurrentBeginTestPage { get; private set; } = ApplicationPage.BeginTestInitial;
 
         #endregion
 
@@ -57,19 +58,9 @@ namespace Testinator.Server.Domain
 
             // Additionally, inform the view about possible sidemenu state change
             OnPropertyChanged(nameof(SideMenuVisible));
-        }
 
-        /// <summary>
-        /// Navigates to the specified BeginTestPage subpage
-        /// </summary>
-        /// <param name="page">The page to go to</param>
-        public void GoToBeginTestPage(ApplicationPage page)
-        {
-            // Set the current page
-            CurrentBeginTestPage = page;
-
-            // Fire off a CurrentBeginTestPage changed event
-            OnPropertyChanged(nameof(CurrentBeginTestPage));
+            // Log it
+            mLogger.Log("Changing application page to:" + page.ToString());
         }
 
         /// <summary>
@@ -87,8 +78,11 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ApplicationViewModel()
+        public ApplicationViewModel(ILogFactory logger)
         {
+            // Inject DI services
+            mLogger = logger;
+
             // Get the current version from assebly
             var assebly = Assembly.LoadFrom("Testinator.Server.Domain.dll");
             Version = assebly.GetName().Version;
