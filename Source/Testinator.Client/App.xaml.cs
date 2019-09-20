@@ -58,7 +58,7 @@ namespace Testinator.Client
 
             // Inject WPF specific services
             Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
-            Framework.Construction.Services.AddSingleton<ILogFactory>(new BaseLogFactory(new[]
+            Framework.Construction.Services.AddSingleton<Core.ILogFactory>(new BaseLogFactory(new[]
             {
                 // TODO: Add ApplicationSettings so we can set/edit a log location
                 //       For now just log to the path where this application is running

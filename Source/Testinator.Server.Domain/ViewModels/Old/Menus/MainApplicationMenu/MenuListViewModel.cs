@@ -36,19 +36,19 @@ namespace Testinator.Server.Domain
                 {
                     Name = LocalizationResource.StartTest,
                     Icon = IconType.Test,
-                    TargetPage = ApplicationPage.BeginTest
+                    TargetPage = ApplicationPage.Home
                 },
                 new MenuListItemViewModel(applicationVM)
                 {
                     Name = LocalizationResource.TestEditorTitle,
                     Icon = IconType.Editor,
-                    TargetPage = ApplicationPage.TestEditorInitial
+                    TargetPage = ApplicationPage.TestCreatorInitial
                 },
                 new MenuListItemViewModel(applicationVM)
                 {
                     Name = LocalizationResource.TestResults,
                     Icon = IconType.DataBase,
-                    TargetPage = ApplicationPage.TestResultsInitial,
+                    TargetPage = ApplicationPage.Home,
                 },
                 new MenuListItemViewModel(applicationVM)
                 {

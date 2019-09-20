@@ -67,7 +67,7 @@ namespace Testinator.Server.Domain
             // Create commands
             LoginCommand = new RelayCommand(LogInAsync);
             // TODO: Change that
-            EnterWithoutLoginCommand = new RelayCommand(() => mApplicationVM.GoToPage(ApplicationPage.Demo));
+            EnterWithoutLoginCommand = new RelayCommand(() => mApplicationVM.GoToPage(ApplicationPage.TestCreatorInitial));
         }
 
         #endregion

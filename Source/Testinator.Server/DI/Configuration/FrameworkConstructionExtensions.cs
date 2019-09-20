@@ -39,11 +39,18 @@ namespace Testinator.Server
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<HomeViewModel>();
-            construction.Services.AddTransient<TestInfoPageViewModel>();
             construction.Services.AddTransient<LoginViewModel>();
             construction.Services.AddTransient<ScreenStreamViewModel>();
             construction.Services.AddTransient<AboutViewModel>();
             construction.Services.AddTransient<MenuListItemViewModel>();
+
+            construction.Services.AddTransient<TestCreatorInitialPageViewModel>();
+            construction.Services.AddTransient<TestCreatorTestInfoPageViewModel>();
+            construction.Services.AddTransient<TestCreatorTestOptionsPageViewModel>();
+            construction.Services.AddTransient<TestCreatorTestFinalizePageViewModel>();
+            construction.Services.AddTransient<TestCreatorQuestionsPageViewModel>();
+            construction.Services.AddTransient<TestCreatorGradingPageViewModel>();
+            construction.Services.AddTransient<QuestionsMultipleChoicePageViewModel>();
 
             // Return the construction for chaining
             return construction;
