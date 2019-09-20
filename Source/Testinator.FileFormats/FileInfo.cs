@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Testinator.FileFormats
+namespace Testinator.Files
 {
     public class FileInfo
     {

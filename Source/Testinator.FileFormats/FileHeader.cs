@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Testinator.FileFormats
+namespace Testinator.Files
 {
     internal class FileHeader
     {

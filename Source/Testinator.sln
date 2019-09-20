@@ -72,7 +72,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.Network",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Server.Serialization", "Testinator.Server.Serialization\Testinator.Server.Serialization.csproj", "{8E209FDC-A762-45C7-A971-C771E4263B9C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.FileFormats", "Testinator.FileFormats\Testinator.FileFormats.csproj", "{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Files", "Testinator.FileFormats\Testinator.Files.csproj", "{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

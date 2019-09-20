@@ -50,6 +50,9 @@ namespace Demo
 
 
 #endif
+            
+
+            /*
             var passwd = "someTestPassword!@";
 
             var _iterations = 2;
@@ -73,6 +76,7 @@ namespace Demo
 
             _passwordBytes = new PasswordDeriveBytes(passwd, saltBytes, _hash, _iterations);
             Console.WriteLine("Decrypted: " + BitConverter.ToString(_passwordBytes.GetBytes(_keySize / 8)).Replace("-", ""));
+            */
 
 
             /*

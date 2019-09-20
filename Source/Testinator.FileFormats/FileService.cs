@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 
-namespace Testinator.FileFormats
+namespace Testinator.Files
 {
     public class FileService
     {

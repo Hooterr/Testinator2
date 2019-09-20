@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Testinator.FileFormats
+namespace Testinator.Files
 {
     internal class MetadataEncoder
     {
