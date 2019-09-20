@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
 using Testinator.TestSystem.Implementation.Questions;
@@ -46,7 +48,34 @@ namespace Demo
                 fs.Close();
             }
 
+
 #endif
+            var passwd = "someTestPassword!@";
+
+            var _iterations = 2;
+            var _keySize = 256;
+
+            var _hash = "SHA1";
+            var _salt = "aselrias38490a32"; // Random
+            var _vector = "8947az34awl34kjq"; // Random
+
+            var vectorBytes = Encoding.ASCII.GetBytes(_vector);
+            var saltBytes = Encoding.ASCII.GetBytes(_salt);
+
+            // encrypt
+            var _passwordBytes = new PasswordDeriveBytes(passwd, saltBytes, _hash, _iterations);
+            Console.WriteLine("Encrypted: " + BitConverter.ToString(_passwordBytes.GetBytes(_keySize / 8)).Replace("-", ""));
+
+            _salt = "fjdl9kfjsdflkjsdgl";
+            _vector = "f23fee3ef";
+            vectorBytes = Encoding.ASCII.GetBytes(_vector);
+            saltBytes = Encoding.ASCII.GetBytes(_salt);
+
+            _passwordBytes = new PasswordDeriveBytes(passwd, saltBytes, _hash, _iterations);
+            Console.WriteLine("Decrypted: " + BitConverter.ToString(_passwordBytes.GetBytes(_keySize / 8)).Replace("-", ""));
+
+
+            /*
             var watch = Stopwatch.StartNew();
 
             var allQuestions = Directory.GetFiles(Environment.GetFolderPath(Environment.SpecialFolder.Desktop) + "\\demo", "*.qtn").ToList();
@@ -65,6 +94,7 @@ namespace Demo
             }
 
             Console.WriteLine($"======= Found: {questionInfoes.Count()} question files in {watch.ElapsedMilliseconds.ToString()}ms =======");
+            */
             Console.ReadKey();
         }
 
@@ -151,5 +181,100 @@ namespace Demo
             };
             return result;
         }
+    }
+    public static class Cryptography
+    {
+        #region Settings
+
+        private static int _iterations = 2;
+        private static int _keySize = 256;
+
+        private static string _hash = "SHA1";
+        private static string _salt = "aselrias38490a32"; // Random
+        private static string _vector = "8947az34awl34kjq"; // Random
+
+        #endregion
+
+        public static string Encrypt(string value, string password)
+        {
+            return Encrypt<AesManaged>(value, password);
+        }
+        public static string Encrypt<T>(string value, string password)
+                where T : SymmetricAlgorithm, new()
+        {
+            byte[] vectorBytes = Encoding.ASCII.GetBytes(_vector);
+            byte[] saltBytes = Encoding.ASCII.GetBytes(_salt);
+            byte[] valueBytes = Encoding.ASCII.GetBytes(value);
+
+            byte[] encrypted;
+            using (T cipher = new T())
+            {
+                PasswordDeriveBytes _passwordBytes =
+                    new PasswordDeriveBytes(password, saltBytes, _hash, _iterations);
+                byte[] keyBytes = _passwordBytes.GetBytes(_keySize / 8);
+
+                cipher.Mode = CipherMode.CBC;
+
+                using (ICryptoTransform encryptor = cipher.CreateEncryptor(keyBytes, vectorBytes))
+                {
+                    using (MemoryStream to = new MemoryStream())
+                    {
+                        using (CryptoStream writer = new CryptoStream(to, encryptor, CryptoStreamMode.Write))
+                        {
+                            writer.Write(valueBytes, 0, valueBytes.Length);
+                            writer.FlushFinalBlock();
+                            encrypted = to.ToArray();
+                        }
+                    }
+                }
+                cipher.Clear();
+            }
+            return Convert.ToBase64String(encrypted);
+        }
+
+        public static string Decrypt(string value, string password)
+        {
+            return Decrypt<AesManaged>(value, password);
+        }
+        public static string Decrypt<T>(string value, string password) where T : SymmetricAlgorithm, new()
+        {
+            byte[] vectorBytes = Encoding.ASCII.GetBytes(_vector);
+            byte[] saltBytes = Encoding.ASCII.GetBytes(_salt);
+            byte[] valueBytes = Convert.FromBase64String(value);
+
+            byte[] decrypted;
+            int decryptedByteCount = 0;
+
+            using (T cipher = new T())
+            {
+                PasswordDeriveBytes _passwordBytes = new PasswordDeriveBytes(password, saltBytes, _hash, _iterations);
+                byte[] keyBytes = _passwordBytes.GetBytes(_keySize / 8);
+
+                cipher.Mode = CipherMode.CBC;
+
+                try
+                {
+                    using (ICryptoTransform decryptor = cipher.CreateDecryptor(keyBytes, vectorBytes))
+                    {
+                        using (MemoryStream from = new MemoryStream(valueBytes))
+                        {
+                            using (CryptoStream reader = new CryptoStream(from, decryptor, CryptoStreamMode.Read))
+                            {
+                                decrypted = new byte[valueBytes.Length];
+                                decryptedByteCount = reader.Read(decrypted, 0, decrypted.Length);
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return String.Empty;
+                }
+
+                cipher.Clear();
+            }
+            return Encoding.UTF8.GetString(decrypted, 0, decryptedByteCount);
+        }
+
     }
 }

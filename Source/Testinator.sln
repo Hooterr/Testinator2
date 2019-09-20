@@ -64,10 +64,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Client.TestSyste
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.Domain", "Testinator.Server.Domain\Testinator.Server.Domain.csproj", "{409C10F1-B984-4A7C-B34A-0A431FF050B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Demo", "Demo\Demo.csproj", "{5A5C20E0-85BB-4F6F-B389-83E674863B9B}"
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Server.Logging", "Testinator.Server.Logging\Testinator.Server.Logging.csproj", "{81AA335E-56B4-4345-947D-23EA26CD2ABA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo", "Demo\Demo.csproj", "{5A5C20E0-85BB-4F6F-B389-83E674863B9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Server.Network", "Testinator.Server.Networking\Testinator.Server.Network.csproj", "{7879EAD1-0A1C-47F5-A1F4-5FC57019CE73}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.Logging", "Testinator.Server.Logging\Testinator.Server.Logging.csproj", "{81AA335E-56B4-4345-947D-23EA26CD2ABA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.Network", "Testinator.Server.Networking\Testinator.Server.Network.csproj", "{7879EAD1-0A1C-47F5-A1F4-5FC57019CE73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.Server.Serialization", "Testinator.Server.Serialization\Testinator.Server.Serialization.csproj", "{8E209FDC-A762-45C7-A971-C771E4263B9C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.FileFormats", "Testinator.FileFormats\Testinator.FileFormats.csproj", "{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -265,6 +270,22 @@ Global
 		{7879EAD1-0A1C-47F5-A1F4-5FC57019CE73}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7879EAD1-0A1C-47F5-A1F4-5FC57019CE73}.Release|x86.ActiveCfg = Release|Any CPU
 		{7879EAD1-0A1C-47F5-A1F4-5FC57019CE73}.Release|x86.Build.0 = Release|Any CPU
+		{8E209FDC-A762-45C7-A971-C771E4263B9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E209FDC-A762-45C7-A971-C771E4263B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E209FDC-A762-45C7-A971-C771E4263B9C}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8E209FDC-A762-45C7-A971-C771E4263B9C}.Debug|x86.Build.0 = Debug|Any CPU
+		{8E209FDC-A762-45C7-A971-C771E4263B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E209FDC-A762-45C7-A971-C771E4263B9C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E209FDC-A762-45C7-A971-C771E4263B9C}.Release|x86.ActiveCfg = Release|Any CPU
+		{8E209FDC-A762-45C7-A971-C771E4263B9C}.Release|x86.Build.0 = Release|Any CPU
+		{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}.Debug|x86.Build.0 = Debug|Any CPU
+		{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}.Release|x86.ActiveCfg = Release|Any CPU
+		{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -293,6 +314,8 @@ Global
 		{409C10F1-B984-4A7C-B34A-0A431FF050B7} = {EFA7EAE9-954F-48D5-8DE8-81B5B6D2A213}
 		{81AA335E-56B4-4345-947D-23EA26CD2ABA} = {EFA7EAE9-954F-48D5-8DE8-81B5B6D2A213}
 		{7879EAD1-0A1C-47F5-A1F4-5FC57019CE73} = {EFA7EAE9-954F-48D5-8DE8-81B5B6D2A213}
+		{8E209FDC-A762-45C7-A971-C771E4263B9C} = {EFA7EAE9-954F-48D5-8DE8-81B5B6D2A213}
+		{BBD23E64-0C08-4360-8FBD-C1E99E3BC96F} = {371B15B0-F9C8-4BD5-8095-C46C98F6DF6B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F44C476F-7275-42D4-AA3F-05FEF5D78E83}
