@@ -12,6 +12,7 @@ namespace Testinator.Server.Domain
         #region Private Members
 
         private readonly ITestCreatorService mTestCreator;
+        private readonly ApplicationViewModel mApplicationVM;
 
         #endregion
 
@@ -50,10 +51,11 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorInitialPageViewModel(ITestCreatorService testCreatorService)
+        public TestCreatorInitialPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
+            mApplicationVM = applicationVM;
 
             // Create commands
             TestSelectedCommand = new RelayParameterizedCommand(TestSelected);
@@ -75,7 +77,8 @@ namespace Testinator.Server.Domain
             // Setup Test Creator with provided test
             mTestCreator.InitializeNewTest(test);
 
-            // TODO: Go to the next page
+            // Go to the next page
+            mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestInfo);
         }
 
         /// <summary>
@@ -86,7 +89,8 @@ namespace Testinator.Server.Domain
             // Setup Test Creator with new test
             mTestCreator.InitializeNewTest();
 
-            // TODO: Go to the next page
+            // Go to the next page
+            mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestInfo);
         }
 
         #endregion
