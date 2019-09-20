@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Threading.Tasks;
 using System.Windows;
 using Testinator.Core;
-using Testinator.Server.Core;
+using Testinator.Server.Domain;
 
 namespace Testinator.Server
 {

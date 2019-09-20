@@ -6,7 +6,7 @@ using Testinator.TestSystem.Editors;
 using Testinator.TestSystem.Implementation;
 using Testinator.TestSystem.Implementation.Questions;
 
-namespace Testinator.Server.TestCreator
+namespace Testinator.Server.Services
 {
     using QuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
 

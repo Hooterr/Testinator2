@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.IO;
+using Testinator.Server.Domain;
 
 namespace Testinator.Server.Database
 {

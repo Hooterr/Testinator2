@@ -1,4 +1,4 @@
-﻿using Testinator.Server.Core;
+﻿using Testinator.Server.Domain;
 
 namespace Testinator.Server
 {
@@ -18,16 +18,6 @@ namespace Testinator.Server
         /// The application view model
         /// </summary>
         public static ApplicationViewModel ApplicationViewModel => DI.Application;
-
-        /// <summary>
-        /// The shortcut to the test host
-        /// </summary>
-        public static TestHost TestHost => Dna.Framework.Service<TestHost>();
-
-        /// <summary>
-        /// The shortcut to the test editor
-        /// </summary>
-        public static TestEditor TestEditor => Dna.Framework.Service<TestEditor>();
 
 
         #endregion

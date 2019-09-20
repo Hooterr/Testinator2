@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using Testinator.Server.Core;
+using Testinator.Server.Domain;
 
 namespace Testinator.Server
 {

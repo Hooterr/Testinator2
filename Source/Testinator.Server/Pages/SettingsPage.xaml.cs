@@ -1,4 +1,4 @@
-﻿using Testinator.Server.Core;
+﻿using Testinator.Server.Domain;
 using Testinator.UICore;
 
 namespace Testinator.Server

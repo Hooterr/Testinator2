@@ -11,16 +11,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DI\Configuration\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Testinator.Core\Testinator.Core.csproj" />
     <ProjectReference Include="..\Testinator.Server.Database\Testinator.Server.Database.csproj" />
     <ProjectReference Include="..\Testinator.Server.Domain\Testinator.Server.Domain.csproj" />
-    <ProjectReference Include="..\Testinator.Server.TestCreator\Testinator.Server.TestCreator.csproj" />
+    <ProjectReference Include="..\Testinator.Server.TestCreator\Testinator.Server.Services.csproj" />
     <ProjectReference Include="..\Testinator.Server.TestSystem.Implementation\Testinator.TestSystem.Implementation.csproj" />
     <ProjectReference Include="..\Testinator.TestSystem.Editors\Testinator.TestSystem.Editors.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Icons\" />
   </ItemGroup>
 
 </Project>

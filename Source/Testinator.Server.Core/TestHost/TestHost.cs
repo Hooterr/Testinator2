@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using Testinator.Core;
 using System.Timers;
 using System.Threading;
+using Testinator.Server.Domain;
 
 namespace Testinator.Server.Core
 {
@@ -15,6 +16,7 @@ namespace Testinator.Server.Core
         #region Private Members
 
         private readonly ServerNetwork mServerNetwork;
+        private readonly ApplicationViewModel mApplicationVM;
 
         /// <summary>
         /// Timer to handle cutdown
@@ -86,12 +88,12 @@ namespace Testinator.Server.Core
                 throw new Exception("Not ready to start test");
             
             // Send package indicating the start of the test
-            var TestStartPackage = DataPackage.StartTestPackage(TestStartupArgs);
+            var testStartPackage = DataPackage.StartTestPackage(TestStartupArgs);
 
             foreach (var client in ClientsInTest)
             {
                 // Send start command with args
-                mServerNetwork.Send(client, TestStartPackage);
+                mServerNetwork.Send(client, testStartPackage);
 
                 // Reset the client for new test
                 client.ResetForNewTest(CurrentTest.Questions.Count);
@@ -321,10 +323,11 @@ namespace Testinator.Server.Core
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestHost(ServerNetwork serverNetwork)
+        public TestHost(ServerNetwork serverNetwork, ApplicationViewModel applicationVM)
         {
             // Inject DI services
             mServerNetwork = serverNetwork;
+            mApplicationVM = applicationVM;
 
             // Initialize timer
             mTestTimer.Elapsed += HandleTimer;
@@ -398,7 +401,7 @@ namespace Testinator.Server.Core
         private void FinishTest()
         {
             IsTestInProgress = false;
-            DI.Application.GoToPage(ApplicationPage.BeginTestResults);
+            mApplicationVM.GoToPage(ApplicationPage.BeginTestResults);
 
             // Clear guid
             CurrentSessionIdentifier = default(Guid);

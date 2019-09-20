@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using Testinator.Core;
-using Testinator.Server.Core;
+using Testinator.Server.Domain;
 
 namespace Testinator.Server
 {
