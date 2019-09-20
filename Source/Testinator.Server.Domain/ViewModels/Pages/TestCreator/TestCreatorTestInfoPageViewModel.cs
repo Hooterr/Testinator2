@@ -14,6 +14,7 @@ namespace Testinator.Server.Domain
         #region Private Members
 
         private readonly ITestCreatorService mTestCreator;
+        private readonly ApplicationViewModel mApplicationVM;
 
         /// <summary>
         /// The editor for test info in this page, used to apply user input to the actual test
@@ -61,10 +62,11 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorTestInfoPageViewModel(ITestCreatorService testCreatorService)
+        public TestCreatorTestInfoPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
+            mApplicationVM = applicationVM;
 
             // Create commands
             SubmitCommand = new RelayCommand(Submit);
@@ -75,6 +77,7 @@ namespace Testinator.Server.Domain
             // Catch all the errors and display them
             // TODO: Add other values here after they are done in editor
             mEditor.OnErrorFor(x => x.Name, (e) => Name.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.Description, (e) => Description.ErrorMessage = e);
             mEditor.OnErrorFor(x => x.TimeLimit, (e) => CompletionTime.ErrorMessage = e);
 
             // And initialize the data we display
@@ -92,13 +95,14 @@ namespace Testinator.Server.Domain
         {
             // Pass all the changes user has made to the editor
             mEditor.Name = Name;
-            mEditor.TimeLimit = CompletionTime;
+            mEditor.Description = Description;
+            mEditor.TimeLimit = new TimeSpan(0, 30, 0); // TODO: CompletionTime;
 
             // Validate current state of data
             if (mEditor.Validate())
             {
                 // Successful validation, go to next page
-                // TODO:
+                mApplicationVM.GoToPage(ApplicationPage.TestCreatorQuestions);
             }
 
             // Validation failed, do not submit anything
@@ -112,6 +116,7 @@ namespace Testinator.Server.Domain
         {
             // Copy all the test info's properties
             Name = mEditor.Name;
+            Description = mEditor.Description;
             CompletionTime = mEditor.TimeLimit;
         }
 

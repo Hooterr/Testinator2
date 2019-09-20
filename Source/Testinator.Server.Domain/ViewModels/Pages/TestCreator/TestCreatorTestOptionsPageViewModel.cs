@@ -11,6 +11,7 @@ namespace Testinator.Server.Domain
         #region Private Members
 
         private readonly ITestCreatorService mTestCreator;
+        private readonly ApplicationViewModel mApplicationVM;
 
         #endregion
 
@@ -19,10 +20,11 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorTestOptionsPageViewModel(ITestCreatorService testCreatorService)
+        public TestCreatorTestOptionsPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
+            mApplicationVM = applicationVM;
         }
 
         #endregion

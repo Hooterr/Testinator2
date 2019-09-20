@@ -12,7 +12,7 @@
 
         public static implicit operator T(InputField<T> d)
         {
-            return d.Value;
+            return d != null ? d.Value : default;
         }
 
         public static implicit operator InputField<T>(T d)

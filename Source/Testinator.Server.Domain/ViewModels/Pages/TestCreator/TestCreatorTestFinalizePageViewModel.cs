@@ -13,6 +13,7 @@ namespace Testinator.Server.Domain
         #region Private Members
 
         private readonly ITestCreatorService mTestCreator;
+        private readonly ApplicationViewModel mApplicationVM;
 
         /// <summary>
         /// The test itself, built by the editor
@@ -43,10 +44,11 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorTestFinalizePageViewModel(ITestCreatorService testCreatorService)
+        public TestCreatorTestFinalizePageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
+            mApplicationVM = applicationVM;
 
             // Create commands
             SubmitTestCommand = new RelayCommand(SubmitTest);
