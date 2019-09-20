@@ -136,7 +136,7 @@
             </Grid>
 
             <!-- Content -->
-            <local:PageHost Grid.Row="1"
+            <local:ApplicationPageHost Grid.Row="1"
                             CurrentPage="{Binding ApplicationViewModel.CurrentPage,
                                           Source={x:Static local:ViewModelLocator.Instance}}"
                             CurrentPageViewModel="{Binding ApplicationViewModel.CurrentPageViewModel,

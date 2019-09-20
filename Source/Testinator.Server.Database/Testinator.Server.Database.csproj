@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Testinator.Core\Testinator.Core.csproj" />
+    <ProjectReference Include="..\Testinator.Server.Domain\Testinator.Server.Domain.csproj" />
   </ItemGroup>
 
 </Project>

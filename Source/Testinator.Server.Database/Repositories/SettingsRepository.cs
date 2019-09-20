@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Testinator.Core;
 using System.Linq;
 using System;
+using Testinator.Server.Domain;
 
 namespace Testinator.Server.Database
 {

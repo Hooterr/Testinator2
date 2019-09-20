@@ -1,12 +1,13 @@
-﻿using System.Diagnostics;
+﻿using Dna;
+using Microsoft.Extensions.DependencyInjection;
+using System.Diagnostics;
 using System.Globalization;
 using System.Net;
 using System.Threading.Tasks;
 using System.Windows;
 using Testinator.Core;
-using Testinator.Server.Core;
-using Dna;
-using Microsoft.Extensions.DependencyInjection;
+using Testinator.Server.Domain;
+using Testinator.Server.Logging;
 
 namespace Testinator.Server
 {
@@ -16,7 +17,7 @@ namespace Testinator.Server
     public partial class App : Application
     {
         /// <summary>
-        /// Custom startup so we load our IoC and Updater immediately before anything else
+        /// Custom startup so we load our DI and Updater immediately before anything else
         /// </summary>
         /// <param name="e"></param>
         protected override async void OnStartup(StartupEventArgs e)
@@ -27,7 +28,7 @@ namespace Testinator.Server
             // Setup the main application 
             ApplicationSetup();
 
-            DI.Logger.Log("Application starting...");
+            Framework.Service<ILogFactory>().Log("Application starting...");
 
             // Show the main window
             Current.MainWindow = new MainWindow();
@@ -36,19 +37,19 @@ namespace Testinator.Server
             // Check for updates
             if (await CheckUpdatesAsync())
             {
-                DI.Logger.Log("Running updater...");
+                Framework.Service<ILogFactory>().Log("Running updater...");
 
                 // Run the updater
                 Process.Start(new ProcessStartInfo
                 {
                     FileName = "Testinator.Updater.exe",
-                    Arguments = "Server" + " " + DI.Application.ApplicationLanguage + " " + "",
+                    Arguments = "Server" + " " + Framework.Service<ApplicationViewModel>().ApplicationLanguage + " " + "",
                     UseShellExecute = true,
                     Verb = "runas"
                 });
 
                 // Close this app
-                DI.Logger.Log("Main application closing...");
+                Framework.Service<ILogFactory>().Log("Main application closing...");
                 Current.Shutdown();
             }
         }
@@ -62,19 +63,17 @@ namespace Testinator.Server
             LocalizationResource.Culture = new CultureInfo("pl-PL");
 
             // Setup DI
-            DI.InitialSetup();
+            Framework.Construct<DefaultFrameworkConstruction>()
+                                                .AddFileLogger()
+                                                .AddDbContext()
+                                                .AddApplicationServices()
+                                                .Build();
 
-            // Inject UI Manager
-            Framework.Construction.Services.AddSingleton<IUIManager, UIManager>();
-
-            // Build DI so WPF services can use base stuff
-            Framework.Construction.Build();
-
-            // Inject WPF specific services
+            // Inject Logger
             Framework.Construction.Services.AddSingleton<ILogFactory>(new BaseLogFactory(new[]
             {
                 // Set the path from Settings
-                new Core.FileLogger(DI.Settings.LogFilePath)
+                new Logging.FileLogger(DI.Settings.LogFilePath)
             }));
 
             // Build the final DI
@@ -128,7 +127,7 @@ namespace Testinator.Server
                                 AcceptText = LocalizationResource.Sure,
                                 CancelText = LocalizationResource.SkipUpdate
                             };
-                            await DI.UI.ShowMessage(vm);
+                            await Framework.Service<IUIManager>().ShowMessage(vm);
 
                             // Depending on the answer...
                             return vm.UserResponse;
@@ -137,7 +136,7 @@ namespace Testinator.Server
                     case "New update IMP":
                         {
                             // An important update, inform the user and update
-                            await DI.UI.ShowMessage(new MessageBoxDialogViewModel
+                            await Framework.Service<IUIManager>().ShowMessage(new MessageBoxDialogViewModel
                             {
                                 Title = LocalizationResource.NewImportantUpdate,
                                 Message = LocalizationResource.NewImportantUpdateInfo,

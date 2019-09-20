@@ -6,7 +6,7 @@ using Testinator.TestSystem.Editors;
 using Testinator.TestSystem.Implementation;
 using Testinator.TestSystem.Implementation.Questions;
 
-namespace Testinator.Server.TestCreator
+namespace Testinator.Server.Services
 {
     using QuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
 
@@ -36,11 +36,11 @@ namespace Testinator.Server.TestCreator
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorService(IPoolManager poolManager)
+        /*public TestCreatorService(IPoolManager poolManager)
         {
             // Inject DI services
             mPoolManager = poolManager;
-        }
+        }*/
 
         #endregion
 

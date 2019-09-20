@@ -10,6 +10,8 @@ namespace Testinator.TestSystem.Implementation
         [StringLength(min: 5, max: 200, fromVersion: 1)]
         public string Name { get; set; }
 
+        public string Description { get; set; }
+
         public DateTime CreationDate { get; set; }
 
         public DateTime LastEditionDate { get; set; }

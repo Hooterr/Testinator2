@@ -10,6 +10,11 @@ namespace Testinator.TestSystem.Abstractions.Tests
         string Name { get; }
 
         /// <summary>
+        /// The short description for this test
+        /// </summary>
+        string Description { get; }
+
+        /// <summary>
         /// The date when this test was initially created
         /// </summary>
         DateTime CreationDate { get; }

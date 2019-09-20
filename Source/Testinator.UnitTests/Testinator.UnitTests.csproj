@@ -74,7 +74,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Testinator.Server.TestSystem.Implementation\Testinator.TestSystem.Implementation.csproj">
       <Project>{7710df93-a84a-4073-8358-b4ae051c3942}</Project>
-      <Name>Testinator.Server.TestSystem.Implementation</Name>
+      <Name>Testinator.TestSystem.Implementation</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />

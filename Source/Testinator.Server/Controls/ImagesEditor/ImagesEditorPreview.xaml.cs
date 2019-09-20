@@ -1,5 +1,5 @@
 ﻿using System.Windows.Controls;
-using Testinator.Server.Core;
+using Testinator.Server.Domain;
 
 namespace Testinator.Server
 {
@@ -11,7 +11,7 @@ namespace Testinator.Server
         public ImagesEditorPreview()
         {
             InitializeComponent();
-            DataContext = ImagesEditorViewModel.Instance;
+            DataContext = DI.GetInjectedPageViewModel<ImagesEditorViewModel>();
         }
     }
 }

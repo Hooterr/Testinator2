@@ -15,6 +15,9 @@ namespace Testinator.TestSystem.Editors
         private int mNameMaxLen;
         private int mNameMinLen;
 
+        private int mDescriptionMaxLen;
+        private int mDescriptionMinLen;
+
         private TimeSpan mTimeLimitMin;
         private TimeSpan mTimeLimitMax;
 
@@ -23,6 +26,8 @@ namespace Testinator.TestSystem.Editors
         #region Public Properties
 
         public string Name { get; set; }
+
+        public string Description { get; set; }
 
         public TimeSpan TimeLimit { get; set; }
 
@@ -64,6 +69,17 @@ namespace Testinator.TestSystem.Editors
                 HandleErrorFor(x => x.Name, $"The name must be from within the range of {mNameMinLen} to {mNameMaxLen} characters.");
             }
 
+            if (string.IsNullOrEmpty(Description))
+            {
+                validationPassed = false;
+                HandleErrorFor(x => x.Description, "The description must not be empty");
+            }
+            else if (Description.Length > mDescriptionMaxLen || Description.Length < mDescriptionMinLen)
+            {
+                validationPassed = false;
+                HandleErrorFor(x => x.Description, $"The description must be from within the range of {mDescriptionMinLen} to {mDescriptionMaxLen} characters.");
+            }
+
             if (TimeLimit == null)
             {
                 validationPassed = false;
@@ -95,6 +111,7 @@ namespace Testinator.TestSystem.Editors
                 };
 
             info.Name = Name;
+            info.Description = Description;
             info.TimeLimit = TimeLimit;
             return info;
         }
@@ -118,6 +135,10 @@ namespace Testinator.TestSystem.Editors
 
             mNameMaxLen = nameConstraints.Max;
             mNameMinLen = nameConstraints.Min;
+
+            // TODO: Fix with description
+            mDescriptionMaxLen = nameConstraints.Max;
+            mDescriptionMinLen = nameConstraints.Min;
 
             var timeConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, TimeSpan, TimeSpanLimitAttribute>
                 (x => x.TimeLimit, Version);

@@ -16,6 +16,12 @@ namespace Testinator.TestSystem.Editors
         string Name { get; set; }
 
         /// <summary>
+        /// The short description for this test
+        /// </summary>
+        [EditorProperty]
+        string Description { get; set; }
+
+        /// <summary>
         /// The time limit for this test
         /// </summary>
         [EditorProperty]
