@@ -9,7 +9,7 @@ namespace Testinator.Server.Domain
     /// <summary>
     /// The view model for test info page in Test Creator
     /// </summary>
-    public class TestInfoPageViewModel : BaseViewModel
+    public class TestCreatorTestInfoPageViewModel : BaseViewModel
     {
         #region Private Members
 
@@ -61,11 +61,10 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestInfoPageViewModel(ITestCreatorService testCreatorService)
+        public TestCreatorTestInfoPageViewModel(ITestCreatorService testCreatorService)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
-            mTestCreator.InitializeNewTest(); // TODO: Remove once demo is not needed
 
             // Create commands
             SubmitCommand = new RelayCommand(Submit);

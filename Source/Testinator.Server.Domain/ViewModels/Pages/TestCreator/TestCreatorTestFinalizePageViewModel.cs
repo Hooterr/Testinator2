@@ -8,7 +8,7 @@ namespace Testinator.Server.Domain
     /// <summary>
     /// The view model for test finalization page in Test Creator
     /// </summary>
-    public class TestFinalizePageViewModel : BaseViewModel
+    public class TestCreatorTestFinalizePageViewModel : BaseViewModel
     {
         #region Private Members
 
@@ -43,7 +43,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestFinalizePageViewModel(ITestCreatorService testCreatorService)
+        public TestCreatorTestFinalizePageViewModel(ITestCreatorService testCreatorService)
         {
             // Inject DI services
             mTestCreator = testCreatorService;

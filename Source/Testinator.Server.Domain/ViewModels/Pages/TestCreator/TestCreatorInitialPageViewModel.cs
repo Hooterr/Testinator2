@@ -5,9 +5,9 @@ using Testinator.TestSystem.Editors;
 namespace Testinator.Server.Domain
 {
     /// <summary>
-    /// The view model for initial test list page in Test Creator
+    /// The view model for initial Test Creator page
     /// </summary>
-    public class TestListPageViewModel : BaseViewModel
+    public class TestCreatorInitialPageViewModel : BaseViewModel
     {
         #region Private Members
 
@@ -17,7 +17,7 @@ namespace Testinator.Server.Domain
 
         #region Public Properties
 
-        // TODO: Test list etc.
+        // TODO: Test list, grading list etc.
 
         #endregion
 
@@ -33,6 +33,16 @@ namespace Testinator.Server.Domain
         /// </summary>
         public ICommand NewTestCommand { get; private set; }
 
+        /// <summary>
+        /// The command to fire when any grading preset is selected from the list for edition
+        /// </summary>
+        public ICommand GradingSelectedCommand { get; private set; }
+
+        /// <summary>
+        /// The command to create brand-new grading preset
+        /// </summary>
+        public ICommand NewGradingCommand { get; private set; }
+
         #endregion
 
         #region Constructor
@@ -40,7 +50,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestListPageViewModel(ITestCreatorService testCreatorService)
+        public TestCreatorInitialPageViewModel(ITestCreatorService testCreatorService)
         {
             // Inject DI services
             mTestCreator = testCreatorService;

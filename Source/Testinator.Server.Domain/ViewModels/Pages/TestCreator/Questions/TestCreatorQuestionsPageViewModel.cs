@@ -1,12 +1,10 @@
-﻿using Testinator.Core;
-
-namespace Testinator.Server.Domain
+﻿namespace Testinator.Server.Domain
 {
     /// <summary>
     /// The view model for questions page in Test Creator
     /// This is the master page that contains specific question types pages inside
     /// </summary>
-    public class QuestionsMasterPageViewModel : BaseViewModel // TODO: PageHostViewModel
+    public class TestCreatorQuestionsPageViewModel : PageHostViewModel<TestCreatorQuestionsPage>
     {
     }
 }
