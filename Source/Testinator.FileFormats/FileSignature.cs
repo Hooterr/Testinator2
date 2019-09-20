@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Testinator.Files
@@ -13,10 +14,10 @@ namespace Testinator.Files
          * 
          */
 
-        private const ulong EmptySignature = 0x546E720000003D3D;
-        private const ulong Mask = 0xFFFFFF000000FFFF;
-        private const ulong VersionMask =  0x000000FFF0000000;
-        private const ulong MetadataMask = 0x000000000FFF0000;
+        private const ulong EmptySignature =    0x546E720000003D3D;
+        private const ulong Mask =              0xFFFFFF000000FFFF;
+        private const ulong VersionMask =       0x000000FFF0000000;
+        private const ulong MetadataMask =      0x000000000FFF0000;
 
         public ushort Version { get; set; }
         
@@ -42,8 +43,8 @@ namespace Testinator.Files
         public ulong ToUInt64()
         {
             var result = EmptySignature;
-            result |= ((ulong)(Version & 0x0FFF)) << (40); // 12 + 12 + 16
-            result |= ((ulong)(MetadataLength & 0x0FFF)) << (28); // 12 + 16
+            result |= ((ulong)(Version & 0x0FFF)) << (28); // 12 + 16
+            result |= ((ulong)(MetadataLength & 0x0FFF)) << (16); // 16
             return result;
         }
 

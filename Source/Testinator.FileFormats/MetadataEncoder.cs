@@ -33,13 +33,13 @@ namespace Testinator.Files
 
                 if(lookingForKey && bytes[i] == KeyValueSeparator)
                 {
-                    key = Encoding.UTF8.GetString(bytes.Skip(startIdx).Take(i - startIdx - 1).ToArray());
+                    key = Encoding.UTF8.GetString(bytes.Skip(startIdx).Take(i - startIdx).ToArray());
                     lookingForKey = false;
                     startIdx = i + 1;
                 }
                 else if (bytes[i] == PairSeparator)
                 {
-                    value = Encoding.UTF8.GetString(bytes.Skip(startIdx).Take(i - startIdx - 1).ToArray());
+                    value = Encoding.UTF8.GetString(bytes.Skip(startIdx).Take(i - startIdx).ToArray());
                     lookingForKey = true;
                     startIdx = i + 1;
                     pairs.Add(key, value);

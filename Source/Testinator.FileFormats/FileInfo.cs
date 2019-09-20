@@ -6,12 +6,10 @@ namespace Testinator.Files
 {
     public class FileInfo
     {
-        public int Version { get; internal set; }
+        public int Version { get; set; }
 
-        public string AbsolutePath { get; internal set; }
+        public string AbsolutePath { get; set; }
 
-        public string Name { get; internal set; }
-
-        public IReadOnlyDictionary<string, string> Metadata { get; internal set; }
+        public IReadOnlyDictionary<string, string> Metadata { get; set; }
     }
 }

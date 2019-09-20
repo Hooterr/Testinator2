@@ -14,7 +14,6 @@ namespace Testinator.Files
             var fileInfo = new FileInfo()
             {
                 AbsolutePath = absolutePath,
-                Name = Path.GetFileName(absolutePath),
             };
             var signatureBytes = new byte[8];
             FileSignature signature;
@@ -46,7 +45,7 @@ namespace Testinator.Files
 
         public void SaveFile(FileInfo info, byte[] data)
         {
-            using (var fs = new FileStream(info.AbsolutePath, FileMode.CreateNew))
+            using (var fs = new FileStream(info.AbsolutePath, FileMode.Create))
             {
                 var fileHeader = info.GenerateHeader();
                 var headerBytes = fileHeader.GetAllBytes();

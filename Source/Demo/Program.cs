@@ -3,11 +3,13 @@ using RandomDataGenerator.FieldOptions;
 using RandomDataGenerator.Randomizers;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using Testinator.Files;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
 using Testinator.TestSystem.Implementation.Questions;
@@ -50,7 +52,24 @@ namespace Demo
 
 
 #endif
+            var fs = new FileService();
+
+            var finfo = new Testinator.Files.FileInfo()
+            {
+                Version = 1,
+                AbsolutePath = "C:\\Users\\root\\Desktop\\demo\\something.qtn",
+                Metadata = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>()
+                {
+                    { "Name", "brzęczyszczykiewicz" },
+                    { "Author", "Józef Żdziebełko" },
+                    { "Tags", "#there#is#no#way#this#fucking#thing#works" },
+                }),
+            };
+
+            fs.SaveFile(finfo, new byte[] { 0x01, 0x02, 0x03, 0x04 });
             
+
+            var fi = fs.GetFileInfo("C:\\Users\\root\\Desktop\\demo\\something.qtn");
 
             /*
             var passwd = "someTestPassword!@";
