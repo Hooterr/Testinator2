@@ -8,6 +8,11 @@
         /// <summary>
         /// The page for multiple choice question editing
         /// </summary>
-        MultipleChoice
+        MultipleChoice,
+
+        /// <summary>
+        /// The page for checkboxes question editing
+        /// </summary>
+        Checkboxes,
     }
 }

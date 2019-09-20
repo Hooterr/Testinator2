@@ -20,6 +20,8 @@
             <local:TestCreatorQuestionsPageHost
                     CurrentPage="{Binding CurrentPage}"
                     CurrentPageViewModel="{Binding CurrentPageViewModel}" />
+            <Button Content="Go to grading"
+                    Command="{Binding FinishQuestionsCommand}" />
         </StackPanel>
         
     </Border>

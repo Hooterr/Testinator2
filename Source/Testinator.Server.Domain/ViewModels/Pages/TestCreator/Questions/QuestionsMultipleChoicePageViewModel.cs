@@ -1,4 +1,5 @@
-﻿using Testinator.Core;
+﻿using System.Windows.Input;
+using Testinator.Core;
 using Testinator.TestSystem.Editors;
 
 namespace Testinator.Server.Domain
@@ -17,13 +18,27 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// The editor for multiple choice question
         /// </summary>
-        private readonly QuestionEditorMultipleChoice mEditor;
+        private QuestionEditorMultipleChoice mEditor;
 
         #endregion
 
         #region Public Properties
 
-        public string Task { get; set; }
+        public InputField<string> Task { get; set; }
+        public InputField<string> AnswerA { get; set; }
+        public InputField<string> AnswerB { get; set; }
+        public InputField<string> AnswerC { get; set; }
+        public InputField<string> Points { get; set; }
+        public InputField<string> RightAnswer { get; set; }
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// The command to submit current state of question
+        /// </summary>
+        public ICommand SubmitCommand { get; private set; }
 
         #endregion
 
@@ -37,8 +52,28 @@ namespace Testinator.Server.Domain
             // Inject DI services
             mTestCreator = testCreatorService;
 
-            // Get the editor associated with this page
-            mEditor = mTestCreator.GetEditorMultipleChoice();
+            // Create commands
+            SubmitCommand = new RelayCommand(Submit);
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        public void InitializeEditor(QuestionEditorMultipleChoice editor)
+        {
+            // Get the editor itself
+            mEditor = editor;
+
+            Task = "DDD";
+        }
+
+        /// <summary>
+        /// Tries to submit the question to the editor
+        /// </summary>
+        private void Submit()
+        {
+
         }
 
         #endregion
