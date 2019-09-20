@@ -1,4 +1,4 @@
-﻿<UICore:BasePageHost x:TypeArguments="Core:TestCreatorQuestionsPage"  x:Class="Testinator.Server.TestCreatorQuestionsPageHost"
+﻿<UICore:BasePageHost x:TypeArguments="Core:QuestionsPage"  x:Class="Testinator.Server.TestCreatorQuestionsPageHost"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 

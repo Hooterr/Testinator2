@@ -3,7 +3,7 @@
     /// <summary>
     /// Every page in Test Creator grading section as an enum
     /// </summary>
-    public enum TestCreatorGradingPage
+    public enum GradingPage
     {
     }
 }

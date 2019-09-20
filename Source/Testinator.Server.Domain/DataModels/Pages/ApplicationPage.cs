@@ -21,9 +21,34 @@
         Home,
 
         /// <summary>
-        /// The test editor initial page
+        /// The test creator initial page with test and grading lists inside
         /// </summary>
         TestCreatorInitial,
+
+        /// <summary>
+        /// The test creator test info page to fill all basic test data
+        /// </summary>
+        TestCreatorTestInfo,
+
+        /// <summary>
+        /// The test creator questions master page
+        /// </summary>
+        TestCreatorQuestions,
+
+        /// <summary>
+        /// The test creator grading master page
+        /// </summary>
+        TestCreatorGrading,
+
+        /// <summary>
+        /// The test creator test options page
+        /// </summary>
+        TestCreatorTestOptions,
+
+        /// <summary>
+        /// The test creator test finalization page
+        /// </summary>
+        TestCreatorTestFinalize,
 
         /// <summary>
         /// The screen stream page
@@ -31,7 +56,7 @@
         ScreenStream,
 
         /// <summary>
-        /// The settings page
+        /// The application's settings page
         /// </summary>
         Settings,
 

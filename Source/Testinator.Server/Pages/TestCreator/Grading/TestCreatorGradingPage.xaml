@@ -1,0 +1,24 @@
+﻿<UICore:BasePage x:TypeArguments="Core:TestCreatorGradingPageViewModel" x:Class="Testinator.Server.TestCreatorGradingPage"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                 xmlns:local="clr-namespace:Testinator.Server"
+                 xmlns:Core="clr-namespace:Testinator.Server.Domain;assembly=Testinator.Server.Domain"
+                 xmlns:core="clr-namespace:Testinator.Core;assembly=Testinator.Core"
+                 xmlns:UICore="clr-namespace:Testinator.UICore;assembly=Testinator.UICore"
+                 mc:Ignorable="d"
+                 d:DesignHeight="720"
+                 d:DesignWidth="1024">
+
+    <Border Background="{StaticResource WhiteLightBrush}">
+
+        <StackPanel>
+            <TextBlock Text="Tutaj bedzie lista dostepnych gradingow oraz przycisk zeby stworzyc nowy" />
+            <Button Content="TODO: Stworz nowy, ale for now - przejdz dalej"
+                    Command="{Binding NewGradingCommand}" />
+        </StackPanel>
+        
+    </Border>
+
+</UICore:BasePage>

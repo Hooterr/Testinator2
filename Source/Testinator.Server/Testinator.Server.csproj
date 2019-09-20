@@ -268,8 +268,11 @@
     <Compile Include="Controls\Menu\MenuListItemControl.xaml.cs">
       <DependentUpon>MenuListItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\PageHost.xaml.cs">
-      <DependentUpon>PageHost.xaml</DependentUpon>
+    <Compile Include="Controls\PageHosts\TestCreatorQuestionsPageHost.xaml.cs">
+      <DependentUpon>TestCreatorQuestionsPageHost.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\PageHosts\ApplicationPageHost.xaml.cs">
+      <DependentUpon>ApplicationPageHost.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Panels\TextWithIcon.xaml.cs">
       <DependentUpon>TextWithIcon.xaml</DependentUpon>
@@ -299,9 +302,27 @@
     </Compile>
     <Compile Include="DI\Configuration\FrameworkConstructionExtensions.cs" />
     <Compile Include="DI\DI.cs" />
-    <Compile Include="DI\UIManager.cs" />
+    <Compile Include="DI\Implementations\UIManager.cs" />
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TestCreator\Grading\TestCreatorGradingPage.xaml.cs">
+      <DependentUpon>TestCreatorGradingPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TestCreator\Questions\QuestionsMultipleChoicePage.xaml.cs">
+      <DependentUpon>QuestionsMultipleChoicePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TestCreator\Questions\TestCreatorQuestionsPage.xaml.cs">
+      <DependentUpon>TestCreatorQuestionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TestCreator\TestCreatorTestFinalizePage.xaml.cs">
+      <DependentUpon>TestCreatorTestFinalizePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TestCreator\TestCreatorTestOptionsPage.xaml.cs">
+      <DependentUpon>TestCreatorTestOptionsPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\TestCreator\TestCreatorInitialPage.xaml.cs">
+      <DependentUpon>TestCreatorInitialPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TestCreator\TestCreatorTestInfoPage.xaml.cs">
       <DependentUpon>TestCreatorTestInfoPage.xaml</DependentUpon>
@@ -356,7 +377,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\PageHost.xaml">
+    <Page Include="Controls\PageHosts\TestCreatorQuestionsPageHost.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\PageHosts\ApplicationPageHost.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -401,6 +426,30 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Pages\HomePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TestCreator\Grading\TestCreatorGradingPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TestCreator\Questions\QuestionsMultipleChoicePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TestCreator\Questions\TestCreatorQuestionsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TestCreator\TestCreatorTestFinalizePage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TestCreator\TestCreatorTestOptionsPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TestCreator\TestCreatorInitialPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -513,6 +562,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Fody.6.0.0\build\Fody.targets" Condition="Exists('..\packages\Fody.6.0.0\build\Fody.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

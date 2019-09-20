@@ -5,16 +5,13 @@ using Testinator.UICore;
 namespace Testinator.Server
 {
     /// <summary>
-    /// Converts the <see cref="ApplicationPage"/> to an actual view/page
+    /// Converts the application pages enum to an actual view/page and vice versa
     /// </summary>
     public static class ApplicationPageConverter
     {
         /// <summary>
         /// Takes a <see cref="ApplicationPage"/> and a view model, if any, and creates the desired page
         /// </summary>
-        /// <param name="page"></param>
-        /// <param name="viewModel"></param>
-        /// <returns></returns>
         public static BasePage ToBasePage(this ApplicationPage page, object viewModel = null)
         {
             // Find the appropriate page
@@ -26,8 +23,23 @@ namespace Testinator.Server
                 case ApplicationPage.Home:
                     return new HomePage(viewModel as HomeViewModel ?? DI.GetInjectedPageViewModel<HomeViewModel>());
 
-                case ApplicationPage.TestEditorBasicInformationEditor:
-                    return new TestCreatorTestInfoPage(viewModel as TestInfoPageViewModel ?? DI.GetInjectedPageViewModel<TestInfoPageViewModel>());
+                case ApplicationPage.TestCreatorInitial:
+                    return new TestCreatorInitialPage(viewModel as TestCreatorInitialPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorInitialPageViewModel>());
+
+                case ApplicationPage.TestCreatorTestInfo:
+                    return new TestCreatorTestInfoPage(viewModel as TestCreatorTestInfoPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorTestInfoPageViewModel>());
+
+                case ApplicationPage.TestCreatorQuestions:
+                    return new TestCreatorQuestionsPage(viewModel as TestCreatorQuestionsPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorQuestionsPageViewModel>());
+
+                case ApplicationPage.TestCreatorGrading:
+                    return new TestCreatorGradingPage(viewModel as TestCreatorGradingPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorGradingPageViewModel>());
+
+                case ApplicationPage.TestCreatorTestOptions:
+                    return new TestCreatorTestOptionsPage(viewModel as TestCreatorTestOptionsPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorTestOptionsPageViewModel>());
+
+                case ApplicationPage.TestCreatorTestFinalize:
+                    return new TestCreatorTestFinalizePage(viewModel as TestCreatorTestFinalizePageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorTestFinalizePageViewModel>());
 
                 case ApplicationPage.ScreenStream:
                     return new ScreenStreamPage(viewModel as ScreenStreamViewModel ?? DI.GetInjectedPageViewModel<ScreenStreamViewModel>());
@@ -47,8 +59,6 @@ namespace Testinator.Server
         /// <summary>
         /// Converts a <see cref="BasePage"/> to the specific <see cref="ApplicationPage"/> that is for that type of page
         /// </summary>
-        /// <param name="page"></param>
-        /// <returns></returns>
         public static ApplicationPage ToApplicationPage(this BasePage page)
         {
             // Find application page that matches the base page
@@ -58,8 +68,23 @@ namespace Testinator.Server
             if (page is HomePage)
                 return ApplicationPage.Home;
 
+            if (page is TestCreatorInitialPage)
+                return ApplicationPage.TestCreatorInitial;
+
             if (page is TestCreatorTestInfoPage)
-                return ApplicationPage.TestEditorBasicInformationEditor;
+                return ApplicationPage.TestCreatorTestInfo;
+
+            if (page is TestCreatorQuestionsPage)
+                return ApplicationPage.TestCreatorQuestions;
+
+            if (page is TestCreatorGradingPage)
+                return ApplicationPage.TestCreatorGrading;
+
+            if (page is TestCreatorTestOptionsPage)
+                return ApplicationPage.TestCreatorTestOptions;
+
+            if (page is TestCreatorTestFinalizePage)
+                return ApplicationPage.TestCreatorTestFinalize;
 
             if (page is ScreenStreamPage)
                 return ApplicationPage.ScreenStream;
@@ -72,7 +97,38 @@ namespace Testinator.Server
 
             // Alert developer of issue
             Debugger.Break();
-            return default(ApplicationPage);
+            return default;
+        }
+
+        /// <summary>
+        /// Takes a <see cref="QuestionsPage"/> and a view model, if any, and creates the desired page
+        /// </summary>
+        public static BasePage ToBasePage(this QuestionsPage page, object viewModel = null)
+        {
+            // Find the appropriate page
+            switch (page)
+            {
+                case QuestionsPage.MultipleChoice:
+                    return new QuestionsMultipleChoicePage(viewModel as QuestionsMultipleChoicePageViewModel ?? DI.GetInjectedPageViewModel<QuestionsMultipleChoicePageViewModel>());
+
+                default:
+                    Debugger.Break();
+                    return null;
+            }
+        }
+
+        /// <summary>
+        /// Converts a <see cref="BasePage"/> to the specific <see cref="QuestionsPage"/> that is for that type of page
+        /// </summary>
+        public static QuestionsPage ToQuestionsPage(this BasePage page)
+        {
+            // Find question page that matches the base page
+            if (page is QuestionsMultipleChoicePage)
+                return QuestionsPage.MultipleChoice;
+
+            // Alert developer of issue
+            Debugger.Break();
+            return default;
         }
     }
 }

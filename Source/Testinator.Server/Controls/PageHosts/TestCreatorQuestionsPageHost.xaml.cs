@@ -1,8 +1,6 @@
-﻿using System.ComponentModel;
-using System.Windows;
+﻿using System.Windows;
 using Testinator.Server.Domain;
 using Testinator.UICore;
-using System;
 
 
 namespace Testinator.Server
@@ -10,7 +8,7 @@ namespace Testinator.Server
     /// <summary>
     /// Interaction logic for TestCreatorQuestionsPageHost.xaml
     /// </summary>
-    public partial class TestCreatorQuestionsPageHost : BasePageHost<ApplicationPage>
+    public partial class TestCreatorQuestionsPageHost : BasePageHost<QuestionsPage>
     {
         #region Singleton
 
@@ -27,9 +25,9 @@ namespace Testinator.Server
         /// <summary>
         /// The current page to show in the page host
         /// </summary>
-        public ApplicationPage CurrentPage
+        public QuestionsPage CurrentPage
         {
-            get => (ApplicationPage)GetValue(CurrentPageProperty);
+            get => (QuestionsPage)GetValue(CurrentPageProperty);
             set => SetValue(CurrentPageProperty, value);
         }
 
@@ -37,7 +35,7 @@ namespace Testinator.Server
         /// Registers <see cref="CurrentPage"/> as a dependency property
         /// </summary>
         public static readonly DependencyProperty CurrentPageProperty =
-            DependencyProperty.Register(nameof(CurrentPage), typeof(ApplicationPage), typeof(TestCreatorQuestionsPageHost), new UIPropertyMetadata(default(ApplicationPage), null, CurrentPagePropertyChanged));
+            DependencyProperty.Register(nameof(CurrentPage), typeof(QuestionsPage), typeof(TestCreatorQuestionsPageHost), new UIPropertyMetadata(default(QuestionsPage), null, CurrentPagePropertyChanged));
 
         #endregion
 
@@ -49,11 +47,6 @@ namespace Testinator.Server
         public TestCreatorQuestionsPageHost() : base()
         {
             InitializeComponent();
-
-            // If we are in DesignMode, show the current page
-            // as the dependency property does not fire
-            if (DesignerProperties.GetIsInDesignMode(this))
-                NewPage.Content = DI.Application.CurrentPage.ToBasePage();
         }
 
         #endregion
@@ -68,7 +61,7 @@ namespace Testinator.Server
         private static object CurrentPagePropertyChanged(DependencyObject d, object value)
         {
             // Get target values
-            var targetPage = (ApplicationPage)value;
+            var targetPage = (QuestionsPage)value;
             var targetPageViewModel = d.GetValue(CurrentPageViewModelProperty);
 
             // Get the frames
@@ -91,13 +84,13 @@ namespace Testinator.Server
         /// </summary>
         /// <param name="page">The page to convert as an enum</param>
         /// <param name="vm">The optional view model</param>
-        public override BasePage BasePageConvert(ApplicationPage page, object vm = null) => page.ToBasePage(vm);
+        public override BasePage BasePageConvert(QuestionsPage page, object vm = null) => page.ToBasePage(vm);
 
         /// <summary>
         /// Override the application page convert to handle our application specific pages
         /// </summary>
         /// <param name="page">The page to convert</param>
-        public override ApplicationPage ApplicationPageConvert(BasePage page) => page.ToApplicationPage();
+        public override QuestionsPage ApplicationPageConvert(BasePage page) => page.ToQuestionsPage();
 
         #endregion
     }

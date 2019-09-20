@@ -4,16 +4,16 @@ using Testinator.UICore;
 namespace Testinator.Server
 {
     /// <summary>
-    /// Interaction logic for TestCreatorTestInfoPage.xaml
+    /// Interaction logic for TestCreatorTestFinalizePage.xaml
     /// </summary>
-    public partial class TestCreatorTestInfoPage : BasePage<TestCreatorTestInfoPageViewModel>
+    public partial class TestCreatorTestFinalizePage : BasePage<TestCreatorTestFinalizePageViewModel>
     {
         #region Constructor
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorTestInfoPage() : base()
+        public TestCreatorTestFinalizePage() : base()
         {
             InitializeComponent();
         }
@@ -22,7 +22,7 @@ namespace Testinator.Server
         /// Constructor with specific view model
         /// </summary>
         /// <param name="specificViewModel">The specific view model to use for this page</param>
-        public TestCreatorTestInfoPage(TestCreatorTestInfoPageViewModel specificViewModel) : base(specificViewModel)
+        public TestCreatorTestFinalizePage(TestCreatorTestFinalizePageViewModel specificViewModel) : base(specificViewModel)
         {
             InitializeComponent();
         }
