@@ -1,4 +1,6 @@
-﻿namespace Testinator.Server.Domain
+﻿using Testinator.TestSystem.Implementation;
+
+namespace Testinator.Server.Domain
 {
     public interface ITestFileManager
     {
@@ -7,5 +9,7 @@
 
         TestFileContext[] GetTestContexts(string absoluteDirectoryPath);
         TestFileContext[] GetTestContexts(ApplicationDataFolders folder);
+
+        bool Save(Test test, string fileName, string absoluteFolderPath);
     }
 }

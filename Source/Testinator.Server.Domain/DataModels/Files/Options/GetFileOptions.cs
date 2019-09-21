@@ -24,6 +24,14 @@ namespace Testinator.Server.Domain
             return this;
         }
 
+        public GetFileOptions InFolder(string folderPath, string fileName)
+        {
+            AbsolutePath = folderPath + "\\" + fileName;
+            FileName = null;
+            Folder = null;
+            return this;
+        }
+
         public GetFileOptions ReadOnlyMode()
         {
             OpenMode = FileMode.Open;
