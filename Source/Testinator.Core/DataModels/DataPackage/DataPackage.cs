@@ -55,7 +55,7 @@ namespace Testinator.Core
         /// </summary>
         /// <param name="Test"></param>
         /// <returns></returns>
-        public static DataPackage TestPackage(Test Test) => new DataPackage(PackageType.TestForm, Test);
+        //public static DataPackage TestPackage(Test Test) => new DataPackage(PackageType.TestForm, Test);
 
         /// <summary>
         /// Creates a package that contains startup command with args

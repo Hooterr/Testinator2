@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics;
-using Testinator.Client.Core;
+using Testinator.Client.Domain;
 using Testinator.UICore;
 
 namespace Testinator.Client
@@ -26,25 +26,6 @@ namespace Testinator.Client
                 case ApplicationPage.WaitingForTest:
                     return new WaitingForTestPage(viewModel as WaitingForTestViewModel);
 
-                case ApplicationPage.ResultOverviewPage:
-                    return new ResultOverviewPage(viewModel as ResultOverviewViewModel);
-
-                case ApplicationPage.ResultQuestionsPage:
-                    return new ResultQuestionsPage(viewModel as ResultQuestionsViewModel);
-
-                #region Question Pages
-
-                case ApplicationPage.QuestionMultipleCheckboxes:
-                    return new QuestionMultipleCheckboxesPage(viewModel as QuestionMultipleCheckboxesViewModel);
-
-                case ApplicationPage.QuestionMultipleChoice:
-                    return new QuestionMultipleChoicePage(viewModel as QuestionMultipleChoiceViewModel);
-
-                case ApplicationPage.QuestionSingleTextBox:
-                    return new QuestionSingleTextBoxPage(viewModel as QuestionSingleTextBoxViewModel);
-
-                #endregion
-
                 default:
                     Debugger.Break();
                     return null;
@@ -63,20 +44,10 @@ namespace Testinator.Client
                 return ApplicationPage.Login;
             if (page is WaitingForTestPage)
                 return ApplicationPage.WaitingForTest;
-            if (page is ResultOverviewPage)
-                return ApplicationPage.ResultOverviewPage;
-            if (page is ResultQuestionsPage)
-                return ApplicationPage.ResultQuestionsPage;
-            if (page is QuestionMultipleChoicePage)
-                return ApplicationPage.QuestionMultipleChoice;
-            if (page is QuestionMultipleCheckboxesPage)
-                return ApplicationPage.QuestionMultipleCheckboxes;
-            if (page is QuestionSingleTextBoxPage)
-                return ApplicationPage.QuestionSingleTextBox;
 
             // Alert developer of issue
             Debugger.Break();
-            return default(ApplicationPage);
+            return default;
         }
     }
 }

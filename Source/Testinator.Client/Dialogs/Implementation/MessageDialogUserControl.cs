@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Testinator.Client.Core;
 
 namespace Testinator.Client
 {
