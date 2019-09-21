@@ -3,7 +3,7 @@
 namespace Testinator.Server.Domain
 {
     public class GetFileOptions
-   {
+    {
         public string AbsolutePath { get; private set; }
         public string FileName { get; private set; }
         public ApplicationDataFolders? Folder { get; private set; }

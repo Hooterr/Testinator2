@@ -28,7 +28,7 @@ namespace Testinator.Server.Domain
                     throw new InvalidOperationException("File name cannot be empty.");
             }
 
-            throw new InvalidCastException("Just must specify either an absolute path to a file, or choose set folder and file name to look for.");
+            throw new InvalidCastException("You must specify either an absolute path to a file, or choose set folder and file name to look for.");
         }
 
         public GetFileOptionsAdapter(GetFileOptions options, string rootDataFolderPath)

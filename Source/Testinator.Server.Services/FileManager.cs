@@ -23,15 +23,32 @@ namespace Testinator.Server.Services
             }
         }
 
-        public string[] GetAllFileNames(string absolutePath, string extensionFilter = null)
+        public string[] GetAllFileNames(Action<GetFilesFromDirectoryOptions> configureOptions)
         {
-            throw new NotImplementedException();
+            if (configureOptions == null)
+                throw new ArgumentNullException(nameof(configureOptions), "Get files options action cannot be null");
+
+            var options = new GetFilesFromDirectoryOptions();
+            configureOptions.Invoke(options);
+
+            var result = new string[0];
+            try
+            {
+                var adaper = new GetFilesFromDirectoryOptionsAdapter(options, mDataRootFolder);
+                adaper.GetPath(out var path, out var searchPattern);
+                result = Directory.GetFiles(path, searchPattern);
+            }
+            catch
+            {
+                // TODO error handling?
+            }
+            return result;
         }
 
         public FileStream GetFile(Action<GetFileOptions> configureOptions)
         {
             if(configureOptions == null)
-                throw new ArgumentNullException(nameof(configureOptions), "Get file options cannot be null");
+                throw new ArgumentNullException(nameof(configureOptions), "Get file options action cannot be null");
 
             var options = new GetFileOptions();
             configureOptions.Invoke(options);
