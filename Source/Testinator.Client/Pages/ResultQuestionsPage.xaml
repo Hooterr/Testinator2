@@ -5,7 +5,7 @@
                  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
                  xmlns:local="clr-namespace:Testinator.Client"
                  xmlns:UICore="clr-namespace:Testinator.UICore;assembly=Testinator.UICore"
-                 xmlns:Core="clr-namespace:Testinator.Client.Core;assembly=Testinator.Client.Core"
+                 xmlns:Core="clr-namespace:Testinator.Client.Domain;assembly=Testinator.Client.Domain"
                  xmlns:core="clr-namespace:Testinator.Core;assembly=Testinator.Core"
                  mc:Ignorable="d" 
                  d:DesignHeight="700" d:DesignWidth="1000">

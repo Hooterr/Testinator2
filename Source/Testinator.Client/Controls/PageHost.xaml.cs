@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
-using Testinator.Client.Core;
+using Testinator.Client.Domain;
 using Testinator.UICore;
 
 namespace Testinator.Client

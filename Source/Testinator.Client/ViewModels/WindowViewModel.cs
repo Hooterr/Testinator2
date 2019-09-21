@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Shell;
-using Testinator.Client.Core;
+using Testinator.Client.Domain;
 using Testinator.Core;
 using Testinator.UICore;
 
@@ -310,7 +310,7 @@ namespace Testinator.Client
             CloseCommand = new RelayCommand(() =>
             {
                 // Check if any test is already in progress
-                if (Dna.Framework.Service<TestHost>().IsTestInProgress)
+                if (Dna.Framework.Service<ITestHost>().IsTestInProgress)
                 {
                     // Show warning to the user and do not close the app
                     DI.UI.ShowMessage(new MessageBoxDialogViewModel
