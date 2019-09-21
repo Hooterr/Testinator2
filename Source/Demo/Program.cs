@@ -10,6 +10,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using Testinator.Files;
+using Testinator.Server.Domain;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
 using Testinator.TestSystem.Implementation.Questions;
@@ -52,7 +53,8 @@ namespace Demo
 
 
 #endif
-            var fs = new FileService();
+            Console.WriteLine(ApplicationDataFolders.Tests.GetFolderName());
+            /*var fs = new FileService();
 
             var finfo = new Testinator.Files.FileInfo()
             {
@@ -71,7 +73,7 @@ namespace Demo
 
             var fi = fs.GetFileInfo("C:\\Users\\root\\Desktop\\demo\\something.qtn");
 
-            /*
+            
             var passwd = "someTestPassword!@";
 
             var _iterations = 2;

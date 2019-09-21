@@ -8,8 +8,6 @@ namespace Testinator.Files
     {
         public int Version { get; set; }
 
-        public string AbsolutePath { get; set; }
-
         public IReadOnlyDictionary<string, string> Metadata { get; set; }
     }
 }

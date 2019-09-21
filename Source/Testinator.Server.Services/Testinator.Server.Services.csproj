@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Testinator.FileFormats\Testinator.Files.csproj" />
     <ProjectReference Include="..\Testinator.Server.Domain\Testinator.Server.Domain.csproj" />
   </ItemGroup>
 
