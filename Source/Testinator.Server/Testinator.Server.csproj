@@ -525,8 +525,8 @@
       <Project>{7879EAD1-0A1C-47F5-A1F4-5FC57019CE73}</Project>
       <Name>Testinator.Server.Network</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Testinator.Server.TestCreator\Testinator.Server.Services.csproj">
-      <Project>{12d9ba9f-61ec-4af4-818e-c5d588506f35}</Project>
+    <ProjectReference Include="..\Testinator.Server.Services\Testinator.Server.Services.csproj">
+      <Project>{72b73009-63d9-49a2-8faa-e82917356c37}</Project>
       <Name>Testinator.Server.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Testinator.TestSystem.Editors\Testinator.TestSystem.Editors.csproj">
