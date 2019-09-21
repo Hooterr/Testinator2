@@ -5,7 +5,7 @@
         public static ISerializer<T> New<T>()
             where T : class
         {
-            return new Serializer<T>();
+            return new DefaultSerializer<T>();
         }
     }
 }

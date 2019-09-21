@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Testinator.Server.Serialization
 {
-    internal class Serializer<T> : ISerializer<T>
+    internal class DefaultSerializer<T> : ISerializer<T>
         where T : class
     {
         public T Deserialize(Stream serializationStream)
