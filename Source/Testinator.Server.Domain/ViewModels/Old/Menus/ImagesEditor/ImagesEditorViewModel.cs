@@ -36,7 +36,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Indicates if the user can add more question to the task
         /// </summary>
-        public bool CanAddImages => Items.Count < TaskContent.MaximumImagesCount;
+        public bool CanAddImages => true; //Items.Count < TaskContent.MaximumImagesCount;
 
         /// <summary>
         /// Indicates if previewmode is enabled
@@ -178,7 +178,7 @@ namespace Testinator.Server.Domain
                 {
                     image = new Bitmap(fileName);
 
-                    TaskContent.ValidateImage(image);
+                    //TaskContent.ValidateImage(image);
                 }
                 catch (FileNotFoundException ex)
                 {

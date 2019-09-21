@@ -48,7 +48,7 @@ namespace Testinator.Client.Domain
             OnPageChanged += OnPageChange;
 
             // Get the current version from assebly
-            var assembly = Assembly.LoadFrom("Testinator.Client.Core.dll");
+            var assembly = Assembly.LoadFrom("Testinator.Client.Domain.dll");
             Version = assembly.GetName().Version;
         }
 

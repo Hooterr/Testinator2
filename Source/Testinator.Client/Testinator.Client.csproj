@@ -186,23 +186,8 @@
     <Compile Include="Controls\LoginPageLeftSide.xaml.cs">
       <DependentUpon>LoginPageLeftSide.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\Questions\CheckboxAnswerItemControl.xaml.cs">
-      <DependentUpon>CheckboxAnswerItemControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Questions\MultipleCheckboxesAnswersList.xaml.cs">
-      <DependentUpon>MultipleCheckboxesAnswersList.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Questions\MultipleChoiceAnswersList.xaml.cs">
-      <DependentUpon>MultipleChoiceAnswersList.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Controls\PageHost.xaml.cs">
       <DependentUpon>PageHost.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Questions\ABCAnswerItemControl.xaml.cs">
-      <DependentUpon>ABCAnswerItemControl.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Controls\Questions\QuestionListItemControl.xaml.cs">
-      <DependentUpon>QuestionListItemControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Dialogs\Base\BaseDialogUserControl.cs" />
     <Compile Include="Dialogs\DialogMessageBox.xaml.cs">
@@ -221,21 +206,6 @@
     <Compile Include="DI\Implementations\ViewModelProvider.cs" />
     <Compile Include="Extensions\IconTypeExtensions.cs" />
     <Compile Include="DI\Implementations\UIManager.cs" />
-    <Compile Include="Pages\Questions\QuestionMultipleCheckboxesPage.xaml.cs">
-      <DependentUpon>QuestionMultipleCheckboxesPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Questions\QuestionSingleTextBoxPage.xaml.cs">
-      <DependentUpon>QuestionSingleTextBoxPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\Questions\QuestionMultipleChoicePage.xaml.cs">
-      <DependentUpon>QuestionMultipleChoicePage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ResultQuestionsPage.xaml.cs">
-      <DependentUpon>ResultQuestionsPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Pages\ResultOverviewPage.xaml.cs">
-      <DependentUpon>ResultOverviewPage.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Pages\WaitingForTestPage.xaml.cs">
       <DependentUpon>WaitingForTestPage.xaml</DependentUpon>
     </Compile>
@@ -247,8 +217,6 @@
     <Compile Include="ValueConverters\BooleanInvertConverter.cs" />
     <Compile Include="ValueConverters\BooleanToVisibilityConverter.cs" />
     <Compile Include="ValueConverters\ImageToImageSourceConverterConverter.cs" />
-    <Compile Include="ValueConverters\MarkToTextConverter.cs" />
-    <Compile Include="ValueConverters\QuestionTypeToIconConverter.cs" />
     <Compile Include="ValueConverters\StringRGBToBrushConverter.cs" />
     <Compile Include="ViewModels\DialogWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
@@ -261,27 +229,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\Questions\CheckboxAnswerItemControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Questions\MultipleCheckboxesAnswersList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Questions\MultipleChoiceAnswersList.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Controls\PageHost.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Questions\ABCAnswerItemControl.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Controls\Questions\QuestionListItemControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -309,26 +257,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\Questions\QuestionMultipleCheckboxesPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\Questions\QuestionSingleTextBoxPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\Questions\QuestionMultipleChoicePage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\ResultQuestionsPage.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Pages\ResultOverviewPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Pages\WaitingForTestPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

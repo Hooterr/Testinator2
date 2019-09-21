@@ -14,7 +14,7 @@ namespace Testinator.Core
         /// <summary>
         /// The answers given by the user
         /// </summary>
-        public List<Answer> Answers { get; set; }
+        //public List<Answer> Answers { get; set; }
 
         /// <summary>
         /// Points scored by the user
@@ -24,6 +24,6 @@ namespace Testinator.Core
         /// <summary>
         /// The client mark
         /// </summary>
-        public Marks Mark { get; set; }
+        //public Marks Mark { get; set; }
     }
 }

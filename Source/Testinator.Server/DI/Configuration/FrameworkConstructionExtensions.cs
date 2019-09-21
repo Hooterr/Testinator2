@@ -29,7 +29,6 @@ namespace Testinator.Server
 
             // Bind to a scoped instance of specified models
             construction.Services.AddScoped<IServerNetwork, ServerNetwork>();
-            construction.Services.AddScoped<FileManagerBase, LogsWriter>();
             construction.Services.AddScoped<UserMapper>();
             construction.Services.AddScoped<ISettingsRepository, SettingsRepository>();
             construction.Services.AddScoped<IUserRepository, UserRepository>();

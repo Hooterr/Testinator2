@@ -15,7 +15,6 @@ namespace Testinator.Client.Network
 
         private readonly ILogFactory mLogger;
         private readonly IClientModel mClientModel;
-        private readonly ITestHost mTestHost;
         private readonly ApplicationViewModel mApplicationVM;
         private readonly IUIManager mUIManager;
 
@@ -36,7 +35,6 @@ namespace Testinator.Client.Network
         /// Default constructor
         /// </summary>
         public ClientNetwork(IClientModel clientModel, 
-                             ITestHost testHost,
                              ILogFactory logger, 
                              ApplicationViewModel applicationVM, 
                              IUIManager uiManager)
@@ -44,7 +42,6 @@ namespace Testinator.Client.Network
             // Inject DI services
             mLogger = logger;
             mClientModel = clientModel;
-            mTestHost = testHost;
             mApplicationVM = applicationVM;
             mUIManager = uiManager;
 
@@ -90,11 +87,11 @@ namespace Testinator.Client.Network
             mLogger.Log("Network connection lost");
 
             // Dont'try to reconnect if in the result page, because the test result has been already sent to the server
-            if (mTestHost.IsShowingResultPage)
-                return;
+            //if (mTestHost.IsShowingResultPage)
+               // return;
 
             // If the test in progress
-            if (mTestHost.IsTestInProgress)
+            //if (mTestHost.IsTestInProgress)
             {
                 // Notify the test host about the disconnection
                 //mTestHost.NetworkDisconnected();
@@ -107,7 +104,7 @@ namespace Testinator.Client.Network
             }
 
             // In any other case return to the login page
-            else
+            //else
                 mUIManager.DispatcherThreadAction(() => mApplicationVM.GoToPage(ApplicationPage.Login));
         }
 
@@ -120,11 +117,11 @@ namespace Testinator.Client.Network
             mLogger.Log("Network disconnected");
 
             // Dont'try to reconnect if in the result page, because the test result has been already sent to the server
-            if (mTestHost.IsShowingResultPage)
-                return;
+            //if (mTestHost.IsShowingResultPage)
+               // return;
 
             // If not in reults page show login page
-            if (!mTestHost.IsTestInProgress)
+            //if (!mTestHost.IsTestInProgress)
                 mUIManager.DispatcherThreadAction(() => mApplicationVM.GoToPage(ApplicationPage.Login));
         }
 
@@ -166,19 +163,19 @@ namespace Testinator.Client.Network
             {
                 case PackageType.TestForm:
                     // Bind the newly received test
-                    mTestHost.BindTest(DataReceived.Content as Test);
+                    //mTestHost.BindTest(DataReceived.Content as Test);
                     break;
 
                 case PackageType.BeginTest:
 
                     var args = DataReceived.Content as TestStartupArgs;
 
-                    mTestHost.SetupArguments(args);
-                    mTestHost.StartTest();
+                    //mTestHost.SetupArguments(args);
+                    //mTestHost.StartTest();
                     break;
 
                 case PackageType.StopTestForcefully:
-                    mTestHost.AbortTest();
+                    //mTestHost.AbortTest();
                     break;
 
             }

@@ -22,8 +22,6 @@ namespace Testinator.Client
         {
             // Bind to a single instance of specified models
             construction.Services.AddSingleton<ApplicationViewModel>();
-            construction.Services.AddSingleton<ITestHost, TestHost>();
-            construction.Services.AddSingleton<FileManagerBase, LogsWriter>();
             construction.Services.AddSingleton<IClientModel, ClientModel>();
             construction.Services.AddSingleton<IClientNetwork, ClientNetwork>();
             construction.Services.AddSingleton<IViewModelProvider, ViewModelProvider>();
@@ -35,16 +33,11 @@ namespace Testinator.Client
 
                     // TODO: Make log files ordered by a date, week-wise
                     //       For now - random numbers for testing as it allows running multiple clients
-                    new Logging.FileLogger(($"log{new Random().Next(100000, 99999999).ToString()}.txt"), new LogsWriter())
+                    new Logging.FileLogger(($"log{new Random().Next(100000, 99999999).ToString()}.txt"))
                 ));
 
             // Inject dependiencies into every page's view model
             construction.Services.AddTransient<LoginViewModel>();
-            construction.Services.AddTransient<QuestionMultipleCheckboxesViewModel>();
-            construction.Services.AddTransient<QuestionMultipleChoiceViewModel>();
-            construction.Services.AddTransient<QuestionSingleTextBoxViewModel>();
-            construction.Services.AddTransient<ResultQuestionsViewModel>();
-            construction.Services.AddTransient<ResultOverviewViewModel>();
             construction.Services.AddTransient<WaitingForTestViewModel>();
 
             // Return the construction for chaining

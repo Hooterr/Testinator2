@@ -35,16 +35,6 @@ namespace Testinator.Server.Domain
             set => GetType().GetProperty(propertyName).SetValue(this, value, null);
         }
 
-        /// <summary>
-        /// The config xml file reader which handles config properties loading from local config file
-        /// </summary>
-        private XmlReader ConfigFileReader { get; set; } = new XmlReader(SaveableObjects.Config);
-
-        /// <summary>
-        /// The config xml file writer which handles config properties saving/deleting from local config file
-        /// </summary>
-        private XmlWriter ConfigFileWriter { get; set; } = new XmlWriter(SaveableObjects.Config);
-
         #endregion
 
         #region Public Properties // TODO: Set this in UI

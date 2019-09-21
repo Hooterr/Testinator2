@@ -50,7 +50,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// The answer given by this user
         /// </summary>
-        public List<Answer> Answers { get; set; }
+        //public List<Answer> Answers { get; set; }
 
         /// <summary>
         /// Points scored by the user
@@ -60,7 +60,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// The client mark
         /// </summary>
-        public Marks Mark { get; set; }
+        //public Marks Mark { get; set; }
 
         /// <summary>
         /// The order in which the client answered questions
@@ -82,9 +82,9 @@ namespace Testinator.Server.Domain
             this.QuestionsCount = QuestionsCount;
             HasConnectionProblem = false;
             HasResultsBeenReceived = false;
-            Answers = new List<Answer>();
+            //Answers = new List<Answer>();
             PointsScored = 0;
-            Mark = default(Marks);
+            //Mark = default(Marks);
         }
 
         #endregion

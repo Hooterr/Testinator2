@@ -21,11 +21,6 @@ namespace Testinator.Client
         public static ApplicationViewModel ApplicationViewModel => DI.Application;
 
         /// <summary>
-        /// The test host
-        /// </summary>
-        public static ITestHost TestHost => Framework.Service<ITestHost>();
-
-        /// <summary>
         /// The client (user) model
         /// </summary>
         public static IClientModel ClientModel => Framework.Service<IClientModel>();

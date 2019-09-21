@@ -9,7 +9,7 @@ namespace Testinator.Core
     public class SettingsPropertyInfo
     {
         #region Public Properties
-        
+
         /// <summary>
         /// The name of the property
         /// </summary>
