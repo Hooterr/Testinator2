@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Testinator.Files
 {
-    public class FileInfo
+    public class FileContext
     {
         public int Version { get; set; }
 

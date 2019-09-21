@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Testinator.Server.Domain
+﻿namespace Testinator.Server.Domain
 {
     public class GetFilesFromDirectoryOptions
     {

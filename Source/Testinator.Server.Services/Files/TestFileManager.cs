@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Testinator.Files;
 using Testinator.Server.Domain;
 
@@ -8,18 +6,18 @@ namespace Testinator.Server.Services
 {
     public class TestFileManager : ITestFileManager
     {
-        private readonly IFileManager mFiles;
+        private readonly IFileAccessService mFileAccess;
         private readonly IFileService mFilesEncoder;
 
-        public TestFileManager(IFileManager files, IFileService fileService)
+        public TestFileManager(IFileAccessService files, IFileService fileService)
         {
-            mFiles = files;
+            mFileAccess = files;
             mFilesEncoder = fileService;
         }
 
         public TestFileContext GetTestContext(string absolutePath)
         {
-            var fs = mFiles.GetFile(options =>
+            var fs = mFileAccess.GetFile(options =>
             {
                 options.UseAbsolutePath(absolutePath)
                        .ReadOnlyMode();

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.IO;
-using Testinator.Core;
 using Testinator.Server.Domain;
 
-namespace Testinator.Server.Services
+namespace Testinator.Files
 {
-    public class FileManager : IFileManager
+    public class FileAccessService : IFileAccessService
     {
         private readonly string mDataRootFolder;
-        public FileManager()
+        public FileAccessService()
         {
             // TODO maybe get this from settings
             mDataRootFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Testinator";
@@ -17,7 +16,7 @@ namespace Testinator.Server.Services
             // TODO handle the case when there we got no permission to do this
             Directory.CreateDirectory(mDataRootFolder);
 
-            foreach(var folder in EnumHelpers.GetValues<ApplicationDataFolders>())
+            foreach(var folder in typeof(ApplicationDataFolders).GetEnumValues())
             {
                 Directory.CreateDirectory($"{mDataRootFolder}\\{folder.ToString()}");
             }

@@ -1,17 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Text;
 
 namespace Testinator.Files
 {
     public class FileService : IFileService
     {
         private readonly MetadataEncoder mMetadataEncoder;
-        public FileInfo GetFileInfo(FileStream stream)
+        public FileContext GetFileInfo(FileStream stream)
         {
-            var fileInfo = new FileInfo();
+            var fileInfo = new FileContext();
 
             var signatureBytes = new byte[8];
             FileSignature signature;
@@ -39,7 +37,7 @@ namespace Testinator.Files
             return fileInfo;
         }
 
-        public void SaveFile(FileStream stream, FileInfo info, byte[] data)
+        public void SaveFile(FileStream stream, FileContext info, byte[] data)
         {
             
             var fileHeader = info.GenerateHeader();
