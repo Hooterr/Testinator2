@@ -1,10 +1,13 @@
-﻿using System.Windows.Input;
+﻿using System;
+using System.Linq;
 using Testinator.Core;
+using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
+using Testinator.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.Domain
 {
-    using QuestionEditorMultipleChoice = IQuestionEditor<TestSystem.Implementation.Questions.MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
+    using QuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
 
     /// <summary>
     /// The view model for multiple choice question page in Test Creator
@@ -12,8 +15,6 @@ namespace Testinator.Server.Domain
     public class QuestionsMultipleChoicePageViewModel : BaseViewModel
     {
         #region Private Members
-
-        private readonly ITestCreatorService mTestCreator;
 
         /// <summary>
         /// The editor for multiple choice question
@@ -33,47 +34,46 @@ namespace Testinator.Server.Domain
 
         #endregion
 
-        #region Commands
+        #region Public Methods
 
         /// <summary>
-        /// The command to submit current state of question
+        /// Initializes this view model with provided editor for this question
         /// </summary>
-        public ICommand SubmitCommand { get; private set; }
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Default constructor
-        /// </summary>
-        public QuestionsMultipleChoicePageViewModel(ITestCreatorService testCreatorService)
-        {
-            // Inject DI services
-            mTestCreator = testCreatorService;
-
-            // Create commands
-            SubmitCommand = new RelayCommand(Submit);
-        }
-
-        #endregion
-
-        #region Command Methods
-
-        public void InitializeEditor(QuestionEditorMultipleChoice editor)
+        /// <param name="editor">The editor for this type of question containing all data</param>
+        public Func<IQuestion> InitializeEditor(QuestionEditorMultipleChoice editor)
         {
             // Get the editor itself
             mEditor = editor;
 
-            Task = "DDD";
+            // Initialize every property based on it
+            // If we are editing existing question, editor will have it's data
+            // If we are creating new one, editor will be empty but its still fine at this point
+            Task = mEditor.Task.Text.Content;
+            AnswerA = mEditor.Options.Options.FirstOrDefault();
+            Points = mEditor.Scoring.MaximumScore.ToString();
+            RightAnswer = mEditor.Scoring.CorrectAnswerIdx.ToString();
+
+            // Return the submit action for the master view model to make use of
+            return Submit;
         }
 
         /// <summary>
         /// Tries to submit the question to the editor
         /// </summary>
-        private void Submit()
+        public IQuestion Submit()
         {
+            // Pass all the changes user has made to the editor
+            mEditor.Task.Text.Content = Task;
 
+            // Validate current state of data
+            if (mEditor.Validate())
+            {
+                // Successful validation, return the question
+                return mEditor.Build().Result;
+            }
+
+            // Validation failed, return null so the master page will react accordingly
+            return null;
         }
 
         #endregion

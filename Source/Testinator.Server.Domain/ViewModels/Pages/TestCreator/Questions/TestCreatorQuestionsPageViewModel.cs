@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows.Input;
 using Testinator.Core;
+using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
 
 namespace Testinator.Server.Domain
@@ -15,6 +16,25 @@ namespace Testinator.Server.Domain
 
         private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
+
+        /// <summary>
+        /// The editor for questions list in this page
+        /// </summary>
+        private readonly IQuestionEditorCollection mEditor;
+
+        /// <summary>
+        /// The function of current question's view model that should be fired to submit the question state
+        /// </summary>
+        private Func<IQuestion> mSubmitQuestionAction;
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>
+        /// Indicates if user is in question creation mode
+        /// </summary>
+        public bool IsCreatingQuestion { get; set; }
 
         #endregion
 
@@ -67,11 +87,14 @@ namespace Testinator.Server.Domain
             // Get the editor for this specific question
             var editor = mTestCreator.GetEditorMultipleChoice(questionNumber);
 
-            // Show the page
-            GoToPage(QuestionsPage.MultipleChoice);
+            // Create the view model for this question
+            var viewModel = new QuestionsMultipleChoicePageViewModel();
 
-            // Pass the editor for this question
-            (CurrentPageViewModel as QuestionsMultipleChoicePageViewModel).InitializeEditor(editor);
+            // Initialize the view model with given editor, getting the submit action in return
+            mSubmitQuestionAction = viewModel.InitializeEditor(editor);
+
+            // Show the page
+            GoToPage(QuestionsPage.MultipleChoice, viewModel);
         }
 
         /// <summary>
@@ -84,6 +107,26 @@ namespace Testinator.Server.Domain
 
             // Show the page
             GoToPage(QuestionsPage.Checkboxes);
+        }
+
+        /// <summary>
+        /// Tries to submit current state of question to the test
+        /// </summary>
+        private void SubmitCurrentQuestion()
+        {
+            // Fire the submit action
+            var question = mSubmitQuestionAction();
+
+            // If question was not built successfully...
+            if (question == null)
+            {
+                // Don't do anything there since the question page itself will show every error
+                return;
+            }
+
+            // Otherwise we have a ready question
+            // Add it to test
+            mEditor.Add(question);
         }
 
         /// <summary>
