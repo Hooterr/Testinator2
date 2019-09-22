@@ -42,6 +42,10 @@ namespace Testinator.Server.Domain
         /// <param name="editor">The editor for this type of question containing all data</param>
         public Func<IQuestion> InitializeEditor(QuestionEditorMultipleChoice editor)
         {
+            // If we don't get valid editor, we can't do anything
+            if (editor == null)
+                return null;
+
             // Get the editor itself
             mEditor = editor;
 
@@ -52,6 +56,11 @@ namespace Testinator.Server.Domain
             AnswerA = mEditor.Options.Options.FirstOrDefault();
             Points = mEditor.Scoring.MaximumScore.ToString();
             RightAnswer = mEditor.Scoring.CorrectAnswerIdx.ToString();
+
+            // Catch all the errors and display them
+            mEditor.OnErrorFor(x => x.Task.Text.Content, (e) => Task.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.Options.Options, (e) => AnswerA.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.Scoring.MaximumScore, (e) => Points.ErrorMessage = e);
 
             // Return the submit action for the master view model to make use of
             return Submit;
