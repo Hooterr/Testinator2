@@ -10,17 +10,17 @@ namespace Testinator.TestSystem.Editors
         #region All Constructors
 
         /// <summary>
+        /// Initializes this editor to create a new test options pack
+        /// </summary>
+        /// <param name="version">The version of the test system model to use</param>
+        public TestOptionsEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+
+        /// <summary>
         /// Initializes this editor to edit an existing options pack
         /// </summary>
         /// <param name="options">The options to edit</param>
         /// <param name="version">The version of the test system model to use</param>
-        public TestOptionsEditor(TestOptions options, int version) : base(options, version) { }
-
-        /// <summary>
-        /// Initializes this editor to create a new test options pack
-        /// </summary>
-        /// <param name="version">The version of the test system model to use</param>
-        public TestOptionsEditor(int version) : base(version) { }
+        public TestOptionsEditor(TestOptions options, int version, IInternalErrorHandler errorHandler) : base(options, version, errorHandler) { }
 
         #endregion
 
@@ -35,7 +35,12 @@ namespace Testinator.TestSystem.Editors
                 result = new TestOptions();
 
             return result;
-        } 
+        }
+
+        protected override bool Validate()
+        {
+            throw new System.NotImplementedException();
+        }
 
         #endregion
     }

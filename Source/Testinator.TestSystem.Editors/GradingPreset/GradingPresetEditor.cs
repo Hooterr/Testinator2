@@ -13,9 +13,9 @@ namespace Testinator.TestSystem.Editors
 
         public List<KeyValuePair<int, IGrade>> Thresholds { get; set; }
 
-        public GradingPresetEditor(int version) : base(version) { }
+        public GradingPresetEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
 
-        public GradingPresetEditor(GradingPreset preset, int version) : base(preset, version)
+        public GradingPresetEditor(GradingPreset preset, int version, IInternalErrorHandler errorHandler) : base(preset, version, errorHandler)
         {
             if (preset == null)
                 throw new ArgumentNullException(nameof(preset));
@@ -26,14 +26,14 @@ namespace Testinator.TestSystem.Editors
             Name = preset.Name;
         }
 
-        public override bool Validate()
+        protected override bool Validate()
         {
             var validationPassed = true;
 
             if (Thresholds.Count < 1)
             {
                 validationPassed = false;
-                HandleErrorFor(x => x.Thresholds, "There must be at least 2 thresholds.");
+                //HandleErrorFor(x => x.Thresholds, "There must be at least 2 thresholds.");
 
             }
             else
@@ -42,7 +42,7 @@ namespace Testinator.TestSystem.Editors
                 if (Thresholds.Select(x => x.Key).Distinct().Count() != Thresholds.Count())
                 { 
                     validationPassed = false;
-                    HandleErrorFor(x => x.Thresholds, "There cannot be identical threshold.");
+                    //HandleErrorFor(x => x.Thresholds, "There cannot be identical threshold.");
                 }
                 // At least 2 thresholds, and all unique
                 else
@@ -51,7 +51,7 @@ namespace Testinator.TestSystem.Editors
                     if (Thresholds.OrderBy(x => x.Key).Last().Key != 100)
                     {
                         validationPassed = false;
-                        HandleErrorFor(x => x.Thresholds, "The last threshold's upper limit must be 100%.");
+                        //HandleErrorFor(x => x.Thresholds, "The last threshold's upper limit must be 100%.");
                     }
                 }
 
@@ -59,7 +59,7 @@ namespace Testinator.TestSystem.Editors
                 if(Thresholds.Select(x => x.Value.Name).Distinct().Count() != Thresholds.Select(x => x.Value.Name).Count())
                 {
                     validationPassed = false;
-                    HandleErrorFor(x => x.Thresholds, "Grades must have unique names");
+                    //HandleErrorFor(x => x.Thresholds, "Grades must have unique names");
                 }
 
             }

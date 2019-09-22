@@ -45,13 +45,13 @@ namespace Testinator.TestSystem.Editors
             // Create editors
             if (mQuestion == null)
             {
-                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mVersion);
-                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mVersion);
+                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mVersion, mErrorListiner);
+                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mVersion, mErrorListiner);
             }
             else
             {
-                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mQuestion.Options, mVersion);
-                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mQuestion.Scoring, mVersion);
+                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mQuestion.Options, mVersion, mErrorListiner);
+                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mQuestion.Scoring, mVersion, mErrorListiner);
             }
         }
 
@@ -71,11 +71,10 @@ namespace Testinator.TestSystem.Editors
         protected override bool FinalValidation()
         {
             // Important to clear all errors
-            ClearAllErrors();
             var validationPassed = true;
-            if (mScoringEditor.CorrectAnswerIdx < 0 || mScoringEditor.CorrectAnswerIdx + 1 > mOptionsEditor.Options.Count)
+            if (mScoringEditor.CorrectAnswerIdx < 0 || mScoringEditor.CorrectAnswerIdx + 1 > mOptionsEditor.ABCD.Count)
             {
-                HandleErrorFor(x => x.Scoring, "Correct answer must be matched to the number of options.");
+                //HandleErrorFor(x => x.Scoring, "Correct answer must be matched to the number of options.");
                 validationPassed = false;
             }
             return validationPassed;

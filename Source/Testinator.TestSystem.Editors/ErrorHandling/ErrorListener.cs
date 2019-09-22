@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
-using System.Reflection;
-using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Editors
 {
@@ -11,29 +8,13 @@ namespace Testinator.TestSystem.Editors
     /// The implementation of <see cref="IErrorListener{T}"/>
     /// </summary>
     /// <typeparam name="TIntereface">The interface the implementation of the editor is hidden behind</typeparam>
-    internal abstract class ErrorListener<TIntereface> : IErrorListener<TIntereface>
+    internal class ErrorListener<TIntereface> : IErrorListener<TIntereface>, IInternalErrorHandler
     {
         #region Private Members
 
-        /// <summary>
-        /// Key: property name Value: action to execute when error occurs concerning that property
-        /// </summary>
-        private readonly Dictionary<string, Action<string>> mErrorHandlers;
+        private HandlersCollection mHandlers;
 
-        /// <summary>
-        /// Errors for properties that don't have error handlers defined by the user and all other errors
-        /// </summary>
-        private readonly List<string> mUnHandledErrorMessages;
-
-        private Action<string> mInterceptUnhandledErrorHandler;
-        #endregion
-
-        #region Internal Methods
-
-        internal void OnUnhandledError(Action<string> handler)
-        {
-            mInterceptUnhandledErrorHandler = handler;
-        }
+        private IList<string> mUnhandled;
 
         #endregion
 
@@ -46,18 +27,14 @@ namespace Testinator.TestSystem.Editors
         /// <param name="action">The action to execute when an error occurs of the editor property</param>
         public void OnErrorFor(Expression<Func<TIntereface, object>> propertyExpression, Action<string> action)
         {
-            var propertyInfo = propertyExpression.GetPropertyInfo();
+            var propName = propertyExpression.GetCorrectPropertyName();
+            mHandlers[propName] = action;
 
-            if (propertyInfo.GetCustomAttributes<EditorPropertyAttribute>(true).Any() == false)
-                throw new ArgumentException($"This property is not an editor property.");
-
-            mErrorHandlers[propertyInfo.Name] = action;
         }
 
-        protected bool HasHandlerFor(Expression<Func<TIntereface, object>> propertyExpression)
+        public void OnErrorFor(string propertyName, Action<string> action)
         {
-            var propertyName = propertyExpression.GetCorrectPropertyName();
-            return mErrorHandlers.ContainsKey(propertyName);
+            mHandlers[propertyName] = action;
         }
 
         #endregion
@@ -67,20 +44,10 @@ namespace Testinator.TestSystem.Editors
         /// <summary>
         /// Default constructor
         /// </summary>
-        protected ErrorListener()
+        public ErrorListener()
         {
-            // Create defaults
-            mErrorHandlers = new Dictionary<string, Action<string>>();
-            mUnHandledErrorMessages = new List<string>();
-
-            // Get all editor properties and create the error handlers map
-            var editorProperties = typeof(TIntereface)
-                              .GetAllProperties()
-                              .Where(field => field.GetCustomAttributes<EditorPropertyAttribute>(inherit: true).Any())
-                              .Select(field => field.Name)
-                              .ToList();
-
-            mErrorHandlers = editorProperties.ToDictionary(k => k, v => default(Action<string>));
+            mHandlers = new HandlersCollection(typeof(TIntereface).GetHandlersTree());
+            mUnhandled = new List<string>();
         }
 
         #endregion
@@ -95,62 +62,34 @@ namespace Testinator.TestSystem.Editors
         protected void HandleErrorFor(Expression<Func<TIntereface, object>> propertyExpression, string message)
         {
             var propertyName = propertyExpression.GetCorrectPropertyName();
-
-            if (false == mErrorHandlers.ContainsKey(propertyName))
-                throw new ArgumentException($"{propertyName} doesn't have {nameof(EditorPropertyAttribute)} thus it can't be used in {nameof(HandleErrorFor)} method.");
-
-            // If there is handler for that method execute the associated action
-            if (mErrorHandlers[propertyName] != null)
-                mErrorHandlers[propertyName].Invoke(message);
-            // If we got an intercept handler
-            else if (mInterceptUnhandledErrorHandler != null)
-            {
-                // Handle the error and quit
-                mInterceptUnhandledErrorHandler.Invoke(message);
-                return;
-            }
-            // The error has not been handled, add it to the list
-            mUnHandledErrorMessages.Add(message);
+            HandleError(propertyName, message);
         }
 
         /// <summary>
-        /// Handles an error not associated with any property
+        /// Handles an error not associated with any property or editor
         /// </summary>
         /// <param name="message">The error message</param>
         protected void HandleError(string message)
         {
-            // If we got an intercept handler
-            if (mInterceptUnhandledErrorHandler != null)
-            {
-                // Handle the error and quit
-                mInterceptUnhandledErrorHandler.Invoke(message);
-                return;
-            }
-
-            mUnHandledErrorMessages.Add(message);
+            mUnhandled.Add(message);
         }
 
         /// <summary>
         /// Gets all of the errors that haven't already been handled 
         /// </summary>
         /// <returns>The list of error messages strings</returns>
-        protected List<string> GetUnhandledErrors()
+        protected IList<string> GetUnhandledErrors()
         {
-            return mUnHandledErrorMessages;
+            return mUnhandled;
         }
 
         /// <summary>
         /// Clears all error messages
         /// </summary>
-        protected void ClearAllErrors()
+        public void Clear()
         {
-            // Invoke all the methods with empty string to clear the message
-            foreach (var action in mErrorHandlers.Values)
-                if (action != null)
-                    action.Invoke(string.Empty);
-
-            // Clear the unhandled errors too
-            mUnHandledErrorMessages.Clear();
+            mUnhandled.Clear();
+            mHandlers.ClearErrors();
         }
 
         /// <summary>
@@ -163,6 +102,11 @@ namespace Testinator.TestSystem.Editors
             return true;
         }
 
+        public void HandleError(string propertyName, string message)
+        {
+            if (!mHandlers.HandleError(propertyName, message))
+                mUnhandled.Add(message);
+        }
 
         #endregion
     }

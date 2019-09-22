@@ -37,40 +37,34 @@ namespace Testinator.TestSystem.Editors
         /// Initializes task editor to create a new task 
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        public TaskEditor(int version) : base(version) { }
+        public TaskEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler)
+        {
+            mTextEditor = new TextEditor(Version, errorHandler);
+            mImageEditor = new ImageEditor(Version, errorHandler);
+        }
 
         /// <summary>
         /// Initializes task editor to edit an existing task
         /// </summary>
         /// <param name="objToEdit">The task to edit</param>
         /// <param name="version">The question model version to use</param>
-        public TaskEditor(IQuestionTask objToEdit, int version) : base(objToEdit, version) { }
+        public TaskEditor(IQuestionTask objToEdit, int version, IInternalErrorHandler errorHandler) : base(objToEdit, version, errorHandler)
+        {
+            mTextEditor = new TextEditor(OriginalObject.Text, Version, errorHandler);
+            mImageEditor = new ImageEditor(OriginalObject.Images, Version, errorHandler);
+        }
 
         #endregion
 
         #region Overridden Methods
 
-        protected override void OnInitialize()
-        {
-            if (OriginalObject == null)
-            {
-                mTextEditor = new TextEditor(Version);
-                mImageEditor = new ImageEditor(Version);
-            }
-            else
-            {
-                mTextEditor = new TextEditor(OriginalObject.Text, Version);
-                mImageEditor = new ImageEditor(OriginalObject.Images, Version);
-            }
-        }
-
-        public override bool Validate()
+        protected override bool Validate()
         {
             var validationPassed = true;
 
             if (string.IsNullOrEmpty(mTextEditor.Content) && mImageEditor.GetCurrentCount() == 0)
             {
-                HandleError("Both text content and images cannot be empty.");
+                mErrorHandlerAdapter.HandleErrorFor(x => x, "Both text content and images cannot be empty.");
                 validationPassed = false;
             }
             return validationPassed;
@@ -84,7 +78,7 @@ namespace Testinator.TestSystem.Editors
 
         public override OperationResult<IQuestionTask> Build()
         {
-            ClearAllErrors();
+           // ClearAllErrors();
             var textOperation = mTextEditor.Build();
             var imageOperation = mImageEditor.Build();
 
@@ -126,9 +120,7 @@ namespace Testinator.TestSystem.Editors
                 else
                 {
                     // Validation failed
-                    var result = OperationResult<IQuestionTask>.Fail();
-                    result.AddErrors(GetUnhandledErrors());
-                    return result;
+                    return OperationResult<IQuestionTask>.Fail();
                 }
             }
         } 

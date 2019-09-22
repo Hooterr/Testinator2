@@ -54,14 +54,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes this editor to create new scoring guidelines
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        public MultipleChoiceQuestionScoringEditor(int version) : base(version) { }
+        public MultipleChoiceQuestionScoringEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
 
         /// <summary>
         /// Initializes this editor to edit an existing scoring
         /// </summary>
         /// <param name="scoring">The scoring to edit</param>
         /// <param name="version">The question model version to use</param>
-        public MultipleChoiceQuestionScoringEditor(MultipleChoiceQuestionScoring scoring, int version) : base(scoring, version) { }
+        public MultipleChoiceQuestionScoringEditor(MultipleChoiceQuestionScoring scoring, int version, IInternalErrorHandler errorHandler) : base(scoring, version, errorHandler) { }
 
         #endregion
 
@@ -102,18 +102,19 @@ namespace Testinator.TestSystem.Editors
 
         }
 
-        public override bool Validate()
+        protected override bool Validate()
         {
             var validationPassed = true;
             if (MaximumScore < mMinScore || MaximumScore > mMaxScore)
             {
-                HandleErrorFor(x => x.MaximumScore, $"Maximum point score must from {mMinScore} to {mMaxScore}.");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.MaximumScore, $"Maximum point score must from {mMinScore} to {mMaxScore}.");
                 validationPassed = false;
             }
 
             if (false == mDefaultStrategyType.IsAssignableFrom(mScoringStrategy.GetType()))
             {
-                HandleError($"The only valid type of scoring strategy for this question is {mDefaultStrategyType.Name}.");
+                // TODO THIS WILL NOT WORK MOST LIKELY
+                mErrorHandlerAdapter.HandleErrorFor(x => x, $"The only valid type of scoring strategy for this question is {mDefaultStrategyType.Name}.");
                 validationPassed = false;
             }
 

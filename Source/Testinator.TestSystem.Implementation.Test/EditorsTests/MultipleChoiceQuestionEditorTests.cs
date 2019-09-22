@@ -42,9 +42,9 @@ namespace Testinator.TestSystem.Implementation.Test.EditorsTests
         public void PostBuildValidationCorrectAnswerMoreThanOptionsWhenOptionsMoreThan0()
         {
             var editor = NewEditor();
-            editor.Options.Options.Add("ddd");
-            editor.Options.Options.Add("22");
-            editor.Options.Options.Add("dd");
+            editor.Options.ABCD.Add("ddd");
+            editor.Options.ABCD.Add("22");
+            editor.Options.ABCD.Add("dd");
             editor.Scoring.CorrectAnswerIdx = 4;
             var result = editor.Build();
             Assert.False(result.Succeeded);
@@ -55,9 +55,9 @@ namespace Testinator.TestSystem.Implementation.Test.EditorsTests
         public void PostBuildValidationAllGood()
         {
             var editor = NewEditor();
-            editor.Options.Options.Add("ddd");
-            editor.Options.Options.Add("22");
-            editor.Options.Options.Add("dd");
+            editor.Options.ABCD.Add("ddd");
+            editor.Options.ABCD.Add("22");
+            editor.Options.ABCD.Add("dd");
             editor.Scoring.CorrectAnswerIdx = 2;
             var result = editor.Build();
             Assert.DoesNotContain("Correct answer must be matched to the number of options.", result.Errors);

@@ -44,7 +44,7 @@ namespace Testinator.TestSystem.Editors
         /// <summary>
         /// ABC options for this question
         /// </summary>
-        public List<string> Options { get; set; }
+        public List<string> ABCD { get; set; }
 
         #endregion
 
@@ -61,8 +61,8 @@ namespace Testinator.TestSystem.Editors
         }
         public void SetOptions(params string[] options)
         {
-            Options.Clear();
-            Options.AddRange(options);
+            ABCD.Clear();
+            ABCD.AddRange(options);
         }
 
         #endregion
@@ -73,14 +73,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create new question options
         /// </summary>
         /// <param name="version">The version of question model to use</param>
-        public MultipleChoiceQuestionOptionsEditor(int version) : base(version) { }
+        public MultipleChoiceQuestionOptionsEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
 
         /// <summary>
         /// Initializes the editor to edit an existing question options
         /// </summary>
         /// <param name="objToEdit">The options to edit</param>
         /// <param name="version">The version of question model to use</param>
-        public MultipleChoiceQuestionOptionsEditor(MultipleChoiceQuestionOptions objToEdit, int version) : base(objToEdit, version) { }
+        public MultipleChoiceQuestionOptionsEditor(MultipleChoiceQuestionOptions objToEdit, int version, IInternalErrorHandler errorHandler) : base(objToEdit, version, errorHandler) { }
 
         #endregion
 
@@ -89,9 +89,9 @@ namespace Testinator.TestSystem.Editors
         protected override void OnInitialize()
         {
             if (IsInCreationMode())
-                Options = new List<string>();
+                ABCD = new List<string>();
             else
-                Options = new List<string>(OriginalObject.Options);
+                ABCD = new List<string>(OriginalObject.Options);
 
             LoadAttributeValues();
         }
@@ -104,44 +104,44 @@ namespace Testinator.TestSystem.Editors
                 questionOptions = new MultipleChoiceQuestionOptions()
                 {
 #pragma warning disable IDE0003
-                    Options = this.Options,
+                    Options = this.ABCD,
                 };
             }
             else
             {
                 questionOptions = OriginalObject;
-                questionOptions.Options = this.Options;
+                questionOptions.Options = this.ABCD;
             }
 
             return questionOptions;
         }
 
         
-        public override bool Validate()
+        protected override bool Validate()
         {
             var validationPassed = true;
 
             // Delete last options that are null or empty
-            Options.RemoveAllLast(x => string.IsNullOrEmpty(x));
+            ABCD.RemoveAllLast(x => string.IsNullOrEmpty(x));
 
             if (mOnlyDistinct)
             {
-                if (Options.Count > 1 && (Options.Distinct().Count() != Options.Count()))
+                if (ABCD.Count > 1 && (ABCD.Distinct().Count() != ABCD.Count()))
                 {
-                    HandleErrorFor(x => x.Options, "Options must be unique");
+                    mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, "Options must be unique");
                     validationPassed = false;
                 }
             }
 
-            if (Options.Count() < mMinCount || Options.Count() > mMaxCount)
+            if (ABCD.Count() < mMinCount || ABCD.Count() > mMaxCount)
             {
-                HandleErrorFor(x => x.Options, $"There must be from {mMinCount} to {mMaxCount} options.");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"There must be from {mMinCount} to {mMaxCount} options.");
                 validationPassed = false;
             }
 
-            if (!Options.All(str => OptionsLengthInRange(str)))
+            if (!ABCD.All(str => OptionsLengthInRange(str)))
             {
-                HandleErrorFor(x => x.Options, $"Every options must be from {mMinOptionLen} to {mMaxOptionLen} characters long.");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"Every options must be from {mMinOptionLen} to {mMaxOptionLen} characters long.");
                 validationPassed = false;
             }
 

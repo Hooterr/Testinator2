@@ -7,7 +7,7 @@ namespace Testinator.TestSystem.Editors
     /// </summary>
     /// <typeparam name="TObjectToCreate">The type of object this editor will operate on</typeparam>
     /// <typeparam name="TInterface">The interface the implementation of the editor is hidden behind</typeparam>
-    internal abstract class BaseEditor<TObjectToCreate, TInterface> : ErrorListener<TInterface>, IBuildable<TObjectToCreate>
+    internal abstract class BaseEditor<TObjectToCreate, TInterface> : IBuildable<TObjectToCreate>
     {
         #region Protected Members
 
@@ -22,6 +22,8 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         protected TObjectToCreate OriginalObject { get; private set; }
 
+        protected IErrorHandlerAdapter<TInterface> mErrorHandlerAdapter;
+
         #endregion
 
         #region All Constructors
@@ -30,12 +32,15 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create a new object
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        protected BaseEditor(int version)
+        protected BaseEditor(int version, IInternalErrorHandler errorHandler)
         {
             if (Versions.NotInRange(version))
                 throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
 
+            mErrorHandlerAdapter = new ErrorHandlerAdapter<TInterface>(errorHandler);
+
             Version = version;
+
             OnInitialize();
         }
 
@@ -44,7 +49,7 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         /// <param name="baseObject">The object to edit. NOTE: null value is allowed here, it's treated as if the caller wanted to create a new object</param>
         /// <param name="version">The question model version to use</param>
-        protected BaseEditor(TObjectToCreate baseObject, int version)
+        protected BaseEditor(TObjectToCreate baseObject, int version, IInternalErrorHandler errorHandler)
         {
             if (Versions.NotInRange(version))
                 throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
@@ -52,6 +57,8 @@ namespace Testinator.TestSystem.Editors
             OriginalObject = baseObject;
 
             Version = version;
+
+            mErrorHandlerAdapter = new ErrorHandlerAdapter<TInterface>(errorHandler);
 
             OnInitialize();
         }
@@ -85,8 +92,6 @@ namespace Testinator.TestSystem.Editors
 
         public virtual OperationResult<TObjectToCreate> Build()
         {
-            // Remember to clear the errors
-            ClearAllErrors();
             if (Validate())
             {
                 var builtObject = BuildObject();
@@ -94,11 +99,11 @@ namespace Testinator.TestSystem.Editors
             }
             else
             {
-                var unhandledErrors = GetUnhandledErrors();
-                var result = OperationResult<TObjectToCreate>.Fail(unhandledErrors);
-                return result;
+                return OperationResult<TObjectToCreate>.Fail();
             }
         }
+
+        protected abstract bool Validate();
 
         #endregion
 

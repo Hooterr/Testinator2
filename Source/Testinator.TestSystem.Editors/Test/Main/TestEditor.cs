@@ -46,35 +46,31 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         /// <param name="test">The test to edit</param>
         /// <param name="version">The version of test system to use</param>
-        public TestEditor(Implementation.Test test, int version) : base(test, version) { }
+        public TestEditor(Implementation.Test test, int version) : base(test, version, null)// TODO create a new type of master editor that doesn't require IInternalErrorHandler
+        {
+            var errorHandler = new ErrorListener<ITestEditor>();
+            mInfo = new TestInfoEditor(OriginalObject.mInfo, Version, errorHandler);
+            mOptions = new TestOptionsEditor(OriginalObject.mTestOptions, Version, errorHandler);
+            mQuestions = new QuestionEditorCollection(OriginalObject.Questions.Select(x => x.GetQuestion()).ToList());
+            mGrading = new GradingEditor(OriginalObject.mGrading, Version, errorHandler);
+        }
 
         /// <summary>
         /// Initializes the editor to create a new test
         /// </summary>
         /// <param name="version">The version of test system to use</param>
-        public TestEditor(int version) : base(version) { }
+        public TestEditor(int version) : base(version, null)
+        {
+            var errorHandler = new ErrorListener<ITestEditor>();
+            mInfo = new TestInfoEditor(Version, errorHandler);
+            mOptions = new TestOptionsEditor(Version, errorHandler);
+            mQuestions = new QuestionEditorCollection();
+            mGrading = new GradingEditor(Version, errorHandler);
+        }
 
         #endregion
 
         #region Overridden
-
-        protected override void OnInitialize()
-        {
-            if (IsInEditorMode())
-            {
-                mInfo = new TestInfoEditor(OriginalObject.mInfo, Version);
-                mOptions = new TestOptionsEditor(OriginalObject.mTestOptions, Version);
-                mQuestions = new QuestionEditorCollection(OriginalObject.Questions.Select(x => x.GetQuestion()).ToList());
-                mGrading = new GradingEditor(OriginalObject.mGrading, Version);
-            }
-            else
-            {
-                mInfo = new TestInfoEditor(Version);
-                mOptions = new TestOptionsEditor(Version);
-                mQuestions = new QuestionEditorCollection();
-                mGrading = new GradingEditor(Version);
-            }
-        }
 
         protected override Implementation.Test BuildObject()
         {
@@ -116,7 +112,12 @@ namespace Testinator.TestSystem.Editors
             }
 
             return OperationResult<ITest>.Success(result);
-        } 
+        }
+
+        protected override bool Validate()
+        {
+            throw new System.NotImplementedException();
+        }
 
         #endregion
     }

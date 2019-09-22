@@ -38,14 +38,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create new text content
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        public TextEditor(int version) : base(version) { }
+        public TextEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
 
         /// <summary>
         /// Initializes the editor to edit an existing text content
         /// </summary>
         /// <param name="objToEdit">The text content to edit</param>
         /// <param name="version">The question model version to use</param>
-        public TextEditor(ITextContent objToEdit, int version) : base(objToEdit, version) { }
+        public TextEditor(ITextContent objToEdit, int version, IInternalErrorHandler errorHandler) : base(objToEdit, version, errorHandler) { }
 
         #endregion
 
@@ -73,19 +73,24 @@ namespace Testinator.TestSystem.Editors
             }
         }
 
-        public override bool Validate()
+        protected override bool Validate()
         {
             var veryficationPassed = true;
 
-            // Null content is OK,
-            if (Content != null && (Content.Length > mMaxTextLength))
+            if(string.IsNullOrEmpty(Content))
             {
-                HandleErrorFor(x => x.Content, $"Text content is too long. Maximum text length is set to {mMaxTextLength} characters.");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.Content, $"Text content cannot be empty.");
                 veryficationPassed = false;
             }
+            else if ((Content.Length > mMaxTextLength))
+            {
+                mErrorHandlerAdapter.HandleErrorFor(x => x.Content, $"Text content is too long. Maximum text length is set to {mMaxTextLength} characters.");
+                veryficationPassed = false;
+            }
+
             if (Markup == MarkupLanguage.Html)
             {
-                HandleErrorFor(x => x.Markup, $"Not supported yet.");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.Markup, $"Not supported yet.");
                 veryficationPassed = false;
             }
 

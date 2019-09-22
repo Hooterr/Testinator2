@@ -2,6 +2,7 @@
 using Testinator.TestSystem.Implementation;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Attributes;
+using System.Linq.Expressions;
 
 namespace Testinator.TestSystem.Editors
 {
@@ -41,54 +42,55 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create a new object
         /// </summary>
         /// <param name="version">The version of test system to use</param>
-        public TestInfoEditor(int version) : base(version) { }
+        public TestInfoEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
 
         /// <summary>
         /// Initializes the editor to edit an existing info
         /// </summary>
         /// <param name="originalObj">The object to edit</param>
         /// <param name="version">The version of test system to use</param>
-        public TestInfoEditor(TestInfo originalObj, int version) : base(originalObj, version) { }
+        public TestInfoEditor(TestInfo originalObj, int version, IInternalErrorHandler errorHandler) : base(originalObj, version, errorHandler) { }
 
         #endregion
 
         #region Public Method
 
-        public override bool Validate()
+        protected override bool Validate()
         {
+            mErrorHandlerAdapter.ClearAllErrors();
             var validationPassed = true;
 
             if (string.IsNullOrEmpty(Name))
             {
                 validationPassed = false;
-                HandleErrorFor(x => x.Name, "The name must not be empty");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.Name, "The name must not be empty");
             }
             else if (Name.Length > mNameMaxLen || Name.Length < mNameMinLen)
             {
                 validationPassed = false;
-                HandleErrorFor(x => x.Name, $"The name must be from within the range of {mNameMinLen} to {mNameMaxLen} characters.");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.Name, $"The name must be from within the range of {mNameMinLen} to {mNameMaxLen} characters.");
             }
 
             if (string.IsNullOrEmpty(Description))
             {
                 validationPassed = false;
-                HandleErrorFor(x => x.Description, "The description must not be empty");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.Description, "The description must not be empty");
             }
             else if (Description.Length > mDescriptionMaxLen || Description.Length < mDescriptionMinLen)
             {
                 validationPassed = false;
-                HandleErrorFor(x => x.Description, $"The description must be from within the range of {mDescriptionMinLen} to {mDescriptionMaxLen} characters.");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.Description, $"The description must be from within the range of {mDescriptionMinLen} to {mDescriptionMaxLen} characters.");
             }
 
             if (TimeLimit == null)
             {
                 validationPassed = false;
-                HandleErrorFor(x => x.TimeLimit, "Time limit cannot be null");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.TimeLimit, "Time limit cannot be null");
             }
             else if (TimeLimit < mTimeLimitMin || TimeLimit > mTimeLimitMax)
             {
                 validationPassed = false;
-                HandleErrorFor(x => x.TimeLimit, $"Time limit must be from within the range of {mTimeLimitMin.ToString()} to {mTimeLimitMax.ToString()}.");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.TimeLimit, $"Time limit must be from within the range of {mTimeLimitMin.ToString()} to {mTimeLimitMax.ToString()}.");
             }
 
             // TODO possibly more to come (?)
@@ -136,7 +138,6 @@ namespace Testinator.TestSystem.Editors
             mNameMaxLen = nameConstraints.Max;
             mNameMinLen = nameConstraints.Min;
 
-            // TODO: Fix with description
             mDescriptionMaxLen = nameConstraints.Max;
             mDescriptionMinLen = nameConstraints.Min;
 
@@ -145,6 +146,17 @@ namespace Testinator.TestSystem.Editors
 
             mTimeLimitMax = timeConstraints.Max;
             mTimeLimitMin = timeConstraints.Min;
+        }
+
+        public void OnErrorFor(Expression<Func<ITestInfoEditor, object>> propertyExpression, Action<string> action)
+        {
+            var propertyName = propertyExpression.GetCorrectPropertyName();
+            mErrorHandlerAdapter.OnErrorFor(propertyName, action);
+        }
+
+        bool IErrorListener<ITestInfoEditor>.Validate()
+        {
+            return this.Validate();
         }
 
         #endregion

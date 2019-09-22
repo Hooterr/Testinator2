@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using Testinator.Core;
 using Testinator.TestSystem.Abstractions;
@@ -53,13 +54,32 @@ namespace Testinator.Server.Domain
             // If we are editing existing question, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
             Task = mEditor.Task.Text.Content;
-            AnswerA = mEditor.Options.Options.FirstOrDefault();
+            AnswerA = mEditor.Options.ABCD.FirstOrDefault();
             Points = mEditor.Scoring.MaximumScore.ToString();
             RightAnswer = mEditor.Scoring.CorrectAnswerIdx.ToString();
 
             // Catch all the errors and display them
+
+            // Jeśli zrobisz tak to error do Content przyjdzie tutaj
             mEditor.OnErrorFor(x => x.Task.Text.Content, (e) => Task.ErrorMessage = e);
-            mEditor.OnErrorFor(x => x.Options.Options, (e) => AnswerA.ErrorMessage = e);
+
+            // Jeśli to powyższe zakomentujesz i zostawisz tylko to poniżej to wszystkie errory z Task.Text przyjdą tutaj 
+            //(może przyjść więcej niż jeden więc trzeba zrobić jakąś mechaniką żeby się nie nadpisywały
+            // Tak naprawdę to powyższe OnErrorFor(x => x.Task.Text.Content...) też możesz zostawić
+            // wtedy te errory związne z Content pójdą do góry, a reszta związana z Task.Text pójdzie tu niżej
+            // Czyli jak Task.Text.Content nie ma handlera to error jest podawany wyżej do Task.Text, jak on nie ma handlera to do Task, a jak task nie ma
+            // to wrzucany jest do tej listy operation result
+            // Można być dorobić metodę OnUnhandledError(...) i tam pakować te nieobsłużone
+            // W teorii taka metoda to po prostu OnErrorFor(x => x) ale to jeszcze nie działa
+            // Ale zrobie to na dniach
+            // Jakbyś chciał grzebać w implementacji tego to uprzedzam, że jest tam mały chaos część rzeczy ma w ogóle tymczasowe nazwy itp.
+            // Dont worry będą komentarze
+            //mEditor.OnErrorFor(x => x.Task.Text, (e) =>
+            //{
+            //    Debugger.Break();
+            //});
+
+            mEditor.OnErrorFor(x => x.Options.ABCD, (e) => AnswerA.ErrorMessage = e);
             mEditor.OnErrorFor(x => x.Scoring.MaximumScore, (e) => Points.ErrorMessage = e);
 
             // Return the submit action for the master view model to make use of

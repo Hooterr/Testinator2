@@ -27,15 +27,15 @@ namespace Testinator.TestSystem.Editors
 
             var TaskErrorMessage = string.Empty;
 
-            editor.Task.Text.OnErrorFor(x => x.Content, (msg) => TaskErrorMessage = msg);
-            editor.Options.SetOptions("AAAA", "BBBB", "CCCCCC", "DDDDDD");
-            editor.Scoring.MaximumScore = 100;
-            editor.Scoring.CorrectAnswerIdx = 3;
-            editor.Task.Text.Content = "A, B, C or D?";
-            editor.OnErrorFor(x => x.Task, (m) => 
-            {
+            //editor.Task.Text.OnErrorFor(x => x.Content, (msg) => TaskErrorMessage = msg);
+            //editor.Options.SetOptions("AAAA", "BBBB", "CCCCCC", "DDDDDD");
+            //editor.Scoring.MaximumScore = 100;
+            //editor.Scoring.CorrectAnswerIdx = 3;
+            //editor.Task.Text.Content = "A, B, C or D?";
+            //editor.OnErrorFor(x => x.Task, (m) => 
+            //{
                 
-            });
+            //});
 
             var operation = editor.Build();
 

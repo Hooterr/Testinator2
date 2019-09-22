@@ -11,19 +11,19 @@ namespace Testinator.TestSystem.Editors
         /// <summary>
         /// Editor for the task part of the question
         /// </summary>
-        [EditorProperty]
+        [Editor]
         ITaskEditor Task { get; }
 
         /// <summary>
         /// Editor for the options part of the question
         /// </summary>
-        [EditorProperty]
+        [Editor]
         TOptionsEditor Options { get; }
 
         /// <summary>
         /// Editor for the scoring part of the question
         /// </summary>
-        [EditorProperty]
+        [Editor]
         TScoringEditor Scoring { get; }
     }
 }

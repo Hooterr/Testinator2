@@ -38,7 +38,7 @@ namespace Testinator.TestSystem.Editors.Test.Builder
 
         public ITestEditor Build()
         {
-            if (mInitialTest == null)
+            if (mInitialTest != null)
                 return new TestEditor(mInitialTest, mVersion);
 
             return new TestEditor(mVersion);

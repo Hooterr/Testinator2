@@ -6,7 +6,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// The editor for text part of the task
     /// </summary>
-    public interface ITextEditor : IErrorListener<ITextEditor>
+    public interface ITextEditor
     {
         /// <summary>
         /// The content of the text part of the task

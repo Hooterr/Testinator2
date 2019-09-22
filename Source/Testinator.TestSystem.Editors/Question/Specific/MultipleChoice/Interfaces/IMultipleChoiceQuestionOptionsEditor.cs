@@ -6,14 +6,14 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// The editor for options part of multiple choice question
     /// </summary>
-    public interface IMultipleChoiceQuestionOptionsEditor : IQuestionOptionsEditor, IErrorListener<IMultipleChoiceQuestionOptionsEditor>
+    public interface IMultipleChoiceQuestionOptionsEditor : IQuestionOptionsEditor//, IErrorListener<IMultipleChoiceQuestionOptionsEditor>
     {
         /// <summary>
         /// The ABC options for this question
         /// NOTE: every null or empty options that are at the end of the list will be skipped
         /// </summary>
         [EditorProperty]
-        List<string> Options { get; set; }
+        List<string> ABCD { get; set; }
 
         /// <summary>
         /// Shortcut to set multiple options at once

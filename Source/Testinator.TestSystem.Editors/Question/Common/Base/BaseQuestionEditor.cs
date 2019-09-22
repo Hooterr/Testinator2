@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Testinator.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Abstractions;
+using System.Linq.Expressions;
 
 namespace Testinator.TestSystem.Editors
 {
@@ -11,7 +12,7 @@ namespace Testinator.TestSystem.Editors
     /// <typeparam name="TQuestion">The type of question this editor will be operating on</typeparam>
     /// <typeparam name="TOptionsEditor">The type of editor to use for the options part of the question</typeparam>
     /// <typeparam name="TScoringEditor">The type of editor to use for the scoring part of the question</typeparam>
-    internal abstract class BaseQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : ErrorListener<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>>,                                                                                                    IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>
+    internal abstract class BaseQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>
         where TQuestion : BaseQuestion, new()
         where TOptionsEditor : IQuestionOptionsEditor
         where TScoringEditor : IQuestionScoringEditor
@@ -32,6 +33,8 @@ namespace Testinator.TestSystem.Editors
         /// The editor for task part of the question
         /// </summary>
         protected TaskEditor mTaskEditor;
+
+        protected ErrorListener<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>> mErrorListiner;
 
         #endregion
 
@@ -59,6 +62,7 @@ namespace Testinator.TestSystem.Editors
         public OperationResult<TQuestion> Build()
         {
             // Build all the parts of the question
+            mErrorListiner.Clear();
             var taskBuildOperation = mTaskEditor.Build();
             var optionsBuildOperation = BuildOptions();
             var scoringBuildOperation = BuildScoring();
@@ -71,8 +75,8 @@ namespace Testinator.TestSystem.Editors
                 var questionBuildResult = OperationResult<TQuestion>.Fail();
                 questionBuildResult.Merge(taskBuildOperation)
                                    .Merge(optionsBuildOperation)
-                                   .Merge(scoringBuildOperation)
-                                   .AddErrors(GetUnhandledErrors());
+                                   .Merge(scoringBuildOperation); 
+                                   //.AddErrors(GetUnhandledErrors());
 
                 return questionBuildResult;
             }
@@ -165,12 +169,13 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         private void InitializeEditor()
         {
+            mErrorListiner = new ErrorListener<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>>();
+
             // Create task editor
             if (mQuestion == null)
-
-                mTaskEditor = new TaskEditor(mVersion);
+                mTaskEditor = new TaskEditor(mVersion, mErrorListiner);
             else
-                mTaskEditor = new TaskEditor(mQuestion.Task, mVersion);
+                mTaskEditor = new TaskEditor(mQuestion.Task, mVersion, mErrorListiner);
 
             // Let the implementer initialize as well 
             OnInitializing();
@@ -182,20 +187,16 @@ namespace Testinator.TestSystem.Editors
             if (Scoring == null)
                 throw new NotSupportedException("Options scoring has not been initialized.");
 
-            if(HasHandlerFor(x => x.Task) == false)
-            {
-                mTaskEditor.OnUnhandledError((msg) => HandleErrorFor(x => x.Task, msg));
-            }
+        }
 
-            if (HasHandlerFor(x => x.Scoring) == false)
-            {
-                mTaskEditor.OnUnhandledError((msg) => HandleErrorFor(x => x.Scoring, msg));
-            }
+        public void OnErrorFor(Expression<Func<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>, object>> propertyExpression, Action<string> action)
+        {
+            mErrorListiner.OnErrorFor(propertyExpression, action);
+        }
 
-            if (HasHandlerFor(x => x.Options) == false)
-            {
-                mTaskEditor.OnUnhandledError((msg) => HandleErrorFor(x => x.Options, msg));
-            }
+        public bool Validate()
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

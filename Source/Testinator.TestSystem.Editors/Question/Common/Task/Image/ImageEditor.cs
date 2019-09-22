@@ -115,14 +115,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes this editor to create a new object
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        public ImageEditor(int version) : base(version) { }
+        public ImageEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
 
         /// <summary>
         /// Initializes this editor to edit an existing object
         /// </summary>
         /// <param name="objToEdit">The image content to edit</param>
         /// <param name="version">The question model version to use</param>
-        public ImageEditor(IImageContent objToEdit, int version) : base(objToEdit, version) { }
+        public ImageEditor(IImageContent objToEdit, int version, IInternalErrorHandler errorHandler) : base(objToEdit, version, errorHandler) { }
 
         #endregion
 
@@ -168,6 +168,11 @@ namespace Testinator.TestSystem.Editors
                 Images = mImages,
             };
             return result;
+        }
+
+        protected override bool Validate()
+        {
+            return true;
         }
 
         #endregion

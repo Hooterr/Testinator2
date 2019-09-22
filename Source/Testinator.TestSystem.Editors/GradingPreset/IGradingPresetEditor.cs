@@ -5,7 +5,7 @@ using Testinator.TestSystem.Implementation;
 
 namespace Testinator.TestSystem.Editors
 {
-    public interface IGradingPresetEditor : IBuildable<IGradingPreset>, IErrorListener<IGradingPresetEditor>
+    public interface IGradingPresetEditor : IBuildable<IGradingPreset>//, IErrorListener<IGradingPresetEditor>
     {
         [EditorProperty]
         string Name { get; set; }
