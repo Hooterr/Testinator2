@@ -7,6 +7,7 @@
                  xmlns:Core="clr-namespace:Testinator.Server.Domain;assembly=Testinator.Server.Domain"
                  xmlns:core="clr-namespace:Testinator.Core;assembly=Testinator.Core"
                  xmlns:UICore="clr-namespace:Testinator.UICore;assembly=Testinator.UICore"
+                 xmlns:Animations="clr-namespace:Testinator.AnimationFramework;assembly=Testinator.AnimationFramework"
                  mc:Ignorable="d"
                  d:DesignHeight="720"
                  d:DesignWidth="1024">
@@ -15,15 +16,23 @@
 
         <StackPanel>
             <TextBlock Text="Tutaj bedzie lista questionow w tescie oraz przyciski do wyboru typu questiona zeby stworzyc nowy" />
+            
             <Button Content="MultipleChoice"
+                    Animations:AnimateSlideAndFadeInFromTopProperty.Value="{Binding IsCreatingQuestion, Converter={local:BooleanInvertConverter}}"
                     Command="{Binding NewQuestionMultipleChoiceCommand}" />
+            
             <local:TestCreatorQuestionsPageHost
                     CurrentPage="{Binding CurrentPage}"
-                    CurrentPageViewModel="{Binding CurrentPageViewModel}" />
+                    CurrentPageViewModel="{Binding CurrentPageViewModel}"
+                    Visibility="{Binding IsCreatingQuestion, Converter={local:BooleanToVisiblityConverter}}" />
+            
             <Button Content="Submit question"
+                    Visibility="{Binding IsCreatingQuestion, Converter={local:BooleanToVisiblityConverter}}"
                     Command="{Binding SubmitQuestionCommand}" />
+            
             <Button Content="Go to grading"
                     Command="{Binding FinishQuestionsCommand}" />
+            
         </StackPanel>
         
     </Border>

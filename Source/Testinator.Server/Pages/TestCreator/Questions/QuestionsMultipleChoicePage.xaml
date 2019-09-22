@@ -51,8 +51,6 @@
             <TextBlock Text="{Binding RightAnswer.ErrorMessage}"
                                Style="{StaticResource QuestionTextBlockStyle}"
                                Foreground="{StaticResource RedLightBrush}"/>
-            <Button Content="Submit"
-                    Command="{Binding SubmitCommand}" />
         </StackPanel>
         
     </Border>
