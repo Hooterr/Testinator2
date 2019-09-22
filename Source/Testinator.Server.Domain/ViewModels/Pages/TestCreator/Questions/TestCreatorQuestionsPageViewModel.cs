@@ -51,6 +51,11 @@ namespace Testinator.Server.Domain
         public ICommand NewQuestionCheckboxesCommand { get; private set; }
 
         /// <summary>
+        /// The command to submit the question that is created
+        /// </summary>
+        public ICommand SubmitQuestionCommand { get; private set; }
+
+        /// <summary>
         /// The command to finish this page and move forward with test creation
         /// </summary>
         public ICommand FinishQuestionsCommand { get; private set; }
@@ -71,6 +76,7 @@ namespace Testinator.Server.Domain
             // Create commands
             NewQuestionMultipleChoiceCommand = new RelayCommand(() => GoToMultipleChoiceQuestion());
             NewQuestionCheckboxesCommand = new RelayCommand(() => GoToCheckboxesQuestion());
+            SubmitQuestionCommand = new RelayCommand(SubmitCurrentQuestion);
             FinishQuestionsCommand = new RelayCommand(GoToNextPage);
         }
 
@@ -94,6 +100,7 @@ namespace Testinator.Server.Domain
             mSubmitQuestionAction = viewModel.InitializeEditor(editor);
 
             // Show the page
+            IsCreatingQuestion = true;
             GoToPage(QuestionsPage.MultipleChoice, viewModel);
         }
 
@@ -106,6 +113,7 @@ namespace Testinator.Server.Domain
             // TODO: Get editor checkboxes
 
             // Show the page
+            IsCreatingQuestion = true;
             GoToPage(QuestionsPage.Checkboxes);
         }
 
@@ -127,6 +135,9 @@ namespace Testinator.Server.Domain
             // Otherwise we have a ready question
             // Add it to test
             mEditor.Add(question);
+
+            // We're done creating the question, hide the page
+            IsCreatingQuestion = false;
         }
 
         /// <summary>
