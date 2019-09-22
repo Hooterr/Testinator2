@@ -10,6 +10,7 @@ namespace Testinator.TestSystem.Editors
     public interface ITestCreatorService
     {
         IGradingEditor GetEditorGrading();
+        IQuestionEditorCollection GetEditorTestQuestions();
         QuestionEditorMultipleChoice GetEditorMultipleChoice(int? questionNumber = null);
         ITestInfoEditor GetEditorTestInfo();
         ITestOptionsEditor GetEditorTestOptions();

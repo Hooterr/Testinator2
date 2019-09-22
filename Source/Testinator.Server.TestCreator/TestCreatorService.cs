@@ -103,6 +103,19 @@ namespace Testinator.Server.Services
         }
 
         /// <summary>
+        /// Gets the editor for the list of test's <see cref="IQuestion"/>s
+        /// </summary>
+        public IQuestionEditorCollection GetEditorTestQuestions()
+        {
+            // Make sure we have ready editor
+            if (mCurrentTestEditor == null)
+                throw new InvalidOperationException("Editor not initialized.");
+
+            // Return specific editor for test questions
+            return mCurrentTestEditor.Questions;
+        }
+
+        /// <summary>
         /// Gets the editor for <see cref="MultipleChoiceQuestion"/>
         /// </summary>
         /// <param name="questionNumber">The index of question to preload from test, if not provided, brand-new question will be created</param>
@@ -147,6 +160,10 @@ namespace Testinator.Server.Services
             return mCurrentTestEditor.Grading;
         }
 
+        /// <summary>
+        /// Builds the final version of the test object based on what is in all the editors
+        /// </summary>
+        /// <returns>Test object</returns>
         public ITest BuildTest()
         {
             // Make sure we have ready editor
