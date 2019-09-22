@@ -65,11 +65,14 @@ namespace Testinator.Server.Domain
             // Pass all the changes user has made to the editor
             mEditor.Task.Text.Content = Task;
 
-            // Validate current state of data
-            if (mEditor.Validate())
+            // Try to build the question
+            var buildOperation = mEditor.Build();
+
+            // If it succeeded...
+            if (buildOperation.Succeeded)
             {
-                // Successful validation, return the question
-                return mEditor.Build().Result;
+                // Return the question
+                return buildOperation.Result;
             }
 
             // Validation failed, return null so the master page will react accordingly
