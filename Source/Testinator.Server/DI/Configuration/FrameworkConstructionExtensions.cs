@@ -50,6 +50,8 @@ namespace Testinator.Server
             construction.Services.AddTransient<TestCreatorQuestionsPageViewModel>();
             construction.Services.AddTransient<TestCreatorGradingPageViewModel>();
             construction.Services.AddTransient<QuestionsMultipleChoicePageViewModel>();
+            construction.Services.AddTransient<QuestionsCheckboxesPageViewModel>();
+            construction.Services.AddTransient<QuestionsSingleAnswerPageViewModel>();
 
             // Return the construction for chaining
             return construction;
