@@ -21,34 +21,19 @@
             <TextBlock Text="{Binding Task.ErrorMessage}"
                                Style="{StaticResource QuestionTextBlockStyle}"
                                Foreground="{StaticResource RedLightBrush}"/>
-            <TextBox Text="{Binding AnswerA.Value}"
-                     Tag="Odpowiedz A"
-                     Style="{StaticResource BigInputTextBox}"/>
-            <TextBlock Text="{Binding AnswerA.ErrorMessage}"
-                               Style="{StaticResource QuestionTextBlockStyle}"
-                               Foreground="{StaticResource RedLightBrush}"/>
-            <TextBox Text="{Binding AnswerB.Value}"
-                     Tag="Odpowiedz B"
-                     Style="{StaticResource BigInputTextBox}"/>
-            <TextBlock Text="{Binding AnswerB.ErrorMessage}"
-                               Style="{StaticResource QuestionTextBlockStyle}"
-                               Foreground="{StaticResource RedLightBrush}"/>
-            <TextBox Text="{Binding AnswerC.Value}"
-                     Tag="Odpowiedz C"
-                     Style="{StaticResource BigInputTextBox}"/>
-            <TextBlock Text="{Binding AnswerC.ErrorMessage}"
-                               Style="{StaticResource QuestionTextBlockStyle}"
-                               Foreground="{StaticResource RedLightBrush}"/>
+
+            <ItemsControl ItemsSource="{Binding Answers.Value}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:AnswerSelectableControl />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            
             <TextBox Text="{Binding Points.Value}"
                      Tag="Punkty"
                      Style="{StaticResource BigInputTextBox}"/>
             <TextBlock Text="{Binding Points.ErrorMessage}"
-                               Style="{StaticResource QuestionTextBlockStyle}"
-                               Foreground="{StaticResource RedLightBrush}"/>
-            <TextBox Text="{Binding RightAnswer.Value}"
-                     Tag="Poprawna odpowiedz"
-                     Style="{StaticResource BigInputTextBox}"/>
-            <TextBlock Text="{Binding RightAnswer.ErrorMessage}"
                                Style="{StaticResource QuestionTextBlockStyle}"
                                Foreground="{StaticResource RedLightBrush}"/>
         </StackPanel>

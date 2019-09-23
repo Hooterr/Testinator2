@@ -253,13 +253,16 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\IsBusyProperty.cs" />
-    <Compile Include="Controls\ImagesEditor\ImagesEditorControl.xaml.cs">
+    <Compile Include="Controls\TestCreator\AnswerSelectableControl.xaml.cs">
+      <DependentUpon>AnswerSelectableControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\TestCreator\ImagesEditor\ImagesEditorControl.xaml.cs">
       <DependentUpon>ImagesEditorControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ImagesEditor\ImagesEditorItemControl.xaml.cs">
+    <Compile Include="Controls\TestCreator\ImagesEditor\ImagesEditorItemControl.xaml.cs">
       <DependentUpon>ImagesEditorItemControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\ImagesEditor\ImagesEditorPreview.xaml.cs">
+    <Compile Include="Controls\TestCreator\ImagesEditor\ImagesEditorPreview.xaml.cs">
       <DependentUpon>ImagesEditorPreview.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\Menu\MenuListControl.xaml.cs">
@@ -352,15 +355,19 @@
     <Compile Include="ViewModels\DialogWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
-    <Page Include="Controls\ImagesEditor\ImagesEditorControl.xaml">
+    <Page Include="Controls\TestCreator\AnswerSelectableControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ImagesEditor\ImagesEditorItemControl.xaml">
+    <Page Include="Controls\TestCreator\ImagesEditor\ImagesEditorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\ImagesEditor\ImagesEditorPreview.xaml">
+    <Page Include="Controls\TestCreator\ImagesEditor\ImagesEditorItemControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TestCreator\ImagesEditor\ImagesEditorPreview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
