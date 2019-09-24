@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
 using System.Windows.Input;
 using Testinator.Core;
@@ -124,10 +123,16 @@ namespace Testinator.Server.Domain
         /// </summary>
         public IQuestion Submit()
         {
+            // Clear all the error messages
+            Task.ErrorMessage = string.Empty;
+            Answers.ErrorMessage = string.Empty;
+            Points.ErrorMessage = string.Empty;
+
             // Pass all the changes user has made to the editor
             mEditor.Task.Text.Content = Task;
             mEditor.Options.ABCD = Answers.Value.ToOptionsInEditor();
-            mEditor.Scoring.CorrectAnswerIdx = Answers.Value.GetIndexOfSelected();
+            var rightAnswerIndex = Answers.Value.GetIndexesOfSelected().FirstOrDefault();
+            mEditor.Scoring.CorrectAnswerIdx = rightAnswerIndex ?? -1;
             mEditor.Scoring.MaximumScore = int.Parse(Points);
 
             // Return built question
