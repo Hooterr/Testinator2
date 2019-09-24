@@ -39,9 +39,10 @@
                         Style="{StaticResource QuestionTextBlockStyle}"
                         Foreground="{StaticResource RedLightBrush}"/>
             
-            <TextBox Text="{Binding Points.Value}"
-                     Tag="Punkty"
-                     Style="{StaticResource BigInputTextBox}"/>
+            <local:RegexTextBox Text="{Binding Points.Value}"
+                                Regex="^(0?[1-9]|[1-9][0-9])$"
+                                 Tag="Punkty"
+                                 Style="{StaticResource BigInputTextBox}"/>
             <TextBlock Text="{Binding Points.ErrorMessage}"
                         Style="{StaticResource QuestionTextBlockStyle}"
                         Foreground="{StaticResource RedLightBrush}"/>
