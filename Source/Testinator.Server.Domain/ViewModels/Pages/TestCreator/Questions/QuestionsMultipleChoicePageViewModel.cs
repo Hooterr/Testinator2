@@ -118,10 +118,11 @@ namespace Testinator.Server.Domain
                 return;
 
             // Add new answer
+            var answerTitle = (char)('A' + answersCount);
             Answers.Value.Add(new AnswerSelectableViewModel
             {
                 // Set appropriate title
-                Title = ('A' + answersCount).ToString()
+                Title = answerTitle.ToString()
             });
         }
 

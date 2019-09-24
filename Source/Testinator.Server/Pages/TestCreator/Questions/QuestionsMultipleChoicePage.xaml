@@ -46,6 +46,13 @@
             <TextBlock Text="{Binding Points.ErrorMessage}"
                         Style="{StaticResource QuestionTextBlockStyle}"
                         Foreground="{StaticResource RedLightBrush}"/>
+
+            <Button Content="+"
+                    Command="{Binding AddAnswerCommand}" />
+
+            <Button Content="-"
+                    Command="{Binding RemoveAnswerCommand}" />
+            
         </StackPanel>
         
     </Border>
