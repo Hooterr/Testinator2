@@ -8,7 +8,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// The implementation of the options editor for multiple choice question
     /// </summary>
-    internal class MultipleChoiceQuestionOptionsEditor : BaseEditor<MultipleChoiceQuestionOptions, IMultipleChoiceQuestionOptionsEditor>, IMultipleChoiceQuestionOptionsEditor
+    internal class MultipleChoiceQuestionOptionsEditor : NestedEditor<MultipleChoiceQuestionOptions, IMultipleChoiceQuestionOptionsEditor>, IMultipleChoiceQuestionOptionsEditor
     {
         #region Private Members
 
@@ -88,12 +88,18 @@ namespace Testinator.TestSystem.Editors
 
         protected override void OnInitialize()
         {
-            if (IsInCreationMode())
-                ABCD = new List<string>();
-            else
-                ABCD = new List<string>(OriginalObject.Options);
-
             LoadAttributeValues();
+        }
+
+        protected override void InitializeCreateNewObject()
+        {
+            ABCD = new List<string>();
+
+        }
+
+        protected override void InitializeEditExistingObject()
+        {
+            ABCD = new List<string>(OriginalObject.Options);
         }
 
         protected override MultipleChoiceQuestionOptions BuildObject()
@@ -128,20 +134,20 @@ namespace Testinator.TestSystem.Editors
             {
                 if (ABCD.Count > 1 && (ABCD.Distinct().Count() != ABCD.Count()))
                 {
-                    mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, "Options must be unique");
+                    ErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, "Options must be unique");
                     validationPassed = false;
                 }
             }
 
             if (ABCD.Count() < mMinCount || ABCD.Count() > mMaxCount)
             {
-                mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"There must be from {mMinCount} to {mMaxCount} options.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"There must be from {mMinCount} to {mMaxCount} options.");
                 validationPassed = false;
             }
 
             if (!ABCD.All(str => OptionsLengthInRange(str)))
             {
-                mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"Every options must be from {mMinOptionLen} to {mMaxOptionLen} characters long.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"Every options must be from {mMinOptionLen} to {mMaxOptionLen} characters long.");
                 validationPassed = false;
             }
 
@@ -158,15 +164,15 @@ namespace Testinator.TestSystem.Editors
         private void LoadAttributeValues()
         {
             var collectionCountAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, List<string>, CollectionCountAttribute>
-                (x => x.Options, Version);
+                (x => x.Options, mVersion);
             mMaxCount = collectionCountAttr.Max;
             mMinCount = collectionCountAttr.Min;
 
             mOnlyDistinct = AttributeHelper.GetPropertyAttributeValue<MultipleChoiceQuestionOptions, List<string>, CollectionItemsOnlyDistinctAttribute, bool>
-                (x => x.Options, attr => attr.Value, Version);
+                (x => x.Options, attr => attr.Value, mVersion);
 
             var stringLenAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, List<string>, StringLengthAttribute>
-                    (x => x.Options, Version);
+                    (x => x.Options, mVersion);
             mMaxOptionLen = stringLenAttr.Max;
             mMinOptionLen = stringLenAttr.Min;
         }

@@ -7,7 +7,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// The implementation of the text part of the question task
     /// </summary>
-    internal class TextEditor : BaseEditor<ITextContent, ITextEditor>, ITextEditor, IBuildable<ITextContent>
+    internal class TextEditor : NestedEditor<ITextContent, ITextEditor>, ITextEditor, IBuildable<ITextContent>
     {
         #region Protected Members
 
@@ -51,7 +51,7 @@ namespace Testinator.TestSystem.Editors
 
         protected virtual void LoadAttributeValues()
         {
-            mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Text, a => a.MaxLength, Version);
+            mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Text, a => a.MaxLength, mVersion);
         }
 
         #region Overridden Methods
@@ -59,17 +59,6 @@ namespace Testinator.TestSystem.Editors
         protected override void OnInitialize()
         {
             LoadAttributeValues();
-
-            if (IsInCreationMode())
-            {
-                Content = string.Empty;
-                Markup = MarkupLanguage.PlainText;
-            }
-            else
-            {
-                Content = OriginalObject.Text;
-                Markup = OriginalObject.Markup;
-            }
         }
 
         protected override bool Validate()
@@ -78,18 +67,18 @@ namespace Testinator.TestSystem.Editors
 
             if(string.IsNullOrEmpty(Content))
             {
-                mErrorHandlerAdapter.HandleErrorFor(x => x.Content, $"Text content cannot be empty.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Content, $"Text content cannot be empty.");
                 veryficationPassed = false;
             }
             else if ((Content.Length > mMaxTextLength))
             {
-                mErrorHandlerAdapter.HandleErrorFor(x => x.Content, $"Text content is too long. Maximum text length is set to {mMaxTextLength} characters.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Content, $"Text content is too long. Maximum text length is set to {mMaxTextLength} characters.");
                 veryficationPassed = false;
             }
 
             if (Markup == MarkupLanguage.Html)
             {
-                mErrorHandlerAdapter.HandleErrorFor(x => x.Markup, $"Not supported yet.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Markup, $"Not supported yet.");
                 veryficationPassed = false;
             }
 
@@ -105,7 +94,19 @@ namespace Testinator.TestSystem.Editors
             };
 
             return result;
-        } 
+        }
+
+        protected override void InitializeCreateNewObject()
+        {
+            Content = string.Empty;
+            Markup = MarkupLanguage.PlainText;
+        }
+
+        protected override void InitializeEditExistingObject()
+        {
+            Content = OriginalObject.Text;
+            Markup = OriginalObject.Markup;
+        }
 
         #endregion
     }

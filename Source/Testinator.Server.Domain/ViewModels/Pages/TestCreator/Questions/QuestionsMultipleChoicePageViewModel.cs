@@ -80,6 +80,7 @@ namespace Testinator.Server.Domain
         {
             // Pass all the changes user has made to the editor
             mEditor.Task.Text.Content = Task;
+            mEditor.Scoring.MaximumScore = int.Parse(Points);
 
             // Try to build the question
             var buildOperation = mEditor.Build();

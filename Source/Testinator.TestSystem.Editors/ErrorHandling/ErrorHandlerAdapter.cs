@@ -27,11 +27,12 @@ namespace Testinator.TestSystem.Editors
                 {
                     if (expression.GetObjectType() == typeof(T))
                         name = mParentEditorName;
+                    else
+                        name = string.Empty;
                 }
             }
 
-            if(name != null)
-                mHandler.HandleErrorFor(name, message);
+            mHandler.HandleErrorFor(name, message);
         }
 
         public void OnErrorFor(Expression<Func<T, object>> property, Action<string> action)
@@ -40,10 +41,16 @@ namespace Testinator.TestSystem.Editors
             mHandler.OnErrorFor(propName, action);
         }
 
-        public ErrorHandlerAdapter(IInternalErrorHandler handler, string parentEditorName)
+        private ErrorHandlerAdapter(IInternalErrorHandler handler, string parentEditorName)
         {
+            if (handler == null)
+                throw new ArgumentNullException();
             mHandler = handler;
             mParentEditorName = parentEditorName;
         }
+
+        public static ErrorHandlerAdapter<T> NestedEditor(IInternalErrorHandler handler, string parentEditorName) => new ErrorHandlerAdapter<T>(handler, parentEditorName);
+
+        public static ErrorHandlerAdapter<T> TopLevelEditor(IInternalErrorHandler handler) => new ErrorHandlerAdapter<T>(handler, string.Empty);
     }
 }

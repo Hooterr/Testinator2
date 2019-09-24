@@ -40,25 +40,6 @@ namespace Testinator.TestSystem.Editors
 
         #region Protected Methods
 
-        protected override void OnInitializing()
-        {
-            // Create editors
-            if (mQuestion == null)
-            {
-                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mVersion);
-                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mVersion);
-            }
-            else
-            {
-                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mQuestion.Options, mVersion);
-                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mQuestion.Scoring, mVersion);
-            }
-
-            // Attach error handlers
-            mOptionsEditor.AttachErrorHandler(mErrorListiner, nameof(Options));
-            mScoringEditor.AttachErrorHandler(mErrorListiner, nameof(Scoring));
-        }
-
         protected override OperationResult<IQuestionOptions> BuildOptions()
         {
             var optionsBuildResult = mOptionsEditor.Build();
@@ -72,17 +53,43 @@ namespace Testinator.TestSystem.Editors
             return OperationResult<IQuestionScoring>.Convert<IQuestionScoring, MultipleChoiceQuestionScoring>(scoringBuildResult);
         }
 
-        protected override bool FinalValidation()
-        {
-            // Important to clear all errors
-            // But do this in the top level editor only
+        protected override bool Validate()
+        { 
             var validationPassed = true;
             if (mScoringEditor.CorrectAnswerIdx < 0 || mScoringEditor.CorrectAnswerIdx + 1 > mOptionsEditor.ABCD.Count)
             {
-                mErrorListiner.HandleErrorFor(x => x.Scoring, "Correct answer must be matched to the number of options.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Scoring, "Correct answer must be matched to the number of options.");
                 validationPassed = false;
             }
             return validationPassed;
+        }
+        protected override void CreateNestedEditorExistingObject()
+        {
+            mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(OriginalObject.Options, mVersion);
+            mScoringEditor = new MultipleChoiceQuestionScoringEditor(OriginalObject.Scoring, mVersion);
+        }
+
+        protected override void OnEditorsCreated()
+        {
+            base.OnEditorsCreated();
+            mOptionsEditor.SetInternalErrorHandler(mInternalErrorHandler);
+            mOptionsEditor.Initialize();
+            mOptionsEditor.SetInternalErrorHandler(mInternalErrorHandler);
+            mScoringEditor.Initialize();
+        }
+
+        protected override void CreateNestedEditorsNewObject()
+        {
+            base.CreateNestedEditorsNewObject();
+            mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mVersion);
+            mScoringEditor = new MultipleChoiceQuestionScoringEditor(mVersion);
+        }
+
+        protected override void CreateHandlers(IInternalErrorHandler internalHandler)
+        {
+            base.CreateHandlers(internalHandler);
+            mOptionsEditor.AttachErrorHandler(internalHandler, nameof(Options));
+            mScoringEditor.AttachErrorHandler(internalHandler, nameof(Scoring));
         }
 
         #endregion

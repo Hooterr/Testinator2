@@ -13,7 +13,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// Default implementation of <see cref="IGradingEditor"/>
     /// </summary>
-    internal class GradingEditor : BaseEditor<Grading, IGradingEditor>, IGradingEditor
+    internal class GradingEditor : NestedEditor<Grading, IGradingEditor>, IGradingEditor
     {
         #region Editor Properties
 
@@ -81,7 +81,7 @@ namespace Testinator.TestSystem.Editors
                 if(Preset == null)
                 {
                     validationPassed = false;
-                    mErrorHandlerAdapter.HandleErrorFor(x => x.Preset, "Preset cannot be null if not using custom thresholds.");
+                    ErrorHandlerAdapter.HandleErrorFor(x => x.Preset, "Preset cannot be null if not using custom thresholds.");
                 }
             }
 
@@ -148,7 +148,7 @@ namespace Testinator.TestSystem.Editors
             if (CustomThresholds.Count < 2)
             {
                 passed = false;
-                mErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, "There must be at least 2 custom thresholds.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, "There must be at least 2 custom thresholds.");
             }
             else
             {
@@ -157,13 +157,13 @@ namespace Testinator.TestSystem.Editors
                     if(false == CustomThresholds.TrueForAll(x => x.Key <= mMaxPointScore))
                     {
                         passed = false;
-                        mErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Not a single threshold can exceed the max point score ({mMaxPointScore}).");
+                        ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Not a single threshold can exceed the max point score ({mMaxPointScore}).");
                     }
                     
                     if (CustomThresholds.OrderByDescending(x => x.Key).First().Key != mMaxPointScore)
                     {
                         passed = false;
-                        mErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"The last threshold's upper limit must be equal to the max point score ({mMaxPointScore})");
+                        ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"The last threshold's upper limit must be equal to the max point score ({mMaxPointScore})");
                     }
                 }
                 else
@@ -171,25 +171,25 @@ namespace Testinator.TestSystem.Editors
                     if (false == CustomThresholds.TrueForAll(x => x.Key <= 100))
                     {
                         passed = false;
-                        mErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Not a single threshold can exceed 100%.");
+                        ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Not a single threshold can exceed 100%.");
                     }
 
                     if(CustomThresholds.OrderByDescending(x => x.Key).First().Key != 100)
                     {
                         passed = false;
-                        mErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"The last threshold's upper limit must be a 100%");
+                        ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"The last threshold's upper limit must be a 100%");
                     }
                 }
 
                 if (CustomThresholds.Select(x => x.Key).Distinct().Count() != CustomThresholds.Count())
                 {
                     passed = false;
-                    mErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Found multiple threshold with the same upper limit.");
+                    ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Found multiple threshold with the same upper limit.");
                 }
                 if (CustomThresholds.Select(x => x.Value.Name).Distinct().Count() != CustomThresholds.Count())
                 {
                     passed = false;
-                    mErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Found multiple thresholds with the same grade.");
+                    ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Found multiple thresholds with the same grade.");
                 }
             }
 
@@ -198,7 +198,7 @@ namespace Testinator.TestSystem.Editors
 
         public void OnErrorFor(Expression<Func<IGradingEditor, object>> propertyExpression, Action<string> action)
         {
-            mErrorHandlerAdapter.OnErrorFor(propertyExpression, action);
+            ErrorHandlerAdapter.OnErrorFor(propertyExpression, action);
         }
 
         bool IErrorListener<IGradingEditor>.Validate()

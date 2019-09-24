@@ -7,7 +7,7 @@ using Testinator.TestSystem.Implementation;
 
 namespace Testinator.TestSystem.Editors
 {
-    internal class GradingPresetEditor : BaseEditor<IGradingPreset, IGradingPresetEditor>, IGradingPresetEditor
+    internal class GradingPresetEditor : NestedEditor<IGradingPreset, IGradingPresetEditor>, IGradingPresetEditor
     {
         public string Name { get; set; }
 

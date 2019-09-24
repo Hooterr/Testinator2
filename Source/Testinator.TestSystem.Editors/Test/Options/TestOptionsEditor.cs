@@ -5,7 +5,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// Default implementation of <see cref="ITestOptionsEditor"/>
     /// </summary>
-    internal class TestOptionsEditor : BaseEditor<TestOptions, ITestOptionsEditor>, ITestOptionsEditor
+    internal class TestOptionsEditor : NestedEditor<TestOptions, ITestOptionsEditor>, ITestOptionsEditor
     {
         #region All Constructors
 

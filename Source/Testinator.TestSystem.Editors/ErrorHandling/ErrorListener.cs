@@ -20,6 +20,8 @@ namespace Testinator.TestSystem.Editors
 
         #region Public Methods
 
+        public static ErrorListener<TIntereface> GenerateNew() => new ErrorListener<TIntereface>();
+
         /// <summary>
         /// Sets the method to execute when an error occurs for the given editor property
         /// </summary>
@@ -44,7 +46,7 @@ namespace Testinator.TestSystem.Editors
         /// <summary>
         /// Default constructor
         /// </summary>
-        public ErrorListener()
+        private ErrorListener()
         {
             mHandlers = new HandlersCollection(typeof(TIntereface).GetHandlersTree());
             mUnhandled = new List<string>();
