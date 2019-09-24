@@ -23,6 +23,9 @@ namespace Testinator.Server.Domain
         /// </summary>
         private QuestionEditorMultipleChoice mEditor;
 
+        private int mMinimumAnswersCount;
+        private int mMaximumAnswersCount;
+
         #endregion
 
         #region Public Properties
@@ -102,11 +105,15 @@ namespace Testinator.Server.Domain
             // Get the editor itself
             mEditor = editor;
 
-            // Initialize every property based on it
+            // Get the requirement values
+            mMinimumAnswersCount = mEditor.Options.GetMinimumCount();
+            mMaximumAnswersCount = mEditor.Options.GetMaximumCount();
+
+            // Initialize every property based on current editor state
             // If we are editing existing question, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
             Task = mEditor.Task.Text.Content;
-            Answers = mEditor.Options.ABCD.ToAnswerViewModels();
+            Answers = mEditor.Options.ABCD.ToAnswerViewModels(mMinimumAnswersCount);
             Points = mEditor.Scoring.MaximumScore.ToString();
 
             // Catch all the errors and display them

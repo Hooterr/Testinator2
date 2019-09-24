@@ -36,17 +36,52 @@ namespace Testinator.Server.Domain
         /// Converts editor options to the answers view models that are displayed in UI
         /// </summary>
         /// <param name="options">The options from question editor</param>
+        /// <param name="minimumAnswersCount">The minimum amount of answers required</param>
         /// <returns>Answer view models as an observable collection</returns>
-        public static ObservableCollection<AnswerSelectableViewModel> ToAnswerViewModels(this IEnumerable<string> options)
+        public static ObservableCollection<AnswerSelectableViewModel> ToAnswerViewModels(this IEnumerable<string> options, int minimumAnswersCount)
         {
             // Prepare a collection to return
             var answers = new ObservableCollection<AnswerSelectableViewModel>();
 
-            return new ObservableCollection<AnswerSelectableViewModel>
+            // For each given option
+            foreach (var option in options)
             {
-                new AnswerSelectableViewModel(),
-                new AnswerSelectableViewModel()
-            };
+                // Create new answer
+                answers.Add(new AnswerSelectableViewModel
+                {
+                    // Get the text content
+                    Answer = option,
+
+                    // Mark as unselected
+                    IsSelected = false
+                });
+            }
+
+            // Check if we haven't met the minimum requirement of answer count
+            var answerCount = answers.Count;
+            if (answerCount < minimumAnswersCount)
+            {
+                // Then we need to create new answers to fill the gap
+                for (var i = 0; i < minimumAnswersCount - answerCount; i++)
+                {
+                    // Create new answer
+                    answers.Add(new AnswerSelectableViewModel());
+                }
+            }
+
+            // Set the titles of each answer
+            var currentTitle = 'A';
+            foreach (var answer in answers)
+            {
+                // Set the current title
+                answer.Title = currentTitle.ToString();
+
+                // Increment the char value for next letter
+                currentTitle++;
+            }
+
+            // Return the final collection
+            return answers;
         }
 
         /// <summary>

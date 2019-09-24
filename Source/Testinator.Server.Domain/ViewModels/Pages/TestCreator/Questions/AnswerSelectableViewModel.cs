@@ -12,12 +12,12 @@ namespace Testinator.Server.Domain
         /// Usually its just A or B or C or D etc.
         /// NOTE: Not used in every question type
         /// </summary>
-        public string Title { get; set; }
+        public string Title { get; set; } = string.Empty;
 
         /// <summary>
         /// The actual answer text content 
         /// </summary>
-        public string Answer { get; set; }
+        public string Answer { get; set; } = string.Empty;
 
         /// <summary>
         /// Indicates if this answer is selected for being the right one 
