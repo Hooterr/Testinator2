@@ -52,16 +52,7 @@ namespace Testinator.Server.Domain
             // If we are editing existing question, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
             Task = mEditor.Task.Text.Content;
-
-
-            // TODO: Fix
-            Answers = new ObservableCollection<AnswerSelectableViewModel>
-            {
-                new AnswerSelectableViewModel(),
-                new AnswerSelectableViewModel()
-            };
-
-
+            Answers = mEditor.Options.ABCD.ToAnswerViewModels();
             Points = mEditor.Scoring.MaximumScore.ToString();
 
             // Catch all the errors and display them
@@ -80,19 +71,10 @@ namespace Testinator.Server.Domain
         {
             // Pass all the changes user has made to the editor
             mEditor.Task.Text.Content = Task;
+            mEditor.Options.ABCD = Answers.Value.ToOptionsInEditor();
 
-            // Try to build the question
-            var buildOperation = mEditor.Build();
-
-            // If it succeeded...
-            if (buildOperation.Succeeded)
-            {
-                // Return the question
-                return buildOperation.Result;
-            }
-
-            // Validation failed, return null so the master page will react accordingly
-            return null;
+            // Return built question
+            return mEditor.BuildQuestionFromEditor();
         }
 
         #endregion

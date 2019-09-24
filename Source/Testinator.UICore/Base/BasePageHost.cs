@@ -1,9 +1,8 @@
-﻿using Testinator.Core;
-using System.ComponentModel;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System;
+using Testinator.Core;
 
 namespace Testinator.UICore
 {

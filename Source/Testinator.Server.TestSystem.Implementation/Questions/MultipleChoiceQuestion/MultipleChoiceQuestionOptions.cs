@@ -12,6 +12,6 @@ namespace Testinator.TestSystem.Implementation.Questions
         [CollectionCount(min: 2, max: 5, fromVersion: 1)]
         [StringLength(min: 1, max: 150, fromVersion: 1)]
         [CollectionItemsOnlyDistinct(value: true, fromVersion: 1)]
-        public List<string> Options { get; internal set; }
+        public List<(bool, string)> Options { get; internal set; }
     }
 }
