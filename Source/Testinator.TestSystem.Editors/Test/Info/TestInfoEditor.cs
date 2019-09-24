@@ -57,7 +57,7 @@ namespace Testinator.TestSystem.Editors
 
         protected override bool Validate()
         {
-            mErrorHandlerAdapter.ClearAllErrors();
+            mErrorHandlerAdapter.Clear();
             var validationPassed = true;
 
             if (string.IsNullOrEmpty(Name))
@@ -150,8 +150,7 @@ namespace Testinator.TestSystem.Editors
 
         public void OnErrorFor(Expression<Func<ITestInfoEditor, object>> propertyExpression, Action<string> action)
         {
-            var propertyName = propertyExpression.GetCorrectPropertyName();
-            mErrorHandlerAdapter.OnErrorFor(propertyName, action);
+            mErrorHandlerAdapter.OnErrorFor(propertyExpression, action);
         }
 
         bool IErrorListener<ITestInfoEditor>.Validate()

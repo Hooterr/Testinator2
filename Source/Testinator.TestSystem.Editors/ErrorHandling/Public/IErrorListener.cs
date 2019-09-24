@@ -17,7 +17,7 @@ namespace Testinator.TestSystem.Editors
 
         /// <summary>
         /// Validates without submitting
-        /// Executes error handler if provided with <see cref="OnErrorFor(Expression{Func{T, object}}, Action{string})"/>
+        /// Executes error handlers if provided with <see cref="OnErrorFor(Expression{Func{T, object}}, Action{string})"/>
         /// </summary>
         /// <returns>True if successful, otherwise false</returns>
         bool Validate();

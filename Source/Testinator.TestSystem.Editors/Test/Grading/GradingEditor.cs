@@ -198,8 +198,7 @@ namespace Testinator.TestSystem.Editors
 
         public void OnErrorFor(Expression<Func<IGradingEditor, object>> propertyExpression, Action<string> action)
         {
-            var propName = propertyExpression.GetCorrectPropertyName();
-            mErrorHandlerAdapter.OnErrorFor(propName, action);
+            mErrorHandlerAdapter.OnErrorFor(propertyExpression, action);
         }
 
         bool IErrorListener<IGradingEditor>.Validate()

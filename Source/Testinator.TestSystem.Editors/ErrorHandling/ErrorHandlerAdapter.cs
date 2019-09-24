@@ -8,8 +8,9 @@ namespace Testinator.TestSystem.Editors
     internal class ErrorHandlerAdapter<T> : IErrorHandlerAdapter<T>
     {
         private readonly IInternalErrorHandler mHandler;
+        private readonly string mParentEditorName;
 
-        public void ClearAllErrors()
+        public void Clear()
         {
             mHandler.Clear();
         }
@@ -17,7 +18,7 @@ namespace Testinator.TestSystem.Editors
         public void HandleErrorFor(Expression<Func<T, object>> property, string message)
         {
             var name = property.GetCorrectPropertyName();
-            mHandler.HandleError(name, message);
+            mHandler.HandleErrorFor(name, message);
         }
 
         public void OnErrorFor(Expression<Func<T, object>> property, Action<string> action)

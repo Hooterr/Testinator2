@@ -59,10 +59,10 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         /// <param name="propertyExpression">The property this error concerns</param>
         /// <param name="message">The error message</param>
-        protected void HandleErrorFor(Expression<Func<TIntereface, object>> propertyExpression, string message)
+        public void HandleErrorFor(Expression<Func<TIntereface, object>> propertyExpression, string message)
         {
             var propertyName = propertyExpression.GetCorrectPropertyName();
-            HandleError(propertyName, message);
+            HandleErrorFor(propertyName, message);
         }
 
         /// <summary>
@@ -102,7 +102,7 @@ namespace Testinator.TestSystem.Editors
             return true;
         }
 
-        public void HandleError(string propertyName, string message)
+        public void HandleErrorFor(string propertyName, string message)
         {
             if (!mHandlers.HandleError(propertyName, message))
                 mUnhandled.Add(message);

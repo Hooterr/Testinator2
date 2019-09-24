@@ -71,10 +71,11 @@ namespace Testinator.TestSystem.Editors
         protected override bool FinalValidation()
         {
             // Important to clear all errors
+            // But do this in the top level editor only
             var validationPassed = true;
             if (mScoringEditor.CorrectAnswerIdx < 0 || mScoringEditor.CorrectAnswerIdx + 1 > mOptionsEditor.ABCD.Count)
             {
-                //HandleErrorFor(x => x.Scoring, "Correct answer must be matched to the number of options.");
+                mErrorListiner.HandleErrorFor(x => x.Scoring, "Correct answer must be matched to the number of options.");
                 validationPassed = false;
             }
             return validationPassed;
