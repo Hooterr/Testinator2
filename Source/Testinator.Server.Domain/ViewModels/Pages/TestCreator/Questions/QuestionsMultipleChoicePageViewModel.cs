@@ -2,6 +2,7 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Windows.Input;
 using Testinator.Core;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
@@ -27,9 +28,63 @@ namespace Testinator.Server.Domain
 
         #region Public Properties
 
+        /// <summary>
+        /// The task for this question
+        /// </summary>
         public InputField<string> Task { get; set; }
+
+        /// <summary>
+        /// The possible answers for this question as view models
+        /// </summary>
         public InputField<ObservableCollection<AnswerSelectableViewModel>> Answers { get; set; }
+
+        /// <summary>
+        /// The points that are given for right answer
+        /// </summary>
         public InputField<string> Points { get; set; }
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// The command to select an answer as the right one
+        /// </summary>
+        public ICommand SelectAnswerCommand { get; private set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public QuestionsMultipleChoicePageViewModel()
+        {
+            // Create commands
+            SelectAnswerCommand = new RelayParameterizedCommand(SelectAnswer);
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Selects an answer as the right one
+        /// </summary>
+        /// <param name="param">The selected answer view model</param>
+        private void SelectAnswer(object param)
+        {
+            // Get the actual view model from parameter
+            var viewModel = param as AnswerSelectableViewModel;
+
+            // Deselect any other answer before-hand
+            foreach (var answer in Answers.Value)
+                answer.IsSelected = false;
+
+            // Mark provided answer as selected
+            viewModel.IsSelected = true;
+        }
 
         #endregion
 
@@ -72,6 +127,8 @@ namespace Testinator.Server.Domain
             // Pass all the changes user has made to the editor
             mEditor.Task.Text.Content = Task;
             mEditor.Options.ABCD = Answers.Value.ToOptionsInEditor();
+            mEditor.Scoring.CorrectAnswerIdx = Answers.Value.GetIndexOfSelected();
+            mEditor.Scoring.MaximumScore = int.Parse(Points);
 
             // Return built question
             return mEditor.BuildQuestionFromEditor();

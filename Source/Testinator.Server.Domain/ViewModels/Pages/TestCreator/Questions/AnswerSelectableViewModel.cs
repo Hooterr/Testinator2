@@ -7,8 +7,21 @@ namespace Testinator.Server.Domain
     /// </summary>
     public class AnswerSelectableViewModel : BaseViewModel
     {
+        /// <summary>
+        /// The title to use to identify this answer
+        /// Usually its just A or B or C or D etc.
+        /// NOTE: Not used in every question type
+        /// </summary>
+        public string Title { get; set; }
+
+        /// <summary>
+        /// The actual answer text content 
+        /// </summary>
         public string Answer { get; set; }
 
+        /// <summary>
+        /// Indicates if this answer is selected for being the right one 
+        /// </summary>
         public bool IsSelected { get; set; }
     }
 }

@@ -14,28 +14,37 @@
     <Border Background="{StaticResource WhiteLightBrush}">
 
         <StackPanel>
-            <TextBlock Text="Question - Multiple Choice" />
+            <TextBlock Text="Question - Multiple Choice"
+                       FontSize="30" />
             <TextBox Text="{Binding Task.Value}"
                      Tag="Tresc"
                      Style="{StaticResource BigInputTextBox}"/>
             <TextBlock Text="{Binding Task.ErrorMessage}"
-                               Style="{StaticResource QuestionTextBlockStyle}"
-                               Foreground="{StaticResource RedLightBrush}"/>
+                        Style="{StaticResource QuestionTextBlockStyle}"
+                        Foreground="{StaticResource RedLightBrush}"/>
 
             <ItemsControl ItemsSource="{Binding Answers.Value}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:AnswerSelectableControl />
+                        <local:AnswerSelectableControl>
+                            <Button Content="{Binding Title}"
+                                    Command="{Binding DataContext.SelectAnswerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
+                                    CommandParameter="{Binding}"
+                                    />
+                        </local:AnswerSelectableControl>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+            <TextBlock Text="{Binding Answers.ErrorMessage}"
+                        Style="{StaticResource QuestionTextBlockStyle}"
+                        Foreground="{StaticResource RedLightBrush}"/>
             
             <TextBox Text="{Binding Points.Value}"
                      Tag="Punkty"
                      Style="{StaticResource BigInputTextBox}"/>
             <TextBlock Text="{Binding Points.ErrorMessage}"
-                               Style="{StaticResource QuestionTextBlockStyle}"
-                               Foreground="{StaticResource RedLightBrush}"/>
+                        Style="{StaticResource QuestionTextBlockStyle}"
+                        Foreground="{StaticResource RedLightBrush}"/>
         </StackPanel>
         
     </Border>
