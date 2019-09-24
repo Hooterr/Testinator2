@@ -39,6 +39,7 @@ namespace Testinator.Server.Domain
         /// <returns>Answer view models as an observable collection</returns>
         public static ObservableCollection<AnswerSelectableViewModel> ToAnswerViewModels(this IEnumerable<string> options)
         {
+            // Prepare a collection to return
             var answers = new ObservableCollection<AnswerSelectableViewModel>();
 
             return new ObservableCollection<AnswerSelectableViewModel>

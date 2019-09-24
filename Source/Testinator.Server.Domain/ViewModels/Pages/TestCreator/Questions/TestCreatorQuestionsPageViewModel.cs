@@ -78,6 +78,9 @@ namespace Testinator.Server.Domain
             NewQuestionCheckboxesCommand = new RelayCommand(() => GoToCheckboxesQuestion());
             SubmitQuestionCommand = new RelayCommand(SubmitCurrentQuestion);
             FinishQuestionsCommand = new RelayCommand(GoToNextPage);
+
+            // Get the editor for questions
+            mEditor = mTestCreator.GetEditorTestQuestions();
         }
 
         #endregion
