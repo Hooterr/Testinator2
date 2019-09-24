@@ -45,14 +45,18 @@ namespace Testinator.TestSystem.Editors
             // Create editors
             if (mQuestion == null)
             {
-                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mVersion, mErrorListiner);
-                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mVersion, mErrorListiner);
+                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mVersion);
+                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mVersion);
             }
             else
             {
-                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mQuestion.Options, mVersion, mErrorListiner);
-                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mQuestion.Scoring, mVersion, mErrorListiner);
+                mOptionsEditor = new MultipleChoiceQuestionOptionsEditor(mQuestion.Options, mVersion);
+                mScoringEditor = new MultipleChoiceQuestionScoringEditor(mQuestion.Scoring, mVersion);
             }
+
+            // Attach error handlers
+            mOptionsEditor.AttachErrorHandler(mErrorListiner, nameof(Options));
+            mScoringEditor.AttachErrorHandler(mErrorListiner, nameof(Scoring));
         }
 
         protected override OperationResult<IQuestionOptions> BuildOptions()

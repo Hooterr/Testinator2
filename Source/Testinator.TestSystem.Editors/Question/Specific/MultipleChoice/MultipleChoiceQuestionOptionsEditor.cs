@@ -73,14 +73,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create new question options
         /// </summary>
         /// <param name="version">The version of question model to use</param>
-        public MultipleChoiceQuestionOptionsEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public MultipleChoiceQuestionOptionsEditor(int version) : base(version) { }
 
         /// <summary>
         /// Initializes the editor to edit an existing question options
         /// </summary>
         /// <param name="objToEdit">The options to edit</param>
         /// <param name="version">The version of question model to use</param>
-        public MultipleChoiceQuestionOptionsEditor(MultipleChoiceQuestionOptions objToEdit, int version, IInternalErrorHandler errorHandler) : base(objToEdit, version, errorHandler) { }
+        public MultipleChoiceQuestionOptionsEditor(MultipleChoiceQuestionOptions objToEdit, int version) : base(objToEdit, version) { }
 
         #endregion
 

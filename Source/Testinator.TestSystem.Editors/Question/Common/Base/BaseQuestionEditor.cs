@@ -161,7 +161,7 @@ namespace Testinator.TestSystem.Editors
         protected virtual bool FinalValidation() => true;
 
         #endregion
-
+        
         #region Private Methods
 
         /// <summary>
@@ -173,9 +173,11 @@ namespace Testinator.TestSystem.Editors
 
             // Create task editor
             if (mQuestion == null)
-                mTaskEditor = new TaskEditor(mVersion, mErrorListiner);
+                mTaskEditor = new TaskEditor(mVersion);
             else
-                mTaskEditor = new TaskEditor(mQuestion.Task, mVersion, mErrorListiner);
+                mTaskEditor = new TaskEditor(mQuestion.Task, mVersion);
+
+            mTaskEditor.AttachErrorHandler(mErrorListiner, nameof(Task));
 
             // Let the implementer initialize as well 
             OnInitializing();
@@ -186,7 +188,6 @@ namespace Testinator.TestSystem.Editors
 
             if (Scoring == null)
                 throw new NotSupportedException("Options scoring has not been initialized.");
-
         }
 
         public void OnErrorFor(Expression<Func<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>, object>> propertyExpression, Action<string> action)

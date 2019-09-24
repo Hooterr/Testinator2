@@ -8,7 +8,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// Default implementation of <see cref="ITestEditor"/>
     /// </summary>
-    internal class TestEditor : BaseEditor<Implementation.Test, ITestEditor>, ITestEditor
+    internal class TestEditor : BaseEditor<Implementation.Test, ITestEditor>, ITestEditor // TODO create a master editor type
     {
         #region Private Members
 
@@ -46,31 +46,40 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         /// <param name="test">The test to edit</param>
         /// <param name="version">The version of test system to use</param>
-        public TestEditor(Implementation.Test test, int version) : base(test, version, null)// TODO create a new type of master editor that doesn't require IInternalErrorHandler
+        public TestEditor(Implementation.Test test, int version) : base(test, version)
         {
             var errorHandler = new ErrorListener<ITestEditor>();
-            mInfo = new TestInfoEditor(OriginalObject.mInfo, Version, errorHandler);
-            mOptions = new TestOptionsEditor(OriginalObject.mTestOptions, Version, errorHandler);
+            mInfo = new TestInfoEditor(OriginalObject.mInfo, Version);
+            mOptions = new TestOptionsEditor(OriginalObject.mTestOptions, Version);
             mQuestions = new QuestionEditorCollection(OriginalObject.Questions.Select(x => x.GetQuestion()).ToList());
-            mGrading = new GradingEditor(OriginalObject.mGrading, Version, errorHandler);
+            mGrading = new GradingEditor(OriginalObject.mGrading, Version);
+            CreateHandlers(errorHandler);
         }
 
         /// <summary>
         /// Initializes the editor to create a new test
         /// </summary>
         /// <param name="version">The version of test system to use</param>
-        public TestEditor(int version) : base(version, null)
+        public TestEditor(int version) : base(version)
         {
             var errorHandler = new ErrorListener<ITestEditor>();
-            mInfo = new TestInfoEditor(Version, errorHandler);
-            mOptions = new TestOptionsEditor(Version, errorHandler);
+            mInfo = new TestInfoEditor(Version);
+            mOptions = new TestOptionsEditor(Version);
             mQuestions = new QuestionEditorCollection();
-            mGrading = new GradingEditor(Version, errorHandler);
+            mGrading = new GradingEditor(Version);
+            CreateHandlers(errorHandler);
         }
 
         #endregion
 
         #region Overridden
+
+        protected override void CreateHandlers(IInternalErrorHandler handler)
+        {
+            mInfo.AttachErrorHandler(handler, nameof(Info));
+            mOptions.AttachErrorHandler(handler, nameof(Options));
+            mGrading.AttachErrorHandler(handler, nameof(Grading));
+        }
 
         protected override Implementation.Test BuildObject()
         {

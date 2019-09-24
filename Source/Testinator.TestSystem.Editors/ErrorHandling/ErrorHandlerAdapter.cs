@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Testinator.TestSystem.Editors
 {
@@ -15,10 +13,25 @@ namespace Testinator.TestSystem.Editors
             mHandler.Clear();
         }
 
-        public void HandleErrorFor(Expression<Func<T, object>> property, string message)
+        public void HandleErrorFor(Expression<Func<T, object>> expression, string message)
         {
-            var name = property.GetCorrectPropertyName();
-            mHandler.HandleErrorFor(name, message);
+            string name = null;
+            try
+            {
+                name = expression.GetCorrectPropertyName();
+            }
+            catch { }
+            finally
+            {
+                if (name == null)
+                {
+                    if (expression.GetObjectType() == typeof(T))
+                        name = mParentEditorName;
+                }
+            }
+
+            if(name != null)
+                mHandler.HandleErrorFor(name, message);
         }
 
         public void OnErrorFor(Expression<Func<T, object>> property, Action<string> action)
@@ -27,14 +40,10 @@ namespace Testinator.TestSystem.Editors
             mHandler.OnErrorFor(propName, action);
         }
 
-        public void OnErrorFor(string propertyName, Action<string> action)
-        {
-            mHandler.OnErrorFor(propertyName, action);
-        }
-
-        public ErrorHandlerAdapter(IInternalErrorHandler handler)
+        public ErrorHandlerAdapter(IInternalErrorHandler handler, string parentEditorName)
         {
             mHandler = handler;
+            mParentEditorName = parentEditorName;
         }
     }
 }

@@ -13,9 +13,9 @@ namespace Testinator.TestSystem.Editors
 
         public List<KeyValuePair<int, IGrade>> Thresholds { get; set; }
 
-        public GradingPresetEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public GradingPresetEditor(int version) : base(version) { }
 
-        public GradingPresetEditor(GradingPreset preset, int version, IInternalErrorHandler errorHandler) : base(preset, version, errorHandler)
+        public GradingPresetEditor(GradingPreset preset, int version) : base(preset, version)
         {
             if (preset == null)
                 throw new ArgumentNullException(nameof(preset));

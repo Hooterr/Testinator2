@@ -38,18 +38,17 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create new text content
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        public TextEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public TextEditor(int version) : base(version) { }
 
         /// <summary>
         /// Initializes the editor to edit an existing text content
         /// </summary>
         /// <param name="objToEdit">The text content to edit</param>
         /// <param name="version">The question model version to use</param>
-        public TextEditor(ITextContent objToEdit, int version, IInternalErrorHandler errorHandler) : base(objToEdit, version, errorHandler) { }
+        public TextEditor(ITextContent objToEdit, int version) : base(objToEdit, version) { }
 
         #endregion
 
-        // For testing
         protected virtual void LoadAttributeValues()
         {
             mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Text, a => a.MaxLength, Version);

@@ -32,12 +32,10 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create a new object
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        protected BaseEditor(int version, IInternalErrorHandler errorHandler)
+        protected BaseEditor(int version)
         {
             if (Versions.NotInRange(version))
                 throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
-
-            mErrorHandlerAdapter = new ErrorHandlerAdapter<TInterface>(errorHandler);
 
             Version = version;
 
@@ -49,7 +47,7 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         /// <param name="baseObject">The object to edit. NOTE: null value is allowed here, it's treated as if the caller wanted to create a new object</param>
         /// <param name="version">The question model version to use</param>
-        protected BaseEditor(TObjectToCreate baseObject, int version, IInternalErrorHandler errorHandler)
+        protected BaseEditor(TObjectToCreate baseObject, int version)
         {
             if (Versions.NotInRange(version))
                 throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
@@ -58,14 +56,24 @@ namespace Testinator.TestSystem.Editors
 
             Version = version;
 
-            mErrorHandlerAdapter = new ErrorHandlerAdapter<TInterface>(errorHandler);
-
             OnInitialize();
         }
 
         #endregion
 
+        #region Public Methods
+
+        public void AttachErrorHandler(IInternalErrorHandler handler, string parentEditorName)
+        {
+            mErrorHandlerAdapter = new ErrorHandlerAdapter<TInterface>(handler, parentEditorName);
+            CreateHandlers(handler);
+        }
+
+        #endregion
+
         #region Protected Methods
+
+        protected virtual void CreateHandlers(IInternalErrorHandler handler) { }
 
         /// <summary>
         /// Determines if the editor is editing an existing object
@@ -78,7 +86,6 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         /// <returns>True if it's creating a new object, false if the editor is editing an existing one</returns>
         protected bool IsInCreationMode() => OriginalObject == null;
-
         #endregion
 
         #region Protected

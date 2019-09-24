@@ -37,10 +37,10 @@ namespace Testinator.TestSystem.Editors
         /// Initializes task editor to create a new task 
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        public TaskEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler)
+        public TaskEditor(int version) : base(version)
         {
-            mTextEditor = new TextEditor(Version, errorHandler);
-            mImageEditor = new ImageEditor(Version, errorHandler);
+            mTextEditor = new TextEditor(Version);
+            mImageEditor = new ImageEditor(Version);
         }
 
         /// <summary>
@@ -48,15 +48,21 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         /// <param name="objToEdit">The task to edit</param>
         /// <param name="version">The question model version to use</param>
-        public TaskEditor(IQuestionTask objToEdit, int version, IInternalErrorHandler errorHandler) : base(objToEdit, version, errorHandler)
+        public TaskEditor(IQuestionTask objToEdit, int version) : base(objToEdit, version)
         {
-            mTextEditor = new TextEditor(OriginalObject.Text, Version, errorHandler);
-            mImageEditor = new ImageEditor(OriginalObject.Images, Version, errorHandler);
+            mTextEditor = new TextEditor(OriginalObject.Text, Version);
+            mImageEditor = new ImageEditor(OriginalObject.Images, Version);
         }
 
         #endregion
 
         #region Overridden Methods
+
+        protected override void CreateHandlers(IInternalErrorHandler handler)
+        {
+            mTextEditor.AttachErrorHandler(handler, nameof(Text));
+            mImageEditor.AttachErrorHandler(handler, nameof(Images));
+        }
 
         protected override bool Validate()
         {

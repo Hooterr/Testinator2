@@ -36,14 +36,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create a new grading
         /// </summary>
         /// <param name="version">The version of test system to use</param>
-        public GradingEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public GradingEditor(int version) : base(version) { }
 
         /// <summary>
         /// Initializes the editor to edit an existing grading
         /// </summary>
         /// <param name="grading">The grading to edit</param>
         /// <param name="version">The version of test system to use</param>
-        public GradingEditor(Grading grading, int version, IInternalErrorHandler errorHandler) : base(grading, version, errorHandler) { }
+        public GradingEditor(Grading grading, int version) : base(grading, version) { }
 
         #endregion
 

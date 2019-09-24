@@ -13,14 +13,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes this editor to create a new test options pack
         /// </summary>
         /// <param name="version">The version of the test system model to use</param>
-        public TestOptionsEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public TestOptionsEditor(int version) : base(version) { }
 
         /// <summary>
         /// Initializes this editor to edit an existing options pack
         /// </summary>
         /// <param name="options">The options to edit</param>
         /// <param name="version">The version of the test system model to use</param>
-        public TestOptionsEditor(TestOptions options, int version, IInternalErrorHandler errorHandler) : base(options, version, errorHandler) { }
+        public TestOptionsEditor(TestOptions options, int version) : base(options, version) { }
 
         #endregion
 

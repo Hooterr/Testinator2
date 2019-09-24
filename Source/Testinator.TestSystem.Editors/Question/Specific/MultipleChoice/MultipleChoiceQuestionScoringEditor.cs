@@ -54,14 +54,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes this editor to create new scoring guidelines
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        public MultipleChoiceQuestionScoringEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public MultipleChoiceQuestionScoringEditor(int version) : base(version) { }
 
         /// <summary>
         /// Initializes this editor to edit an existing scoring
         /// </summary>
         /// <param name="scoring">The scoring to edit</param>
         /// <param name="version">The question model version to use</param>
-        public MultipleChoiceQuestionScoringEditor(MultipleChoiceQuestionScoring scoring, int version, IInternalErrorHandler errorHandler) : base(scoring, version, errorHandler) { }
+        public MultipleChoiceQuestionScoringEditor(MultipleChoiceQuestionScoring scoring, int version) : base(scoring, version) { }
 
         #endregion
 

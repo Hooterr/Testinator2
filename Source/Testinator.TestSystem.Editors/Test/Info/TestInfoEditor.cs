@@ -42,14 +42,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create a new object
         /// </summary>
         /// <param name="version">The version of test system to use</param>
-        public TestInfoEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public TestInfoEditor(int version) : base(version) { }
 
         /// <summary>
         /// Initializes the editor to edit an existing info
         /// </summary>
         /// <param name="originalObj">The object to edit</param>
         /// <param name="version">The version of test system to use</param>
-        public TestInfoEditor(TestInfo originalObj, int version, IInternalErrorHandler errorHandler) : base(originalObj, version, errorHandler) { }
+        public TestInfoEditor(TestInfo originalObj, int version) : base(originalObj, version) { }
 
         #endregion
 
