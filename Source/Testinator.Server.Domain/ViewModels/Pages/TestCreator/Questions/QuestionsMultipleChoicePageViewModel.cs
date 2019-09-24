@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Linq;
+using System.Windows.Input;
 using Testinator.Core;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
@@ -27,9 +27,63 @@ namespace Testinator.Server.Domain
 
         #region Public Properties
 
+        /// <summary>
+        /// The task for this question
+        /// </summary>
         public InputField<string> Task { get; set; }
+
+        /// <summary>
+        /// The possible answers for this question as view models
+        /// </summary>
         public InputField<ObservableCollection<AnswerSelectableViewModel>> Answers { get; set; }
+
+        /// <summary>
+        /// The points that are given for right answer
+        /// </summary>
         public InputField<string> Points { get; set; }
+
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// The command to select an answer as the right one
+        /// </summary>
+        public ICommand SelectAnswerCommand { get; private set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        public QuestionsMultipleChoicePageViewModel()
+        {
+            // Create commands
+            SelectAnswerCommand = new RelayParameterizedCommand(SelectAnswer);
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Selects an answer as the right one
+        /// </summary>
+        /// <param name="param">The selected answer view model</param>
+        private void SelectAnswer(object param)
+        {
+            // Get the actual view model from parameter
+            var viewModel = param as AnswerSelectableViewModel;
+
+            // Deselect any other answer before-hand
+            foreach (var answer in Answers.Value)
+                answer.IsSelected = false;
+
+            // Mark provided answer as selected
+            viewModel.IsSelected = true;
+        }
 
         #endregion
 
@@ -52,16 +106,7 @@ namespace Testinator.Server.Domain
             // If we are editing existing question, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
             Task = mEditor.Task.Text.Content;
-
-
-            // TODO: Fix
-            Answers = new ObservableCollection<AnswerSelectableViewModel>
-            {
-                new AnswerSelectableViewModel(),
-                new AnswerSelectableViewModel()
-            };
-
-
+            Answers = mEditor.Options.ABCD.ToAnswerViewModels();
             Points = mEditor.Scoring.MaximumScore.ToString();
 
             // Catch all the errors and display them
@@ -78,22 +123,20 @@ namespace Testinator.Server.Domain
         /// </summary>
         public IQuestion Submit()
         {
+            // Clear all the error messages
+            Task.ErrorMessage = string.Empty;
+            Answers.ErrorMessage = string.Empty;
+            Points.ErrorMessage = string.Empty;
+
             // Pass all the changes user has made to the editor
             mEditor.Task.Text.Content = Task;
+            mEditor.Options.ABCD = Answers.Value.ToOptionsInEditor();
+            var rightAnswerIndex = Answers.Value.GetIndexesOfSelected().FirstOrDefault();
+            mEditor.Scoring.CorrectAnswerIdx = rightAnswerIndex ?? -1;
             mEditor.Scoring.MaximumScore = int.Parse(Points);
 
-            // Try to build the question
-            var buildOperation = mEditor.Build();
-
-            // If it succeeded...
-            if (buildOperation.Succeeded)
-            {
-                // Return the question
-                return buildOperation.Result;
-            }
-
-            // Validation failed, return null so the master page will react accordingly
-            return null;
+            // Return built question
+            return mEditor.BuildQuestionFromEditor();
         }
 
         #endregion

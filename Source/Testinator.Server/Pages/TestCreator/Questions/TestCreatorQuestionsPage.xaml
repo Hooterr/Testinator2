@@ -15,7 +15,9 @@
     <Border Background="{StaticResource WhiteLightBrush}">
 
         <StackPanel>
-            <TextBlock Text="Tutaj bedzie lista questionow w tescie oraz przyciski do wyboru typu questiona zeby stworzyc nowy" />
+            <TextBlock 
+                Animations:AnimateSlideAndFadeInFromTopProperty.Value="{Binding IsCreatingQuestion, Converter={local:BooleanInvertConverter}}"
+                Text="Tutaj bedzie lista questionow w tescie oraz przyciski do wyboru typu questiona zeby stworzyc nowy" />
             
             <Button Content="MultipleChoice"
                     Animations:AnimateSlideAndFadeInFromTopProperty.Value="{Binding IsCreatingQuestion, Converter={local:BooleanInvertConverter}}"

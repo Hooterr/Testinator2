@@ -3,7 +3,7 @@
     public class InputField<T> : BaseViewModel
     {
         public T Value { get; set; }
-        public string ErrorMessage { get; set; }
+        public string ErrorMessage { get; set; } = string.Empty;
 
         public InputField(T value)
         {
