@@ -23,7 +23,14 @@ namespace Testinator.Server.Domain
         /// </summary>
         private QuestionEditorMultipleChoice mEditor;
 
+        /// <summary>
+        /// The minimum amount of answers required for successful question validation
+        /// </summary>
         private int mMinimumAnswersCount;
+
+        /// <summary>
+        /// The maximum amount of answers required for successful question validation
+        /// </summary>
         private int mMaximumAnswersCount;
 
         #endregion
@@ -54,6 +61,16 @@ namespace Testinator.Server.Domain
         /// </summary>
         public ICommand SelectAnswerCommand { get; private set; }
 
+        /// <summary>
+        /// The command to add new possible answer to the question
+        /// </summary>
+        public ICommand AddAnswerCommand { get; private set; }
+
+        /// <summary>
+        /// The command to remove last answer from the question
+        /// </summary>
+        public ICommand RemoveAnswerCommand { get; private set; }
+
         #endregion
 
         #region Constructor
@@ -65,6 +82,8 @@ namespace Testinator.Server.Domain
         {
             // Create commands
             SelectAnswerCommand = new RelayParameterizedCommand(SelectAnswer);
+            AddAnswerCommand = new RelayCommand(AddAnswer);
+            RemoveAnswerCommand = new RelayCommand(RemoveAnswer);
         }
 
         #endregion
@@ -86,6 +105,38 @@ namespace Testinator.Server.Domain
 
             // Mark provided answer as selected
             viewModel.IsSelected = true;
+        }
+
+        /// <summary>
+        /// Adds new possible answer to the question
+        /// </summary>
+        private void AddAnswer()
+        {
+            // Make sure we don't exceed maximum answer limit
+            var answersCount = Answers.Value.Count;
+            if (answersCount >= mMaximumAnswersCount)
+                return;
+
+            // Add new answer
+            Answers.Value.Add(new AnswerSelectableViewModel
+            {
+                // Set appropriate title
+                Title = ('A' + answersCount).ToString()
+            });
+        }
+
+        /// <summary>
+        /// Removes last answer from the question
+        /// </summary>
+        private void RemoveAnswer()
+        {
+            // Make sure we can remove the answer and still meet the requirement
+            var answersCount = Answers.Value.Count;
+            if (answersCount <= mMinimumAnswersCount)
+                return;
+
+            // Remove the last answer
+            Answers.Value.RemoveAt(answersCount - 1);
         }
 
         #endregion
