@@ -94,7 +94,6 @@ namespace Testinator.TestSystem.Editors
         protected override void InitializeCreateNewObject()
         {
             ABCD = new List<string>();
-
         }
 
         protected override void InitializeEditExistingObject()
@@ -128,7 +127,8 @@ namespace Testinator.TestSystem.Editors
             var validationPassed = true;
 
             // Delete last options that are null or empty
-            ABCD.RemoveAllLast(x => string.IsNullOrEmpty(x));
+            // Don't need to do this anymore
+            //ABCD.RemoveAllLast(x => string.IsNullOrEmpty(x));
 
             if (mOnlyDistinct)
             {
