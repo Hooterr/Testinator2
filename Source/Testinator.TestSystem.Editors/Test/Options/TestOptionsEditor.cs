@@ -39,7 +39,7 @@ namespace Testinator.TestSystem.Editors
 
         protected override bool Validate()
         {
-            throw new System.NotImplementedException();
+            return true;
         }
 
         #endregion
