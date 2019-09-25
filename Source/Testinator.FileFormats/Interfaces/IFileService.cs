@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using Testinator.Server.Domain;
 
 namespace Testinator.Files
 {

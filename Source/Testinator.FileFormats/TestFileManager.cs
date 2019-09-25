@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
-using Testinator.Files;
 using Testinator.Server.Domain;
 using Testinator.Server.Serialization;
 using Testinator.TestSystem.Implementation;
 
-namespace Testinator.Server.Services
+namespace Testinator.Files
 {
     /// <summary>
     /// Default implementation of <see cref="ITestFileManager"/>

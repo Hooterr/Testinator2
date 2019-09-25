@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.IO;
+using Testinator.Server.Domain;
 
 namespace Testinator.Files
 {

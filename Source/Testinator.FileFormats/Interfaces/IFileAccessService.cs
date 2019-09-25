@@ -1,7 +1,8 @@
 ﻿using System;
 using System.IO;
+using Testinator.Server.Domain;
 
-namespace Testinator.Server.Domain
+namespace Testinator.Files
 {
     /// <summary>
     /// Handles access to files

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Testinator.Server.Domain;
 
 namespace Testinator.Files
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Testinator.Files
+namespace Testinator.Server.Domain
 {
     /// <summary>
     /// Contains information about a file
