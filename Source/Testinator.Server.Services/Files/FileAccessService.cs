@@ -4,23 +4,44 @@ using Testinator.Server.Domain;
 
 namespace Testinator.Files
 {
+    /// <summary>
+    /// Default implementation of <see cref="IFileAccessService"/>
+    /// </summary>
     public class FileAccessService : IFileAccessService
     {
+        #region Private Members
+        
+        /// <summary>
+        /// Root folder for application data
+        /// </summary>
         private readonly string mDataRootFolder;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public FileAccessService()
         {
             // TODO maybe get this from settings
             mDataRootFolder = $"{Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments)}\\Testinator";
 
             // Ensure folders are created
-            // TODO handle the case when there we got no permission to do this
+            // TODO handle the case when we got no permission to do this
             Directory.CreateDirectory(mDataRootFolder);
 
-            foreach(var folder in typeof(ApplicationDataFolders).GetEnumValues())
+            // Make sure all the directories exist
+            foreach (var folder in typeof(ApplicationDataFolders).GetEnumValues())
             {
                 Directory.CreateDirectory($"{mDataRootFolder}\\{folder.ToString()}");
             }
         }
+
+        #endregion
+
+        #region Interface Methods
 
         public string[] GetAllFileNames(Action<GetFilesFromDirectoryOptions> configureOptions)
         {
@@ -46,7 +67,7 @@ namespace Testinator.Files
 
         public FileStream GetFile(Action<GetFileOptions> configureOptions)
         {
-            if(configureOptions == null)
+            if (configureOptions == null)
                 throw new ArgumentNullException(nameof(configureOptions), "Get file options action cannot be null");
 
             var options = new GetFileOptions();
@@ -64,6 +85,8 @@ namespace Testinator.Files
             }
 
             return fs;
-        }
+        } 
+
+        #endregion
     }
 }

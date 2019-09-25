@@ -9,18 +9,38 @@ using Testinator.TestSystem.Implementation;
 
 namespace Testinator.Server.Services
 {
+    /// <summary>
+    /// Default implementation of <see cref="ITestFileManager"/>
+    /// </summary>
     public class TestFileManager : ITestFileManager
     {
+        #region Private Members
+
+        // All needed services
         private readonly IFileAccessService mFileAccess;
         private readonly IFileService mFilesEncoder;
         private readonly ISerializer<Test> mSerializer;
 
-        public TestFileManager(IFileAccessService files, IFileService fileService)
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
+        /// <param name="fileAccess">File access service</param>
+        /// <param name="fileService">TBA</param>
+        public TestFileManager(IFileAccessService fileAccess, IFileService fileService)
         {
-            mFileAccess = files;
+            // TODO combine this services into one
+            mFileAccess = fileAccess;
             mFilesEncoder = fileService;
             mSerializer = SerializerFactory.New<Test>();
         }
+
+        #endregion
+
+        #region Interface Methods
 
         public TestFileContext GetTestContext(string absolutePath)
         {
@@ -68,7 +88,7 @@ namespace Testinator.Server.Services
 
             var tags = new StringBuilder();
             var currCat = test.Info.Category;
-            while(currCat != null)
+            while (currCat != null)
             {
                 tags.Append($"#{currCat.Name}");
                 currCat = currCat.SubCategory;
@@ -89,6 +109,8 @@ namespace Testinator.Server.Services
 
             mFilesEncoder.SaveFile(fs, fileContext, testBytes);
             return true;
-        }
+        } 
+
+        #endregion
     }
 }
