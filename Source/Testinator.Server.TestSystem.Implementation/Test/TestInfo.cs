@@ -5,6 +5,7 @@ using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Implementation
 {
+    [Serializable]
     public class TestInfo : ITestInfo
     {
         [StringLength(min: 5, max: 200, fromVersion: 1)]

@@ -1,7 +1,9 @@
-﻿using Testinator.TestSystem.Abstractions;
+﻿using System;
+using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Implementation
 {
+    [Serializable]
     internal class Grading : IGrading
     {
         public IGradingStrategy Strategy { get; internal set; }

@@ -5,6 +5,7 @@ using Testinator.TestSystem.Abstractions.Tests;
 
 namespace Testinator.TestSystem.Implementation
 {
+    [Serializable]
     public class Test : ITest
     {
         #region Internal Members
@@ -17,7 +18,6 @@ namespace Testinator.TestSystem.Implementation
         #endregion
 
         public ITestInfo Info => mInfo;
-      
 
         public IGrading Grading => mGrading;
 
