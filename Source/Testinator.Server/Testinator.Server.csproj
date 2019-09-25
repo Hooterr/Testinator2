@@ -509,6 +509,10 @@
       <Project>{f592fa60-030d-440b-bb00-ed4ea5a919f6}</Project>
       <Name>Testinator.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Testinator.FileFormats\Testinator.Files.csproj">
+      <Project>{bbd23e64-0c08-4360-8fbd-c1e99e3bc96f}</Project>
+      <Name>Testinator.Files</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Testinator.Server.Database\Testinator.Server.Database.csproj">
       <Project>{d4954a2f-015a-4346-913e-4d9caa8d5829}</Project>
       <Name>Testinator.Server.Database</Name>

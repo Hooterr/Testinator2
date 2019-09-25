@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Testinator.Core;
+using Testinator.Files;
 using Testinator.Server.Database;
 using Testinator.Server.Domain;
 using Testinator.Server.Network;
@@ -50,6 +51,8 @@ namespace Testinator.Server
             construction.Services.AddTransient<TestCreatorQuestionsPageViewModel>();
             construction.Services.AddTransient<TestCreatorGradingPageViewModel>();
             construction.Services.AddTransient<QuestionsMultipleChoicePageViewModel>();
+
+            FilesServicesInstaller.Install(construction.Services);
 
             // Return the construction for chaining
             return construction;
