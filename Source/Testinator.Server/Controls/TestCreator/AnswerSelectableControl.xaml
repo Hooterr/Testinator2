@@ -29,7 +29,6 @@
 
                         </Grid>
 
-                        <!-- Hover effect -->
                         <ControlTemplate.Triggers>
 
                             <DataTrigger Binding="{Binding IsSelected}" Value="True">

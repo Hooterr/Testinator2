@@ -38,7 +38,7 @@ namespace Testinator.TestSystem.Editors
         
         // Don't bother for now
 
-        // bool UseAllQuestions
+        // bool UseAllQuestions - shouldn't this go to test options btw?
         // some fun stuff with questions' categories
     }
 }

@@ -36,6 +36,11 @@ namespace Testinator.Server.Domain
         /// </summary>
         public bool IsCreatingQuestion { get; set; }
 
+        /// <summary>
+        /// The errors that are displayed in case there is a problem with questions
+        /// </summary>
+        public string ErrorMessage { get; set; }
+
         #endregion
 
         #region Commands
@@ -148,7 +153,8 @@ namespace Testinator.Server.Domain
         /// </summary>
         private void GoToNextPage()
         {
-            // TODO: Validate questions and stuff
+            // TODO: Validate questions
+            //mEditor.Validate();
 
             // Go to grading page
             mApplicationVM.GoToPage(ApplicationPage.TestCreatorGrading);
