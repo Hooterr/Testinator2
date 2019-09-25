@@ -4,9 +4,31 @@ using System.IO;
 
 namespace Testinator.Files
 {
+    /// <summary>
+    /// Default implementation of <see cref="IFileService"/>
+    /// </summary>
     public class FileService : IFileService
     {
+        #region Private Members
+
         private readonly MetadataEncoder mMetadataEncoder;
+
+        #endregion
+
+        #region Constructors
+
+        /// <summary>
+        /// Default constructors
+        /// </summary>
+        public FileService()
+        {
+            mMetadataEncoder = MetadataEncoder.Default;
+        }
+
+        #endregion        
+        
+        #region Interface Methods
+
         public FileContext GetFileInfo(FileStream stream)
         {
             var fileInfo = new FileContext();
@@ -15,7 +37,7 @@ namespace Testinator.Files
             FileSignature signature;
             byte[] metadataBytes;
             try
-            { 
+            {
                 signatureBytes = new byte[8];
                 stream.Read(signatureBytes, 0, 8);
 
@@ -26,10 +48,10 @@ namespace Testinator.Files
             }
             catch
             {
-                stream.Close();
+                stream.Dispose();
                 throw;
             }
-            
+
 
             fileInfo.Version = signature.Version;
             var metadata = mMetadataEncoder.Parse(metadataBytes);
@@ -39,18 +61,18 @@ namespace Testinator.Files
 
         public void SaveFile(FileStream stream, FileContext info, byte[] data)
         {
-            
             var fileHeader = info.GenerateHeader(mMetadataEncoder);
             var headerBytes = fileHeader.GetAllBytes();
-            // Here goes the header
-            stream.Write(headerBytes, 0, headerBytes.Length);
-            // And right after that the actual file content
-            stream.Write(data, 0, data.Length);
-        }
 
-        public FileService()
-        {
-            mMetadataEncoder = MetadataEncoder.Default;
-        }
+            using (stream)
+            {
+                // Here goes the header
+                stream.Write(headerBytes, 0, headerBytes.Length);
+                // And right after that the actual file content
+                stream.Write(data, 0, data.Length);
+            }
+        } 
+
+        #endregion
     }
 }

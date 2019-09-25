@@ -5,20 +5,33 @@ using System.Text;
 
 namespace Testinator.Files
 {
+    /// <summary>
+    /// Handles metadata encoding and decoding
+    /// </summary>
     internal class MetadataEncoder
     {
 
         /* 
-         * 
          * key value pairs
          * 
          * <key> 0x1f <value> 0x1e 
          * 
          */
 
+        #region Private Members
+
         private const byte KeyValueSeparator = 0x1f;
         private const byte PairSeparator = 0x1e;
 
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        /// Parses metadata
+        /// </summary>
+        /// <param name="bytes">Metadata bytes</param>
+        /// <returns>Converted key values dictionary</returns>
         public IDictionary<string, string> Parse(byte[] bytes)
         {
             var pairs = new Dictionary<string, string>();
@@ -27,10 +40,10 @@ namespace Testinator.Files
             var lookingForKey = true;
             var key = "";
             var value = "";
-            for(var i = 0; i < bytes.Length; i++)
+            for (var i = 0; i < bytes.Length; i++)
             {
 
-                if(lookingForKey && bytes[i] == KeyValueSeparator)
+                if (lookingForKey && bytes[i] == KeyValueSeparator)
                 {
                     key = Encoding.UTF8.GetString(bytes.Skip(startIdx).Take(i - startIdx).ToArray());
                     lookingForKey = false;
@@ -48,10 +61,15 @@ namespace Testinator.Files
             return pairs;
         }
 
+        /// <summary>
+        /// Converts metadata to bytes
+        /// </summary>
+        /// <param name="metadata">Key value dictionary containing the metadata</param>
+        /// <returns>Metadata converted to bytes</returns>
         public byte[] Encode(IReadOnlyDictionary<string, string> metadata)
         {
             byte[] bytes;
-            using(var ms = new MemoryStream())
+            using (var ms = new MemoryStream())
             {
                 foreach (var pair in metadata)
                 {
@@ -69,8 +87,20 @@ namespace Testinator.Files
             return bytes;
         }
 
+        #endregion   
+
+        #region Construction
+
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         private MetadataEncoder() { }
 
-        public static MetadataEncoder Default => new MetadataEncoder();
+        /// <summary>
+        /// Gets a default encoder
+        /// </summary>
+        public static MetadataEncoder Default => new MetadataEncoder(); 
+        
+        #endregion
     }
 }
