@@ -15,16 +15,14 @@ namespace Testinator.Server.Domain
         private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
 
-        private readonly IGradingEditor mEditor;
-
         #endregion
 
         #region Public Properties
 
         /// <summary>
-        /// Indicates if user is in grading creation mode
+        /// Indicates if user is in grading editing mode
         /// </summary>
-        public bool IsCreatingGrading { get; set; }
+        public bool IsEditingGrading { get; set; }
 
         #endregion
 
@@ -50,9 +48,6 @@ namespace Testinator.Server.Domain
 
             // Create commands
             FinishGradingCommand = new RelayCommand(GoToNextPage);
-
-            // Get the editor for grading
-            mEditor = mTestCreator.GetEditorGrading();
         }
 
         #endregion
