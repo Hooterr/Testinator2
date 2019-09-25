@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Testinator.Files
+namespace Testinator.Server.Files
 {
     /// <summary>
     /// Handles metadata encoding and decoding

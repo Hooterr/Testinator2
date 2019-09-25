@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Testinator.Files
+namespace Testinator.Server.Files
 {
     public static class FilesServicesInstaller
     {

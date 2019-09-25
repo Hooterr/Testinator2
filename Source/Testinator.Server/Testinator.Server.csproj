@@ -509,10 +509,6 @@
       <Project>{f592fa60-030d-440b-bb00-ed4ea5a919f6}</Project>
       <Name>Testinator.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Testinator.FileFormats\Testinator.Files.csproj">
-      <Project>{bbd23e64-0c08-4360-8fbd-c1e99e3bc96f}</Project>
-      <Name>Testinator.Files</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Testinator.Server.Database\Testinator.Server.Database.csproj">
       <Project>{d4954a2f-015a-4346-913e-4d9caa8d5829}</Project>
       <Name>Testinator.Server.Database</Name>
@@ -520,6 +516,10 @@
     <ProjectReference Include="..\Testinator.Server.Domain\Testinator.Server.Domain.csproj">
       <Project>{409c10f1-b984-4a7c-b34a-0a431ff050b7}</Project>
       <Name>Testinator.Server.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Testinator.Server.Files\Testinator.Server.Files.csproj">
+      <Project>{28a0bfe6-214b-47c2-86c6-e3bb1635064b}</Project>
+      <Name>Testinator.Server.Files</Name>
     </ProjectReference>
     <ProjectReference Include="..\Testinator.Server.Logging\Testinator.Server.Logging.csproj">
       <Project>{81aa335e-56b4-4345-947d-23ea26cd2aba}</Project>

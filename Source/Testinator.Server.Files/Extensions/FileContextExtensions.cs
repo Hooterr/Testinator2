@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Testinator.Server.Domain;
 
-namespace Testinator.Files
+namespace Testinator.Server.Files
 {
     /// <summary>
     /// Extensions for <see cref="FileContext"/>

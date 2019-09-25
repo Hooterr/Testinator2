@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using Testinator.Server.Domain;
-using Testinator.Server.Serialization;
 using Testinator.TestSystem.Implementation;
 
-namespace Testinator.Files
+namespace Testinator.Server.Files
 {
     /// <summary>
     /// Default implementation of <see cref="ITestFileManager"/>

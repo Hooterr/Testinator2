@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Testinator.Server.Domain\Testinator.Server.Domain.csproj" />
-    <ProjectReference Include="..\Testinator.Server.Serialization\Testinator.Server.Serialization.csproj" />
   </ItemGroup>
 
 </Project>

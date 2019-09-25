@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using Testinator.Server.Domain;
 
-namespace Testinator.Files
+namespace Testinator.Server.Files
 {
     /// <summary>
     /// Handles basic operation on Testinator files

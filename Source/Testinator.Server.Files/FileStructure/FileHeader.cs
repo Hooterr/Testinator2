@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace Testinator.Files
+namespace Testinator.Server.Files
 {
     /// <summary>
     /// Represents a header of any file

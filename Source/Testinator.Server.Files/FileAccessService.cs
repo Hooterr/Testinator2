@@ -2,7 +2,7 @@
 using System.IO;
 using Testinator.Server.Domain;
 
-namespace Testinator.Files
+namespace Testinator.Server.Files
 {
     /// <summary>
     /// Default implementation of <see cref="IFileAccessService"/>

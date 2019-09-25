@@ -1,10 +1,9 @@
 ﻿using Dna;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Testinator.Core;
-using Testinator.Files;
 using Testinator.Server.Database;
 using Testinator.Server.Domain;
+using Testinator.Server.Files;
 using Testinator.Server.Network;
 using Testinator.Server.Services;
 using Testinator.TestSystem.Editors;
@@ -37,7 +36,7 @@ namespace Testinator.Server
             construction.Services.AddScoped<ITestCreatorService, TestCreatorService>();
             construction.Services.AddScoped<IUIManager, UIManager>();
 
-            // Inject dependiencies into every page's view model
+            // Inject dependencies into every page's view model
             construction.Services.AddTransient<HomeViewModel>();
             construction.Services.AddTransient<LoginViewModel>();
             construction.Services.AddTransient<ScreenStreamViewModel>();
@@ -51,6 +50,8 @@ namespace Testinator.Server
             construction.Services.AddTransient<TestCreatorQuestionsPageViewModel>();
             construction.Services.AddTransient<TestCreatorGradingPageViewModel>();
             construction.Services.AddTransient<QuestionsMultipleChoicePageViewModel>();
+
+            construction.Services.AddScoped<ITestFileManager, TestFileManager>();
 
             FilesServicesInstaller.Install(construction.Services);
 
