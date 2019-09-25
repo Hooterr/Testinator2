@@ -68,5 +68,9 @@ namespace Testinator.Files
 
             return bytes;
         }
+
+        private MetadataEncoder() { }
+
+        public static MetadataEncoder Default => new MetadataEncoder();
     }
 }

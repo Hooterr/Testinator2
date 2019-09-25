@@ -40,7 +40,7 @@ namespace Testinator.Files
         public void SaveFile(FileStream stream, FileContext info, byte[] data)
         {
             
-            var fileHeader = info.GenerateHeader();
+            var fileHeader = info.GenerateHeader(mMetadataEncoder);
             var headerBytes = fileHeader.GetAllBytes();
             // Here goes the header
             stream.Write(headerBytes, 0, headerBytes.Length);
@@ -50,7 +50,7 @@ namespace Testinator.Files
 
         public FileService()
         {
-            mMetadataEncoder = new MetadataEncoder();
+            mMetadataEncoder = MetadataEncoder.Default;
         }
     }
 }
