@@ -22,7 +22,7 @@ namespace Testinator.Server.Files
                 path = mGetFilesOptions.AbsoluteFolderPath;
 
             else if(mGetFilesOptions.ApplicationFolder != null)
-                path = $"{mRootDataFolderPath}\\{mGetFilesOptions.ApplicationFolder.ToString()}";
+                path = $"{mRootDataFolderPath}\\{mGetFilesOptions.ApplicationFolder.Value.GetFolderName()}";
 
             throw new InvalidOperationException("You must at least specify application folder or an absolute path to a folder.");
         }

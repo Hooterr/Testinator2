@@ -1,7 +1,4 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Testinator.Server.Files
 {
@@ -9,8 +6,7 @@ namespace Testinator.Server.Files
     {
         public static void Install(IServiceCollection services)
         {
-            services.AddScoped<IFileAccessService, FileAccessService>()
-                .AddScoped<IFileService, FileService>();
+            services.AddScoped<IFileAccessService, FileAccessService>();
         }
     }
 }

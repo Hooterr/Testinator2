@@ -9,20 +9,16 @@ namespace Testinator.Server.Files
         private readonly string mRootDataFolderPath;
         private readonly GetFileOptions mGetFileOptions;
 
-        public void GetPath(out string path, out FileMode mode)
-        {
-            mode = mGetFileOptions.OpenMode ?? throw new InvalidOperationException("File mode must be specified explicitly.");
-
+        public string GetAbsolutePath()
+        { 
             if (!string.IsNullOrEmpty(mGetFileOptions.AbsolutePath))
             {
-                path = mGetFileOptions.AbsolutePath;
+                return mGetFileOptions.AbsolutePath;
             }
             else if(mGetFileOptions.Folder != null)
             {
                 if(!string.IsNullOrWhiteSpace(mGetFileOptions.FileName))
-                {
-                    path = $"{mRootDataFolderPath}\\{mGetFileOptions.Folder.ToString()}\\{mGetFileOptions.FileName}";
-                }
+                    return $"{mRootDataFolderPath}\\{mGetFileOptions.Folder.Value.GetFolderName()}\\{mGetFileOptions.FileName}";
                 else
                     throw new InvalidOperationException("File name cannot be empty.");
             }

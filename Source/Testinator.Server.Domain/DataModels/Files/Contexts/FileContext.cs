@@ -17,6 +17,6 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// File's metadata
         /// </summary>
-        public IReadOnlyDictionary<string, string> Metadata { get; set; }
+        public IDictionary<string, string> Metadata { get; set; }
     }
 }

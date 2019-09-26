@@ -66,7 +66,7 @@ namespace Testinator.Server.Files
         /// </summary>
         /// <param name="metadata">Key value dictionary containing the metadata</param>
         /// <returns>Metadata converted to bytes</returns>
-        public byte[] Encode(IReadOnlyDictionary<string, string> metadata)
+        public byte[] Encode(IDictionary<string, string> metadata)
         {
             byte[] bytes;
             using (var ms = new MemoryStream())

@@ -1,6 +1,4 @@
-﻿using System;
-using System.IO;
-using Testinator.Server.Domain;
+﻿using Testinator.Server.Domain;
 
 namespace Testinator.Server.Files
 {
@@ -9,18 +7,21 @@ namespace Testinator.Server.Files
     /// </summary>
     public interface IFileAccessService
     {
-        /// <summary>
-        /// Gets a specific file
-        /// </summary>
-        /// <param name="configureOptions">Configure options method</param>
-        /// <returns>Stream to the file</returns>
-        FileStream GetFile(Action<GetFileOptions> configureOptions);
+        string DataFolderRootPath { get; }
 
         /// <summary>
-        /// Gets all file names from a given directory
+        /// Get a file context from a file
         /// </summary>
-        /// <param name="configureOptions">Configure options method</param>
-        /// <returns>The file names</returns>
-        string[] GetAllFileNames(Action<GetFilesFromDirectoryOptions> configureOptions);
+        /// <param name="absolutePath">The absolute path to the file</param>
+        /// <returns>File context</returns>
+        FileContext GetFileInfo(string absolutePath);
+
+        /// <summary>
+        /// Saves data to file
+        /// </summary>
+        /// <param name="absolutePath">The absolute path to a file</param>
+        /// <param name="info">Information about that files</param>
+        /// <param name="data">The actual files content</param>
+        void SaveFile(string absolutePath, FileContext info, byte[] data);
     }
 }
