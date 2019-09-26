@@ -16,21 +16,15 @@ namespace Testinator.TestSystem.Editors
         List<string> ABCD { get; set; }
 
         /// <summary>
-        /// Shortcut to set multiple options at once
-        /// </summary>
-        /// <param name="options"></param>
-        void SetOptions(params string[] options);
-
-        /// <summary>
         /// Gets the maximum count of the allowed options
         /// </summary>
         /// <returns>The maximum number of options</returns>
-        int GetMaximumCount();
+        int MaximumCount { get; }
 
         /// <summary>
         /// Gets the minimum count of the allowed options
         /// </summary>
         /// <returns>The minimum number of options</returns>
-        int GetMinimumCount();
+        int MinimumCount { get; }
     }
 }

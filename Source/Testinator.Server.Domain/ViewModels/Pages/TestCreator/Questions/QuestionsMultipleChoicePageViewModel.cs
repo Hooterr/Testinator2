@@ -23,16 +23,6 @@ namespace Testinator.Server.Domain
         /// </summary>
         private QuestionEditorMultipleChoice mEditor;
 
-        /// <summary>
-        /// The minimum amount of answers required for successful question validation
-        /// </summary>
-        private int mMinimumAnswersCount;
-
-        /// <summary>
-        /// The maximum amount of answers required for successful question validation
-        /// </summary>
-        private int mMaximumAnswersCount;
-
         #endregion
 
         #region Public Properties
@@ -114,7 +104,7 @@ namespace Testinator.Server.Domain
         {
             // Make sure we don't exceed maximum answer limit
             var answersCount = Answers.Value.Count;
-            if (answersCount >= mMaximumAnswersCount)
+            if (answersCount >= mEditor.Options.MaximumCount)
                 return;
 
             // Add new answer
@@ -133,7 +123,7 @@ namespace Testinator.Server.Domain
         {
             // Make sure we can remove the answer and still meet the requirement
             var answersCount = Answers.Value.Count;
-            if (answersCount <= mMinimumAnswersCount)
+            if (answersCount <= mEditor.Options.MinimumCount)
                 return;
 
             // Remove the last answer
@@ -157,15 +147,11 @@ namespace Testinator.Server.Domain
             // Get the editor itself
             mEditor = editor;
 
-            // Get the requirement values
-            mMinimumAnswersCount = mEditor.Options.GetMinimumCount();
-            mMaximumAnswersCount = mEditor.Options.GetMaximumCount();
-
             // Initialize every property based on current editor state
             // If we are editing existing question, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
             Task = mEditor.Task.Text.Content;
-            Answers = mEditor.Options.ABCD.ToAnswerViewModels(mMinimumAnswersCount);
+            Answers = mEditor.Options.ABCD.ToAnswerViewModels(mEditor.Options.MinimumCount);
             Points = mEditor.Scoring.MaximumScore.ToString();
 
             // Catch all the errors and display them

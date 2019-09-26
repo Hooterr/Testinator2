@@ -13,16 +13,6 @@ namespace Testinator.TestSystem.Editors
         #region Private Members
 
         /// <summary>
-        /// Maximum count of options
-        /// </summary>
-        private int mMaxCount;
-        
-        /// <summary>
-        /// Minimum count of options
-        /// </summary>
-        private int mMinCount;
-
-        /// <summary>
         /// Maximum single option length
         /// </summary>
         private int mMaxOptionLen;
@@ -46,24 +36,15 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         public List<string> ABCD { get; set; }
 
-        #endregion
+        /// <summary>
+        /// Maximum allowed amount of options
+        /// </summary>
+        public int MaximumCount { get; private set; }
 
-        #region Public Methods
-        
-        public int GetMaximumCount()
-        {
-            return mMaxCount;
-        }
-
-        public int GetMinimumCount()
-        {
-            return mMinCount;
-        }
-        public void SetOptions(params string[] options)
-        {
-            ABCD.Clear();
-            ABCD.AddRange(options);
-        }
+        /// <summary>
+        /// Minimum required amount of options
+        /// </summary>
+        public int MinimumCount { get; private set; }
 
         #endregion
 
@@ -133,9 +114,9 @@ namespace Testinator.TestSystem.Editors
                 }
             }
 
-            if (ABCD.Count() < mMinCount || ABCD.Count() > mMaxCount)
+            if (ABCD.Count() < MinimumCount || ABCD.Count() > MaximumCount)
             {
-                mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"There must be from {mMinCount} to {mMaxCount} options.");
+                mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"There must be from {MinimumCount} to {MaximumCount} options.");
                 validationPassed = false;
             }
 
@@ -159,8 +140,8 @@ namespace Testinator.TestSystem.Editors
         {
             var collectionCountAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, List<string>, CollectionCountAttribute>
                 (x => x.Options, Version);
-            mMaxCount = collectionCountAttr.Max;
-            mMinCount = collectionCountAttr.Min;
+            MaximumCount = collectionCountAttr.Max;
+            MinimumCount = collectionCountAttr.Min;
 
             mOnlyDistinct = AttributeHelper.GetPropertyAttributeValue<MultipleChoiceQuestionOptions, List<string>, CollectionItemsOnlyDistinctAttribute, bool>
                 (x => x.Options, attr => attr.Value, Version);

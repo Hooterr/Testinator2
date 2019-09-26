@@ -44,6 +44,16 @@ namespace Testinator.Server.Domain
         #region Commands
 
         /// <summary>
+        /// The command to add new possible grade to the grading
+        /// </summary>
+        public ICommand AddGradeCommand { get; private set; }
+
+        /// <summary>
+        /// The command to remove last grade from the grading
+        /// </summary>
+        public ICommand RemoveGradeCommand { get; private set; }
+
+        /// <summary>
         /// The command to finish this page and move forward with test creation
         /// </summary>
         public ICommand FinishGradingCommand { get; private set; }
@@ -62,10 +72,15 @@ namespace Testinator.Server.Domain
             mApplicationVM = applicationVM;
 
             // Create commands
+            AddGradeCommand = new RelayCommand(AddGrade);
+            RemoveGradeCommand = new RelayCommand(RemoveGrade);
             FinishGradingCommand = new RelayCommand(GoToNextPage);
 
-            // Get the editor for grading
+            // Get the editor associated with this page
             mEditor = mTestCreator.GetEditorGrading();
+
+            // And initialize the data we display
+            InitializeInputData();
         }
 
         #endregion
@@ -73,10 +88,41 @@ namespace Testinator.Server.Domain
         #region Command Methods
 
         /// <summary>
+        /// Adds new possible grade to the current grading
+        /// </summary>
+        private void AddGrade()
+        {
+            // Make sure we don't exceed maximum grade limit
+            var gradesCount = Grades.Value.Count;
+            if (gradesCount >= mEditor.MaxThresholdsCount)
+                return;
+
+            // Add new grade
+            Grades.Value.Add(new GradeEditableViewModel());
+        }
+
+        /// <summary>
+        /// Removes last grade from the current grading
+        /// </summary>
+        private void RemoveGrade()
+        {
+            // Make sure we can remove the answer and still meet the requirement
+            var gradesCount = Grades.Value.Count;
+            if (gradesCount <= mEditor.MinThresholdCount)
+                return;
+
+            // Remove the last grade
+            Grades.Value.RemoveAt(gradesCount - 1);
+        }
+
+        /// <summary>
         /// Checks if we have enough questions in the test and goes to the grading page
         /// </summary>
         private void GoToNextPage()
         {
+            // Pass all the changes back to the editor
+            mEditor.CustomThresholds = Grades.Value.ToThresholdsInEditor();
+
             // Validate grading state
             if (mEditor.Validate())
             {
@@ -84,7 +130,8 @@ namespace Testinator.Server.Domain
                 mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestFinalize);
             }
 
-            // TODO: Validation failed
+            // Validation failed, do not submit anything
+            // Error will be displayed by previous setup, no need to do anything here
         }
 
         /// <summary>
@@ -92,6 +139,10 @@ namespace Testinator.Server.Domain
         /// </summary>
         private void InitializeInputData()
         {
+            // Copy all the properties from the editor
+            PointsForTest = mEditor.TotalPointScore;
+            Grades = mEditor.CustomThresholds.ToGradeViewModels(mEditor.MinThresholdCount);
+
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x.CustomThresholds, (e) => Grades.ErrorMessage = e);
         }
