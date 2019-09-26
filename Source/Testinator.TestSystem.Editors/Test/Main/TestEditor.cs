@@ -29,7 +29,7 @@ namespace Testinator.TestSystem.Editors
         {
             get
             {
-                // TODO, should to for now, but fix this later
+                // TODO, should do for now, but fix this later
                 mGrading.mMaxPointScore = mQuestions.Sum(x => x.Scoring.MaximumScore);
                 return mGrading;
             }

@@ -25,6 +25,8 @@ namespace Testinator.TestSystem.Editors
 
         public bool ContainsPoints { get; set; }
 
+        public int TotalPointScore => mMaxPointScore;
+
         #endregion
 
         // Fix this

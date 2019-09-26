@@ -25,6 +25,11 @@ namespace Testinator.TestSystem.Editors
         List<KeyValuePair<int, IGrade>> CustomThresholds { get; set; }
 
         /// <summary>
+        /// Number of points one can get for all correct answers from this test
+        /// </summary>
+        int TotalPointScore { get; }
+
+        /// <summary>
         /// Indicates if <see cref="CustomThresholds"/> contains points thresholds or percentage thresholds
         /// </summary>
         bool ContainsPoints { get; set; }
