@@ -1,4 +1,5 @@
 ﻿using System;
+using Testinator.TestSystem.Abstractions.Tests;
 using Testinator.TestSystem.Implementation;
 
 namespace Testinator.Server.Domain
@@ -30,6 +31,8 @@ namespace Testinator.Server.Domain
         /// <param name="absoluteFolderPath">Absolute path to the file</param>
         /// <returns>True if successful, otherwise false</returns>
         bool Save(Action<GetFileOptions> configureOptions, Test test);
+
+        ITest Read(Action<GetFileOptions> configureOptions);
 
         // TODO Save(Test,ApplicationDataFolder,name)
         // and more

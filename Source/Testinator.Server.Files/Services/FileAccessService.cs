@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using Testinator.Server.Domain;
 
 namespace Testinator.Server.Files
@@ -86,6 +87,23 @@ namespace Testinator.Server.Files
                 // And right after that the actual file content
                 fs.Write(data, 0, data.Length);
             }
+        }
+
+        public byte[] ReadFileContents(string absolutePath)
+        {
+            byte[] wholeFile;
+            using (var fs = new FileStream(absolutePath, FileMode.Open))
+            {
+                using (var ms = new MemoryStream())
+                {
+                    fs.CopyTo(ms);
+                    wholeFile = ms.ToArray();
+                }
+            }
+
+            var signatureULong = BitConverter.ToUInt64(wholeFile.Take(8).ToArray(), 0);
+            var signature = new FileSignature(signatureULong);
+            return wholeFile.Skip(8 + signature.MetadataLength).ToArray();
         }
 
         #endregion

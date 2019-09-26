@@ -31,7 +31,7 @@ namespace Demo
 
             Console.WriteLine($"question build success: {questionBuild.Succeeded}");
 
-            mTestEditor.Info.Name = "This is the name of this test. As you can see it's so long that it's almost TLDR.";
+            mTestEditor.Info.Name = "This is the name of this test. As you can see it's so long that it's almost TLDR.złóęążźźżźłóęęęęę";
             mTestEditor.Info.Description = "This is the description of this test. It's pretty short in fact.";
             mTestEditor.Questions.Add(questionBuild.Result);
             mTestEditor.Questions.Add(questionBuild.Result);
@@ -60,6 +60,11 @@ namespace Demo
             var contexts = files.GetTestContexts(options =>
             {
                 options.Folder(ApplicationDataFolders.Tests);
+            });
+
+            var test = files.Read(options =>
+            {
+                options.InFolder(ApplicationDataFolders.Tests, "this shit better works");
             });
             
             Console.ReadKey();

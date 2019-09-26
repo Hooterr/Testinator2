@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Text;
 using Testinator.Server.Domain;
+using Testinator.TestSystem.Abstractions.Tests;
 using Testinator.TestSystem.Implementation;
 
 namespace Testinator.Server.Files
@@ -67,6 +68,21 @@ namespace Testinator.Server.Files
             adapter.GetPath(out var path, out var searchPattern);
 
             return GetFileContexts(path, searchPattern);
+        }
+
+        public ITest Read(Action<GetFileOptions> configureOptions)
+        {
+            if (configureOptions == null)
+                throw new ArgumentNullException(nameof(configureOptions));
+
+            var options = new GetFileOptions();
+            configureOptions.Invoke(options);
+            var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath)
+                .WithExtension(FileExtensions.Test);
+
+            var path = adapter.GetAbsolutePath();
+            var bytes = mFileAccess.ReadFileContents(path);
+            return mSerializer.Deserialize(new MemoryStream(bytes));
         }
 
         public bool Save(Action<GetFileOptions> configureOptions, Test test)

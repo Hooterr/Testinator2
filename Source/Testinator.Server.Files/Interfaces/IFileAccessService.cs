@@ -23,5 +23,7 @@ namespace Testinator.Server.Files
         /// <param name="info">Information about that files</param>
         /// <param name="data">The actual files content</param>
         void SaveFile(string absolutePath, FileContext info, byte[] data);
+
+        byte[] ReadFileContents(string absolutePath);
     }
 }
