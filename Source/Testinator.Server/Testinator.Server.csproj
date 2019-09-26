@@ -309,7 +309,7 @@
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\TestCreator\Grading\TestCreatorGradingPage.xaml.cs">
+    <Compile Include="Pages\TestCreator\TestCreatorGradingPage.xaml.cs">
       <DependentUpon>TestCreatorGradingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\TestCreator\Questions\QuestionsMultipleChoicePage.xaml.cs">
@@ -431,7 +431,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\TestCreator\Grading\TestCreatorGradingPage.xaml">
+    <Page Include="Pages\TestCreator\TestCreatorGradingPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

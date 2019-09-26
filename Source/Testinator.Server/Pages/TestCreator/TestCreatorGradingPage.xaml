@@ -58,20 +58,11 @@
 
                     <TextBlock Grid.ColumnSpan="4" Style="{StaticResource MediumTitleText}">
                         <Run Text="{x:Static core:LocalizationResource.MaxPointsTitle}" />
-                        <Run Text="{Binding Test.TotalPointScore, Mode=OneWay}" />
+                        <Run Text="{Binding TotalPointScore, Mode=OneWay}" />
                     </TextBlock>
 
-                    <StackPanel Orientation="Horizontal"
-                                Grid.Row="1"
-                                Grid.ColumnSpan="4">
-                        <TextBlock Text="{x:Static core:LocalizationResource.IsMarkACountedQuestion}"
-                                   Style="{StaticResource QuestionTextBlockStyle}" />
-                        <CheckBox IsChecked="{Binding CurrentGrading.IsMarkAIncluded}"/>
-                    </StackPanel>
-
                     <Grid Grid.Row="2"
-                          Grid.ColumnSpan="4"
-                          Visibility="{Binding CurrentGrading.IsMarkAIncluded, Converter={local:BooleanToVisiblityConverter}}">
+                          Grid.ColumnSpan="4">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*" />
@@ -349,8 +340,9 @@
                 </Grid>
 
                 <Border Grid.Column="1" Background="{StaticResource WhiteLightBrush}">
-                    <!--<local:CriteriaListControl DataContext="{x:Static Core:CriteriaListViewModel.Instance}"/>
-             --></Border>
+                    <!--<local:CriteriaListControl DataContext="{x:Static Core:CriteriaListViewModel.Instance}"/>-->
+                    <TextBlock Text="Tutaj będzie lista dostępnych gradingow presetow, obecnie nie ma nic" />
+                </Border>
 
             </Grid>
 
