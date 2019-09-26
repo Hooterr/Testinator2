@@ -1,6 +1,7 @@
 ﻿using System;
+using Testinator.Server.Domain;
 
-namespace Testinator.Server.Domain
+namespace Testinator.Server.Files
 {
     public class GetFilesFromDirectoryOptionsAdapter
     {

@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
+using Testinator.Server.Domain;
 
-namespace Testinator.Server.Domain
+namespace Testinator.Server.Files
 {
     public class GetFileOptionsAdapter
     {
