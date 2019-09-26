@@ -47,9 +47,10 @@ namespace Testinator.Server.Files
             var options = new GetFileOptions();
             configureOptions.Invoke(options);
 
-            var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath);
-            var filePath = adapter.GetAbsolutePath();
+            var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath)
+                .WithExtension(FileExtensions.Test);
 
+            var filePath = adapter.GetAbsolutePath();
             return GetFileContext(filePath);
         }
 

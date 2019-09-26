@@ -1,4 +1,6 @@
-﻿namespace Testinator.Server.Domain
+﻿using System.IO;
+
+namespace Testinator.Server.Domain
 {
     public class GetFileOptions
     {
@@ -25,7 +27,7 @@
         public GetFileOptions InFolder(string folderPath, string fileName)
         {
             AbsolutePath = folderPath + "\\" + fileName;
-            FileName = null;
+            FileName = fileName;
             Folder = null;
             return this;
         }
