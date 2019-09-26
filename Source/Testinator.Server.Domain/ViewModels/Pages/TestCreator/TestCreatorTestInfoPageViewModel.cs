@@ -74,12 +74,6 @@ namespace Testinator.Server.Domain
             // Get the editor associated with this page
             mEditor = mTestCreator.GetEditorTestInfo();
 
-            // Catch all the errors and display them
-            // TODO: Add other values here after they are done in editor
-            mEditor.OnErrorFor(x => x.Name, (e) => Name.ErrorMessage = e);
-            mEditor.OnErrorFor(x => x.Description, (e) => Description.ErrorMessage = e);
-            mEditor.OnErrorFor(x => x.TimeLimit, (e) => CompletionTime.ErrorMessage = e);
-
             // And initialize the data we display
             InitializeInputData();
         }
@@ -118,6 +112,12 @@ namespace Testinator.Server.Domain
             Name = mEditor.Name;
             Description = mEditor.Description;
             CompletionTime = mEditor.TimeLimit;
+
+            // Catch all the errors and display them
+            // TODO: Add other values here after they are done in editor
+            mEditor.OnErrorFor(x => x.Name, (e) => Name.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.Description, (e) => Description.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.TimeLimit, (e) => CompletionTime.ErrorMessage = e);
         }
 
         #endregion

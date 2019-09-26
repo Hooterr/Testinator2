@@ -58,7 +58,7 @@
 
                     <TextBlock Grid.ColumnSpan="4" Style="{StaticResource MediumTitleText}">
                         <Run Text="{x:Static core:LocalizationResource.MaxPointsTitle}" />
-                        <Run Text="{Binding TotalPointScore, Mode=OneWay}" />
+                        <Run Text="{Binding PointsForTest, Mode=OneWay}" />
                     </TextBlock>
 
                     <Grid Grid.Row="2"

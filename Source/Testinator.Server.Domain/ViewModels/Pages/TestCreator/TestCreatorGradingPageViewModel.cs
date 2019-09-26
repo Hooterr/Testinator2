@@ -30,6 +30,11 @@ namespace Testinator.Server.Domain
         public bool IsEditingGrading { get; set; }
 
         /// <summary>
+        /// The maximum amount of points reachable from test
+        /// </summary>
+        public int PointsForTest { get; set; }
+
+        /// <summary>
         /// The collection of grades that sums up to create grading
         /// </summary>
         public InputField<ObservableCollection<GradeEditableViewModel>> Grades { get; set; }
@@ -80,6 +85,15 @@ namespace Testinator.Server.Domain
             }
 
             // TODO: Validation failed
+        }
+
+        /// <summary>
+        /// Initializes the input data in this page by loading it from the editor
+        /// </summary>
+        private void InitializeInputData()
+        {
+            // Catch all the errors and display them
+            mEditor.OnErrorFor(x => x.CustomThresholds, (e) => Grades.ErrorMessage = e);
         }
 
         #endregion
