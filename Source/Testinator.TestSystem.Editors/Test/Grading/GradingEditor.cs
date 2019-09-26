@@ -60,7 +60,7 @@ namespace Testinator.TestSystem.Editors
             {
                 Custom = true;
                 ContainsPoints = true;
-                // Already null, but keep for good measure 
+                CustomThresholds = new List<KeyValuePair<int, IGrade>>();
                 Preset = null;
             }
         }

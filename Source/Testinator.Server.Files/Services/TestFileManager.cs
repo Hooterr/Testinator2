@@ -47,8 +47,7 @@ namespace Testinator.Server.Files
             var options = new GetFileOptions();
             configureOptions.Invoke(options);
 
-            var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath)
-                .WithExtension(FileExtensions.Test);
+            var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath);
 
             var filePath = adapter.GetAbsolutePath();
             return GetFileContext(filePath);
@@ -61,6 +60,8 @@ namespace Testinator.Server.Files
 
             var options = new GetFilesFromDirectoryOptions();
             configureOptions.Invoke(options);
+            if (string.IsNullOrEmpty(options.SearchPatter))
+                options.Pattern($"*.{FileExtensions.Test}");
 
             var adapter = new GetFilesFromDirectoryOptionsAdapter(options, mFileAccess.DataFolderRootPath);
             adapter.GetPath(out var path, out var searchPattern);
@@ -76,7 +77,9 @@ namespace Testinator.Server.Files
             var options = new GetFileOptions();
             configureOptions.Invoke(options);
 
-            var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath);
+            var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath)
+                .WithExtension(FileExtensions.Test);
+
             var absolutePath = adapter.GetAbsolutePath();
 
             var tags = new StringBuilder();

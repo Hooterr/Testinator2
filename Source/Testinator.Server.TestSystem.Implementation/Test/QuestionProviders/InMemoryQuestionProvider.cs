@@ -6,6 +6,7 @@ using Testinator.TestSystem.Abstractions.Questions;
 
 namespace Testinator.TestSystem.Implementation
 {
+    [Serializable]
     public class InMemoryQuestionProvider : IQuestionProvider
     {
         private IQuestion mQuestion;

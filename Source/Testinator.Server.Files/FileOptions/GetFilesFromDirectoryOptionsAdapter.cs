@@ -24,7 +24,8 @@ namespace Testinator.Server.Files
             else if(mGetFilesOptions.ApplicationFolder != null)
                 path = $"{mRootDataFolderPath}\\{mGetFilesOptions.ApplicationFolder.Value.GetFolderName()}";
 
-            throw new InvalidOperationException("You must at least specify application folder or an absolute path to a folder.");
+            else
+                throw new InvalidOperationException("You must at least specify application folder or an absolute path to a folder.");
         }
     }
 }
