@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Attributes;
 using Testinator.TestSystem.Implementation;
 
 namespace Testinator.TestSystem.Editors
@@ -26,6 +27,10 @@ namespace Testinator.TestSystem.Editors
         public bool ContainsPoints { get; set; }
 
         public int TotalPointScore => mMaxPointScore;
+
+        public int MaxThresholdsCount { get; private set; }
+
+        public int MinThresholdCount { get; private set; }
 
         #endregion
 
@@ -53,6 +58,7 @@ namespace Testinator.TestSystem.Editors
 
         protected override void OnInitialize()
         {
+            LoadAttributeValues();
             if (IsInEditorMode())
             {
                 mMaxPointScore = OriginalObject.MaxPointScore;
@@ -207,6 +213,13 @@ namespace Testinator.TestSystem.Editors
         bool IErrorListener<IGradingEditor>.Validate()
         {
             return Validate();
+        }
+
+        private void LoadAttributeValues()
+        {
+            var thresholdsAttr = AttributeHelper.GetPropertyAttribute<Grading, IGradingStrategy, CollectionCountAttribute>(x => x.Strategy, Version);
+            MaxThresholdsCount = thresholdsAttr.Max;
+            MinThresholdCount = thresholdsAttr.Min;
         }
 
         #endregion
