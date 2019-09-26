@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Testinator.Core;
 using Testinator.TestSystem.Editors;
 
@@ -14,6 +15,11 @@ namespace Testinator.Server.Domain
         private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
 
+        /// <summary>
+        /// The editor for grading in this page
+        /// </summary>
+        private readonly IGradingEditor mEditor;
+
         #endregion
 
         #region Public Properties
@@ -22,6 +28,11 @@ namespace Testinator.Server.Domain
         /// Indicates if user is in grading editing mode
         /// </summary>
         public bool IsEditingGrading { get; set; }
+
+        /// <summary>
+        /// The collection of grades that sums up to create grading
+        /// </summary>
+        public InputField<ObservableCollection<GradeEditableViewModel>> Grades { get; set; }
 
         #endregion
 
@@ -47,6 +58,9 @@ namespace Testinator.Server.Domain
 
             // Create commands
             FinishGradingCommand = new RelayCommand(GoToNextPage);
+
+            // Get the editor for grading
+            mEditor = mTestCreator.GetEditorGrading();
         }
 
         #endregion
@@ -58,10 +72,14 @@ namespace Testinator.Server.Domain
         /// </summary>
         private void GoToNextPage()
         {
-            // TODO: Validate grading and stuff
+            // Validate grading state
+            if (mEditor.Validate())
+            {
+                // Validation succeeded, go to the final page
+                mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestFinalize);
+            }
 
-            // Go to final page
-            mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestFinalize);
+            // TODO: Validation failed
         }
 
         #endregion

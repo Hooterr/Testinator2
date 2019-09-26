@@ -204,7 +204,7 @@ namespace Testinator.TestSystem.Editors
 
         bool IErrorListener<IGradingEditor>.Validate()
         {
-            throw new NotImplementedException();
+            return Validate();
         }
 
         #endregion
