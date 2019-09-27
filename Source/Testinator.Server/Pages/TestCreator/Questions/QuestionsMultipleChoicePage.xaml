@@ -28,6 +28,7 @@
                     <DataTemplate>
                         <local:AnswerSelectableControl>
                             <Button Content="{Binding Title}"
+                                    Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}}"
                                     Command="{Binding DataContext.SelectAnswerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
                                     CommandParameter="{Binding}"
                                     />
