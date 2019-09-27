@@ -22,6 +22,8 @@ namespace Testinator.TestSystem.Editors
         private TimeSpan mTimeLimitMin;
         private TimeSpan mTimeLimitMax;
 
+        private bool mAllowEmptyDescription;
+
         #endregion
 
         #region Public Properties
@@ -73,8 +75,11 @@ namespace Testinator.TestSystem.Editors
 
             if (string.IsNullOrEmpty(Description))
             {
-                validationPassed = false;
-                ErrorHandlerAdapter.HandleErrorFor(x => x.Description, "The description must not be empty");
+                if (false == mAllowEmptyDescription)
+                {
+                    validationPassed = false;
+                    ErrorHandlerAdapter.HandleErrorFor(x => x.Description, "The description must not be empty");
+                }
             }
             else if (Description.Length > mDescriptionMaxLen || Description.Length < mDescriptionMinLen)
             {
@@ -146,6 +151,8 @@ namespace Testinator.TestSystem.Editors
 
             mTimeLimitMax = timeConstraints.Max;
             mTimeLimitMin = timeConstraints.Min;
+
+            mAllowEmptyDescription = AttributeHelper.GetPropertyAttribute<TestInfo, string, AllowNullOrEmptyStringAttribute>(x => x.Description, mVersion) == null;
         }
 
         public void OnErrorFor(Expression<Func<ITestInfoEditor, object>> propertyExpression, Action<string> action)
