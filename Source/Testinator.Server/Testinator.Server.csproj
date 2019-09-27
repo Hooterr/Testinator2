@@ -253,6 +253,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\IsBusyProperty.cs" />
+    <Compile Include="Controls\TestCreator\GradeEditableControl.xaml.cs">
+      <DependentUpon>GradeEditableControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TestCreator\AnswerSelectableControl.xaml.cs">
       <DependentUpon>AnswerSelectableControl.xaml</DependentUpon>
     </Compile>
@@ -355,6 +358,10 @@
     <Compile Include="ViewModels\DialogWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
+    <Page Include="Controls\TestCreator\GradeEditableControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\TestCreator\AnswerSelectableControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -34,7 +34,7 @@ namespace Testinator.TestSystem.Editors
 
         #endregion
 
-        // Fix this
+        // TODO: Fix this
         internal int mMaxPointScore;
 
         #region All Constructors

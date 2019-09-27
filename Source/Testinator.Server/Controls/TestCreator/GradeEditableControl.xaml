@@ -7,17 +7,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="60" d:DesignWidth="800">
 
-    <Grid Margin="4">
+    <Grid>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="60" />
+            <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="4*" />
         </Grid.ColumnDefinitions>
 
-        <TextBox Text="XX"
-                 Grid.Column="1"
-                 Style="{StaticResource BigInputTextBox}" />
+        <TextBlock Text="{Binding ThresholdFrom}" 
+                   Style="{StaticResource QuestionTextBlockStyle}" />
+
+        <TextBlock Text="-"
+                   Grid.Column="1"
+                   Style="{StaticResource QuestionTextBlockStyle}" />
+
+        <TextBox Text="{Binding ThresholdTo, UpdateSourceTrigger=PropertyChanged}"
+                 Grid.Column="2"
+                 local:IntegerOnlyTextBoxProperty.Value="True"
+                 Style="{StaticResource SmallInputTextBox}"
+                 />
+
+        <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}"
+                 Margin="8 0"
+                   Grid.Column="3"
+                   Style="{StaticResource SmallInputTextBox}" />
 
     </Grid>
-    
+
 </UserControl>

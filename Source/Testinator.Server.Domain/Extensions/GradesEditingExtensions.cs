@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Implementation;
 
 namespace Testinator.Server.Domain
 {
@@ -13,6 +14,7 @@ namespace Testinator.Server.Domain
         /// Converts the editor thresholds to grade view models ready to be edited
         /// </summary>
         /// <param name="thresholds">The grading thresholds from editor</param>
+        /// <param name="minimumGradesCount">The minimum amount of grades required</param>
         /// <returns>The collection of grade view models</returns>
         public static ObservableCollection<GradeEditableViewModel> ToGradeViewModels(this IEnumerable<KeyValuePair<int, IGrade>> thresholds, int minimumGradesCount)
         {
@@ -25,8 +27,21 @@ namespace Testinator.Server.Domain
                 // Add new grade
                 grades.Add(new GradeEditableViewModel
                 {
-
+                    Name = threshold.Value.Name,
+                    ThresholdTo = threshold.Key
                 });
+            }
+
+            // Check if we haven't met the minimum requirement of grades count
+            var gradesCount = grades.Count;
+            if (gradesCount < minimumGradesCount)
+            {
+                // Then we need to create new grades to fill the gap
+                for (var i = 0; i < minimumGradesCount - gradesCount; i++)
+                {
+                    // Create empty grade
+                    grades.Add(new GradeEditableViewModel());
+                }
             }
 
             // Return the final collection
@@ -43,7 +58,12 @@ namespace Testinator.Server.Domain
             // Prepare a list to return
             var thresholds = new List<KeyValuePair<int, IGrade>>();
 
-
+            // For each grade...
+            foreach (var grade in grades)
+            {
+                // Add new threshold
+                thresholds.Add(new KeyValuePair<int, IGrade>(grade.ThresholdTo, new Grade(grade.Name)));
+            }
 
             // Return final list
             return thresholds;

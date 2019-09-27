@@ -7,7 +7,7 @@ namespace Testinator.Server
     /// </summary>
     public partial class GradeEditableControl : UserControl
     {
-        public AnswerSelectableControl()
+        public GradeEditableControl()
         {
             InitializeComponent();
         }
