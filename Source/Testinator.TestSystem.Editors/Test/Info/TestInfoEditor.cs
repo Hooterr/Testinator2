@@ -154,7 +154,7 @@ namespace Testinator.TestSystem.Editors
             mTimeLimitMax = timeConstraints.Max;
             mTimeLimitMin = timeConstraints.Min;
 
-            mAllowEmptyDescription = AttributeHelper.GetPropertyAttribute<TestInfo, string, AllowNullOrEmptyStringAttribute>(x => x.Description, mVersion) == null;
+            mAllowEmptyDescription = AttributeHelper.GetPropertyAttribute<TestInfo, string, AllowNullOrEmptyStringAttribute>(x => x.Description, mVersion) != null;
         }
 
         public void OnErrorFor(Expression<Func<ITestInfoEditor, object>> propertyExpression, Action<string> action)
