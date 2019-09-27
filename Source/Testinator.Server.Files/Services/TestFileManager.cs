@@ -18,7 +18,7 @@ namespace Testinator.Server.Files
 
         // All needed services
         private readonly IFileAccessService mFileAccess;
-        private readonly ISerializer<Test> mSerializer;
+        private readonly ISerializer<ITest> mSerializer;
 
         #endregion
 
@@ -32,7 +32,7 @@ namespace Testinator.Server.Files
         public TestFileManager(IFileAccessService fileAccess)
         {
             mFileAccess = fileAccess;
-            mSerializer = SerializerFactory.New<Test>();
+            mSerializer = SerializerFactory.New<ITest>();
         }
 
         #endregion
@@ -84,42 +84,49 @@ namespace Testinator.Server.Files
             return mSerializer.Deserialize(new MemoryStream(bytes));
         }
 
-        public bool Save(Action<GetFileOptions> configureOptions, Test test)
+        public bool Save(Action<GetFileOptions> configureOptions, ITest test)
         {
             if (configureOptions == null)
                 throw new ArgumentNullException(nameof(configureOptions));
 
             var options = new GetFileOptions();
             configureOptions.Invoke(options);
-
-            var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath)
-                .WithExtension(FileExtensions.Test);
-
-            var absolutePath = adapter.GetAbsolutePath();
-
-            var tags = new StringBuilder();
-            var currCat = test.Info.Category;
-            while (currCat != null)
+            try
             {
-                tags.Append($"#{currCat.Name}");
-                currCat = currCat.SubCategory;
-            }
+                var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath)
+                    .WithExtension(FileExtensions.Test);
 
-            var fileContext = new FileContext()
-            {
-                // TODO get this from somewhere
-                Version = 1,
-                Metadata = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>()
+                var absolutePath = adapter.GetAbsolutePath();
+
+                var tags = new StringBuilder();
+                var currCat = test.Info.Category;
+                while (currCat != null)
+                {
+                    tags.Append($"#{currCat.Name}");
+                    currCat = currCat.SubCategory;
+                }
+
+                var fileContext = new FileContext()
+                {
+                    // TODO get this from somewhere
+                    Version = 1,
+                    Metadata = new ReadOnlyDictionary<string, string>(new Dictionary<string, string>()
                 {
                     { "Name", test.Info.Name },
                     { "Tags", tags.ToString() },
 
                 }),
-            };
+                };
 
-            var testBytes = mSerializer.Serialize(test);
+                var testBytes = mSerializer.Serialize(test);
 
-            mFileAccess.SaveFile(absolutePath, fileContext, testBytes);
+                mFileAccess.SaveFile(absolutePath, fileContext, testBytes);
+            }
+            catch
+            {
+                return false;
+            }
+
             return true;
         }
 

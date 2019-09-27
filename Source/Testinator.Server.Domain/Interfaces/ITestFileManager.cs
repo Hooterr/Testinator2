@@ -30,7 +30,7 @@ namespace Testinator.Server.Domain
         /// <param name="fileName">The name of the file</param>
         /// <param name="absoluteFolderPath">Absolute path to the file</param>
         /// <returns>True if successful, otherwise false</returns>
-        bool Save(Action<GetFileOptions> configureOptions, Test test);
+        bool Save(Action<GetFileOptions> configureOptions, ITest test);
 
         /// <summary>
         /// Read a test from file

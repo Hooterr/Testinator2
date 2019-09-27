@@ -14,6 +14,7 @@ namespace Testinator.Server.Domain
 
         private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
+        private readonly ITestFileManager mFileManager;
 
         /// <summary>
         /// The test itself, built by the editor
@@ -26,7 +27,11 @@ namespace Testinator.Server.Domain
 
         // TODO: List all the test's properties
 
-        public string Name => mTest.Info.Name;
+        public string TestName => mTest.Info.Name;
+
+        public string FileName { get; set; }
+
+        public string Message { get; set; }
 
         #endregion
 
@@ -44,17 +49,20 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorTestFinalizePageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
+        public TestCreatorTestFinalizePageViewModel(ITestCreatorService testCreatorService, ITestFileManager fileManager, ApplicationViewModel applicationVM)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
             mApplicationVM = applicationVM;
+            mFileManager = fileManager;
 
             // Create commands
             SubmitTestCommand = new RelayCommand(SubmitTest);
 
             // Get the built test
             mTest = mTestCreator.BuildTest();
+
+            FileName = TestName;
         }
 
         #endregion
@@ -66,7 +74,20 @@ namespace Testinator.Server.Domain
         /// </summary>
         private void SubmitTest()
         {
-            // TODO: Save to file, save to user, etc.
+            if (string.IsNullOrEmpty(TestName))
+                Message = "Pusta nazwa";
+            else if (mFileManager.Save(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.Tests)
+                    .WithName(FileName);
+            }, mTest))
+            {
+                Message = "Alles gut";
+            }
+            else
+            {
+                Message = "Couldn't save because of an error. Lol.";
+            }
         }
 
         #endregion
