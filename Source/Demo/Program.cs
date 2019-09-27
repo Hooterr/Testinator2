@@ -54,7 +54,8 @@ namespace Demo
             ITestFileManager files = new TestFileManager(new FileAccessService());
             files.Save(options =>
             {
-                options.InFolder(ApplicationDataFolders.Tests, "this shit better works");
+                options.InFolder(ApplicationDataFolders.Tests)
+                    .WithName("this shit better works");
             }, (Test)testBuild.Result);
 
             var contexts = files.GetTestContexts(options =>
@@ -64,7 +65,8 @@ namespace Demo
 
             var test = files.Read(options =>
             {
-                options.InFolder(ApplicationDataFolders.Tests, "this shit better works");
+                options.InFolder(ApplicationDataFolders.Tests)
+                    .WithName("this shit better works");
             });
             
             Console.ReadKey();

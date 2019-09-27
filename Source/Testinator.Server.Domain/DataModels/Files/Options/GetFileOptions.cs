@@ -16,11 +16,16 @@ namespace Testinator.Server.Domain
             return this;
         }
 
-        public GetFileOptions InFolder(ApplicationDataFolders folder, string fileName)
+        public GetFileOptions InFolder(ApplicationDataFolders folder)
         {
             AbsolutePath = null;
-            FileName = fileName;
             Folder = folder;
+            return this;
+        }
+
+        public GetFileOptions WithName(string name)
+        {
+            FileName = name;
             return this;
         }
 
