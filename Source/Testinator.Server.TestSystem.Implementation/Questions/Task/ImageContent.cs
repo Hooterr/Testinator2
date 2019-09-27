@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using Testinator.TestSystem.Abstractions.Questions.Task;
 using Testinator.TestSystem.Attributes;
@@ -8,6 +9,7 @@ namespace Testinator.TestSystem.Implementation.Questions.Task
     /// <summary>
     /// Represents all the images in <see cref="QuestionTask"/>
     /// </summary>
+    [Serializable]
     public class ImageContent : IImageContent
     {
 

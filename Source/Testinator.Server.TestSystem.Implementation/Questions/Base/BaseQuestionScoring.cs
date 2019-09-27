@@ -5,6 +5,7 @@ using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Implementation.Questions
 {
+    [Serializable]
     public abstract class BaseQuestionScoring<TQuestionUserAnswer> : IQuestionScoring
         where TQuestionUserAnswer : class
     {

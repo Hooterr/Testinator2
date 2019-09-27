@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="RandomDataGenerator.Net" Version="1.0.9" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Testinator.Server.Domain\Testinator.Server.Domain.csproj" />
+    <ProjectReference Include="..\Testinator.Server.Files\Testinator.Server.Files.csproj" />
+    <ProjectReference Include="..\Testinator.Server.TestSystem.Implementation\Testinator.TestSystem.Implementation.csproj" />
+    <ProjectReference Include="..\Testinator.TestSystem.Abstractions\Testinator.TestSystem.Abstractions.csproj" />
+    <ProjectReference Include="..\Testinator.TestSystem.Editors.Attributes\Testinator.TestSystem.Attributes.csproj" />
+    <ProjectReference Include="..\Testinator.TestSystem.Editors\Testinator.TestSystem.Editors.csproj" />
+  </ItemGroup>
+
+</Project>

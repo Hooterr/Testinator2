@@ -1,4 +1,5 @@
-﻿using Testinator.TestSystem.Abstractions.Questions.Task;
+﻿using System;
+using Testinator.TestSystem.Abstractions.Questions.Task;
 using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Implementation.Questions.Task
@@ -6,6 +7,7 @@ namespace Testinator.TestSystem.Implementation.Questions.Task
     /// <summary>
     /// Represents the string content of the question task
     /// </summary>
+    [Serializable]
     public class TextContent : ITextContent
     {
 

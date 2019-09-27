@@ -1,8 +1,11 @@
-﻿namespace Testinator.TestSystem.Abstractions
+﻿using System;
+
+namespace Testinator.TestSystem.Abstractions
 {
     /// <summary>
     /// The category string that implements One-Way-Linked list for subcategories
     /// </summary>
+    [Serializable]
     public class Category
     {
         /// <summary>

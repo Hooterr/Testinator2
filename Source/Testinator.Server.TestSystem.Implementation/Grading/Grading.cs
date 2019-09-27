@@ -1,8 +1,9 @@
-﻿using Testinator.TestSystem.Abstractions;
-using Testinator.TestSystem.Attributes;
+﻿using System;
+using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Implementation
 {
+    [Serializable]
     internal class Grading : IGrading
     {
         [CollectionCount(min: 2, max: 12, fromVersion: 1)]

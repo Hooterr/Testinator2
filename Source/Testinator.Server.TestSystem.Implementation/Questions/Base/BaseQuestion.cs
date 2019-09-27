@@ -9,6 +9,7 @@ namespace Testinator.TestSystem.Implementation.Questions
     /// <summary>
     /// Basic implementation of a question
     /// </summary>
+    [Serializable]
     public abstract class BaseQuestion : IQuestion
     {
         public IQuestionTask Task { get; internal set; }
