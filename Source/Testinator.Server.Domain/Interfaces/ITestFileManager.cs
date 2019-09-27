@@ -12,14 +12,14 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Gets test context from a file
         /// </summary>
-        /// <param name="configureOptions">The action to configure options</param>
+        /// <param name="configureOptions">The action to configure options with</param>
         /// <returns>Test file context</returns>
         TestFileContext GetTestContext(Action<GetFileOptions> configureOptions);
 
         /// <summary>
         /// Gets test contexts of all test in a given directory
         /// </summary>
-        /// <param name="configureOptions">The action to configure options</param>
+        /// <param name="configureOptions">The action to configure options with</param>
         /// <returns>Test files contexts</returns>
         TestFileContext[] GetTestContexts(Action<GetFilesFromDirectoryOptions> configureOptions);
 
@@ -32,9 +32,11 @@ namespace Testinator.Server.Domain
         /// <returns>True if successful, otherwise false</returns>
         bool Save(Action<GetFileOptions> configureOptions, Test test);
 
+        /// <summary>
+        /// Read a test from file
+        /// </summary>
+        /// <param name="configureOptions">The action to configure options with</param>
+        /// <returns>The test that was read from file</returns>
         ITest Read(Action<GetFileOptions> configureOptions);
-
-        // TODO Save(Test,ApplicationDataFolder,name)
-        // and more
     }
 }

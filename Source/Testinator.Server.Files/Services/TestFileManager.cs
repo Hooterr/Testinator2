@@ -31,7 +31,6 @@ namespace Testinator.Server.Files
         /// <param name="fileService">TBA</param>
         public TestFileManager(IFileAccessService fileAccess)
         {
-            // TODO combine this services into one
             mFileAccess = fileAccess;
             mSerializer = SerializerFactory.New<Test>();
         }
@@ -62,7 +61,7 @@ namespace Testinator.Server.Files
             var options = new GetFilesFromDirectoryOptions();
             configureOptions.Invoke(options);
             if (string.IsNullOrEmpty(options.SearchPatter))
-                options.Pattern($"*.{FileExtensions.Test}");
+                options.UseSearchPattern($"*.{FileExtensions.Test}");
 
             var adapter = new GetFilesFromDirectoryOptionsAdapter(options, mFileAccess.DataFolderRootPath);
             adapter.GetPath(out var path, out var searchPattern);
@@ -137,7 +136,7 @@ namespace Testinator.Server.Files
                 FilePath = absolutePath,
                 TestName = fileInfo.Metadata.ContainsKey("Name") ? fileInfo.Metadata["Name"] : null,
                 Author = fileInfo.Metadata.ContainsKey("Author") ? fileInfo.Metadata["Author"] : null,
-                Tags = fileInfo.Metadata.ContainsKey("Tags") ? fileInfo.Metadata["Tags"].Split('#') : null
+                Categories = fileInfo.Metadata.ContainsKey("Tags") ? fileInfo.Metadata["Tags"].Split('#') : null
             };
 
             return testFileContext;

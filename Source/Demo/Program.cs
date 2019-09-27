@@ -54,18 +54,18 @@ namespace Demo
             ITestFileManager files = new TestFileManager(new FileAccessService());
             files.Save(options =>
             {
-                options.InFolder(ApplicationDataFolders.Tests)
+                options.InApplicationFolder(ApplicationDataFolders.Tests)
                     .WithName("this shit better works");
             }, (Test)testBuild.Result);
 
             var contexts = files.GetTestContexts(options =>
             {
-                options.Folder(ApplicationDataFolders.Tests);
+                options.InApplicationFolder(ApplicationDataFolders.Tests);
             });
 
             var test = files.Read(options =>
             {
-                options.InFolder(ApplicationDataFolders.Tests)
+                options.InApplicationFolder(ApplicationDataFolders.Tests)
                     .WithName("this shit better works");
             });
             

@@ -4,6 +4,10 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Testinator.Server.Files
 {
+    /// <summary>
+    /// Default implementation of <see cref="ISerializer{T}"/>
+    /// </summary>
+    /// <typeparam name="T">The type of object to serialize</typeparam>
     internal class DefaultSerializer<T> : ISerializer<T>
         where T : class
     {

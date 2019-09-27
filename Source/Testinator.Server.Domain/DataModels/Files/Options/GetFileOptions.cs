@@ -2,38 +2,59 @@
 
 namespace Testinator.Server.Domain
 {
+    /// <summary>
+    /// Options to configure when accessing a single file
+    /// </summary>
     public class GetFileOptions
     {
+        /// <summary>
+        /// The absolute path to the file
+        /// </summary>
         public string AbsolutePath { get; private set; }
-        public string FileName { get; private set; }
-        public ApplicationDataFolders? Folder { get; private set; }
 
-        public GetFileOptions UseAbsolutePath(string path)
+        /// <summary>
+        /// The name of the file
+        /// </summary>
+        public string FileName { get; private set; }
+
+        /// <summary>
+        /// The folder that contains the file if using application data folders
+        /// </summary>
+        public ApplicationDataFolders? ApplicationFolder { get; private set; }
+
+        /// <summary>
+        /// Sets the directory in which the file is supposed to be
+        /// </summary>
+        /// <param name="absolutePath">Absolute path too the folder</param>
+        /// <returns>Fluid interface</returns>
+        public GetFileOptions InFolderAbsolute(string absolutePath)
         {
-            AbsolutePath = path;
+            AbsolutePath = absolutePath;
             FileName = null;
-            Folder = null;
+            ApplicationFolder = null;
             return this;
         }
 
-        public GetFileOptions InFolder(ApplicationDataFolders folder)
+        /// <summary>
+        /// Sets the directory in which the file is supposed to be using application data folders
+        /// </summary>
+        /// <param name="folder">The folder</param>
+        /// <returns>Fluid interface</returns>
+        public GetFileOptions InApplicationFolder(ApplicationDataFolders folder)
         {
             AbsolutePath = null;
-            Folder = folder;
+            ApplicationFolder = folder;
             return this;
         }
 
+        /// <summary>
+        /// Sets the name of the files
+        /// </summary>
+        /// <param name="name">The name of the file WITHOUT extension</param>
+        /// <returns>Fluid interface</returns>
         public GetFileOptions WithName(string name)
         {
             FileName = name;
-            return this;
-        }
-
-        public GetFileOptions InFolder(string folderPath, string fileName)
-        {
-            AbsolutePath = folderPath + "\\" + fileName;
-            FileName = fileName;
-            Folder = null;
             return this;
         }
     }
