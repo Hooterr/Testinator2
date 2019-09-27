@@ -121,7 +121,7 @@ namespace Testinator.Server.Domain
         private void GoToNextPage()
         {
             // Pass all the changes back to the editor
-            mEditor.CustomThresholds = Grades.Value.ToThresholdsInEditor();
+            mEditor.Thresholds = Grades.Value.ToThresholdsInEditor();
 
             // Validate grading state
             if (mEditor.Validate())
@@ -141,10 +141,10 @@ namespace Testinator.Server.Domain
         {
             // Copy all the properties from the editor
             PointsForTest = mEditor.TotalPointScore;
-            Grades = mEditor.CustomThresholds.ToGradeViewModels(mEditor.MinThresholdCount);
+            Grades = mEditor.Thresholds.ToGradeViewModels(mEditor.MinThresholdCount);
 
             // Catch all the errors and display them
-            mEditor.OnErrorFor(x => x.CustomThresholds, (e) => Grades.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.Thresholds, (e) => Grades.ErrorMessage = e);
         }
 
         #endregion

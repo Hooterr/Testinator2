@@ -18,11 +18,7 @@ namespace Testinator.TestSystem.Editors
     {
         #region Editor Properties
 
-        public IGradingPreset Preset { get; set; }
-
-        public List<KeyValuePair<int, IGrade>> CustomThresholds { get; set; }
-
-        public bool Custom { get; set; }
+        public List<KeyValuePair<int, IGrade>> Thresholds { get; set; }
 
         public bool ContainsPoints { get; set; }
 
@@ -54,6 +50,19 @@ namespace Testinator.TestSystem.Editors
 
         #endregion
 
+        #region Public Methods
+
+        public void UsePreset(IGradingPreset preset)
+        {
+            if (preset == null)
+                throw new ArgumentNullException(nameof(preset));
+
+            ContainsPoints = false;
+            Thresholds = new List<KeyValuePair<int, IGrade>>(preset.PercentageThresholds);
+        }
+
+        #endregion
+
         #region Overridden
 
         protected override void OnInitialize()
@@ -63,15 +72,13 @@ namespace Testinator.TestSystem.Editors
             {
                 mMaxPointScore = OriginalObject.MaxPointScore;
                 ContainsPoints = OriginalObject.Strategy.ContainsPoints;
-                CustomThresholds = new List<KeyValuePair<int, IGrade>>(OriginalObject.Strategy.Thresholds);
+                Thresholds = new List<KeyValuePair<int, IGrade>>(OriginalObject.Strategy.Thresholds);
                 
             }
             else
             {
-                Custom = true;
                 ContainsPoints = true;
-                CustomThresholds = new List<KeyValuePair<int, IGrade>>();
-                Preset = null;
+                Thresholds = new List<KeyValuePair<int, IGrade>>();
             }
         }
 
@@ -79,20 +86,9 @@ namespace Testinator.TestSystem.Editors
         {
             var validationPassed = true;
 
-            if (Custom)
-            {
-                if (!ValidateCustomThresholds())
+            if (!ValidateCustomThresholds())
                     validationPassed = false;
-            }
-            else
-            {
-                if(Preset == null)
-                {
-                    validationPassed = false;
-                    ErrorHandlerAdapter.HandleErrorFor(x => x.Preset, "Preset cannot be null if not using custom thresholds.");
-                }
-            }
-
+          
             return validationPassed;
         }
 
@@ -105,34 +101,23 @@ namespace Testinator.TestSystem.Editors
                 result = new Grading();
 
             IGradingStrategy strategy;
-            if (Custom)
+
+            if(ContainsPoints)
             {
-                if(ContainsPoints)
+                strategy = new PointsGradingStrategy()
                 {
-                    strategy = new PointsGradingStrategy()
-                    {
-                        Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.CustomThresholds),
-                    };
-                }
-                else
-                {
-                    strategy = new PercentageGradingStrategy()
-                    {
-                        Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.CustomThresholds),
-                        MaxPointScore = mMaxPointScore,
-                    };
-                }
+                    Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.Thresholds),
+                };
             }
-            // Use preset
             else
             {
                 strategy = new PercentageGradingStrategy()
                 {
-                    Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.CustomThresholds),
+                    Thresholds = new ReadOnlyCollection<KeyValuePair<int, IGrade>>(this.Thresholds),
                     MaxPointScore = mMaxPointScore,
                 };
             }
-
+            
             result.Strategy = strategy;
             result.MaxPointScore = mMaxPointScore;
 
@@ -144,7 +129,7 @@ namespace Testinator.TestSystem.Editors
         #region Private Methods
 
         /// <summary>
-        /// Validates <see cref="CustomThresholds"/>
+        /// Validates <see cref="Thresholds"/>
         /// </summary>
         /// <returns>True - all good, false - there are some errors</returns>
         private bool ValidateCustomThresholds()
@@ -153,51 +138,51 @@ namespace Testinator.TestSystem.Editors
 
             // Sort of a mess but works for now
 
-            if (CustomThresholds.Count < 2)
+            if (Thresholds.Count < 2)
             {
                 passed = false;
-                ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, "There must be at least 2 custom thresholds.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Thresholds, "There must be at least 2 custom thresholds.");
             }
             else
             {
                 if (ContainsPoints)
                 {
-                    if(false == CustomThresholds.TrueForAll(x => x.Key <= mMaxPointScore))
+                    if(false == Thresholds.TrueForAll(x => x.Key <= mMaxPointScore))
                     {
                         passed = false;
-                        ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Not a single threshold can exceed the max point score ({mMaxPointScore}).");
+                        ErrorHandlerAdapter.HandleErrorFor(x => x.Thresholds, $"Not a single threshold can exceed the max point score ({mMaxPointScore}).");
                     }
                     
-                    if (CustomThresholds.OrderByDescending(x => x.Key).First().Key != mMaxPointScore)
+                    if (Thresholds.OrderByDescending(x => x.Key).First().Key != mMaxPointScore)
                     {
                         passed = false;
-                        ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"The last threshold's upper limit must be equal to the max point score ({mMaxPointScore})");
+                        ErrorHandlerAdapter.HandleErrorFor(x => x.Thresholds, $"The last threshold's upper limit must be equal to the max point score ({mMaxPointScore})");
                     }
                 }
                 else
                 {
-                    if (false == CustomThresholds.TrueForAll(x => x.Key <= 100))
+                    if (false == Thresholds.TrueForAll(x => x.Key <= 100))
                     {
                         passed = false;
-                        ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Not a single threshold can exceed 100%.");
+                        ErrorHandlerAdapter.HandleErrorFor(x => x.Thresholds, $"Not a single threshold can exceed 100%.");
                     }
 
-                    if(CustomThresholds.OrderByDescending(x => x.Key).First().Key != 100)
+                    if(Thresholds.OrderByDescending(x => x.Key).First().Key != 100)
                     {
                         passed = false;
-                        ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"The last threshold's upper limit must be a 100%");
+                        ErrorHandlerAdapter.HandleErrorFor(x => x.Thresholds, $"The last threshold's upper limit must be a 100%");
                     }
                 }
 
-                if (CustomThresholds.Select(x => x.Key).Distinct().Count() != CustomThresholds.Count())
+                if (Thresholds.Select(x => x.Key).Distinct().Count() != Thresholds.Count())
                 {
                     passed = false;
-                    ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Found multiple threshold with the same upper limit.");
+                    ErrorHandlerAdapter.HandleErrorFor(x => x.Thresholds, $"Found multiple threshold with the same upper limit.");
                 }
-                if (CustomThresholds.Select(x => x.Value.Name).Distinct().Count() != CustomThresholds.Count())
+                if (Thresholds.Select(x => x.Value.Name).Distinct().Count() != Thresholds.Count())
                 {
                     passed = false;
-                    ErrorHandlerAdapter.HandleErrorFor(x => x.CustomThresholds, $"Found multiple thresholds with the same grade.");
+                    ErrorHandlerAdapter.HandleErrorFor(x => x.Thresholds, $"Found multiple thresholds with the same grade.");
                 }
             }
 
