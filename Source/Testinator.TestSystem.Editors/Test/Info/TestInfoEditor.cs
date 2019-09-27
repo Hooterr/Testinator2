@@ -143,8 +143,10 @@ namespace Testinator.TestSystem.Editors
             mNameMaxLen = nameConstraints.Max;
             mNameMinLen = nameConstraints.Min;
 
-            mDescriptionMaxLen = nameConstraints.Max;
-            mDescriptionMinLen = nameConstraints.Min;
+            var descriptionConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, string, StringLengthAttribute>
+                (x => x.Description, mVersion);
+            mDescriptionMaxLen = descriptionConstraints.Max;
+            mDescriptionMinLen = descriptionConstraints.Min;
 
             var timeConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, TimeSpan, TimeSpanLimitAttribute>
                 (x => x.TimeLimit, mVersion);
