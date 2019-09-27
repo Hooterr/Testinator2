@@ -58,6 +58,7 @@ namespace Testinator.TestSystem.Editors
                 // We're editing an existing question
                 ConcreteEditor = (TEditor)concreteEditorType.GetConstructor(new[] { typeof(TQuestion) }).Invoke(new object[] { mQuestion });
 
+            ((BaseEditor<TQuestion, TEditor>)Convert.ChangeType(ConcreteEditor, concreteEditorType)).Initialize();
             return ConcreteEditor;
         }
 

@@ -66,5 +66,15 @@ namespace Testinator.TestSystem.Editors
 
             return memberInfo;
         }
+        public static Type GetObjectType<T>(this Expression<Func<T, object>> expr)
+        {
+            if ((expr.Body.NodeType == ExpressionType.Convert) ||
+                (expr.Body.NodeType == ExpressionType.ConvertChecked))
+            {
+                if (expr.Body is UnaryExpression unary)
+                    return unary.Operand.Type;
+            }
+            return expr.Body.Type;
+        }
     }
 }

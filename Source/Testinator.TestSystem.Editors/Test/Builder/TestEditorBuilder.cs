@@ -38,10 +38,14 @@ namespace Testinator.TestSystem.Editors.Test.Builder
 
         public ITestEditor Build()
         {
+            TestEditor editor;
             if (mInitialTest != null)
-                return new TestEditor(mInitialTest, mVersion);
+                editor = new TestEditor(mInitialTest, mVersion);
+            else
+                editor = new TestEditor(mVersion);
 
-            return new TestEditor(mVersion);
+            editor.Initialize();
+            return editor;
         }
 
         public ITestEditorBuilder SetInitialTest(Implementation.Test test)

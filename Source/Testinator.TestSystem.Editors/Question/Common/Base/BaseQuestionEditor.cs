@@ -12,7 +12,7 @@ namespace Testinator.TestSystem.Editors
     /// <typeparam name="TQuestion">The type of question this editor will be operating on</typeparam>
     /// <typeparam name="TOptionsEditor">The type of editor to use for the options part of the question</typeparam>
     /// <typeparam name="TScoringEditor">The type of editor to use for the scoring part of the question</typeparam>
-    internal abstract class BaseQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>
+    internal abstract class BaseQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> : MasterEditor<TQuestion, IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>> , IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>
         where TQuestion : BaseQuestion, new()
         where TOptionsEditor : IQuestionOptionsEditor
         where TScoringEditor : IQuestionScoringEditor
@@ -20,21 +20,9 @@ namespace Testinator.TestSystem.Editors
         #region Protected Members
 
         /// <summary>
-        /// The question we're building/editing
-        /// </summary>
-        protected TQuestion mQuestion;
-
-        /// <summary>
-        /// The version of question model we're using
-        /// </summary>
-        protected readonly int mVersion;
-
-        /// <summary>
         /// The editor for task part of the question
         /// </summary>
         protected TaskEditor mTaskEditor;
-
-        protected ErrorListener<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>> mErrorListiner;
 
         #endregion
 
@@ -59,14 +47,16 @@ namespace Testinator.TestSystem.Editors
 
         #region Public Methods
 
-        public OperationResult<TQuestion> Build()
+        public override OperationResult<TQuestion> Build()
         {
+            // CUSTOM BUILD PROCESS, BuildObject shouldn't be called
+
             // Build all the parts of the question
-            mErrorListiner.Clear();
+            ErrorHandlerAdapter.Clear();
             var taskBuildOperation = mTaskEditor.Build();
             var optionsBuildOperation = BuildOptions();
             var scoringBuildOperation = BuildScoring();
-            var postValidationSuccess = FinalValidation();
+            var postValidationSuccess = Validate();
 
             // If any of the operations failed
             if (Helpers.AnyFalse(taskBuildOperation.Succeeded, optionsBuildOperation.Succeeded, scoringBuildOperation.Succeeded, postValidationSuccess))
@@ -81,17 +71,29 @@ namespace Testinator.TestSystem.Editors
                 return questionBuildResult;
             }
 
+            TQuestion resultQuestion;
             // Assemble question
-            if(mQuestion == null)
-            {
-                mQuestion = new TQuestion();
-            }
+            if (OriginalObject == null)
+                resultQuestion = new TQuestion();
+            else
+                resultQuestion = OriginalObject;
 
-            mQuestion.Task = taskBuildOperation.Result;
-            mQuestion.Options = optionsBuildOperation.Result;
-            mQuestion.Scoring = scoringBuildOperation.Result;
+            resultQuestion.Task = taskBuildOperation.Result;
+            resultQuestion.Options = optionsBuildOperation.Result;
+            resultQuestion.Scoring = scoringBuildOperation.Result;
 
-            return OperationResult<TQuestion>.Success(mQuestion);
+            return OperationResult<TQuestion>.Success(resultQuestion);
+        }
+
+        protected override TQuestion BuildObject()
+        {
+            // BuildObject shouldn't be called
+            throw new NotSupportedException();
+        }
+
+        public void OnErrorFor(Expression<Func<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>, object>> propertyExpression, Action<string> action)
+        {
+            ErrorHandlerAdapter.OnErrorFor(propertyExpression, action);
         }
 
         #endregion
@@ -102,44 +104,17 @@ namespace Testinator.TestSystem.Editors
         /// Setups up the editor to edit an existing question
         /// </summary>
         /// <param name="question">Question to edit. Passing null will not create a new question but rather throw an exception</param>
-        protected BaseQuestionEditor(TQuestion question)
-        {
-#pragma warning disable IDE0016 // Use 'throw' expression
-            if (question == null)
-                throw new ArgumentNullException(nameof(question),
-                    "When editing cannot use a null question. If you want to create a new question call the constructor that accepts question model version.");
-#pragma warning restore IDE0016 // Use 'throw' expression
-
-            // Set the question and version
-            mQuestion = question;
-            mVersion = question.Version;
-
-            InitializeEditor();
-        }
+        protected BaseQuestionEditor(TQuestion question) : base(question, question.Version) { }
 
         /// <summary>
         /// Setups up the editor to create a new question using specific version number
         /// </summary>
         /// <param name="version">The version number to use. Must be from within the supported version numbers</param>
-        protected BaseQuestionEditor(int version)
-        {
-            if (Versions.NotInRange(version))
-                throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
-
-            mVersion = version;
-
-            InitializeEditor();
-        }
+        protected BaseQuestionEditor(int version) : base(version) { }
 
         #endregion
 
         #region Protected
-
-        /// <summary>
-        /// Called when the editor is initializing
-        /// In this method editors for options and scoring MUST be created
-        /// </summary>
-        protected abstract void OnInitializing();
 
         /// <summary>
         /// Builds the options for the question
@@ -153,50 +128,50 @@ namespace Testinator.TestSystem.Editors
         /// <returns>The result of the operation</returns>
         protected abstract OperationResult<IQuestionScoring> BuildScoring();
 
-        /// <summary>
-        /// Final validation for the question
-        /// Called when task, options and scoring are built successfully 
-        /// </summary>
-        /// <returns>True if the validation passed, otherwise false</returns>
-        protected virtual bool FinalValidation() => true;
-
         #endregion
 
         #region Private Methods
 
-        /// <summary>
-        /// Performs initialization
-        /// </summary>
-        private void InitializeEditor()
+        protected override void OnInitialize()
         {
-            mErrorListiner = new ErrorListener<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>>();
+            base.OnInitialize();
+        }
 
-            // Create task editor
-            if (mQuestion == null)
-                mTaskEditor = new TaskEditor(mVersion, mErrorListiner);
-            else
-                mTaskEditor = new TaskEditor(mQuestion.Task, mVersion, mErrorListiner);
+        protected override void CreateNestedEditorExistingObject()
+        {
+            mTaskEditor = new TaskEditor(OriginalObject.Task, mVersion);
+        }
 
-            // Let the implementer initialize as well 
-            OnInitializing();
+        protected override void CreateNestedEditorsNewObject()
+        {
+            mTaskEditor = new TaskEditor(mVersion);
+        }
 
-            // Check if the implementer initialized all the editors
+        protected override void OnEditorsCreated()
+        {
+            if (mTaskEditor == null)
+                throw new NotImplementedException("Task editor has not been initialized.");
+
+            mTaskEditor.SetInternalErrorHandler(mInternalErrorHandler);
+            mTaskEditor.Initialize();
+
             if (Options == null)
                 throw new NotImplementedException("Options editor has not been initialized.");
 
             if (Scoring == null)
-                throw new NotSupportedException("Options scoring has not been initialized.");
+                throw new NotSupportedException("Scoring editor has not been initialized.");
 
         }
 
-        public void OnErrorFor(Expression<Func<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>, object>> propertyExpression, Action<string> action)
+        protected override void CreateHandlers(IInternalErrorHandler internalHandler)
         {
-            mErrorListiner.OnErrorFor(propertyExpression, action);
+            base.CreateHandlers(internalHandler);
+            mTaskEditor.AttachErrorHandler(internalHandler, nameof(Task));
         }
 
-        public bool Validate()
+        bool IErrorListener<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>>.Validate()
         {
-            throw new NotImplementedException();
+            return Validate();
         }
 
         #endregion

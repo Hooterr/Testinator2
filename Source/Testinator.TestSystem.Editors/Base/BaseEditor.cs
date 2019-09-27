@@ -2,19 +2,12 @@
 
 namespace Testinator.TestSystem.Editors
 {
-    /// <summary>
-    /// Provides base functionality for any editor
-    /// </summary>
-    /// <typeparam name="TObjectToCreate">The type of object this editor will operate on</typeparam>
-    /// <typeparam name="TInterface">The interface the implementation of the editor is hidden behind</typeparam>
     internal abstract class BaseEditor<TObjectToCreate, TInterface> : IBuildable<TObjectToCreate>
     {
-        #region Protected Members
-
         /// <summary>
         /// The question model version to use
         /// </summary>
-        protected int Version { get; private set; }
+        protected readonly int mVersion;
 
         /// <summary>
         /// The object that is being edited.
@@ -22,50 +15,49 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         protected TObjectToCreate OriginalObject { get; private set; }
 
-        protected IErrorHandlerAdapter<TInterface> mErrorHandlerAdapter;
+        protected IErrorHandlerAdapter<TInterface> ErrorHandlerAdapter { get; set; }
 
-        #endregion
+        protected IInternalErrorHandler mUnderlyingErrorHandler;
 
-        #region All Constructors
-
-        /// <summary>
-        /// Initializes the editor to create a new object
-        /// </summary>
-        /// <param name="version">The question model version to use</param>
-        protected BaseEditor(int version, IInternalErrorHandler errorHandler)
+        public BaseEditor(int version)
         {
             if (Versions.NotInRange(version))
                 throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
 
-            mErrorHandlerAdapter = new ErrorHandlerAdapter<TInterface>(errorHandler);
-
-            Version = version;
-
-            OnInitialize();
+            mVersion = version;
         }
 
-        /// <summary>
-        /// Initializes the editor to edit an existing object
-        /// </summary>
-        /// <param name="baseObject">The object to edit. NOTE: null value is allowed here, it's treated as if the caller wanted to create a new object</param>
-        /// <param name="version">The question model version to use</param>
-        protected BaseEditor(TObjectToCreate baseObject, int version, IInternalErrorHandler errorHandler)
+        public BaseEditor(TObjectToCreate baseObject, int version)
         {
             if (Versions.NotInRange(version))
                 throw new ArgumentOutOfRangeException(nameof(version), "Version must be from within the range.");
 
+            mVersion = version;
             OriginalObject = baseObject;
+        }
 
-            Version = version;
-
-            mErrorHandlerAdapter = new ErrorHandlerAdapter<TInterface>(errorHandler);
-
+        #region Move this to a configuration ca
+        public void Initialize()
+        {
             OnInitialize();
+
+            if (IsInCreationMode())
+            {
+                InitializeCreateNewObject();
+                CreateNestedEditorsNewObject();
+            }
+            else
+            {
+                InitializeEditExistingObject();
+                CreateNestedEditorExistingObject();
+            }
+
+            OnEditorsCreated();
+          
+            CreateHandlers(mUnderlyingErrorHandler);
         }
 
         #endregion
-
-        #region Protected Methods
 
         /// <summary>
         /// Determines if the editor is editing an existing object
@@ -79,16 +71,21 @@ namespace Testinator.TestSystem.Editors
         /// <returns>True if it's creating a new object, false if the editor is editing an existing one</returns>
         protected bool IsInCreationMode() => OriginalObject == null;
 
-        #endregion
+        protected virtual void CreateNestedEditorsNewObject() { }
 
-        #region Protected
+        protected virtual void CreateNestedEditorExistingObject() { }
 
-        #region Virtual
+        protected virtual void OnEditorsCreated() { }
 
-        /// <summary>
-        /// Called when editor is initializing
-        /// </summary>
+        protected abstract bool Validate();
+
         protected virtual void OnInitialize() { }
+
+        protected virtual void InitializeCreateNewObject() { }
+
+        protected virtual void InitializeEditExistingObject() { }
+
+        protected virtual void CreateHandlers(IInternalErrorHandler internalHandler) { }
 
         public virtual OperationResult<TObjectToCreate> Build()
         {
@@ -103,22 +100,11 @@ namespace Testinator.TestSystem.Editors
             }
         }
 
-        protected abstract bool Validate();
-
-        #endregion
-
-        #region Abstract
-
         /// <summary>
         /// Builds the edited object
         /// Called only if the validation passed
         /// </summary>
         /// <returns>The object, edited or created</returns>
         protected abstract TObjectToCreate BuildObject();
-
-        #endregion
-
-        #endregion
-
     }
 }

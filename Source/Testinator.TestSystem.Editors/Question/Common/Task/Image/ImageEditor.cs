@@ -9,7 +9,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// Implementation of the editor for the image part of the question task
     /// </summary>
-    internal class ImageEditor : BaseEditor<IImageContent, IImageEditor>, IImageEditor, IBuildable<IImageContent>
+    internal class ImageEditor : NestedEditor<IImageContent, IImageEditor>, IImageEditor, IBuildable<IImageContent>
     {
         #region Protected Members
 
@@ -115,14 +115,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes this editor to create a new object
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        public ImageEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public ImageEditor(int version) : base(version) { }
 
         /// <summary>
         /// Initializes this editor to edit an existing object
         /// </summary>
         /// <param name="objToEdit">The image content to edit</param>
         /// <param name="version">The question model version to use</param>
-        public ImageEditor(IImageContent objToEdit, int version, IInternalErrorHandler errorHandler) : base(objToEdit, version, errorHandler) { }
+        public ImageEditor(IImageContent objToEdit, int version) : base(objToEdit, version) { }
 
         #endregion
 
@@ -135,11 +135,11 @@ namespace Testinator.TestSystem.Editors
         {
             if(IsInCreationMode())
             {
-                mImages = new List<Image>();
+                
             }
             else
             {
-                mImages = new List<Image>(OriginalObject.Images);
+                
             }
 
             LoadAttributeValues();
@@ -151,10 +151,10 @@ namespace Testinator.TestSystem.Editors
         protected virtual void LoadAttributeValues()
         {
             mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContent, ICollection<Image>, MaxCollectionCountAttribute, int>
-                (obj => obj.Images, attr => attr.MaxCount, Version);
+                (obj => obj.Images, attr => attr.MaxCount, mVersion);
 
             var ImageSizeAttr = AttributeHelper.GetPropertyAttribute<ImageContent, ICollection<Image>, MaxImageSizeAttribute>
-                (x => x.Images, Version);
+                (x => x.Images, mVersion);
 
             mMaxImageHeight = ImageSizeAttr.Height;
             mMaxImageWidth = ImageSizeAttr.Width;
@@ -173,6 +173,16 @@ namespace Testinator.TestSystem.Editors
         protected override bool Validate()
         {
             return true;
+        }
+
+        protected override void InitializeCreateNewObject()
+        {
+            mImages = new List<Image>();
+        }
+
+        protected override void InitializeEditExistingObject()
+        {
+            mImages = new List<Image>(OriginalObject.Images);
         }
 
         #endregion

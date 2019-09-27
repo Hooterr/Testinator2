@@ -4,7 +4,7 @@ namespace Testinator.TestSystem.Editors
 {
     internal interface IInternalErrorHandler
     {
-        void HandleError(string propertyName, string message);
+        void HandleErrorFor(string propertyName, string message);
         void OnErrorFor(string propertyName, Action<string> action);
         void Clear();
     }

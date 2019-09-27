@@ -8,7 +8,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// The implementation of the options editor for multiple choice question
     /// </summary>
-    internal class MultipleChoiceQuestionOptionsEditor : BaseEditor<MultipleChoiceQuestionOptions, IMultipleChoiceQuestionOptionsEditor>, IMultipleChoiceQuestionOptionsEditor
+    internal class MultipleChoiceQuestionOptionsEditor : NestedEditor<MultipleChoiceQuestionOptions, IMultipleChoiceQuestionOptionsEditor>, IMultipleChoiceQuestionOptionsEditor
     {
         #region Private Members
 
@@ -54,14 +54,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create new question options
         /// </summary>
         /// <param name="version">The version of question model to use</param>
-        public MultipleChoiceQuestionOptionsEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public MultipleChoiceQuestionOptionsEditor(int version) : base(version) { }
 
         /// <summary>
         /// Initializes the editor to edit an existing question options
         /// </summary>
         /// <param name="objToEdit">The options to edit</param>
         /// <param name="version">The version of question model to use</param>
-        public MultipleChoiceQuestionOptionsEditor(MultipleChoiceQuestionOptions objToEdit, int version, IInternalErrorHandler errorHandler) : base(objToEdit, version, errorHandler) { }
+        public MultipleChoiceQuestionOptionsEditor(MultipleChoiceQuestionOptions objToEdit, int version) : base(objToEdit, version) { }
 
         #endregion
 
@@ -69,12 +69,17 @@ namespace Testinator.TestSystem.Editors
 
         protected override void OnInitialize()
         {
-            if (IsInCreationMode())
-                ABCD = new List<string>();
-            else
-                ABCD = new List<string>(OriginalObject.Options);
-
             LoadAttributeValues();
+        }
+
+        protected override void InitializeCreateNewObject()
+        {
+            ABCD = new List<string>();
+        }
+
+        protected override void InitializeEditExistingObject()
+        {
+            ABCD = new List<string>(OriginalObject.Options);
         }
 
         protected override MultipleChoiceQuestionOptions BuildObject()
@@ -103,26 +108,27 @@ namespace Testinator.TestSystem.Editors
             var validationPassed = true;
 
             // Delete last options that are null or empty
-            ABCD.RemoveAllLast(x => string.IsNullOrEmpty(x));
+            // Don't need to do this anymore
+            //ABCD.RemoveAllLast(x => string.IsNullOrEmpty(x));
 
             if (mOnlyDistinct)
             {
                 if (ABCD.Count > 1 && (ABCD.Distinct().Count() != ABCD.Count()))
                 {
-                    mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, "Options must be unique");
+                    ErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, "Options must be unique");
                     validationPassed = false;
                 }
             }
 
             if (ABCD.Count() < MinimumCount || ABCD.Count() > MaximumCount)
             {
-                mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"There must be from {MinimumCount} to {MaximumCount} options.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"There must be from {MinimumCount} to {MaximumCount} options.");
                 validationPassed = false;
             }
 
             if (!ABCD.All(str => OptionsLengthInRange(str)))
             {
-                mErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"Every options must be from {mMinOptionLen} to {mMaxOptionLen} characters long.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.ABCD, $"Every options must be from {mMinOptionLen} to {mMaxOptionLen} characters long.");
                 validationPassed = false;
             }
 
@@ -139,15 +145,15 @@ namespace Testinator.TestSystem.Editors
         private void LoadAttributeValues()
         {
             var collectionCountAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, List<string>, CollectionCountAttribute>
-                (x => x.Options, Version);
+                (x => x.Options, mVersion);
             MaximumCount = collectionCountAttr.Max;
             MinimumCount = collectionCountAttr.Min;
 
             mOnlyDistinct = AttributeHelper.GetPropertyAttributeValue<MultipleChoiceQuestionOptions, List<string>, CollectionItemsOnlyDistinctAttribute, bool>
-                (x => x.Options, attr => attr.Value, Version);
+                (x => x.Options, attr => attr.Value, mVersion);
 
             var stringLenAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, List<string>, StringLengthAttribute>
-                    (x => x.Options, Version);
+                    (x => x.Options, mVersion);
             mMaxOptionLen = stringLenAttr.Max;
             mMinOptionLen = stringLenAttr.Min;
         }

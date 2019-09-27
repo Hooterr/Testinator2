@@ -7,7 +7,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// Implementation of the task editor
     /// </summary>
-    internal class TaskEditor : BaseEditor<IQuestionTask, ITaskEditor>, ITaskEditor, IBuildable<IQuestionTask>
+    internal class TaskEditor : NestedEditor<IQuestionTask, ITaskEditor>, ITaskEditor, IBuildable<IQuestionTask>
     {
         #region Private Members
 
@@ -37,10 +37,8 @@ namespace Testinator.TestSystem.Editors
         /// Initializes task editor to create a new task 
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        public TaskEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler)
+        public TaskEditor(int version) : base(version)
         {
-            mTextEditor = new TextEditor(Version, errorHandler);
-            mImageEditor = new ImageEditor(Version, errorHandler);
         }
 
         /// <summary>
@@ -48,15 +46,19 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         /// <param name="objToEdit">The task to edit</param>
         /// <param name="version">The question model version to use</param>
-        public TaskEditor(IQuestionTask objToEdit, int version, IInternalErrorHandler errorHandler) : base(objToEdit, version, errorHandler)
+        public TaskEditor(IQuestionTask objToEdit, int version) : base(objToEdit, version)
         {
-            mTextEditor = new TextEditor(OriginalObject.Text, Version, errorHandler);
-            mImageEditor = new ImageEditor(OriginalObject.Images, Version, errorHandler);
         }
 
         #endregion
 
         #region Overridden Methods
+
+        protected override void CreateHandlers(IInternalErrorHandler handler)
+        {
+            mTextEditor.AttachErrorHandler(handler, nameof(Text));
+            mImageEditor.AttachErrorHandler(handler, nameof(Images));
+        }
 
         protected override bool Validate()
         {
@@ -64,7 +66,7 @@ namespace Testinator.TestSystem.Editors
 
             if (string.IsNullOrEmpty(mTextEditor.Content) && mImageEditor.GetCurrentCount() == 0)
             {
-                mErrorHandlerAdapter.HandleErrorFor(x => x, "Both text content and images cannot be empty.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x, "Both text content and images cannot be empty.");
                 validationPassed = false;
             }
             return validationPassed;
@@ -123,8 +125,26 @@ namespace Testinator.TestSystem.Editors
                     return OperationResult<IQuestionTask>.Fail();
                 }
             }
-        } 
+        }
 
+        protected override void CreateNestedEditorExistingObject()
+        {
+            mTextEditor = new TextEditor(OriginalObject.Text, mVersion);
+            mImageEditor = new ImageEditor(OriginalObject.Images, mVersion);
+        }
+
+        protected override void CreateNestedEditorsNewObject()
+        {
+            // TODO create a factory for this editors (not super important tbh)
+            mTextEditor = new TextEditor(mVersion);
+            mImageEditor = new ImageEditor(mVersion);
+        }
+
+        protected override void OnEditorsCreated()
+        {
+            mTextEditor.Initialize();
+            mImageEditor.Initialize();
+        }
         #endregion
     }
 }

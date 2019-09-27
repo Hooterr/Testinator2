@@ -8,7 +8,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// Default implementation of <see cref="ITestEditor"/>
     /// </summary>
-    internal class TestEditor : BaseEditor<Implementation.Test, ITestEditor>, ITestEditor
+    internal class TestEditor : MasterEditor<Implementation.Test, ITestEditor>, ITestEditor
     {
         #region Private Members
 
@@ -46,31 +46,55 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         /// <param name="test">The test to edit</param>
         /// <param name="version">The version of test system to use</param>
-        public TestEditor(Implementation.Test test, int version) : base(test, version, null)// TODO create a new type of master editor that doesn't require IInternalErrorHandler
-        {
-            var errorHandler = new ErrorListener<ITestEditor>();
-            mInfo = new TestInfoEditor(OriginalObject.mInfo, Version, errorHandler);
-            mOptions = new TestOptionsEditor(OriginalObject.mTestOptions, Version, errorHandler);
-            mQuestions = new QuestionEditorCollection(OriginalObject.Questions.Select(x => x.GetQuestion()).ToList());
-            mGrading = new GradingEditor(OriginalObject.mGrading, Version, errorHandler);
-        }
+        public TestEditor(Implementation.Test test, int version) : base(test, version) { }
 
         /// <summary>
         /// Initializes the editor to create a new test
         /// </summary>
         /// <param name="version">The version of test system to use</param>
-        public TestEditor(int version) : base(version, null)
-        {
-            var errorHandler = new ErrorListener<ITestEditor>();
-            mInfo = new TestInfoEditor(Version, errorHandler);
-            mOptions = new TestOptionsEditor(Version, errorHandler);
-            mQuestions = new QuestionEditorCollection();
-            mGrading = new GradingEditor(Version, errorHandler);
-        }
+        public TestEditor(int version) : base(version) { }
 
         #endregion
 
         #region Overridden
+
+        protected override void CreateNestedEditorExistingObject()
+        {
+            base.CreateNestedEditorExistingObject();
+            mInfo = new TestInfoEditor(OriginalObject.mInfo, mVersion);
+            mOptions = new TestOptionsEditor(OriginalObject.mTestOptions, mVersion);
+            mQuestions = new QuestionEditorCollection(OriginalObject.Questions.Select(x => x.GetQuestion()).ToList());
+            mGrading = new GradingEditor(OriginalObject.mGrading, mVersion);
+        }
+
+        protected override void CreateNestedEditorsNewObject()
+        {
+            base.CreateNestedEditorsNewObject();
+            mInfo = new TestInfoEditor(mVersion);
+            mOptions = new TestOptionsEditor(mVersion);
+            mQuestions = new QuestionEditorCollection();
+            mGrading = new GradingEditor(mVersion);
+        }
+
+        protected override void OnEditorsCreated()
+        {
+            base.OnEditorsCreated();
+            mInfo.SetInternalErrorHandler(mInternalErrorHandler);
+            mInfo.Initialize();
+            mOptions.SetInternalErrorHandler(mInternalErrorHandler);
+            mOptions.Initialize();
+            mGrading.SetInternalErrorHandler(mInternalErrorHandler);
+            mGrading.Initialize();
+        }
+
+        protected override void CreateHandlers(IInternalErrorHandler handler)
+        {
+            // Always let the base do what it needs
+            base.CreateHandlers(handler);
+            mInfo.AttachErrorHandler(handler, nameof(Info));
+            mOptions.AttachErrorHandler(handler, nameof(Options));
+            mGrading.AttachErrorHandler(handler, nameof(Grading));         
+        }
 
         protected override Implementation.Test BuildObject()
         {
@@ -116,7 +140,7 @@ namespace Testinator.TestSystem.Editors
 
         protected override bool Validate()
         {
-            throw new System.NotImplementedException();
+            return Validate();
         }
 
         #endregion

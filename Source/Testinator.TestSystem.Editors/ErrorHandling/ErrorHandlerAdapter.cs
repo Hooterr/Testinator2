@@ -1,23 +1,38 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 
 namespace Testinator.TestSystem.Editors
 {
     internal class ErrorHandlerAdapter<T> : IErrorHandlerAdapter<T>
     {
         private readonly IInternalErrorHandler mHandler;
+        private readonly string mParentEditorName;
 
-        public void ClearAllErrors()
+        public void Clear()
         {
             mHandler.Clear();
         }
 
-        public void HandleErrorFor(Expression<Func<T, object>> property, string message)
+        public void HandleErrorFor(Expression<Func<T, object>> expression, string message)
         {
-            var name = property.GetCorrectPropertyName();
-            mHandler.HandleError(name, message);
+            string name = null;
+            try
+            {
+                name = expression.GetCorrectPropertyName();
+            }
+            catch { }
+            finally
+            {
+                if (name == null)
+                {
+                    if (expression.GetObjectType() == typeof(T))
+                        name = mParentEditorName;
+                    else
+                        name = string.Empty;
+                }
+            }
+
+            mHandler.HandleErrorFor(name, message);
         }
 
         public void OnErrorFor(Expression<Func<T, object>> property, Action<string> action)
@@ -26,14 +41,16 @@ namespace Testinator.TestSystem.Editors
             mHandler.OnErrorFor(propName, action);
         }
 
-        public void OnErrorFor(string propertyName, Action<string> action)
+        private ErrorHandlerAdapter(IInternalErrorHandler handler, string parentEditorName)
         {
-            mHandler.OnErrorFor(propertyName, action);
+            if (handler == null)
+                throw new ArgumentNullException();
+            mHandler = handler;
+            mParentEditorName = parentEditorName;
         }
 
-        public ErrorHandlerAdapter(IInternalErrorHandler handler)
-        {
-            mHandler = handler;
-        }
+        public static ErrorHandlerAdapter<T> NestedEditor(IInternalErrorHandler handler, string parentEditorName) => new ErrorHandlerAdapter<T>(handler, parentEditorName);
+
+        public static ErrorHandlerAdapter<T> TopLevelEditor(IInternalErrorHandler handler) => new ErrorHandlerAdapter<T>(handler, string.Empty);
     }
 }

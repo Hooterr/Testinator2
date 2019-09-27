@@ -8,7 +8,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// Implementation of ABC question scoring editor
     /// </summary>
-    internal class MultipleChoiceQuestionScoringEditor : BaseEditor<MultipleChoiceQuestionScoring, IMultipleChoiceQuestionScoringEditor>, IMultipleChoiceQuestionScoringEditor
+    internal class MultipleChoiceQuestionScoringEditor : NestedEditor<MultipleChoiceQuestionScoring, IMultipleChoiceQuestionScoringEditor>, IMultipleChoiceQuestionScoringEditor
     {
         #region Private Members
 
@@ -54,14 +54,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes this editor to create new scoring guidelines
         /// </summary>
         /// <param name="version">The question model version to use</param>
-        public MultipleChoiceQuestionScoringEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public MultipleChoiceQuestionScoringEditor(int version) : base(version) { }
 
         /// <summary>
         /// Initializes this editor to edit an existing scoring
         /// </summary>
         /// <param name="scoring">The scoring to edit</param>
         /// <param name="version">The question model version to use</param>
-        public MultipleChoiceQuestionScoringEditor(MultipleChoiceQuestionScoring scoring, int version, IInternalErrorHandler errorHandler) : base(scoring, version, errorHandler) { }
+        public MultipleChoiceQuestionScoringEditor(MultipleChoiceQuestionScoring scoring, int version) : base(scoring, version) { }
 
         #endregion
 
@@ -84,13 +84,13 @@ namespace Testinator.TestSystem.Editors
         protected override void OnInitialize()
         {
             var scoreRangeAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionScoring, int, IntegerValueRangeAttribute>
-                (x => x.MaximumScore, Version);
+                (x => x.MaximumScore, mVersion);
 
             mMaxScore = scoreRangeAttr.Max;
             mMinScore = scoreRangeAttr.Min;
 
             mDefaultStrategyType = AttributeHelper.GetPropertyAttributeValue<MultipleChoiceQuestionScoring, DefaultStrategyAttribute, Type>
-                (x => x.Strategy, attr => attr.DefaultStrategyType, Version);
+                (x => x.Strategy, attr => attr.DefaultStrategyType, mVersion);
 
             if (mDefaultStrategyType != null)
             {
@@ -107,19 +107,21 @@ namespace Testinator.TestSystem.Editors
             var validationPassed = true;
             if (MaximumScore < mMinScore || MaximumScore > mMaxScore)
             {
-                mErrorHandlerAdapter.HandleErrorFor(x => x.MaximumScore, $"Maximum point score must from {mMinScore} to {mMaxScore}.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.MaximumScore, $"Maximum point score must from {mMinScore} to {mMaxScore}.");
                 validationPassed = false;
             }
 
             if (false == mDefaultStrategyType.IsAssignableFrom(mScoringStrategy.GetType()))
             {
                 // TODO THIS WILL NOT WORK MOST LIKELY
-                mErrorHandlerAdapter.HandleErrorFor(x => x, $"The only valid type of scoring strategy for this question is {mDefaultStrategyType.Name}.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x, $"The only valid type of scoring strategy for this question is {mDefaultStrategyType.Name}.");
                 validationPassed = false;
             }
 
             return validationPassed;
         }
+
+        // TODO initialization with existing data
 
         #endregion
     }

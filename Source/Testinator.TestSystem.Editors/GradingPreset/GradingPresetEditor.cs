@@ -7,15 +7,15 @@ using Testinator.TestSystem.Implementation;
 
 namespace Testinator.TestSystem.Editors
 {
-    internal class GradingPresetEditor : BaseEditor<IGradingPreset, IGradingPresetEditor>, IGradingPresetEditor
+    internal class GradingPresetEditor : NestedEditor<IGradingPreset, IGradingPresetEditor>, IGradingPresetEditor
     {
         public string Name { get; set; }
 
         public List<KeyValuePair<int, IGrade>> Thresholds { get; set; }
 
-        public GradingPresetEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public GradingPresetEditor(int version) : base(version) { }
 
-        public GradingPresetEditor(GradingPreset preset, int version, IInternalErrorHandler errorHandler) : base(preset, version, errorHandler)
+        public GradingPresetEditor(GradingPreset preset, int version) : base(preset, version)
         {
             if (preset == null)
                 throw new ArgumentNullException(nameof(preset));

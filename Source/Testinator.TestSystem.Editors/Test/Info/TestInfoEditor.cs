@@ -9,7 +9,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// Default implementation of <see cref="ITestInfoEditor"/>
     /// </summary>
-    internal class TestInfoEditor : BaseEditor<TestInfo, ITestInfoEditor>, ITestInfoEditor
+    internal class TestInfoEditor : NestedEditor<TestInfo, ITestInfoEditor>, ITestInfoEditor
     {
         #region Private Members
 
@@ -42,14 +42,14 @@ namespace Testinator.TestSystem.Editors
         /// Initializes the editor to create a new object
         /// </summary>
         /// <param name="version">The version of test system to use</param>
-        public TestInfoEditor(int version, IInternalErrorHandler errorHandler) : base(version, errorHandler) { }
+        public TestInfoEditor(int version) : base(version) { }
 
         /// <summary>
         /// Initializes the editor to edit an existing info
         /// </summary>
         /// <param name="originalObj">The object to edit</param>
         /// <param name="version">The version of test system to use</param>
-        public TestInfoEditor(TestInfo originalObj, int version, IInternalErrorHandler errorHandler) : base(originalObj, version, errorHandler) { }
+        public TestInfoEditor(TestInfo originalObj, int version) : base(originalObj, version) { }
 
         #endregion
 
@@ -57,40 +57,40 @@ namespace Testinator.TestSystem.Editors
 
         protected override bool Validate()
         {
-            mErrorHandlerAdapter.ClearAllErrors();
+            ErrorHandlerAdapter.Clear();
             var validationPassed = true;
 
             if (string.IsNullOrEmpty(Name))
             {
                 validationPassed = false;
-                mErrorHandlerAdapter.HandleErrorFor(x => x.Name, "The name must not be empty");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Name, "The name must not be empty");
             }
             else if (Name.Length > mNameMaxLen || Name.Length < mNameMinLen)
             {
                 validationPassed = false;
-                mErrorHandlerAdapter.HandleErrorFor(x => x.Name, $"The name must be from within the range of {mNameMinLen} to {mNameMaxLen} characters.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Name, $"The name must be from within the range of {mNameMinLen} to {mNameMaxLen} characters.");
             }
 
             if (string.IsNullOrEmpty(Description))
             {
                 validationPassed = false;
-                mErrorHandlerAdapter.HandleErrorFor(x => x.Description, "The description must not be empty");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Description, "The description must not be empty");
             }
             else if (Description.Length > mDescriptionMaxLen || Description.Length < mDescriptionMinLen)
             {
                 validationPassed = false;
-                mErrorHandlerAdapter.HandleErrorFor(x => x.Description, $"The description must be from within the range of {mDescriptionMinLen} to {mDescriptionMaxLen} characters.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Description, $"The description must be from within the range of {mDescriptionMinLen} to {mDescriptionMaxLen} characters.");
             }
 
             if (TimeLimit == null)
             {
                 validationPassed = false;
-                mErrorHandlerAdapter.HandleErrorFor(x => x.TimeLimit, "Time limit cannot be null");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.TimeLimit, "Time limit cannot be null");
             }
             else if (TimeLimit < mTimeLimitMin || TimeLimit > mTimeLimitMax)
             {
                 validationPassed = false;
-                mErrorHandlerAdapter.HandleErrorFor(x => x.TimeLimit, $"Time limit must be from within the range of {mTimeLimitMin.ToString()} to {mTimeLimitMax.ToString()}.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.TimeLimit, $"Time limit must be from within the range of {mTimeLimitMin.ToString()} to {mTimeLimitMax.ToString()}.");
             }
 
             // TODO possibly more to come (?)
@@ -133,7 +133,7 @@ namespace Testinator.TestSystem.Editors
         private void LoadAttributes()
         {
             var nameConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, string, StringLengthAttribute>
-                (x => x.Name, Version);
+                (x => x.Name, mVersion);
 
             mNameMaxLen = nameConstraints.Max;
             mNameMinLen = nameConstraints.Min;
@@ -142,7 +142,7 @@ namespace Testinator.TestSystem.Editors
             mDescriptionMinLen = nameConstraints.Min;
 
             var timeConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, TimeSpan, TimeSpanLimitAttribute>
-                (x => x.TimeLimit, Version);
+                (x => x.TimeLimit, mVersion);
 
             mTimeLimitMax = timeConstraints.Max;
             mTimeLimitMin = timeConstraints.Min;
@@ -150,8 +150,7 @@ namespace Testinator.TestSystem.Editors
 
         public void OnErrorFor(Expression<Func<ITestInfoEditor, object>> propertyExpression, Action<string> action)
         {
-            var propertyName = propertyExpression.GetCorrectPropertyName();
-            mErrorHandlerAdapter.OnErrorFor(propertyName, action);
+            ErrorHandlerAdapter.OnErrorFor(propertyExpression, action);
         }
 
         bool IErrorListener<ITestInfoEditor>.Validate()
