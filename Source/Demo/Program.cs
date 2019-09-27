@@ -24,7 +24,7 @@ namespace Demo
                 .Build();
 
             mQuestionEditor.Task.Text.Content = "New super question. What is 2 + 2 * 2?";
-            mQuestionEditor.Options.SetOptions("8", "6", "10", "duzo");
+            mQuestionEditor.Options.ABCD = new List<string>() { "8", "6", "10", "duzo" };
             mQuestionEditor.Scoring.CorrectAnswerIdx = 1;
             mQuestionEditor.Scoring.MaximumScore = 12;
             var questionBuild = mQuestionEditor.Build();

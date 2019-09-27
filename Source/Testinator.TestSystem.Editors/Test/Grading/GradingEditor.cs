@@ -216,7 +216,7 @@ namespace Testinator.TestSystem.Editors
 
         private void LoadAttributeValues()
         {
-            var thresholdsAttr = AttributeHelper.GetPropertyAttribute<Grading, IGradingStrategy, CollectionCountAttribute>(x => x.Strategy, Version);
+            var thresholdsAttr = AttributeHelper.GetPropertyAttribute<Grading, IGradingStrategy, CollectionCountAttribute>(x => x.Strategy, this.mVersion);
             MaxThresholdsCount = thresholdsAttr.Max;
             MinThresholdCount = thresholdsAttr.Min;
         }
