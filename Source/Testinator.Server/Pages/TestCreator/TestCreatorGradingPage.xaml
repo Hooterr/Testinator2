@@ -43,6 +43,9 @@
                         <Run Text="{Binding PointsForTest, Mode=OneWay}" />
                     </TextBlock>
 
+                    <CheckBox Content="Pokaż punkty"
+                              IsChecked="{Binding PointsMode}" />
+
                     <ItemsControl ItemsSource="{Binding Grades.Value}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
@@ -63,7 +66,7 @@
                         
                         <Button Content="-"
                                 Grid.Column="1"
-                                Command="{Binding AddGradeCommand}"
+                                Command="{Binding RemoveGradeCommand}"
                                 Style="{StaticResource BaseUIButton}" />
 
                     </Grid>
@@ -71,31 +74,6 @@
                     <TextBlock Text="{Binding Grades.ErrorMessage}"
                                Foreground="Red"
                                Style="{StaticResource QuestionTextBlockStyle}" />
-
-                    <Grid>
-
-                        <Button Content="{x:Static core:LocalizationResource.EditCriteria}"
-                                Visibility="{Binding IsEditingGrading, Converter={local:BooleanToVisiblityConverter}, ConverterParameter=True}"
-                                Command="{Binding EditPointsCriteriaCommand}"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Center"
-                                Style="{StaticResource BaseUIButton}" />
-
-                        <Button Content="{x:Static core:LocalizationResource.CancelChanges}"
-                                Visibility="{Binding IsEditingGrading, Converter={local:BooleanToVisiblityConverter}}"
-                                Command="{Binding CancelEditPointsCommand}"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Left"
-                                Style="{StaticResource BaseUIButton}" />
-
-                        <Button Content="{x:Static core:LocalizationResource.ConfirmChanges}"
-                                Visibility="{Binding IsEditingGrading, Converter={local:BooleanToVisiblityConverter}}"
-                                Command="{Binding SubmitEditPointsCommand}"
-                                VerticalAlignment="Center"
-                                HorizontalAlignment="Right"
-                                Style="{StaticResource BaseUIButton}" />
-
-                    </Grid>
 
                 </StackPanel>
 

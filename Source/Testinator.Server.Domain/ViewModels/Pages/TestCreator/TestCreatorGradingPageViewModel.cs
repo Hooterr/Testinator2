@@ -16,6 +16,16 @@ namespace Testinator.Server.Domain
         private readonly ApplicationViewModel mApplicationVM;
 
         /// <summary>
+        /// Indicates if grading is in points mode
+        /// </summary>
+        private bool mPointsMode;
+
+        /// <summary>
+        /// The collection of grades always stored as percentages
+        /// </summary>
+        private ObservableCollection<GradeEditableViewModel> mPercentageGrades;
+
+        /// <summary>
         /// The editor for grading in this page
         /// </summary>
         private readonly IGradingEditor mEditor;
@@ -25,9 +35,36 @@ namespace Testinator.Server.Domain
         #region Public Properties
 
         /// <summary>
-        /// Indicates if user is in grading editing mode
+        /// Indicates if user is in grading creation mode
         /// </summary>
-        public bool IsEditingGrading { get; set; }
+        public bool IsCreatingGrading { get; set; }
+
+        /// <summary>
+        /// Indicates if grading is in points mode
+        /// If it's false, grading is displayed in percentages
+        /// </summary>
+        public bool PointsMode
+        {
+            get => mPointsMode;
+            set
+            {
+                // Get the value itself
+                mPointsMode = value;
+
+                // If its true...
+                if (mPointsMode)
+                {
+                    // Convert current grades to points
+                    Grades = mPercentageGrades; // TODO: Grades.ToPoints();
+                }
+                // Otherwise...
+                else
+                {
+                    // Use percentage grades
+                    Grades = mPercentageGrades;
+                }
+            }
+        }
 
         /// <summary>
         /// The maximum amount of points reachable from test
@@ -122,6 +159,8 @@ namespace Testinator.Server.Domain
         {
             // Pass all the changes back to the editor
             mEditor.CustomThresholds = Grades.Value.ToThresholdsInEditor();
+            mEditor.Custom = IsCreatingGrading;
+            mEditor.ContainsPoints = PointsMode;
 
             // Validate grading state
             if (mEditor.Validate())
@@ -142,6 +181,8 @@ namespace Testinator.Server.Domain
             // Copy all the properties from the editor
             PointsForTest = mEditor.TotalPointScore;
             Grades = mEditor.CustomThresholds.ToGradeViewModels(mEditor.MinThresholdCount);
+            IsCreatingGrading = mEditor.Custom;
+            PointsMode = mEditor.ContainsPoints;
 
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x.CustomThresholds, (e) => Grades.ErrorMessage = e);

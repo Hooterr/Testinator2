@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Implementation;
 
@@ -44,8 +45,8 @@ namespace Testinator.Server.Domain
                 }
             }
 
-            // Return the final collection
-            return grades;
+            // Fill missing grade data and return ready collection
+            return grades.StandarizeGrades();
         }
 
         /// <summary>
@@ -67,6 +68,42 @@ namespace Testinator.Server.Domain
 
             // Return final list
             return thresholds;
+        }
+
+
+        /// <summary>
+        /// Ensures the correctness of grade view models, fills up missing data etc.
+        /// </summary>
+        /// <param name="grades">The grade view models</param>
+        /// <returns>The same grade view models that were passed as a parameter</returns>
+        public static ObservableCollection<GradeEditableViewModel> StandarizeGrades(this ObservableCollection<GradeEditableViewModel> grades)
+        {
+            // Loop each grade
+            for (var i = 0; i < grades.Count; i++)
+            {
+                // For the very first grade...
+                if (i == 0)
+                {
+                    // Set its starting threshold to 0
+                    grades.ElementAt(i).ThresholdFrom = 0;
+                    continue;
+                }
+
+                // For the last grade...
+                if (i == grades.Count - 1)
+                {
+                    // Set its ending threshold to 100
+                    grades.ElementAt(i).ThresholdTo = 100;
+                    break;
+                }
+
+                // For any other grade...
+                // Set its starting threshold based on previous grade
+                grades.ElementAt(i).ThresholdFrom = grades.ElementAt(i - 1).ThresholdTo + 1;
+            }
+
+            // Return the grades
+            return grades;
         }
     }
 }
