@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Input;
@@ -27,20 +28,35 @@ namespace Testinator.Server.Domain
 
         #region Public Properties
 
+        public bool DebugView { get; set; } = false;
+
+        public List<string> MarkupTypes { get; } = new List<string>() { "plain text", "HTML" };
+
         /// <summary>
         /// The task for this question
         /// </summary>
-        public InputField<string> Task { get; set; }
+        public InputField<string> TaskTextContent { get; set; }
+        public ErrorCollection TaskErrors { get; set; }
+        public ErrorCollection TaskTextErrors { get; set; }
+        public ErrorCollection TaskTextContentErrors { get; set; }
+        public ErrorCollection TaskTextMarkupErrors { get; set; }
+        public ErrorCollection TaskImagesErrors { get; set; }
 
         /// <summary>
         /// The possible answers for this question as view models
         /// </summary>
         public InputField<ObservableCollection<AnswerSelectableViewModel>> Answers { get; set; }
+        public ErrorCollection OptionsErrors { get; set; }
+        public ErrorCollection OptionsABCDErrors { get; set; }
 
         /// <summary>
         /// The points that are given for right answer
         /// </summary>
         public InputField<string> Points { get; set; }
+        public ErrorCollection ScoringErrors { get; set; }
+        public ErrorCollection ScoringMaxPointsErrors { get; set; }
+        public ErrorCollection ScoringCorrectAnswerErrors { get; set; }
+        public ErrorCollection General { get; set; }
 
         #endregion
 
@@ -61,6 +77,8 @@ namespace Testinator.Server.Domain
         /// </summary>
         public ICommand RemoveAnswerCommand { get; private set; }
 
+        public ICommand ToggleDebugViewCommand { get; private set; }
+
         #endregion
 
         #region Constructor
@@ -74,6 +92,7 @@ namespace Testinator.Server.Domain
             SelectAnswerCommand = new RelayParameterizedCommand(SelectAnswer);
             AddAnswerCommand = new RelayCommand(AddAnswer);
             RemoveAnswerCommand = new RelayCommand(RemoveAnswer);
+            ToggleDebugViewCommand = new RelayCommand(() => DebugView ^= true);
         }
 
         #endregion
@@ -150,14 +169,40 @@ namespace Testinator.Server.Domain
             // Initialize every property based on current editor state
             // If we are editing existing question, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
-            Task = mEditor.Task.Text.Content;
+            TaskTextContent = mEditor.Task.Text.Content;
             Answers = mEditor.Options.ABCD.ToAnswerViewModels(mEditor.Options.MinimumCount);
             Points = mEditor.Scoring.MaximumScore.ToString();
 
             // Catch all the errors and display them
-            mEditor.OnErrorFor(x => x.Task.Text.Content, (e) => Task.ErrorMessage = e); 
-            mEditor.OnErrorFor(x => x.Options.ABCD, (e) => Answers.ErrorMessage = e);
-            mEditor.OnErrorFor(x => x.Scoring.MaximumScore, (e) => Points.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.Task.Text.Content, TaskTextContent.ErrorMessages); 
+            mEditor.OnErrorFor(x => x.Options.ABCD, Answers.ErrorMessages);
+            mEditor.OnErrorFor(x => x.Scoring.MaximumScore, Points.ErrorMessages);
+
+            // DEBUG
+            TaskErrors = new ErrorCollection();
+            TaskTextErrors = new ErrorCollection();
+            TaskTextContentErrors = new ErrorCollection();
+            TaskTextMarkupErrors = new ErrorCollection();
+            TaskImagesErrors = new ErrorCollection();
+            OptionsErrors = new ErrorCollection();
+            OptionsABCDErrors = new ErrorCollection();
+            ScoringErrors = new ErrorCollection();
+            ScoringMaxPointsErrors = new ErrorCollection();
+            ScoringCorrectAnswerErrors = new ErrorCollection();
+            General = new ErrorCollection();
+
+            //mEditor.OnErrorFor(x => x.Task, TaskErrors);
+            //mEditor.OnErrorFor(x => x.Task.Text, TaskTextErrors);
+            mEditor.OnErrorFor(x => x.Task.Text.Content, TaskTextContent.ErrorMessages);
+            //mEditor.OnErrorFor(x => x.Task.Text.Content, TaskTextContentErrors);
+            //mEditor.OnErrorFor(x => x.Task.Text.Markup, TaskTextMarkupErrors);
+            //mEditor.OnErrorFor(x => x.Task.Images, TaskImagesErrors);
+            //mEditor.OnErrorFor(x => x.Options, OptionsErrors);
+            //mEditor.OnErrorFor(x => x.Options.ABCD, OptionsABCDErrors);
+            //mEditor.OnErrorFor(x => x.Scoring, ScoringErrors);
+            //mEditor.OnErrorFor(x => x.Scoring.MaximumScore, ScoringMaxPointsErrors);
+            //mEditor.OnErrorFor(x => x.Scoring.CorrectAnswerIdx, ScoringCorrectAnswerErrors);
+            mEditor.OnErrorFor(x => x, General);
 
             // Return the submit action for the master view model to make use of
             return Submit;
@@ -169,16 +214,14 @@ namespace Testinator.Server.Domain
         public IQuestion Submit()
         {
             // Clear all the error messages
-            Task.ErrorMessage = string.Empty;
-            Answers.ErrorMessage = string.Empty;
-            Points.ErrorMessage = string.Empty;
+            // You don't need to clean errors
 
             // Pass all the changes user has made to the editor
-            mEditor.Task.Text.Content = Task;
+            mEditor.Task.Text.Content = TaskTextContent;
             mEditor.Options.ABCD = Answers.Value.ToOptionsInEditor();
             var rightAnswerIndex = Answers.Value.GetIndexesOfSelected().FirstOrDefault();
             mEditor.Scoring.CorrectAnswerIdx = rightAnswerIndex ?? -1;
-            mEditor.Scoring.MaximumScore = int.Parse(Points);
+            mEditor.Scoring.MaximumScore = int.TryParse(Points.Value, out var maxScore) ? maxScore : -1;
 
             // Return built question
             return mEditor.BuildQuestionFromEditor();
@@ -186,4 +229,58 @@ namespace Testinator.Server.Domain
 
         #endregion
     }
+
+    public class ErrorHandlerDemo : BaseViewModel, IErrorCollection
+    {
+        public ObservableCollection<string> Errors { get; set; }
+
+        public ErrorHandlerDemo()
+        {
+            Errors = new ObservableCollection<string>();
+        }
+
+        public void Add(string message)
+        {
+            Errors.Add(message);
+        }
+
+        public void Clear()
+        {
+            Errors.Clear();
+        }
+    }
+
+    public class ErrorCollection : ObservableCollection<string>, IErrorCollection
+    { 
+    }
+
+    public class InputFieldNEW<T> : BaseViewModel
+    {
+        public T Value { get; set; }
+
+        public ErrorHandlerDemo ErrorHandler { get; set; }
+
+        public ObservableCollection<string> ErrorList => ErrorHandler?.Errors;
+
+        public InputFieldNEW(T value)
+        {
+            Value = value;
+        }
+
+        public static implicit operator T(InputFieldNEW<T> d)
+        {
+            return d != null ? d.Value : default;
+        }
+
+        public static implicit operator InputFieldNEW<T>(T d)
+        {
+            return new InputFieldNEW<T>(d);
+        }
+
+        public override string ToString()
+        {
+            return Value != null ? Value.ToString() : string.Empty;
+        }
+    }
+
 }

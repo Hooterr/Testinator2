@@ -144,7 +144,7 @@ namespace Testinator.Server.Domain
             Grades = mEditor.Thresholds.ToGradeViewModels(mEditor.MinThresholdCount);
 
             // Catch all the errors and display them
-            mEditor.OnErrorFor(x => x.Thresholds, (e) => Grades.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.Thresholds, Grades.ErrorMessages);
         }
 
         #endregion

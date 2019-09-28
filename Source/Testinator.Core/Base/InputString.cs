@@ -1,13 +1,17 @@
-﻿namespace Testinator.Core
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
+
+namespace Testinator.Core
 {
     public class InputField<T> : BaseViewModel
     {
         public T Value { get; set; }
-        public string ErrorMessage { get; set; } = string.Empty;
+        public ObservableCollection<string> ErrorMessages { get; set; }
 
         public InputField(T value)
         {
             Value = value;
+            ErrorMessages = new ObservableCollection<string>();
         }
 
         public static implicit operator T(InputField<T> d)

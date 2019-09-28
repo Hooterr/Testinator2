@@ -25,9 +25,7 @@
                                 Style="{StaticResource BigInputTextBox}"
                                 Tag="Krótka nazwa testu" />
 
-                <TextBlock Text="{Binding Name.ErrorMessage}"
-                               Style="{StaticResource QuestionTextBlockStyle}"
-                               Foreground="{StaticResource RedLightBrush}"/>
+                <local:ErrorListControl Errors="{Binding Name.ErrorMessages}"/>
 
                 <TextBox Text="{Binding Description.Value, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource BigInputTextBox}"
@@ -39,11 +37,8 @@
                              VerticalScrollBarVisibility="Auto"
                              Height="100"/>
 
-                <TextBlock Text="{Binding Description.ErrorMessage}"
-                               Style="{StaticResource QuestionTextBlockStyle}"
-                               Foreground="{StaticResource RedLightBrush}" />
-
-
+                <local:ErrorListControl Errors="{Binding Description.ErrorMessages}"/>
+                
                 <Button Command="{Binding SubmitCommand}"
                         Style="{StaticResource NewBaseButton}"
                         Background="{StaticResource BlueDarkBrush}"

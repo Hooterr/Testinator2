@@ -44,15 +44,15 @@ namespace Testinator.TestSystem.Editors
             return type.GetProperties(BindingFlags.Public | BindingFlags.Instance);
         }
 
-        internal static BaseHandler[] GetHandlersTree(this Type type, BaseHandler parent = null)
+        internal static BaseNode[] GetHandlersTree(this Type type, BaseNode parent = null)
         {
             if (!type.IsInterface)
                 throw new ArgumentException("Only editor interface is valid");
 
-            var children = new List<BaseHandler>();
+            var children = new List<BaseNode>();
             var allProperties = type.GetAllProperties();
             var editorProperties = allProperties.Where(x => x.GetCustomAttributes<EditorPropertyAttribute>(inherit: true).Any())
-                                                .Select(x => new EditorPropertyHandler()
+                                                .Select(x => new PopertyNode()
                                                 {
                                                     Name = x.Name,
                                                     Parent = parent,
@@ -60,25 +60,76 @@ namespace Testinator.TestSystem.Editors
 
             children.AddRange(editorProperties);
 
-            var editors = allProperties.Where(x => x.GetCustomAttributes<EditorAttribute>(inherit: true).Any())
-                                       .Select(x => new
-                                       {
-                                           handler = new EditorHandler()
-                                           {
-                                               Name = x.Name,
-                                               Parent = parent,
-                                           },
-                                           type = x.PropertyType,
-                                       })
-                                       .Select(x =>
-                                       {
-                                           x.handler.Children = x.type.GetHandlersTree(parent: x.handler);
-                                           return x.handler;
-                                       });
+            var editors = allProperties
+                .Where(x => x.GetCustomAttributes<EditorAttribute>(inherit: true).Any())
+                .Select(x => new
+                {
+                    handler = new EditorNode()
+                    {
+                        Name = x.Name,
+                        Parent = parent,
+                    },
+                    type = x.PropertyType,
+                })
+                .Select(x =>
+                {
+                    x.handler.Children = x.type.GetHandlersTree(parent: x.handler);
+                    return x.handler;
+                });
 
             children.AddRange(editors);
 
             return children.ToArray();
         }
+        internal static BaseNodeNEW GetHandlersTreeNEW(this Type type)
+        {
+            var rootNode = new EditorNodeNEW()
+            {
+                Name = "",
+                Parent = null,
+            };
+            rootNode.Children = type.GetHandlersBranches(rootNode);
+            return rootNode;
+        }
+
+        private static BaseNodeNEW[] GetHandlersBranches(this Type type, BaseNodeNEW parent = null)
+        {
+            if (!type.IsInterface)
+                throw new ArgumentException("Only editor interface is valid");
+
+            var children = new List<BaseNodeNEW>();
+            var allProperties = type.GetAllProperties();
+            var editorProperties = allProperties
+                .Where(x => x.GetCustomAttributes<EditorPropertyAttribute>(inherit: true).Any())
+                .Select(x => new PropertyNodeNEW()
+                {
+                    Name = x.Name,
+                    Parent = parent,
+                });
+
+            children.AddRange(editorProperties);
+
+            var editors = allProperties
+                .Where(x => x.GetCustomAttributes<EditorAttribute>(inherit: true).Any())
+                .Select(x => new
+                {
+                    handler = new EditorNodeNEW()
+                    {
+                        Name = x.Name,
+                        Parent = parent,
+                    },
+                    type = x.PropertyType,
+                })
+                .Select(x =>
+                {
+                    x.handler.Children = x.type.GetHandlersBranches(parent: x.handler);
+                    return x.handler;
+                });
+
+            children.AddRange(editors);
+
+            return children.ToArray();
+        }
+
     }
 }
