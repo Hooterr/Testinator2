@@ -76,9 +76,9 @@ namespace Testinator.TestSystem.Editors
                 veryficationPassed = false;
             }
 
-            if (Markup == MarkupLanguage.Html)
+            if (Markup != MarkupLanguage.PlainText)
             {
-                ErrorHandlerAdapter.HandleErrorFor(x => x.Markup, $"Not supported yet.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Markup, $"Any markup other than plain text it not supported yet.");
                 veryficationPassed = false;
             }
 

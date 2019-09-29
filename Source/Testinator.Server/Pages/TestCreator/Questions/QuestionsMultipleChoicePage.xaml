@@ -16,7 +16,8 @@
         <ScrollViewer VerticalScrollBarVisibility="Visible" Height="600">
             
             <StackPanel>
-                <Button Content="Debug view" HorizontalAlignment="Left" Command="{Binding ToggleDebugViewCommand}"/>
+                <Button Content="Debug view" HorizontalAlignment="Left" Command="{Binding ToggleDebugViewCommand}" Background="OrangeRed"/>
+                
                 <TextBlock Text="Question - Multiple Choice"
                            FontSize="30" />
                 <TextBox Text="{Binding TaskTextContent.Value}"
@@ -26,7 +27,10 @@
                 <local:ErrorListControl
                     Errors="{Binding TaskTextContent.ErrorMessages}"/>
 
+
+                <TextBlock Text="Markup:"/>
                 <ComboBox ItemsSource="{Binding MarkupTypes}"
+                          SelectedItem="{Binding Markup.Value}"
                           />
                                 
                 
@@ -60,172 +64,23 @@
                         Command="{Binding RemoveAnswerCommand}" />
 
                 <StackPanel Visibility="{Binding DebugView, Converter={local:BooleanToVisiblityConverter}}">
+                    <Button Content="Clear all" HorizontalAlignment="Left"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Grid.ColumnSpan="2"
+                            Command="{Binding ClearAllErrorsCommand}"/>
 
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="TaskErrors: " FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding TaskErrors.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding TaskErrors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="TaskTextErrors: " FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding TaskTextErrors.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding TaskTextErrors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="TaskTextContentErrors: " FontWeight="Black" FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding TaskTextContentErrors.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding TaskTextContentErrors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="TaskTextMarkupErrors: " FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding TaskTextMarkupErrors.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding TaskTextMarkupErrors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="TaskImagesErrors: " FontWeight="Black" FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding TaskImagesErrors.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding TaskImagesErrors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="OptionsErrors: " FontWeight="Black" FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding OptionsErrors.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding OptionsErrors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="OptionsABCDErrors: " FontWeight="Black" FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding OptionsABCDErrors.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding OptionsABCDErrors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="ScoringErrors: " FontWeight="Black" FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding ScoringErrors.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding ScoringErrors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="ScoringMaxPointsErrors: " FontWeight="Black" FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding ScoringMaxPointsErrors.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding ScoringMaxPointsErrors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="ScoringCorrectAnswerErrors: " FontWeight="Black" FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding ScoringCorrectAnswerErrors.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding ScoringCorrectAnswerErrors}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
-                    <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="General: " FontWeight="Black" FontFamily="{StaticResource FontMontserratRegular}"/>
-                        <TextBlock Text="{Binding General.Count}" FontFamily="{StaticResource FontMontserratRegular}"/>
-                    </StackPanel>
-                    <ItemsControl ItemsSource="{Binding General}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="  >" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                    <TextBlock Text="{Binding}" FontWeight="Regular" FontFamily="{StaticResource FontMontserratRegular}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-
+                    <local:EditorDebugViewControl DataContext="{Binding TaskErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding TaskTextErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding TaskTextContentErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding TaskTextMarkupErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding TaskImagesErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding OptionsErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding OptionsABCDErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding ScoringErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding ScoringMaxPointsErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding ScoringCorrectAnswerErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding General}"/>
                 </StackPanel>
 
             </StackPanel>
