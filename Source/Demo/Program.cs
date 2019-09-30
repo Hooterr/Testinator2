@@ -40,9 +40,8 @@ namespace Demo
 
             mTestEditor.Info.TimeLimit = TimeSpan.FromMinutes(5);
 
-            mTestEditor.Grading.Custom = true;
             mTestEditor.Grading.ContainsPoints = true;
-            mTestEditor.Grading.CustomThresholds = new List<KeyValuePair<int, IGrade>>()
+            mTestEditor.Grading.Thresholds = new List<KeyValuePair<int, IGrade>>()
             {
                 new KeyValuePair<int, IGrade>(24, new Grade("nzal")),
                 new KeyValuePair<int, IGrade>(48, new Grade("zal")),

@@ -11,44 +11,40 @@ namespace Testinator.TestSystem.Editors
     public interface IGradingEditor : IErrorListener<IGradingEditor>
     {
         /// <summary>
-        /// The preset for this grading
+        /// Contains thresholds, either percentage or points, depends on <see cref="ContainsPoints"/> flag
         /// </summary>
         [EditorProperty]
-        IGradingPreset Preset { get; set; }
-
-        // TODO update comments
-
-        /// <summary>
-        /// Contains custom thresholds, either percentage or points, depends on <see cref="ContainsPoints"/> flag
-        /// </summary>
-        [EditorProperty]
-        List<KeyValuePair<int, IGrade>> CustomThresholds { get; set; }
+        // TODO write a wrapper around it that has a ContainsPoints flag, not super important right now tho
+        List<KeyValuePair<int, IGrade>> Thresholds { get; set; }
 
         /// <summary>
         /// Number of points one can get for all correct answers from this test
         /// </summary>
         int TotalPointScore { get; }
 
+        /// <summary>
+        /// Gets the maximum amount of thresholds
+        /// </summary>
         int MaxThresholdsCount { get; }
 
+        /// <summary>
+        /// Gets the minimum amount of threshold
+        /// </summary>
         int MinThresholdCount { get; }
         int InitialThresholdCount { get; }
 
         /// <summary>
-        /// Indicates if <see cref="CustomThresholds"/> contains points thresholds or percentage thresholds
+        /// Indicates if <see cref="Thresholds"/> contains points thresholds or percentage thresholds
         /// </summary>
         bool ContainsPoints { get; set; }
 
         /// <summary>
-        /// Indicates if <see cref="Preset"/> or <see cref="CustomThresholds"/> should be used
-        /// True: <see cref="CustomThresholds"/> are used
-        /// False: <see cref="Preset"/> is used
+        /// Sets <see cref="Thresholds"/> according to the provided preset
         /// </summary>
-        bool Custom { get; set; } 
+        /// <param name="preset">The preset</param>
+        void UsePreset(IGradingPreset preset);
         
-        // Don't bother for now
-
-        // bool UseAllQuestions - shouldn't this go to test options btw?
+        // bool UseAllQuestions - shouldn't this go to test options btw? yeah, maybe. It can go anywhere tbh
         // some fun stuff with questions' categories
     }
 }

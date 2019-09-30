@@ -11,6 +11,8 @@ namespace Testinator.TestSystem.Implementation
         [StringLength(min: 5, max: 200, fromVersion: 1)]
         public string Name { get; set; }
 
+        [AllowNullOrEmptyString(fromVersion: 1)]
+        [StringLength(min: 5, max: 500, fromVersion: 1)]
         public string Description { get; set; }
 
         public DateTime CreationDate { get; set; }

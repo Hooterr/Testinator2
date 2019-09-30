@@ -13,11 +13,29 @@
 
     <Border Background="{StaticResource WhiteLightBrush}">
 
-        <StackPanel>
-            <TextBlock Text="Tutaj bedzie caly test wylistowany, wszystko co zostalo w nim wybrane, i mozna albo wrocic do edycji albo dac submit i test jest stworzony" />
+        <StackPanel VerticalAlignment="Center">
 
-            <Button Content="Submit"
-                    Command="{Binding SubmitCommand}" />
+            <Grid Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBox Text="{Binding FileName, Mode=TwoWay, FallbackValue=something}"
+                        HorizontalAlignment="Right"
+                        Grid.Column="0"
+                        VerticalAlignment="Center"/>
+                <TextBlock Text=".tst"
+                           Grid.Column="1"
+                           VerticalAlignment="Center"/>
+                <Button 
+                    Grid.Column="2"
+                    Content="Save"
+                    Command="{Binding SubmitTestCommand}"/>
+                
+            </Grid>
+
+            <TextBlock Foreground="Red" Text="{Binding Message, FallbackValue=error404}" HorizontalAlignment="Center" FontWeight="Bold" FontSize="18"/>
 
         </StackPanel>
         

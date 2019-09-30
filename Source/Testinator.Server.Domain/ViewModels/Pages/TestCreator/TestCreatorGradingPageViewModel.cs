@@ -32,7 +32,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Indicates if user is in grading creation mode
         /// </summary>
-        public bool IsCreatingGrading { get; set; }
+        public bool IsCreatingGrading { get; set; } = true;
 
         /// <summary>
         /// Indicates if grading is in points mode
@@ -156,9 +156,9 @@ namespace Testinator.Server.Domain
         private void GoToNextPage()
         {
             // Pass all the changes back to the editor
-            mEditor.CustomThresholds = Grades.Value.ToThresholdsInEditor();
-            mEditor.Custom = IsCreatingGrading;
+            mEditor.Thresholds = Grades.Value.ToThresholdsInEditor();
             mEditor.ContainsPoints = PointsMode;
+            mEditor.Thresholds = Grades.Value.ToThresholdsInEditor();
 
             // Validate grading state
             if (mEditor.Validate())
@@ -178,16 +178,15 @@ namespace Testinator.Server.Domain
         {
             // Copy all the properties from the editor
             PointsForTest = mEditor.TotalPointScore;
-            IsCreatingGrading = mEditor.Custom;
             mPointsMode = mEditor.ContainsPoints;
-            Grades = mEditor.CustomThresholds
+            Grades = mEditor.Thresholds
                 // Use the amount of grades that are provided in the editor
                 .ToGradeViewModels(mEditor.InitialThresholdCount,
                 // If we are using points, use the test points, otherwise maximum is 100%
                 mPointsMode ? PointsForTest : 100);
 
             // Catch all the errors and display them
-            mEditor.OnErrorFor(x => x.CustomThresholds, (e) => Grades.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.Thresholds, (e) => Grades.ErrorMessage = e);
         }
 
         #endregion

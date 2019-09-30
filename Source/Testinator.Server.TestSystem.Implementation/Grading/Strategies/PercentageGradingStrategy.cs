@@ -6,6 +6,7 @@ using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Implementation
 {
+    [Serializable]
     public class PercentageGradingStrategy : IGradingStrategy
     {
         public ReadOnlyCollection<KeyValuePair<int, IGrade>> Thresholds { get; internal set; }
