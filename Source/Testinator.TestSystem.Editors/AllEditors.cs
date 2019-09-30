@@ -3,7 +3,8 @@ using Testinator.TestSystem.Implementation.Questions;
 
 namespace Testinator.TestSystem.Editors
 {
-    using ABCQuestionEditor = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
+    using IQuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
+    using IQuestionEditorMultipleCheckBoxes = IQuestionEditor<MultipleCheckBoxesQuestion, IMultipleCheckBoxesQuestionOptionsEditor, IMultipleCheckBoxesQuestionScoringEditor>;
 
     /// <summary>
     /// Provides editor builders
@@ -11,10 +12,16 @@ namespace Testinator.TestSystem.Editors
     public static class AllEditors
     {
         /// <summary>
-        /// The editor for <see cref="Questions.MultipleChoiceQuestion"/>
+        /// The editor for <see cref="MultipleChoiceQuestion"/>
         /// </summary>
-        public static IEditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion> MultipleChoiceQuestion
-            => new EditorBuilder<ABCQuestionEditor, MultipleChoiceQuestion>();
+        public static IEditorBuilder<IQuestionEditorMultipleChoice, MultipleChoiceQuestion> MultipleChoiceQuestion
+            => new EditorBuilder<IQuestionEditorMultipleChoice, MultipleChoiceQuestion>();
+
+        /// <summary>
+        /// The editor for <see cref="MultipleCheckBoxesQuestion"/>
+        /// </summary>
+        public static IEditorBuilder<IQuestionEditorMultipleCheckBoxes, MultipleCheckBoxesQuestion> MultipleCheckBoxesQuestion
+            => new EditorBuilder<IQuestionEditorMultipleCheckBoxes, MultipleCheckBoxesQuestion>();
 
         /// <summary>
         /// The editor for <see cref="ITest"/>

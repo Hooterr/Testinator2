@@ -8,7 +8,8 @@ using Testinator.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.Services
 {
-    using QuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
+    using IQuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
+    using IQuestionEditorMultipleCheckBoxes = IQuestionEditor<MultipleCheckBoxesQuestion, IMultipleCheckBoxesQuestionOptionsEditor, IMultipleCheckBoxesQuestionScoringEditor>;
 
     /// <summary>
     /// The main test creator service that handles every interactions with data needed in test creator for Testinator.Server app
@@ -120,7 +121,7 @@ namespace Testinator.Server.Services
         /// </summary>
         /// <param name="questionNumber">The index of question to preload from test, if not provided, brand-new question will be created</param>
         /// <returns>The editor of type MultipleChoice</returns>
-        public QuestionEditorMultipleChoice GetEditorMultipleChoice(int? questionNumber = null)
+        public IQuestionEditorMultipleChoice GetEditorMultipleChoice(int? questionNumber = null)
         {
             // If we have a question provided...
             if (questionNumber.HasValue)
@@ -139,6 +140,38 @@ namespace Testinator.Server.Services
             // Otherwise...
             // Get the editor for this type of question
             return AllEditors.MultipleChoiceQuestion
+                // No pre-data provided, so create new question
+                .NewQuestion()
+                // Use latest version since its new question
+                .UseNewestVersion()
+                // Return built editor
+                .Build();
+        }
+
+        /// <summary>
+        /// Gets the editor for <see cref="MultipleCheckBoxesQuestion"/>
+        /// </summary>
+        /// <param name="questionNumber">The index of question to preload from test, if not provided, brand-new question will be created</param>
+        /// <returns>The editor of type MultipleChechBoxes</returns>
+        public IQuestionEditorMultipleCheckBoxes GetEditorMultipleCheckBoxes(int? questionNumber = null)
+        {
+            // If we have a question provided...
+            if (questionNumber.HasValue)
+            {
+                // Get question from the test
+                var question = mCurrentTestEditor.Questions[questionNumber.Value] as MultipleCheckBoxesQuestion;
+
+                // Get the editor for this type of question
+                return AllEditors.MultipleCheckBoxesQuestion
+                    // Pre-load the question
+                    .SetInitialQuestion(question)
+                    // Return built editor
+                    .Build();
+            }
+
+            // Otherwise...
+            // Get the editor for this type of question
+            return AllEditors.MultipleCheckBoxesQuestion
                 // No pre-data provided, so create new question
                 .NewQuestion()
                 // Use latest version since its new question
