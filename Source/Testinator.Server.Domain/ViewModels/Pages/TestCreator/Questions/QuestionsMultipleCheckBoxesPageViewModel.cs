@@ -142,6 +142,7 @@ namespace Testinator.Server.Domain
             // Pass all the changes user has made to the editor
             mEditor.Task.Text.Content = TaskTextContent;
             mEditor.Options.Boxes = Answers.Value.ToOptionsInEditor();
+            mEditor.Scoring.CorrectAnswers = Answers.Value.GetBoolsOfSelected();
             mEditor.Scoring.MaximumScore = int.TryParse(Points.Value, out var maxScore) ? maxScore : -1;
 
             // Return built question

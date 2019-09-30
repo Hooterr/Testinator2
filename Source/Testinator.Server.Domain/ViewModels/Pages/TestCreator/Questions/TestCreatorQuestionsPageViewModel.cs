@@ -129,7 +129,7 @@ namespace Testinator.Server.Domain
 
             // Show the page
             IsCreatingQuestion = true;
-            GoToPage(QuestionsPage.MultipleCheckBoxes);
+            GoToPage(QuestionsPage.MultipleCheckBoxes, viewModel);
         }
 
         /// <summary>

@@ -129,5 +129,26 @@ namespace Testinator.Server.Domain
             // Return the final list
             return indexes;
         }
+
+        /// <summary>
+        /// Finds and returns the list of bools that indicate whether the answer is selected or not
+        /// </summary>
+        /// <param name="answers">Answer view models</param>
+        /// <returns>The list of bools with true values on right answers</returns>
+        public static List<bool> GetBoolsOfSelected(this IList<AnswerSelectableViewModel> answers)
+        {
+            // Prepare a list to return
+            var bools = new List<bool>();
+
+            // Loop each answer
+            foreach (var answer in answers)
+            {
+                // Add its value to the list
+                bools.Add(answer.IsSelected);
+            }
+
+            // Return the final list
+            return bools;
+        }
     }
 }

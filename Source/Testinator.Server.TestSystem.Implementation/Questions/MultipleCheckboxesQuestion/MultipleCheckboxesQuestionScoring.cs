@@ -30,6 +30,7 @@ namespace Testinator.TestSystem.Implementation.Questions
             // Yeah really need that fraction class
             // eg. return new Fraction(correctAnswerCount, TotalCount);
             // or something
+            // Yep, i would need this in view models as well
             return (int)Math.Round((double)correctAnswersCount * 100 / CorrectAnswer.Count);
         }
     }
