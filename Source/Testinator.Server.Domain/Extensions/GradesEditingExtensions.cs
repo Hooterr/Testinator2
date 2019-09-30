@@ -17,9 +17,10 @@ namespace Testinator.Server.Domain
         /// Converts the editor thresholds to grade view models ready to be edited
         /// </summary>
         /// <param name="thresholds">The grading thresholds from editor</param>
-        /// <param name="minimumGradesCount">The minimum amount of grades required</param>
+        /// <param name="initialGradesCount">The initial amount of grades that are created when nothing was provided</param>
+        /// <param name="maxAmount">The maximum amount of points or percentages possible to get</param>
         /// <returns>The list of grade view models</returns>
-        public static BindingList<GradeEditableViewModel> ToGradeViewModels(this IEnumerable<KeyValuePair<int, IGrade>> thresholds, int minimumGradesCount)
+        public static BindingList<GradeEditableViewModel> ToGradeViewModels(this IEnumerable<KeyValuePair<int, IGrade>> thresholds, int initialGradesCount, int maxAmount)
         {
             // Prepare a list to return
             var grades = new BindingList<GradeEditableViewModel>();
@@ -35,16 +36,26 @@ namespace Testinator.Server.Domain
                 });
             }
 
-            // Check if we haven't met the minimum requirement of grades count
-            var gradesCount = grades.Count;
-            if (gradesCount < minimumGradesCount)
+            // If grades are empty...
+            if (grades.Count == 0)
             {
-                // Then we need to create new grades to fill the gap
-                for (var i = 0; i < minimumGradesCount - gradesCount; i++)
+                // That means nothing was provided before-hand
+                // So create brand-new grades
+
+                // Prepare grading step that every grade is incremented by
+                var gradingStep = maxAmount / initialGradesCount;
+                for (var i = 0; i < initialGradesCount; i++)
                 {
-                    // Create empty grade
-                    grades.Add(new GradeEditableViewModel());
+                    // Add new grade
+                    grades.Add(new GradeEditableViewModel
+                    {
+                        // Calculate upper border
+                        ThresholdTo = (i + 1) * gradingStep
+                    });
                 }
+
+                // Make sure last grade ends at maximum amount
+                grades.ElementAt(grades.Count - 1).ThresholdTo = maxAmount;
             }
 
             // Fill missing grade data and return ready list
