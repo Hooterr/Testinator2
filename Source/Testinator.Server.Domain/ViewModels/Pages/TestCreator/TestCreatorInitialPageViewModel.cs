@@ -1,6 +1,9 @@
-﻿using System.Windows.Input;
+﻿using System.ComponentModel;
+using System.Windows.Input;
 using Testinator.Core;
 using Testinator.TestSystem.Editors;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Testinator.Server.Domain
 {
@@ -13,12 +16,17 @@ namespace Testinator.Server.Domain
 
         private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
+        private readonly ITestFileManager mTestFileManager;
+        private readonly TestMapper mTestMapper;
 
         #endregion
 
         #region Public Properties
 
-        // TODO: Test list, grading list etc.
+        /// <summary>
+        /// The tests that are available for editing
+        /// </summary>
+        public ObservableCollection<TestListItemViewModel> Tests { get; set; }
 
         #endregion
 
@@ -51,15 +59,24 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorInitialPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
+        public TestCreatorInitialPageViewModel(
+            ITestCreatorService testCreatorService, 
+            ApplicationViewModel applicationVM, 
+            ITestFileManager testFileManager, 
+            TestMapper testMapper)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
             mApplicationVM = applicationVM;
+            mTestFileManager = testFileManager;
+            mTestMapper = testMapper;
 
             // Create commands
             TestSelectedCommand = new RelayParameterizedCommand(TestSelected);
             NewTestCommand = new RelayCommand(NewTest);
+
+            // Load any saved tests
+            LoadTests();
         }
 
         #endregion
@@ -72,7 +89,14 @@ namespace Testinator.Server.Domain
         private void TestSelected(object param)
         {
             // Get the selected test
-            var test = param as TestSystem.Implementation.Test;
+            var testVM = param as TestListItemViewModel;
+
+            // Get it's data from local file
+            var test = mTestFileManager.Read(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.Tests)
+                    .WithName(testVM.Name);
+            });
 
             // Setup Test Creator with provided test
             mTestCreator.InitializeNewTest(test);
@@ -91,6 +115,30 @@ namespace Testinator.Server.Domain
 
             // Go to the next page
             mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestInfo);
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Loads any saved tests from both local files and web
+        /// </summary>
+        private void LoadTests()
+        {
+            // TODO: Load tests from user account in web
+
+            // Get every locally saved test
+            var localTests = mTestFileManager.GetTestContexts(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.Tests);
+            });
+
+            // Convert all the test to suitable view models
+            var testViewModels = mTestMapper.Map(localTests);
+
+            // Add them to the collection
+            Tests = new ObservableCollection<TestListItemViewModel>(testViewModels);
         }
 
         #endregion
