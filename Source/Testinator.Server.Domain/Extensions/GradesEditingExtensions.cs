@@ -43,14 +43,14 @@ namespace Testinator.Server.Domain
                 // So create brand-new grades
 
                 // Prepare grading step that every grade is incremented by
-                var gradingStep = maxAmount / initialGradesCount;
+                var gradingStep = (double)maxAmount / initialGradesCount;
                 for (var i = 0; i < initialGradesCount; i++)
                 {
                     // Add new grade
                     grades.Add(new GradeEditableViewModel
                     {
                         // Calculate upper border
-                        ThresholdTo = (i + 1) * gradingStep
+                        ThresholdTo = Convert.ToInt32((i + 1) * gradingStep)
                     });
                 }
 
