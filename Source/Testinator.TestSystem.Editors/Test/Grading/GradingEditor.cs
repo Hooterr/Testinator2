@@ -31,6 +31,7 @@ namespace Testinator.TestSystem.Editors
         public int MaxThresholdsCount { get; private set; }
 
         public int MinThresholdCount { get; private set; }
+        public int InitialThresholdCount => 5; // TODO: Get this amount from attributes or wherever you want
 
         #endregion
 

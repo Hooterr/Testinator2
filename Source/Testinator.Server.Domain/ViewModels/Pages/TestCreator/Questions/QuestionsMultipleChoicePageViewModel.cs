@@ -151,7 +151,7 @@ namespace Testinator.Server.Domain
             // If we are editing existing question, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
             Task = mEditor.Task.Text.Content;
-            Answers = mEditor.Options.ABCD.ToAnswerViewModels(mEditor.Options.MinimumCount);
+            Answers = mEditor.Options.ABCD.ToAnswerViewModels(mEditor.Options.InitialCount);
             Points = mEditor.Scoring.MaximumScore.ToString();
 
             // Catch all the errors and display them

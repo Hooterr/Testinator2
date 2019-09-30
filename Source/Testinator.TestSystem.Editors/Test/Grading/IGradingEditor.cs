@@ -32,6 +32,7 @@ namespace Testinator.TestSystem.Editors
         int MaxThresholdsCount { get; }
 
         int MinThresholdCount { get; }
+        int InitialThresholdCount { get; }
 
         /// <summary>
         /// Indicates if <see cref="CustomThresholds"/> contains points thresholds or percentage thresholds

@@ -18,13 +18,16 @@ namespace Testinator.TestSystem.Editors
         /// <summary>
         /// Gets the maximum count of the allowed options
         /// </summary>
-        /// <returns>The maximum number of options</returns>
         int MaximumCount { get; }
 
         /// <summary>
         /// Gets the minimum count of the allowed options
         /// </summary>
-        /// <returns>The minimum number of options</returns>
         int MinimumCount { get; }
+
+        /// <summary>
+        /// Gets the initial count of options for brand-new question
+        /// </summary>
+        int InitialCount { get; }
     }
 }
