@@ -3,6 +3,7 @@ using Testinator.TestSystem.Implementation;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Attributes;
 using System.Linq.Expressions;
+using System.Collections.Generic;
 
 namespace Testinator.TestSystem.Editors
 {
@@ -161,6 +162,11 @@ namespace Testinator.TestSystem.Editors
         {
             ErrorHandlerAdapter.OnErrorFor(propertyExpression, action);
         }
+        public void OnErrorFor(Expression<Func<ITestInfoEditor, object>> propertyExpression, ICollection<string> handler)
+        {
+            ErrorHandlerAdapter.OnErrorFor(propertyExpression, handler);
+        }
+
 
         bool IErrorListener<ITestInfoEditor>.Validate()
         {

@@ -11,51 +11,81 @@
                  d:DesignHeight="720"
                  d:DesignWidth="1024">
 
-    <Border Background="{StaticResource WhiteLightBrush}">
+    <StackPanel Background="{StaticResource WhiteLightBrush}">
 
-        <StackPanel>
-            <TextBlock Text="Question - Multiple Choice"
-                       FontSize="30" />
-            <TextBox Text="{Binding Task.Value}"
-                     Tag="Tresc"
-                     Style="{StaticResource BigInputTextBox}"/>
-            <TextBlock Text="{Binding Task.ErrorMessage}"
-                        Style="{StaticResource QuestionTextBlockStyle}"
-                        Foreground="{StaticResource RedLightBrush}"/>
-
-            <ItemsControl ItemsSource="{Binding Answers.Value}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <local:AnswerSelectableControl>
-                            <Button Content="{Binding Title}"
-                                    Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}}"
-                                    Command="{Binding DataContext.SelectAnswerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
-                                    CommandParameter="{Binding}"
-                                    />
-                        </local:AnswerSelectableControl>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <TextBlock Text="{Binding Answers.ErrorMessage}"
-                        Style="{StaticResource QuestionTextBlockStyle}"
-                        Foreground="{StaticResource RedLightBrush}"/>
+        <ScrollViewer VerticalScrollBarVisibility="Visible" Height="600">
             
-            <local:RegexTextBox Text="{Binding Points.Value}"
-                                Regex="^(0?[1-9]|[1-9][0-9])$"
-                                 Tag="Punkty"
-                                 Style="{StaticResource BigInputTextBox}"/>
-            <TextBlock Text="{Binding Points.ErrorMessage}"
-                        Style="{StaticResource QuestionTextBlockStyle}"
-                        Foreground="{StaticResource RedLightBrush}"/>
+            <StackPanel>
+                <Button Content="Debug view" HorizontalAlignment="Left" Command="{Binding ToggleDebugViewCommand}" Background="OrangeRed"/>
+                
+                <TextBlock Text="Question - Multiple Choice"
+                           FontSize="30" />
+                <TextBox Text="{Binding TaskTextContent.Value}"
+                         Tag="Tresc"
+                         Style="{StaticResource BigInputTextBox}"/>
 
-            <Button Content="+"
-                    Command="{Binding AddAnswerCommand}" />
+                <local:ErrorListControl
+                    Errors="{Binding TaskTextContent.ErrorMessages}"/>
 
-            <Button Content="-"
-                    Command="{Binding RemoveAnswerCommand}" />
+
+                <TextBlock Text="Markup:"/>
+                <ComboBox ItemsSource="{Binding MarkupTypes}"
+                          SelectedItem="{Binding Markup.Value}"
+                          />
+                                
+                
+                <ItemsControl ItemsSource="{Binding Answers.Value}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:AnswerSelectableControl>
+                                <Button Content="{Binding Title}"
+                                        Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}}"
+                                        Command="{Binding DataContext.SelectAnswerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
+                                        CommandParameter="{Binding}"
+                                        />
+                            </local:AnswerSelectableControl>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                
+                <local:ErrorListControl Errors="{Binding Answers.ErrorMessages}"/>
             
-        </StackPanel>
-        
-    </Border>
+                <local:RegexTextBox Text="{Binding Points.Value}"
+                                    Regex="^(0?[1-9]|[1-9][0-9])$"
+                                     Tag="Punkty"
+                                     Style="{StaticResource BigInputTextBox}"/>
+
+                <local:ErrorListControl Errors="{Binding Points.ErrorMessages}"/>
+
+                <Button Content="+"
+                        Command="{Binding AddAnswerCommand}" />
+
+                <Button Content="-"
+                        Command="{Binding RemoveAnswerCommand}" />
+
+                <StackPanel Visibility="{Binding DebugView, Converter={local:BooleanToVisiblityConverter}}">
+                    <Button Content="Clear all" HorizontalAlignment="Left"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Grid.ColumnSpan="2"
+                            Command="{Binding ClearAllErrorsCommand}"/>
+
+                    <local:EditorDebugViewControl DataContext="{Binding TaskErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding TaskTextErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding TaskTextContentErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding TaskTextMarkupErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding TaskImagesErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding OptionsErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding OptionsABCDErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding ScoringErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding ScoringMaxPointsErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding ScoringCorrectAnswerErrors}"/>
+                    <local:EditorDebugViewControl DataContext="{Binding General}"/>
+                </StackPanel>
+
+            </StackPanel>
+        </ScrollViewer>
+
+    </StackPanel>
 
 </UICore:BasePage>

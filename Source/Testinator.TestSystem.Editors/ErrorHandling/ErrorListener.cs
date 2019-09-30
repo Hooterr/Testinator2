@@ -13,6 +13,7 @@ namespace Testinator.TestSystem.Editors
         #region Private Members
 
         private HandlersCollection mHandlers;
+        private HandlersCollectionNEW mHandlersNEW;
 
         private IList<string> mUnhandled;
 
@@ -31,7 +32,6 @@ namespace Testinator.TestSystem.Editors
         {
             var propName = propertyExpression.GetCorrectPropertyName();
             mHandlers[propName] = action;
-
         }
 
         public void OnErrorFor(string propertyName, Action<string> action)
@@ -49,6 +49,7 @@ namespace Testinator.TestSystem.Editors
         private ErrorListener()
         {
             mHandlers = new HandlersCollection(typeof(TIntereface).GetHandlersTree());
+            mHandlersNEW = new HandlersCollectionNEW(typeof(TIntereface).GetHandlersTreeNEW());
             mUnhandled = new List<string>();
         }
 
@@ -92,6 +93,7 @@ namespace Testinator.TestSystem.Editors
         {
             mUnhandled.Clear();
             mHandlers.ClearErrors();
+            mHandlersNEW.ClearErrors();
         }
 
         /// <summary>
@@ -108,6 +110,20 @@ namespace Testinator.TestSystem.Editors
         {
             if (!mHandlers.HandleError(propertyName, message))
                 mUnhandled.Add(message);
+
+            if (!mHandlersNEW.HandleError(propertyName, message))
+                mUnhandled.Add(message);
+        }
+
+        public void OnErrorFor(Expression<Func<TIntereface, object>> propertyExpression, ICollection<string> handler)
+        {
+            var propName = propertyExpression.GetCorrectPropertyName();
+            mHandlersNEW[propName] = handler;
+        }
+
+        public void OnErrorFor(string propertyName, ICollection<string> handler)
+        {
+            mHandlersNEW[propertyName] = handler;
         }
 
         #endregion

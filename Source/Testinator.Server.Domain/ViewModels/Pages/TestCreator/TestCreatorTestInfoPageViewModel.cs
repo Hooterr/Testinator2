@@ -115,9 +115,9 @@ namespace Testinator.Server.Domain
 
             // Catch all the errors and display them
             // TODO: Add other values here after they are done in editor
-            mEditor.OnErrorFor(x => x.Name, (e) => Name.ErrorMessage = e);
-            mEditor.OnErrorFor(x => x.Description, (e) => Description.ErrorMessage = e);
-            mEditor.OnErrorFor(x => x.TimeLimit, (e) => CompletionTime.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.Name, Name.ErrorMessages);
+            mEditor.OnErrorFor(x => x.Description, Description.ErrorMessages);
+            mEditor.OnErrorFor(x => x.TimeLimit, CompletionTime.ErrorMessages);
         }
 
         #endregion

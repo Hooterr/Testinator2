@@ -186,7 +186,7 @@ namespace Testinator.Server.Domain
                 mPointsMode ? PointsForTest : 100);
 
             // Catch all the errors and display them
-            mEditor.OnErrorFor(x => x.Thresholds, (e) => Grades.ErrorMessage = e);
+            mEditor.OnErrorFor(x => x.Thresholds, Grades.ErrorMessages);
         }
 
         #endregion

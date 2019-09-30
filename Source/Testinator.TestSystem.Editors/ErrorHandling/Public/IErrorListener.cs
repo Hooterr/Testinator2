@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
 
 namespace Testinator.TestSystem.Editors
@@ -14,6 +15,8 @@ namespace Testinator.TestSystem.Editors
         /// <param name="propertyExpression">The property</param>
         /// <param name="action">The method</param>
         void OnErrorFor(Expression<Func<T, object>> propertyExpression, Action<string> action);
+
+        void OnErrorFor(Expression<Func<T, object>> propertyExpression, ICollection<string> handler);
 
         /// <summary>
         /// Validates without submitting

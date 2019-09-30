@@ -36,7 +36,6 @@ namespace Testinator.TestSystem.Editors
         public void AttachErrorHandler(IInternalErrorHandler handler, string parentEditorName)
         {
             ErrorHandlerAdapter = ErrorHandlerAdapter<TInterface>.NestedEditor(handler, parentEditorName);
-
         }
 
         public void SetInternalErrorHandler(IInternalErrorHandler handler)

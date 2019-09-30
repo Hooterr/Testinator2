@@ -96,6 +96,11 @@ namespace Testinator.TestSystem.Editors
             ErrorHandlerAdapter.OnErrorFor(propertyExpression, action);
         }
 
+        public void OnErrorFor(Expression<Func<IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor>, object>> propertyExpression, ICollection<string> handler)
+        {
+            ErrorHandlerAdapter.OnErrorFor(propertyExpression, handler);
+        }
+
         #endregion
 
         #region All Constructors 
