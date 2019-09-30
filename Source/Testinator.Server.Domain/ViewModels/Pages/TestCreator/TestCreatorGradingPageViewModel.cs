@@ -178,13 +178,13 @@ namespace Testinator.Server.Domain
         {
             // Copy all the properties from the editor
             PointsForTest = mEditor.TotalPointScore;
+            IsCreatingGrading = mEditor.Custom;
+            mPointsMode = mEditor.ContainsPoints;
             Grades = mEditor.CustomThresholds
                 // Use the amount of grades that are provided in the editor
                 .ToGradeViewModels(mEditor.InitialThresholdCount,
                 // If we are using points, use the test points, otherwise maximum is 100%
-                mEditor.ContainsPoints ? PointsForTest : 100);
-            IsCreatingGrading = mEditor.Custom;
-            PointsMode = mEditor.ContainsPoints;
+                mPointsMode ? PointsForTest : 100);
 
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x.CustomThresholds, (e) => Grades.ErrorMessage = e);
