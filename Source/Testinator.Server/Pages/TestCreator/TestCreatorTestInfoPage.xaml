@@ -25,7 +25,7 @@
                                 Style="{StaticResource BigInputTextBox}"
                                 Tag="Krótka nazwa testu" />
 
-                <local:ErrorListControl Errors="{Binding Name.ErrorMessages}"/>
+                <local:ErrorListControl DataContext="{Binding Name.ErrorMessages}"/>
 
                 <TextBox Text="{Binding Description.Value, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource BigInputTextBox}"
@@ -37,7 +37,7 @@
                              VerticalScrollBarVisibility="Auto"
                              Height="100"/>
 
-                <local:ErrorListControl Errors="{Binding Description.ErrorMessages}"/>
+                <local:ErrorListControl DataContext="{Binding Description.ErrorMessages}"/>
                 
                 <Button Command="{Binding SubmitCommand}"
                         Style="{StaticResource NewBaseButton}"

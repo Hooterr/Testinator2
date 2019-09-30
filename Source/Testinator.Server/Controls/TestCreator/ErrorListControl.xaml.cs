@@ -18,13 +18,15 @@ namespace Testinator.Server
 
         // Using a DependencyProperty as the backing store for Errors.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty ErrorsProperty =
-            DependencyProperty.Register("Errors", typeof(ObservableCollection<string>), typeof(ErrorListControl), new PropertyMetadata(new ObservableCollection<string>()));
+            DependencyProperty.Register(nameof(Errors), typeof(ObservableCollection<string>), typeof(ErrorListControl), new PropertyMetadata(new ObservableCollection<string>()));
 
 
 
         public ErrorListControl()
         {
             InitializeComponent();
+
+            DataContext = Errors;
         }
     }
 }

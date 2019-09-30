@@ -25,7 +25,7 @@
                          Style="{StaticResource BigInputTextBox}"/>
 
                 <local:ErrorListControl
-                    Errors="{Binding TaskTextContent.ErrorMessages}"/>
+                    DataContext="{Binding TaskTextContent.ErrorMessages}"/>
 
                 <ItemsControl ItemsSource="{Binding Answers.Value}">
                     <ItemsControl.ItemTemplate>
@@ -36,15 +36,15 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                
-                <local:ErrorListControl Errors="{Binding Answers.ErrorMessages}"/>
-            
+
+                <local:ErrorListControl DataContext="{Binding Answers.ErrorMessages}"/>
+
                 <local:RegexTextBox Text="{Binding Points.Value}"
                                     Regex="^(0?[1-9]|[1-9][0-9])$"
                                      Tag="Punkty"
                                      Style="{StaticResource BigInputTextBox}"/>
 
-                <local:ErrorListControl Errors="{Binding Points.ErrorMessages}"/>
+                <local:ErrorListControl DataContext="{Binding Points.ErrorMessages}"/>
 
                 <Button Content="+"
                         Command="{Binding AddAnswerCommand}" />
