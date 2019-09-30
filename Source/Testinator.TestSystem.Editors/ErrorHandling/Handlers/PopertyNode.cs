@@ -1,6 +1,6 @@
 ﻿namespace Testinator.TestSystem.Editors
 {
-    internal class PopertyNode : BaseNode
+    internal class PropertyNode : BaseNode
     {
         public override bool IsEditor => false;
     }

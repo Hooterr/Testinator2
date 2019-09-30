@@ -158,10 +158,6 @@ namespace Testinator.TestSystem.Editors
             mAllowEmptyDescription = AttributeHelper.GetPropertyAttribute<TestInfo, string, AllowNullOrEmptyStringAttribute>(x => x.Description, mVersion) != null;
         }
 
-        public void OnErrorFor(Expression<Func<ITestInfoEditor, object>> propertyExpression, Action<string> action)
-        {
-            ErrorHandlerAdapter.OnErrorFor(propertyExpression, action);
-        }
         public void OnErrorFor(Expression<Func<ITestInfoEditor, object>> propertyExpression, ICollection<string> handler)
         {
             ErrorHandlerAdapter.OnErrorFor(propertyExpression, handler);

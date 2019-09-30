@@ -13,14 +13,12 @@ namespace Testinator.TestSystem.Editors
         /// Adds a method to execute when an error for a given property occurs
         /// </summary>
         /// <param name="propertyExpression">The property</param>
-        /// <param name="action">The method</param>
-        void OnErrorFor(Expression<Func<T, object>> propertyExpression, Action<string> action);
-
+        /// <param name="handler">Collection to add/clear the errors</param>
         void OnErrorFor(Expression<Func<T, object>> propertyExpression, ICollection<string> handler);
 
         /// <summary>
         /// Validates without submitting
-        /// Executes error handlers if provided with <see cref="OnErrorFor(Expression{Func{T, object}}, Action{string})"/>
+        /// Executes error handlers if provided with <see cref="OnErrorFor(Expression{Func{T, object}}, ICollection{string})"/>
         /// </summary>
         /// <returns>True if successful, otherwise false</returns>
         bool Validate();

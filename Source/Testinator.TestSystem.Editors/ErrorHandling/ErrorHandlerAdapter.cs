@@ -20,12 +20,6 @@ namespace Testinator.TestSystem.Editors
             mHandler.HandleErrorFor(name, message);
         }
 
-        public void OnErrorFor(Expression<Func<T, object>> expression, Action<string> action)
-        {
-            var propName = GetPropertyName(expression);
-            mHandler.OnErrorFor(propName, action);
-        }
-
         public void OnErrorFor(Expression<Func<T, object>> expression, ICollection<string> handler)
         {
             var propName = GetPropertyName(expression);

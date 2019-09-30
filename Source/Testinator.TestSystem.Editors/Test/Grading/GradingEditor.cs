@@ -190,11 +190,6 @@ namespace Testinator.TestSystem.Editors
             return passed;
         }
 
-        public void OnErrorFor(Expression<Func<IGradingEditor, object>> propertyExpression, Action<string> action)
-        {
-            ErrorHandlerAdapter.OnErrorFor(propertyExpression, action);
-        }
-
         public void OnErrorFor(Expression<Func<IGradingEditor, object>> propertyExpression, ICollection<string> handler)
         {
             ErrorHandlerAdapter.OnErrorFor(propertyExpression, handler);
