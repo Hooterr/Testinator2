@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using Testinator.Core;
 using Testinator.TestSystem.Editors;
@@ -19,11 +20,6 @@ namespace Testinator.Server.Domain
         /// Indicates if grading is in points mode
         /// </summary>
         private bool mPointsMode;
-
-        /// <summary>
-        /// The collection of grades always stored as percentages
-        /// </summary>
-        private ObservableCollection<GradeEditableViewModel> mPercentageGrades;
 
         /// <summary>
         /// The editor for grading in this page
@@ -55,14 +51,17 @@ namespace Testinator.Server.Domain
                 if (mPointsMode)
                 {
                     // Convert current grades to points
-                    Grades = mPercentageGrades; // TODO: Grades.ToPoints();
+                    Grades = Grades.Value.ToPoints(PointsForTest);
                 }
                 // Otherwise...
                 else
                 {
-                    // Use percentage grades
-                    Grades = mPercentageGrades;
+                    // Convert current grades to percentages
+                    Grades = Grades.Value.ToPercentages(PointsForTest);
                 }
+
+                // Make sure grades are standarized at every change
+                Grades.Value.ListChanged += (ss, ee) => Grades.Value.StandarizeGrades();
             }
         }
 
@@ -74,7 +73,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// The collection of grades that sums up to create grading
         /// </summary>
-        public InputField<ObservableCollection<GradeEditableViewModel>> Grades { get; set; }
+        public InputField<BindingList<GradeEditableViewModel>> Grades { get; set; }
 
         #endregion
 
