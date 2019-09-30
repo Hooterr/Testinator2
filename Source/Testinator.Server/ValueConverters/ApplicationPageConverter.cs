@@ -111,6 +111,9 @@ namespace Testinator.Server
                 case QuestionsPage.MultipleChoice:
                     return new QuestionsMultipleChoicePage(viewModel as QuestionsMultipleChoicePageViewModel ?? DI.GetInjectedPageViewModel<QuestionsMultipleChoicePageViewModel>());
 
+                case QuestionsPage.MultipleCheckBoxes:
+                    return new QuestionsMultipleCheckBoxesPage(viewModel as QuestionsMultipleCheckBoxesPageViewModel ?? DI.GetInjectedPageViewModel<QuestionsMultipleCheckBoxesPageViewModel>());
+
                 default:
                     Debugger.Break();
                     return null;
@@ -125,6 +128,9 @@ namespace Testinator.Server
             // Find question page that matches the base page
             if (page is QuestionsMultipleChoicePage)
                 return QuestionsPage.MultipleChoice;
+
+            if (page is QuestionsMultipleCheckBoxesPage)
+                return QuestionsPage.MultipleCheckBoxes;
 
             // Alert developer of issue
             Debugger.Break();

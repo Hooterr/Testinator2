@@ -113,16 +113,23 @@ namespace Testinator.Server.Domain
         }
 
         /// <summary>
-        /// Starts the edit for checkboxes question
+        /// Starts the edit for multiple checkboxes question
         /// </summary>
         /// <param name="questionNumber">The question's data that can be pre-loaded, if its null, we create new question</param>
         private void GoToCheckboxesQuestion(int? questionNumber = null)
         {
-            // TODO: Get editor checkboxes
+            // Get the editor for this specific question
+            var editor = mTestCreator.GetEditorMultipleCheckBoxes(questionNumber);
+
+            // Create the view model for this question
+            var viewModel = new QuestionsMultipleCheckBoxesPageViewModel();
+
+            // Initialize the view model with given editor, getting the submit action in return
+            mSubmitQuestionAction = viewModel.InitializeEditor(editor);
 
             // Show the page
             IsCreatingQuestion = true;
-            GoToPage(QuestionsPage.Checkboxes);
+            GoToPage(QuestionsPage.MultipleCheckBoxes);
         }
 
         /// <summary>

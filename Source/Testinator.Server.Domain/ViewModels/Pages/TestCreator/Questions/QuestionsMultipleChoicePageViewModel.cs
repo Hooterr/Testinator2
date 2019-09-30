@@ -12,7 +12,7 @@ using Testinator.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.Domain
 {
-    using QuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
+    using IQuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
 
     /// <summary>
     /// The view model for multiple choice question page in Test Creator
@@ -24,7 +24,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// The editor for multiple choice question
         /// </summary>
-        private QuestionEditorMultipleChoice mEditor;
+        private IQuestionEditorMultipleChoice mEditor;
 
         #endregion
 
@@ -179,7 +179,7 @@ namespace Testinator.Server.Domain
         /// Initializes this view model with provided editor for this question
         /// </summary>
         /// <param name="editor">The editor for this type of question containing all data</param>
-        public Func<IQuestion> InitializeEditor(QuestionEditorMultipleChoice editor)
+        public Func<IQuestion> InitializeEditor(IQuestionEditorMultipleChoice editor)
         {
             // If we don't get valid editor, we can't do anything
             if (editor == null)
@@ -262,10 +262,10 @@ namespace Testinator.Server.Domain
 
         public string PropertyName { get; set; }
 
-        private QuestionEditorMultipleChoice mEditor;
-        private Expression<Func<QuestionEditorMultipleChoice, object>> mPropertyExpression;
+        private IQuestionEditorMultipleChoice mEditor;
+        private Expression<Func<IQuestionEditorMultipleChoice, object>> mPropertyExpression;
 
-        public DebugViewItemViewModel(QuestionEditorMultipleChoice editor, Expression<Func<QuestionEditorMultipleChoice, object>> propertyExpression, string name, bool enabled = true)
+        public DebugViewItemViewModel(IQuestionEditorMultipleChoice editor, Expression<Func<IQuestionEditorMultipleChoice, object>> propertyExpression, string name, bool enabled = true)
         {
             mEditor = editor;
             mPropertyExpression = propertyExpression;

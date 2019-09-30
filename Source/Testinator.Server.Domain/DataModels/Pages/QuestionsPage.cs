@@ -11,8 +11,8 @@
         MultipleChoice,
 
         /// <summary>
-        /// The page for checkboxes question editing
+        /// The page for multiple checkboxes question editing
         /// </summary>
-        Checkboxes,
+        MultipleCheckBoxes,
     }
 }
