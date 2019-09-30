@@ -5,12 +5,10 @@ using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Implementation.Questions
 {
-    public sealed class MultipleCheckboxesQuestion : BaseQuestion
+    public sealed class MultipleCheckBoxesQuestion : BaseQuestion
     {
-        public new MultipleCheckboxesQuestionScoring Scoring { get; internal set; }
-        public new MultipleCheckboxesQuestionOptions Options { get; internal set; }
-
-        internal MultipleCheckboxesQuestion() { }
+        public new MultipleCheckBoxesQuestionScoring Scoring { get; internal set; }
+        public new MultipleCheckBoxesQuestionOptions Options { get; internal set; }
     }
 
 }

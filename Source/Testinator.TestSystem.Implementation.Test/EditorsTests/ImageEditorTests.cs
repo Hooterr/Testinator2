@@ -204,10 +204,10 @@ namespace Testinator.TestSystem.Implementation.Test.EditorsTests
         protected override void LoadAttributeValues()
         {
             mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContentMock, ICollection<Image>, MaxCollectionCountAttribute, int>
-                (obj => obj.Images, attr => attr.MaxCount, Version);
+                (obj => obj.Images, attr => attr.MaxCount, mVersion);
 
             var ImageSizeAttr = AttributeHelper.GetPropertyAttribute<ImageContentMock, ICollection<Image>, MaxImageSizeAttribute>
-                (x => x.Images, Version);
+                (x => x.Images, mVersion);
             
             mMaxImageHeight = ImageSizeAttr.Height;
             mMaxImageWidth = ImageSizeAttr.Width;

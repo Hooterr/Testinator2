@@ -5,7 +5,7 @@ using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Implementation.Questions
 {
-    public class MultipleCheckboxesQuestionUserAnswer : IUserAnswer
+    public class MultipleCheckBoxesQuestionUserAnswer : IUserAnswer
     {
         /// <summary>
         /// Selected/not selected list of user answer
@@ -13,7 +13,7 @@ namespace Testinator.TestSystem.Implementation.Questions
         public List<bool> CheckedOptions { get; set; }
         public int QuestionId { get; set; }
 
-        public MultipleCheckboxesQuestionUserAnswer()
+        public MultipleCheckBoxesQuestionUserAnswer()
         {
             CheckedOptions = new List<bool>();
         }
