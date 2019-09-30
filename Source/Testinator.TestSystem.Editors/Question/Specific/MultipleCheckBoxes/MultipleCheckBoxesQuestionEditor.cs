@@ -61,7 +61,7 @@ namespace Testinator.TestSystem.Editors
                 ErrorHandlerAdapter.HandleErrorFor(x => x.Scoring.CorrectAnswers, "Correct answers list cannot be null.");
                 validationPassed = false;
             }
-            else if (mScoringEditor.CorrectAnswers.Count != mOptionsEditor.Options.Count)
+            else if (mScoringEditor.CorrectAnswers.Count != mOptionsEditor.Boxes.Count)
             {
                 ErrorHandlerAdapter.HandleErrorFor(x => x.Scoring.CorrectAnswers, "Correct answer must be matched to the number of options.");
                 validationPassed = false;

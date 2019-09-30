@@ -34,7 +34,7 @@ namespace Testinator.TestSystem.Editors
         /// <summary>
         /// Options for this question
         /// </summary>
-        public List<string> Options { get; set; }
+        public List<string> Boxes { get; set; }
 
         /// <summary>
         /// Maximum allowed amount of options
@@ -79,12 +79,12 @@ namespace Testinator.TestSystem.Editors
 
         protected override void InitializeCreateNewObject()
         {
-            Options = new List<string>();
+            Boxes = new List<string>();
         }
 
         protected override void InitializeEditExistingObject()
         {
-            Options = new List<string>(OriginalObject.Options);
+            Boxes = new List<string>(OriginalObject.Options);
         }
 
         protected override MultipleCheckBoxesQuestionOptions BuildObject()
@@ -95,13 +95,13 @@ namespace Testinator.TestSystem.Editors
                 questionOptions = new MultipleCheckBoxesQuestionOptions()
                 {
 #pragma warning disable IDE0003
-                    Options = this.Options,
+                    Options = this.Boxes,
                 };
             }
             else
             {
                 questionOptions = OriginalObject;
-                questionOptions.Options = this.Options;
+                questionOptions.Options = this.Boxes;
             }
 
             return questionOptions;
@@ -114,22 +114,22 @@ namespace Testinator.TestSystem.Editors
 
             if (mOnlyDistinct)
             {
-                if (Options.Count > 1 && (Options.Distinct().Count() != Options.Count()))
+                if (Boxes.Count > 1 && (Boxes.Distinct().Count() != Boxes.Count()))
                 {
-                    ErrorHandlerAdapter.HandleErrorFor(x => x.Options, "Options must be unique");
+                    ErrorHandlerAdapter.HandleErrorFor(x => x.Boxes, "Options must be unique");
                     validationPassed = false;
                 }
             }
 
-            if (Options.Count() < MinimumCount || Options.Count() > MaximumCount)
+            if (Boxes.Count() < MinimumCount || Boxes.Count() > MaximumCount)
             {
-                ErrorHandlerAdapter.HandleErrorFor(x => x.Options, $"There must be from {MinimumCount} to {MaximumCount} options.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Boxes, $"There must be from {MinimumCount} to {MaximumCount} options.");
                 validationPassed = false;
             }
 
-            if (!Options.All(str => OptionLengthInRange(str)))
+            if (!Boxes.All(str => OptionLengthInRange(str)))
             {
-                ErrorHandlerAdapter.HandleErrorFor(x => x.Options, $"Every options must be from {mMinOptionLen} to {mMaxOptionLen} characters long.");
+                ErrorHandlerAdapter.HandleErrorFor(x => x.Boxes, $"Every options must be from {mMinOptionLen} to {mMaxOptionLen} characters long.");
                 validationPassed = false;
             }
 

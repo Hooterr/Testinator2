@@ -3,6 +3,8 @@ using Testinator.TestSystem.Implementation.Questions;
 using Testinator.TestSystem.Implementation.Questions.ScoringStrategy;
 using Testinator.TestSystem.Attributes;
 using System.Collections.Generic;
+using System.Linq;
+using System.Collections.ObjectModel;
 
 namespace Testinator.TestSystem.Editors
 {
@@ -33,6 +35,8 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         private IScoringStrategy mScoringStrategy;
 
+        private IDictionary<string, Type> mStrategiesLookup;
+
         #endregion
 
         #region Public Properties
@@ -46,6 +50,11 @@ namespace Testinator.TestSystem.Editors
         /// The index of a correct answer
         /// </summary>
         public List<bool> CorrectAnswers { get; set; }
+
+        // TODO include maybe some description, or something that supports configuring the strategy
+        public IReadOnlyCollection<string> AvailableStrategies { get; private set; }
+
+        public string Strategy { get; set; }
 
         #endregion
 
@@ -90,8 +99,18 @@ namespace Testinator.TestSystem.Editors
             mMaxScore = scoreRangeAttr.Max;
             mMinScore = scoreRangeAttr.Min;
 
+            mStrategiesLookup = new Dictionary<string, Type>();
+            var availableStrategyTypes = AttributeHelper.GetPropertyAttributeValue<MultipleCheckBoxesQuestionScoring, AvailableStrategiesAttribute, Type[]>(x => x.Strategy, x => x.AvailableStrategies, mVersion);
+
+            foreach(var strategyType in availableStrategyTypes)
+                mStrategiesLookup.Add((strategyType.GetCustomAttributes(typeof(NameAttribute), false).First() as NameAttribute).Name, strategyType);
+
+            AvailableStrategies = new ReadOnlyCollection<string>(mStrategiesLookup.Keys.ToList());
+
             mDefaultStrategyType = AttributeHelper.GetPropertyAttributeValue<MultipleCheckBoxesQuestionScoring, DefaultStrategyAttribute, Type>
                 (x => x.Strategy, attr => attr.DefaultStrategyType, mVersion);
+
+            Strategy = mStrategiesLookup.First(x => x.Value == mDefaultStrategyType).Key;
 
             if (mDefaultStrategyType != null)
             {
@@ -114,7 +133,6 @@ namespace Testinator.TestSystem.Editors
 
             if (false == mDefaultStrategyType.IsAssignableFrom(mScoringStrategy.GetType()))
             {
-                // TODO THIS WILL NOT WORK MOST LIKELY
                 ErrorHandlerAdapter.HandleErrorFor(x => x, $"The only valid type of scoring strategy for this question is {mDefaultStrategyType.Name}.");
                 validationPassed = false;
             }

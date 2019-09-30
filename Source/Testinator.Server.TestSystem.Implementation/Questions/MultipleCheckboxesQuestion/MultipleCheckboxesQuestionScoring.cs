@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using Testinator.TestSystem.Attributes;
+using Testinator.TestSystem.Implementation.Questions.ScoringStrategy;
 
 namespace Testinator.TestSystem.Implementation.Questions
 {
     public class MultipleCheckBoxesQuestionScoring : BaseQuestionScoring<MultipleCheckBoxesQuestionUserAnswer>
     {
         public List<bool> CorrectAnswer { get; internal set; }
+
+        [AvailableStrategies(fromVersion: 1, typeof(AllCorrectScoringStrategy), typeof(CorrespondingFractionScoringStrategy))]
+        [DefaultStrategy(typeof(AllCorrectScoringStrategy), fromVersion: 1)]
+        public new IScoringStrategy Strategy { get; internal set; }
 
         protected override int CalculateCorrectPercentage(MultipleCheckBoxesQuestionUserAnswer userAnswer)
         {

@@ -13,5 +13,10 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         [EditorProperty]
         List<bool> CorrectAnswers { get; set; }
+
+        IReadOnlyCollection<string> AvailableStrategies { get; }
+
+        [EditorProperty]
+        string Strategy { get; set; }
     }
 }

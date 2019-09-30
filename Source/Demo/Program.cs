@@ -69,6 +69,9 @@ namespace Demo
             });
             
             Console.ReadKey();
+
+            var aaa = new MultipleCheckBoxesQuestionEditor(1);
+            aaa.Initialize();
         }
     }
 }

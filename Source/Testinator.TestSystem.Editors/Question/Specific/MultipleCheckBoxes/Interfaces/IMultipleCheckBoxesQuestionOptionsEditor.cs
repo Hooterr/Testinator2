@@ -12,7 +12,7 @@ namespace Testinator.TestSystem.Editors
         /// The options for this question
         /// </summary>
         [EditorProperty]
-        List<string> Options { get; set; }
+        List<string> Boxes { get; set; }
 
         /// <summary>
         /// Gets the maximum count of the allowed options

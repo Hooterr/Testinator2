@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Text;
+using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Implementation.Questions.ScoringStrategy
 {
@@ -8,6 +10,7 @@ namespace Testinator.TestSystem.Implementation.Questions.ScoringStrategy
     /// The strategy that requires 100% correct answer to give full point score, otherwise 0
     /// </summary>
     [Serializable]
+    [Name("Everything must be correct")]
     public class AllCorrectScoringStrategy : IScoringStrategy
     {
         public int Evaluate(int maxPointScore, int percentageDoneCorrect)
