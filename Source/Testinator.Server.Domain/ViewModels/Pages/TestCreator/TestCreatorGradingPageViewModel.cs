@@ -1,5 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Windows.Input;
 using Testinator.Core;
 using Testinator.TestSystem.Editors;
@@ -71,7 +70,7 @@ namespace Testinator.Server.Domain
         public int PointsForTest { get; set; }
 
         /// <summary>
-        /// The collection of grades that sums up to create grading
+        /// The list of grades that sums up to create grading
         /// </summary>
         public InputField<BindingList<GradeEditableViewModel>> Grades { get; set; }
 

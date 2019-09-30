@@ -18,10 +18,10 @@ namespace Testinator.Server.Domain
         /// </summary>
         /// <param name="thresholds">The grading thresholds from editor</param>
         /// <param name="minimumGradesCount">The minimum amount of grades required</param>
-        /// <returns>The collection of grade view models</returns>
+        /// <returns>The list of grade view models</returns>
         public static BindingList<GradeEditableViewModel> ToGradeViewModels(this IEnumerable<KeyValuePair<int, IGrade>> thresholds, int minimumGradesCount)
         {
-            // Prepare a collection to return
+            // Prepare a list to return
             var grades = new BindingList<GradeEditableViewModel>();
 
             // For each provided threshold...
@@ -47,14 +47,14 @@ namespace Testinator.Server.Domain
                 }
             }
 
-            // Fill missing grade data and return ready collection
+            // Fill missing grade data and return ready list
             return grades.StandarizeGrades();
         }
 
         /// <summary>
         /// Converts grade view models 
         /// </summary>
-        /// <param name="grades">The collection of grade view models</param>
+        /// <param name="grades">The list of grade view models</param>
         /// <returns>The grading thresholds ready to pass to the editor</returns>
         public static List<KeyValuePair<int, IGrade>> ToThresholdsInEditor(this IList<GradeEditableViewModel> grades)
         {
@@ -108,7 +108,7 @@ namespace Testinator.Server.Domain
         /// <returns>The grade view models with points thresholds</returns>
         public static BindingList<GradeEditableViewModel> ToPoints(this BindingList<GradeEditableViewModel> percentageGrades, int maxTestPoints)
         {
-            // Create new points collection
+            // Create new points list
             var pointsGrades = new BindingList<GradeEditableViewModel>();
 
             // For each grade...
@@ -124,7 +124,7 @@ namespace Testinator.Server.Domain
                     ThresholdTo = percentageGrade.ThresholdTo * maxTestPoints / 100
                 };
 
-                // Add it to the collection
+                // Add it to the list
                 pointsGrades.Add(pointsGrade);
             }
 
@@ -146,7 +146,7 @@ namespace Testinator.Server.Domain
         /// <returns>The grade view models with percentage thresholds</returns>
         public static BindingList<GradeEditableViewModel> ToPercentages(this BindingList<GradeEditableViewModel> pointsGrades, int maxTestPoints)
         {
-            // Create new percentages collection
+            // Create new percentages list
             var percentageGrades = new BindingList<GradeEditableViewModel>();
 
             // For each grade...
@@ -162,7 +162,7 @@ namespace Testinator.Server.Domain
                     ThresholdTo = Convert.ToInt32((double)pointsGrade.ThresholdTo / maxTestPoints * 100)
                 };
 
-                // Add it to the collection
+                // Add it to the list
                 percentageGrades.Add(percentageGrade);
             }
 
