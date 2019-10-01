@@ -81,6 +81,7 @@ namespace Testinator.TestSystem.Editors
             resultQuestion.Task = taskBuildOperation.Result;
             resultQuestion.Options = optionsBuildOperation.Result;
             resultQuestion.Scoring = scoringBuildOperation.Result;
+            resultQuestion.Version = mVersion;
 
             return OperationResult<TQuestion>.Success(resultQuestion);
         }

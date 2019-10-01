@@ -64,8 +64,8 @@ namespace Demo
 
             var test = files.Read(options =>
             {
-                options.InApplicationFolder(ApplicationDataFolders.Tests)
-                    .WithName("this shit better works");
+                options.InFolderAbsolute("C:\\Users\\root\\Desktop")
+                    .WithName("fdsfsdfsd");
             });
             
             Console.ReadKey();
