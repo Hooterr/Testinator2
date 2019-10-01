@@ -13,54 +13,35 @@ using Testinator.TestSystem.Implementation.Questions;
 namespace Testinator.Server.Domain
 {
     using IQuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
+    using BaseQuestionVM = BaseQuestionsMultipleAnswersViewModel<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
 
     /// <summary>
     /// The view model for multiple choice question page in Test Creator
     /// </summary>
-    public class QuestionsMultipleChoicePageViewModel : BaseViewModel
+    public class QuestionsMultipleChoicePageViewModel : BaseQuestionVM
     {
-        #region Private Members
-
-        /// <summary>
-        /// The editor for multiple choice question
-        /// </summary>
-        private IQuestionEditorMultipleChoice mEditor;
-
-        #endregion
-
-        #region Public Properties
+        #region Debug Stuff
 
         public bool DebugView { get; set; } = false;
 
         public List<string> MarkupTypes { get; } = (Enum.GetValues(typeof(MarkupLanguage)) as MarkupLanguage[]).Select(x => x.ToString()).ToList();
 
         public InputField<string> Markup { get; set; }
-
-        /// <summary>
-        /// The task for this question
-        /// </summary>
-        public InputField<string> TaskTextContent { get; set; }
         public DebugViewItemViewModel TaskErrors { get; set; }
         public DebugViewItemViewModel TaskTextErrors { get; set; }
         public DebugViewItemViewModel TaskTextContentErrors { get; set; }
         public DebugViewItemViewModel TaskTextMarkupErrors { get; set; }
         public DebugViewItemViewModel TaskImagesErrors { get; set; }
-
-        /// <summary>
-        /// The possible answers for this question as view models
-        /// </summary>
-        public InputField<ObservableCollection<AnswerSelectableViewModel>> Answers { get; set; }
         public DebugViewItemViewModel OptionsErrors { get; set; }
         public DebugViewItemViewModel OptionsABCDErrors { get; set; }
-
-        /// <summary>
-        /// The points that are given for right answer
-        /// </summary>
-        public InputField<string> Points { get; set; }
         public DebugViewItemViewModel ScoringErrors { get; set; }
         public DebugViewItemViewModel ScoringMaxPointsErrors { get; set; }
         public DebugViewItemViewModel ScoringCorrectAnswerErrors { get; set; }
         public DebugViewItemViewModel General { get; set; }
+
+        public ICommand ToggleDebugViewCommand { get; private set; }
+
+        public ICommand ClearAllErrorsCommand { get; private set; }
 
         #endregion
 
@@ -70,20 +51,6 @@ namespace Testinator.Server.Domain
         /// The command to select an answer as the right one
         /// </summary>
         public ICommand SelectAnswerCommand { get; private set; }
-
-        /// <summary>
-        /// The command to add new possible answer to the question
-        /// </summary>
-        public ICommand AddAnswerCommand { get; private set; }
-
-        /// <summary>
-        /// The command to remove last answer from the question
-        /// </summary>
-        public ICommand RemoveAnswerCommand { get; private set; }
-
-        public ICommand ToggleDebugViewCommand { get; private set; }
-
-        public ICommand ClearAllErrorsCommand { get; private set; }
 
         #endregion
 
@@ -138,39 +105,6 @@ namespace Testinator.Server.Domain
             viewModel.IsSelected = true;
         }
 
-        /// <summary>
-        /// Adds new possible answer to the question
-        /// </summary>
-        private void AddAnswer()
-        {
-            // Make sure we don't exceed maximum answer limit
-            var answersCount = Answers.Value.Count;
-            if (answersCount >= mEditor.Options.MaximumCount)
-                return;
-
-            // Add new answer
-            var answerTitle = (char)('A' + answersCount);
-            Answers.Value.Add(new AnswerSelectableViewModel
-            {
-                // Set appropriate title
-                Title = answerTitle.ToString()
-            });
-        }
-
-        /// <summary>
-        /// Removes last answer from the question
-        /// </summary>
-        private void RemoveAnswer()
-        {
-            // Make sure we can remove the answer and still meet the requirement
-            var answersCount = Answers.Value.Count;
-            if (answersCount <= mEditor.Options.MinimumCount)
-                return;
-
-            // Remove the last answer
-            Answers.Value.RemoveAt(answersCount - 1);
-        }
-
         #endregion
 
         #region Public Methods
@@ -179,14 +113,10 @@ namespace Testinator.Server.Domain
         /// Initializes this view model with provided editor for this question
         /// </summary>
         /// <param name="editor">The editor for this type of question containing all data</param>
-        public Func<IQuestion> InitializeEditor(IQuestionEditorMultipleChoice editor)
+        public override Func<IQuestion> InitializeEditor(IQuestionEditorMultipleChoice editor)
         {
-            // If we don't get valid editor, we can't do anything
-            if (editor == null)
-                return null;
-
-            // Get the editor itself
-            mEditor = editor;
+            // Do base stuff with editor validation and catch the submit action
+            base.InitializeEditor(editor);
 
             // Initialize every property based on current editor state
             // If we are editing existing question, editor will have it's data

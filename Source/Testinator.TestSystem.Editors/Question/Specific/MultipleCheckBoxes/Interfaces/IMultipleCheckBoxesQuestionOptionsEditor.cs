@@ -4,7 +4,7 @@ using Testinator.TestSystem.Attributes;
 namespace Testinator.TestSystem.Editors
 {
     /// <summary>
-    /// The editor for options part of multiple choice question
+    /// The editor for options part of multiple checkboxes question
     /// </summary>
     public interface IMultipleCheckBoxesQuestionOptionsEditor : IQuestionOptionsEditor
     {
@@ -13,20 +13,5 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         [EditorProperty]
         List<string> Boxes { get; set; }
-
-        /// <summary>
-        /// Gets the maximum count of the allowed options
-        /// </summary>
-        int MaximumCount { get; }
-
-        /// <summary>
-        /// Gets the minimum count of the allowed options
-        /// </summary>
-        int MinimumCount { get; }
-
-        /// <summary>
-        /// Gets the initial count of options for brand-new question
-        /// </summary>
-        int InitialCount { get; }
     }
 }

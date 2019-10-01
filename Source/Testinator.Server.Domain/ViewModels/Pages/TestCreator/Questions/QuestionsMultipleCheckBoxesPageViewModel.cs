@@ -9,54 +9,13 @@ using Testinator.TestSystem.Implementation.Questions;
 namespace Testinator.Server.Domain
 {
     using IQuestionEditorMultipleCheckBoxes = IQuestionEditor<MultipleCheckBoxesQuestion, IMultipleCheckBoxesQuestionOptionsEditor, IMultipleCheckBoxesQuestionScoringEditor>;
+    using BaseQuestionVM = BaseQuestionsMultipleAnswersViewModel<MultipleCheckBoxesQuestion, IMultipleCheckBoxesQuestionOptionsEditor, IMultipleCheckBoxesQuestionScoringEditor>;
 
     /// <summary>
     /// The view model for multiple checkboxes question page in Test Creator
     /// </summary>
-    public class QuestionsMultipleCheckBoxesPageViewModel : BaseViewModel
+    public class QuestionsMultipleCheckBoxesPageViewModel : BaseQuestionVM
     {
-        #region Private Members
-
-        /// <summary>
-        /// The editor for multiple choice question
-        /// </summary>
-        private IQuestionEditorMultipleCheckBoxes mEditor;
-
-        #endregion
-
-        #region Public Propertie
-
-        /// <summary>
-        /// The task for this question
-        /// </summary>
-        public InputField<string> TaskTextContent { get; set; }
-
-        /// <summary>
-        /// The possible answers for this question as view models
-        /// </summary>
-        public InputField<ObservableCollection<AnswerSelectableViewModel>> Answers { get; set; }
-
-        /// <summary>
-        /// The points that are given for right answer
-        /// </summary>
-        public InputField<string> Points { get; set; }
-
-        #endregion
-
-        #region Commands
-
-        /// <summary>
-        /// The command to add new possible answer to the question
-        /// </summary>
-        public ICommand AddAnswerCommand { get; private set; }
-
-        /// <summary>
-        /// The command to remove last answer from the question
-        /// </summary>
-        public ICommand RemoveAnswerCommand { get; private set; }
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
@@ -71,52 +30,16 @@ namespace Testinator.Server.Domain
 
         #endregion
 
-        #region Command Methods
-
-        /// <summary>
-        /// Adds new possible answer to the question
-        /// </summary>
-        private void AddAnswer()
-        {
-            // Make sure we don't exceed maximum answer limit
-            var answersCount = Answers.Value.Count;
-            if (answersCount >= mEditor.Options.MaximumCount)
-                return;
-
-            // Add new answer
-            Answers.Value.Add(new AnswerSelectableViewModel());
-        }
-
-        /// <summary>
-        /// Removes last answer from the question
-        /// </summary>
-        private void RemoveAnswer()
-        {
-            // Make sure we can remove the answer and still meet the requirement
-            var answersCount = Answers.Value.Count;
-            if (answersCount <= mEditor.Options.MinimumCount)
-                return;
-
-            // Remove the last answer
-            Answers.Value.RemoveAt(answersCount - 1);
-        }
-
-        #endregion
-
         #region Public Methods
 
         /// <summary>
         /// Initializes this view model with provided editor for this question
         /// </summary>
         /// <param name="editor">The editor for this type of question containing all data</param>
-        public Func<IQuestion> InitializeEditor(IQuestionEditorMultipleCheckBoxes editor)
+        public override Func<IQuestion> InitializeEditor(IQuestionEditorMultipleCheckBoxes editor)
         {
-            // If we don't get valid editor, we can't do anything
-            if (editor == null)
-                return null;
-
-            // Get the editor itself
-            mEditor = editor;
+            // Do base stuff with editor validation and catch the submit action
+            base.InitializeEditor(editor);
 
             // Initialize every property based on current editor state
             // If we are editing existing question, editor will have it's data

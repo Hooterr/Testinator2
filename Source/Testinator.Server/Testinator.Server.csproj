@@ -565,6 +565,14 @@
       <Project>{72b73009-63d9-49a2-8faa-e82917356c37}</Project>
       <Name>Testinator.Server.Services</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Testinator.Server.TestSystem.Implementation\Testinator.TestSystem.Implementation.csproj">
+      <Project>{7710df93-a84a-4073-8358-b4ae051c3942}</Project>
+      <Name>Testinator.TestSystem.Implementation</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Testinator.TestSystem.Abstractions\Testinator.TestSystem.Abstractions.csproj">
+      <Project>{59d71ce1-c6dd-4320-ace4-0d3c89b74a5d}</Project>
+      <Name>Testinator.TestSystem.Abstractions</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Testinator.TestSystem.Editors\Testinator.TestSystem.Editors.csproj">
       <Project>{d0c626c9-8d16-41fc-8cfa-d5524c98c8ee}</Project>
       <Name>Testinator.TestSystem.Editors</Name>

@@ -9,25 +9,9 @@ namespace Testinator.TestSystem.Editors
     public interface IMultipleChoiceQuestionOptionsEditor : IQuestionOptionsEditor//, IErrorListener<IMultipleChoiceQuestionOptionsEditor>
     {
         /// <summary>
-        /// The ABC options for this question
-        /// NOTE: every null or empty options that are at the end of the list will be skipped
+        /// The ABCD options for this question
         /// </summary>
         [EditorProperty]
         List<string> ABCD { get; set; }
-
-        /// <summary>
-        /// Gets the maximum count of the allowed options
-        /// </summary>
-        int MaximumCount { get; }
-
-        /// <summary>
-        /// Gets the minimum count of the allowed options
-        /// </summary>
-        int MinimumCount { get; }
-
-        /// <summary>
-        /// Gets the initial count of options for brand-new question
-        /// </summary>
-        int InitialCount { get; }
     }
 }
