@@ -38,7 +38,19 @@
             
             <Button Content="Go to grading"
                     Command="{Binding FinishQuestionsCommand}" />
-            
+
+            <TextBlock Text="Lista juz istniejacych questionow w tescie" />
+
+            <ItemsControl ItemsSource="{Binding Questions.Value}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Task}"
+                                Command="{Binding DataContext.EditQuestionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
+                                CommandParameter="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
         </StackPanel>
         
     </Border>

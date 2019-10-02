@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Testinator.Core;
 using Testinator.TestSystem.Abstractions;
@@ -39,7 +40,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// The errors that are displayed in case there is a problem with questions
         /// </summary>
-        public string ErrorMessage { get; set; }
+        public InputField<ObservableCollection<QuestionListItemViewModel>> Questions { get; set; } = new InputField<ObservableCollection<QuestionListItemViewModel>>(new ObservableCollection<QuestionListItemViewModel>());
 
         #endregion
 
@@ -54,6 +55,11 @@ namespace Testinator.Server.Domain
         /// The command to create new question of the type checkboxes
         /// </summary>
         public ICommand NewQuestionCheckboxesCommand { get; private set; }
+
+        /// <summary>
+        /// The command to edit existing question from the list
+        /// </summary>
+        public ICommand EditQuestionCommand { get; private set; }
 
         /// <summary>
         /// The command to submit the question that is created
@@ -81,11 +87,17 @@ namespace Testinator.Server.Domain
             // Create commands
             NewQuestionMultipleChoiceCommand = new RelayCommand(() => GoToMultipleChoiceQuestion());
             NewQuestionCheckboxesCommand = new RelayCommand(() => GoToCheckboxesQuestion());
+            EditQuestionCommand = new RelayParameterizedCommand(EditQuestion);
             SubmitQuestionCommand = new RelayCommand(SubmitCurrentQuestion);
             FinishQuestionsCommand = new RelayCommand(GoToNextPage);
 
             // Get the editor for questions
             mEditor = mTestCreator.GetEditorTestQuestions();
+
+            foreach (var question in mEditor)
+            {
+                Questions.Value.Add(new QuestionListItemViewModel { Task = question.Task.Text.Text });
+            }
         }
 
         #endregion
@@ -130,6 +142,23 @@ namespace Testinator.Server.Domain
             // Show the page
             IsCreatingQuestion = true;
             GoToPage(QuestionsPage.MultipleCheckBoxes, viewModel);
+        }
+        
+        /// <summary>
+        /// Edits specified question from the list
+        /// </summary>
+        /// <param name="param">The question view model displayed in the list</param>
+        private void EditQuestion(object param)
+        {
+            // Get the question view model itself
+            var viewModel = param as QuestionListItemViewModel;
+
+            // Calculate the index
+            var index = Questions.Value.IndexOf(viewModel);
+
+            // TODO: Somehow determine the question type here
+            // Run appropriate function
+            GoToMultipleChoiceQuestion(index);
         }
 
         /// <summary>

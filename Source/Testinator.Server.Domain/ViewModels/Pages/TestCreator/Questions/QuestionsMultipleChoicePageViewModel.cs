@@ -125,6 +125,7 @@ namespace Testinator.Server.Domain
             Answers = mEditor.Options.ABCD.ToAnswerViewModels(mEditor.Options.InitialCount);
             Points = mEditor.Scoring.MaximumScore.ToString();
             Markup = mEditor.Task.Text.Markup.ToString();
+            Answers.Value.ElementAt(mEditor.Scoring.CorrectAnswerIdx).IsSelected = true;
             // Catch all the errors and display them
             //mEditor.OnErrorFor(x => x.Task.Text.Content, TaskTextContent.ErrorMessages); 
             //mEditor.OnErrorFor(x => x.Options.ABCD, Answers.ErrorMessages);
