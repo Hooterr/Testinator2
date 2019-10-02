@@ -30,11 +30,14 @@ namespace Testinator.Server
             // Bind to a scoped instance of specified models
             construction.Services.AddScoped<IServerNetwork, ServerNetwork>();
             construction.Services.AddScoped<UserMapper>();
+            construction.Services.AddScoped<TestMapper>();
             construction.Services.AddScoped<ISettingsRepository, SettingsRepository>();
             construction.Services.AddScoped<IUserRepository, UserRepository>();
             construction.Services.AddScoped<IUserAccountService, UserAccountService>();
             construction.Services.AddScoped<ITestCreatorService, TestCreatorService>();
             construction.Services.AddScoped<IUIManager, UIManager>();
+            construction.Services.AddScoped<ITestFileManager, TestFileManager>();
+            construction.Services.AddScoped<IGradingPresetFileManager, GradingPresetFileManager>();
 
             // Inject dependencies into every page's view model
             construction.Services.AddTransient<HomeViewModel>();
@@ -42,7 +45,6 @@ namespace Testinator.Server
             construction.Services.AddTransient<ScreenStreamViewModel>();
             construction.Services.AddTransient<AboutViewModel>();
             construction.Services.AddTransient<MenuListItemViewModel>();
-
             construction.Services.AddTransient<TestCreatorInitialPageViewModel>();
             construction.Services.AddTransient<TestCreatorTestInfoPageViewModel>();
             construction.Services.AddTransient<TestCreatorTestOptionsPageViewModel>();
@@ -52,9 +54,6 @@ namespace Testinator.Server
             construction.Services.AddTransient<QuestionsMultipleChoicePageViewModel>();
             construction.Services.AddTransient<QuestionsMultipleCheckBoxesPageViewModel>();
             construction.Services.AddTransient<QuestionsSingleAnswerPageViewModel>();
-
-            construction.Services.AddScoped<ITestFileManager, TestFileManager>();
-            construction.Services.AddScoped<IGradingPresetFileManager, GradingPresetFileManager>();
 
             FilesServicesInstaller.Install(construction.Services);
 
