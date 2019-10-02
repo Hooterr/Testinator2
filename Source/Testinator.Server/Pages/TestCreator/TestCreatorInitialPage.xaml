@@ -20,6 +20,17 @@
             <Button Content="Stworz nowy test"
                     Command="{Binding NewTestCommand}" />
 
+            <TextBlock Text="Lista istniejących testów, kliknij żeby edytować" />
+            <ItemsControl ItemsSource="{Binding Tests}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Name}"
+                                Command="{Binding DataContext.TestSelectedCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
+                                CommandParameter="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
         </StackPanel>
         
     </Border>

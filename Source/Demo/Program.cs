@@ -5,6 +5,7 @@ using Testinator.Server.Files;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
 using Testinator.TestSystem.Implementation;
+using Testinator.TestSystem.Implementation.Questions;
 
 namespace Demo
 {
@@ -68,43 +69,14 @@ namespace Demo
                     .WithName("this shit better works");
             });
 
-            var gradingPresetEditor = AllEditors.GradingPresetEditor
-                .NewPreset()
-                .UseNewestVersion()
+            var editor = AllEditors.MultipleChoiceQuestion
+                .SetInitialQuestion(test.Questions[0].GetQuestion() as MultipleChoiceQuestion)
                 .Build();
-            gradingPresetEditor.Name = "Some cool name";
-            gradingPresetEditor.Thresholds = new List<KeyValuePair<int, IGrade>>()
-            {
-                new KeyValuePair<int, IGrade>(50, new Grade("nzal")),
-                new KeyValuePair<int, IGrade>(100, new Grade("zal")),
-            };
-            var gradingPresetBuild = gradingPresetEditor.Build();
-            var preset = gradingPresetBuild.Result ?? throw new NullReferenceException();
+            
+            var testEditor = AllEditors.TestEditor
+                .SetInitialTest(test as Test)
+                .Build();
 
-            IGradingPresetFileManager fm = new GradingPresetFileManager(new FileAccessService());
-            fm.Save((options) =>
-            {
-                options.InApplicationFolder(ApplicationDataFolders.GradingPresets)
-                       .WithName("somePresetThatNoOneCareAboutAnyMoreWhichIsSoSoSadButTrue");
-
-            }, preset);
-
-            var presetRead = fm.Read(options =>
-            {
-                options.InApplicationFolder(ApplicationDataFolders.GradingPresets)
-                    .WithName("somePresetThatNoOneCareAboutAnyMoreWhichIsSoSoSadButTrue");
-            });
-
-            var context = fm.GetGradingPresetContext(options =>
-            {
-                options.InApplicationFolder(ApplicationDataFolders.GradingPresets)
-                    .WithName("somePresetThatNoOneCareAboutAnyMoreWhichIsSoSoSadButTrue");
-            });
-
-            var contextsjlkjkl = fm.GetGradingPresetsContexts(options =>
-            {
-                options.InApplicationFolder(ApplicationDataFolders.GradingPresets);
-            });
 
             Console.ReadKey();
         }

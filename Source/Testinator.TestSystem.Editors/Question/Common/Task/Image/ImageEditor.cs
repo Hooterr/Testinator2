@@ -132,16 +132,7 @@ namespace Testinator.TestSystem.Editors
         /// Called during editor initialization
         /// </summary>
         protected override void OnInitialize()
-        {
-            if(IsInCreationMode())
-            {
-                
-            }
-            else
-            {
-                
-            }
-
+        { 
             LoadAttributeValues();
         }
 

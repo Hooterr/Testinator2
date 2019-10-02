@@ -116,8 +116,7 @@ namespace Testinator.TestSystem.Editors
             test.mInfo = infoBuildOperation.Result;
             test.mTestOptions = optionsBuildOperation.Result;
             test.mGrading = gradingBuildOperation.Result;
-
-            // TODO validate questions list length 
+            test.Version = Versions.Highest;
             test.mQuestionList = mQuestions.Select(x => new InMemoryQuestionProvider(x)).Cast<IQuestionProvider>().ToList();
 
             return test;
