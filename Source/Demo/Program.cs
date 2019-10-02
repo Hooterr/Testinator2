@@ -67,11 +67,46 @@ namespace Demo
                 options.InApplicationFolder(ApplicationDataFolders.Tests)
                     .WithName("this shit better works");
             });
-            
-            Console.ReadKey();
 
-            var aaa = new MultipleCheckBoxesQuestionEditor(1);
-            aaa.Initialize();
+            var gradingPresetEditor = AllEditors.GradingPresetEditor
+                .NewPreset()
+                .UseNewestVersion()
+                .Build();
+            gradingPresetEditor.Name = "Some cool name";
+            gradingPresetEditor.Thresholds = new List<KeyValuePair<int, IGrade>>()
+            {
+                new KeyValuePair<int, IGrade>(50, new Grade("nzal")),
+                new KeyValuePair<int, IGrade>(100, new Grade("zal")),
+            };
+            var gradingPresetBuild = gradingPresetEditor.Build();
+            var preset = gradingPresetBuild.Result ?? throw new NullReferenceException();
+
+            IGradingPresetFileManager fm = new GradingPresetFileManager(new FileAccessService());
+            fm.Save((options) =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.GradingPresets)
+                       .WithName("somePresetThatNoOneCareAboutAnyMoreWhichIsSoSoSadButTrue");
+
+            }, preset);
+
+            var presetRead = fm.Read(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.GradingPresets)
+                    .WithName("somePresetThatNoOneCareAboutAnyMoreWhichIsSoSoSadButTrue");
+            });
+
+            var context = fm.GetGradingPresetContext(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.GradingPresets)
+                    .WithName("somePresetThatNoOneCareAboutAnyMoreWhichIsSoSoSadButTrue");
+            });
+
+            var contextsjlkjkl = fm.GetGradingPresetsContexts(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.GradingPresets);
+            });
+
+            Console.ReadKey();
         }
     }
 }

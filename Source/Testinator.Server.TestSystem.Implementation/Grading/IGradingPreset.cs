@@ -14,5 +14,7 @@ namespace Testinator.TestSystem.Implementation
         DateTime LastEdited { get; }
 
         ReadOnlyCollection<KeyValuePair<int, IGrade>> PercentageThresholds { get; }
+
+        int Version { get; }
     }
 }

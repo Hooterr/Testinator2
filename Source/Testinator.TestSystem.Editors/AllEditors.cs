@@ -1,4 +1,5 @@
 ﻿using Testinator.TestSystem.Editors.Test.Builder;
+using Testinator.TestSystem.Implementation;
 using Testinator.TestSystem.Implementation.Questions;
 
 namespace Testinator.TestSystem.Editors
@@ -27,5 +28,10 @@ namespace Testinator.TestSystem.Editors
         /// The editor for <see cref="ITest"/>
         /// </summary>
         public static ITestEditorBuilder TestEditor => new TestEditorBuilder();
+
+        /// <summary>
+        /// The editor for <see cref="GradingPreset"/>
+        /// </summary>
+        public static IGradingPresetEditorBuilder GradingPresetEditor => new GradingPresetEditorBuilder();
     }
 }

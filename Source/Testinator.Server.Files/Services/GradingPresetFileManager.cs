@@ -46,7 +46,8 @@ namespace Testinator.Server.Files
             var options = new GetFileOptions();
             configureOptions.Invoke(options);
 
-            var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath);
+            var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath)
+                .WithExtension(FileExtensions.GradingPreset);
 
             var filePath = adapter.GetAbsolutePath();
             return GetFileContext(filePath);
@@ -93,7 +94,7 @@ namespace Testinator.Server.Files
             try
             {
                 var adapter = new GetFileOptionsAdapter(options, mFileAccess.DataFolderRootPath)
-                    .WithExtension(FileExtensions.Test);
+                    .WithExtension(FileExtensions.GradingPreset);
 
                 var absolutePath = adapter.GetAbsolutePath();
 
@@ -128,7 +129,7 @@ namespace Testinator.Server.Files
         private GradingPresetFileContext GetFileContext(string absolutePath)
         {
             var fileInfo = mFileAccess.GetFileInfo(absolutePath);
-            var testFileContext = new GradingPresetFileContext
+            var presetFileContext = new GradingPresetFileContext
             {
                 // write a wrapper around meta-data collection
                 FilePath = absolutePath,
@@ -137,7 +138,7 @@ namespace Testinator.Server.Files
                 NumberOfGrades = fileInfo.Metadata.ContainsKey("NumberOfGrades") ? int.Parse(fileInfo.Metadata["NumberOfGrades"]) : default,
             };
 
-            return testFileContext;
+            return presetFileContext;
         }
 
         private GradingPresetFileContext[] GetFileContexts(string absoluteDirectoryPath, string searchPattern)
