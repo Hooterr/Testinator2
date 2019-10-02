@@ -72,7 +72,7 @@ namespace Demo
             var editor = AllEditors.MultipleChoiceQuestion
                 .SetInitialQuestion(test.Questions[0].GetQuestion() as MultipleChoiceQuestion)
                 .Build();
-
+            
             var testEditor = AllEditors.TestEditor
                 .SetInitialTest(test as Test)
                 .Build();

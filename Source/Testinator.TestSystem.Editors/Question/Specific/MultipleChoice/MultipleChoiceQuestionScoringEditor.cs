@@ -102,6 +102,13 @@ namespace Testinator.TestSystem.Editors
 
         }
 
+        protected override void InitializeEditExistingObject()
+        {
+            base.InitializeEditExistingObject();
+            CorrectAnswerIdx = OriginalObject.CorrectAnswerIdx;
+            MaximumScore = OriginalObject.MaximumScore;
+        }
+
         protected override bool Validate()
         {
             var validationPassed = true;

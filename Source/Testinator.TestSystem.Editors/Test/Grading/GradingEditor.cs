@@ -69,18 +69,21 @@ namespace Testinator.TestSystem.Editors
         protected override void OnInitialize()
         {
             LoadAttributeValues();
-            if (IsInEditorMode())
-            {
-                mMaxPointScore = OriginalObject.MaxPointScore;
-                ContainsPoints = OriginalObject.Strategy.ContainsPoints;
-                Thresholds = new List<KeyValuePair<int, IGrade>>(OriginalObject.Strategy.Thresholds);
-                
-            }
-            else
-            {
-                ContainsPoints = true;
-                Thresholds = new List<KeyValuePair<int, IGrade>>();
-            }
+        }
+
+        protected override void InitializeCreateNewObject()
+        {
+            base.InitializeCreateNewObject();
+            ContainsPoints = true;
+            Thresholds = new List<KeyValuePair<int, IGrade>>();
+        }
+
+        protected override void InitializeEditExistingObject()
+        {
+            base.InitializeEditExistingObject();
+            mMaxPointScore = OriginalObject.MaxPointScore;
+            ContainsPoints = OriginalObject.Strategy.ContainsPoints;
+            Thresholds = new List<KeyValuePair<int, IGrade>>(OriginalObject.Strategy.Thresholds);
         }
 
         protected override bool Validate()

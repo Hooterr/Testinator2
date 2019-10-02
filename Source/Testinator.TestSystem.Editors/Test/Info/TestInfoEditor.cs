@@ -128,6 +128,20 @@ namespace Testinator.TestSystem.Editors
             LoadAttributes();
         }
 
+        protected override void InitializeCreateNewObject()
+        {
+            base.InitializeCreateNewObject();
+        }
+
+        protected override void InitializeEditExistingObject()
+        {
+            base.InitializeEditExistingObject();
+            Name = OriginalObject.Name;
+            Description = OriginalObject.Description;
+            TimeLimit = OriginalObject.TimeLimit;
+            Category = OriginalObject.Category;
+        }
+
         #endregion
 
         #region Private Methods
