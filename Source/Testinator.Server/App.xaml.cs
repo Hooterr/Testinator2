@@ -22,6 +22,9 @@ namespace Testinator.Server
         /// <param name="e"></param>
         protected override async void OnStartup(StartupEventArgs e)
         {
+            // https://learnwpf.com/post/2012/07/09/Adding-an-Icon-and-File-Association-to-WPF-Clickonce-Applications.aspx
+            // TODO add file association
+
             // Let the base application do what it needs
             base.OnStartup(e);
 

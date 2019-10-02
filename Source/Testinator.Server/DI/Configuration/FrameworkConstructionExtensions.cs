@@ -54,6 +54,7 @@ namespace Testinator.Server
             construction.Services.AddTransient<QuestionsSingleAnswerPageViewModel>();
 
             construction.Services.AddScoped<ITestFileManager, TestFileManager>();
+            construction.Services.AddScoped<IGradingPresetFileManager, GradingPresetFileManager>();
 
             FilesServicesInstaller.Install(construction.Services);
 
