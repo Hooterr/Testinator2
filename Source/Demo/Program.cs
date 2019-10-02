@@ -5,6 +5,7 @@ using Testinator.Server.Files;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
 using Testinator.TestSystem.Implementation;
+using Testinator.TestSystem.Implementation.Questions;
 
 namespace Demo
 {
@@ -64,10 +65,15 @@ namespace Demo
 
             var test = files.Read(options =>
             {
-                options.InFolderAbsolute("C:\\Users\\root\\Desktop")
-                    .WithName("fdsfsdfsd");
+                options.InApplicationFolder(ApplicationDataFolders.Tests)
+                    .WithName("this shit better works");
             });
+
+            var editor = AllEditors.MultipleChoiceQuestion
+                .SetInitialQuestion(test.Questions[0].GetQuestion() as MultipleChoiceQuestion)
+                .Build();
             
+
             Console.ReadKey();
         }
     }
