@@ -6,9 +6,9 @@ using Testinator.TestSystem.Editors;
 namespace Testinator.Server.Domain
 {
     /// <summary>
-    /// The view model for grading page in Test Creator
+    /// The view model for grading presets page in Test Creator
     /// </summary>
-    public class TestCreatorGradingPageViewModel : BaseViewModel
+    public class TestCreatorGradingPresetsPageViewModel : BaseViewModel
     {
         #region Private Members
 
@@ -16,58 +16,13 @@ namespace Testinator.Server.Domain
         private readonly ApplicationViewModel mApplicationVM;
 
         /// <summary>
-        /// Indicates if grading is in points mode
+        /// The editor for grading presets
         /// </summary>
-        private bool mPointsMode;
-
-        /// <summary>
-        /// The editor for grading in this page
-        /// </summary>
-        private readonly IGradingEditor mEditor;
+        private readonly IGradingPresetEditor mEditor;
 
         #endregion
 
         #region Public Properties
-
-        /// <summary>
-        /// Indicates if user is in grading creation mode
-        /// </summary>
-        public bool IsCreatingGrading { get; set; } = true;
-
-        /// <summary>
-        /// Indicates if grading is in points mode
-        /// If it's false, grading is displayed in percentages
-        /// </summary>
-        public bool PointsMode
-        {
-            get => mPointsMode;
-            set
-            {
-                // Get the value itself
-                mPointsMode = value;
-
-                // If its true...
-                if (mPointsMode)
-                {
-                    // Convert current grades to points
-                    Grades = Grades.Value.ToPoints(PointsForTest);
-                }
-                // Otherwise...
-                else
-                {
-                    // Convert current grades to percentages
-                    Grades = Grades.Value.ToPercentages(PointsForTest);
-                }
-
-                // Make sure grades are standarized at every change
-                Grades.Value.ListChanged += (ss, ee) => Grades.Value.StandarizeGrades();
-            }
-        }
-
-        /// <summary>
-        /// The maximum amount of points reachable from test
-        /// </summary>
-        public int PointsForTest { get; set; }
 
         /// <summary>
         /// The list of grades that sums up to create grading
@@ -89,9 +44,9 @@ namespace Testinator.Server.Domain
         public ICommand RemoveGradeCommand { get; private set; }
 
         /// <summary>
-        /// The command to finish this page and move forward with test creation
+        /// The command to save created grading preset
         /// </summary>
-        public ICommand FinishGradingCommand { get; private set; }
+        public ICommand SaveGradingCommand { get; private set; }
 
         #endregion
 
@@ -100,7 +55,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorGradingPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
+        public TestCreatorGradingPresetsPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
@@ -109,10 +64,10 @@ namespace Testinator.Server.Domain
             // Create commands
             AddGradeCommand = new RelayCommand(AddGrade);
             RemoveGradeCommand = new RelayCommand(RemoveGrade);
-            FinishGradingCommand = new RelayCommand(GoToNextPage);
+            SaveGradingCommand = new RelayCommand(SaveGrading);
 
             // Get the editor associated with this page
-            mEditor = mTestCreator.GetEditorGrading();
+            mEditor = mTestCreator.GetEditorGradingPreset();
 
             // And initialize the data we display
             InitializeInputData();
@@ -151,24 +106,11 @@ namespace Testinator.Server.Domain
         }
 
         /// <summary>
-        /// Checks if we have enough questions in the test and goes to the grading page
+        /// Submits current grading as a preset and saves it
         /// </summary>
-        private void GoToNextPage()
+        private void SaveGrading()
         {
-            // Pass all the changes back to the editor
-            mEditor.Thresholds = Grades.Value.ToThresholdsInEditor();
-            mEditor.ContainsPoints = PointsMode;
-            mEditor.Thresholds = Grades.Value.ToThresholdsInEditor();
-
-            // Validate grading state
-            if (mEditor.Validate())
-            {
-                // Validation succeeded, go to the final page
-                mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestFinalize);
-            }
-
-            // Validation failed, do not submit anything
-            // Error will be displayed by previous setup, no need to do anything here
+            
         }
 
         /// <summary>
@@ -177,13 +119,9 @@ namespace Testinator.Server.Domain
         private void InitializeInputData()
         {
             // Copy all the properties from the editor
-            PointsForTest = mEditor.TotalPointScore;
-            mPointsMode = mEditor.ContainsPoints;
             Grades = mEditor.Thresholds
                 // Use the amount of grades that are provided in the editor
-                .ToGradeViewModels(mEditor.InitialThresholdCount,
-                // If we are using points, use the test points, otherwise maximum is 100%
-                mPointsMode ? PointsForTest : 100);
+                .ToGradeViewModels(mEditor.InitialThresholdCount, 100);
 
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x.Thresholds, Grades.ErrorMessages);

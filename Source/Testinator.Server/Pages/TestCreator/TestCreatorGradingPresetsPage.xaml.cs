@@ -4,16 +4,16 @@ using Testinator.UICore;
 namespace Testinator.Server
 {
     /// <summary>
-    /// Interaction logic for TestCreatorGradingPage.xaml
+    /// Interaction logic for TestCreatorGradingPresetsPage.xaml
     /// </summary>
-    public partial class TestCreatorGradingPage : BasePage<TestCreatorGradingPageViewModel>
+    public partial class TestCreatorGradingPresetsPage : BasePage<TestCreatorGradingPresetsPageViewModel>
     {
         #region Constructor
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorGradingPage() : base()
+        public TestCreatorGradingPresetsPage() : base()
         {
             InitializeComponent();
         }
@@ -22,7 +22,7 @@ namespace Testinator.Server
         /// Constructor with specific view model
         /// </summary>
         /// <param name="specificViewModel">The specific view model to use for this page</param>
-        public TestCreatorGradingPage(TestCreatorGradingPageViewModel specificViewModel) : base(specificViewModel)
+        public TestCreatorGradingPresetsPage(TestCreatorGradingPresetsPageViewModel specificViewModel) : base(specificViewModel)
         {
             InitializeComponent();
         }

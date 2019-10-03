@@ -26,14 +26,17 @@ namespace Testinator.Server
                 case ApplicationPage.TestCreatorInitial:
                     return new TestCreatorInitialPage(viewModel as TestCreatorInitialPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorInitialPageViewModel>());
 
+                case ApplicationPage.TestCreatorGradingPresets:
+                    return new TestCreatorGradingPresetsPage(viewModel as TestCreatorGradingPresetsPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorGradingPresetsPageViewModel>());
+
                 case ApplicationPage.TestCreatorTestInfo:
                     return new TestCreatorTestInfoPage(viewModel as TestCreatorTestInfoPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorTestInfoPageViewModel>());
 
                 case ApplicationPage.TestCreatorQuestions:
                     return new TestCreatorQuestionsPage(viewModel as TestCreatorQuestionsPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorQuestionsPageViewModel>());
 
-                case ApplicationPage.TestCreatorGrading:
-                    return new TestCreatorGradingPage(viewModel as TestCreatorGradingPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorGradingPageViewModel>());
+                case ApplicationPage.TestCreatorTestGrading:
+                    return new TestCreatorTestGradingPage(viewModel as TestCreatorTestGradingPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorTestGradingPageViewModel>());
 
                 case ApplicationPage.TestCreatorTestOptions:
                     return new TestCreatorTestOptionsPage(viewModel as TestCreatorTestOptionsPageViewModel ?? DI.GetInjectedPageViewModel<TestCreatorTestOptionsPageViewModel>());
@@ -71,14 +74,17 @@ namespace Testinator.Server
             if (page is TestCreatorInitialPage)
                 return ApplicationPage.TestCreatorInitial;
 
+            if (page is TestCreatorGradingPresetsPage)
+                return ApplicationPage.TestCreatorGradingPresets;
+
             if (page is TestCreatorTestInfoPage)
                 return ApplicationPage.TestCreatorTestInfo;
 
             if (page is TestCreatorQuestionsPage)
                 return ApplicationPage.TestCreatorQuestions;
 
-            if (page is TestCreatorGradingPage)
-                return ApplicationPage.TestCreatorGrading;
+            if (page is TestCreatorTestGradingPage)
+                return ApplicationPage.TestCreatorTestGrading;
 
             if (page is TestCreatorTestOptionsPage)
                 return ApplicationPage.TestCreatorTestOptions;
