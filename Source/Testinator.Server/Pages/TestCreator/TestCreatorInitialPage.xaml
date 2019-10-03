@@ -31,6 +31,21 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
+            <Button Content="Stworz nowy grading"
+                    Margin="0 10 0 0"
+                    Command="{Binding NewGradingCommand}" />
+
+            <TextBlock Text="Lista grading presetow, kliknij żeby edytować" />
+            <ItemsControl ItemsSource="{Binding GradingPresets}">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Button Content="{Binding Name}"
+                                Command="{Binding DataContext.GradingSelectedCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
+                                CommandParameter="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+
         </StackPanel>
         
     </Border>
