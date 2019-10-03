@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using Testinator.TestSystem.Abstractions;
 
-namespace Testinator.TestSystem.Implementation
+namespace Testinator.TestSystem.Abstractions
 {
     public interface IGradingPreset
     {

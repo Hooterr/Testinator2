@@ -5,12 +5,13 @@ using Testinator.TestSystem.Implementation.Questions;
 
 namespace Testinator.TestSystem.Editors
 {
-    using IQuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
     using IQuestionEditorMultipleCheckBoxes = IQuestionEditor<MultipleCheckBoxesQuestion, IMultipleCheckBoxesQuestionOptionsEditor, IMultipleCheckBoxesQuestionScoringEditor>;
+    using IQuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
 
     public interface ITestCreatorService
     {
         IGradingEditor GetEditorGrading();
+        IGradingPresetEditor GetEditorGradingPreset(IGradingPreset gradingPreset = null);
         IQuestionEditorCollection GetEditorTestQuestions();
         IQuestionEditorMultipleChoice GetEditorMultipleChoice(int? questionNumber = null);
         IQuestionEditorMultipleCheckBoxes GetEditorMultipleCheckBoxes(int? questionNumber = null);

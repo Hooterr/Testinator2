@@ -17,5 +17,20 @@ namespace Testinator.TestSystem.Editors
         DateTime CreatedDate { get; }
 
         DateTime LastModified { get; }
+
+        /// <summary>
+        /// Gets the maximum amount of thresholds
+        /// </summary>
+        int MaxThresholdsCount { get; }
+
+        /// <summary>
+        /// Gets the minimum amount of thresholds
+        /// </summary>
+        int MinThresholdCount { get; }
+
+        /// <summary>
+        /// The initial amount of grades in case of creating brand-new preset
+        /// </summary>
+        int InitialThresholdCount { get; }
     }
 }

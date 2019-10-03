@@ -28,9 +28,13 @@ namespace Testinator.TestSystem.Editors
         int MaxThresholdsCount { get; }
 
         /// <summary>
-        /// Gets the minimum amount of threshold
+        /// Gets the minimum amount of thresholds
         /// </summary>
         int MinThresholdCount { get; }
+
+        /// <summary>
+        /// The initial amount of grades displayed when creating new grading
+        /// </summary>
         int InitialThresholdCount { get; }
 
         /// <summary>
