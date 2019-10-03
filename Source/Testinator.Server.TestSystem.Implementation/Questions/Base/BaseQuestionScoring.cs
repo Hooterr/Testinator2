@@ -13,11 +13,9 @@ namespace Testinator.TestSystem.Implementation.Questions
         [IntegerValueRange(min: 1, max: 100, fromVersion: 1)]
         public int MaximumScore { get; internal set; }
 
-        [EditorProperty]
-        [DefaultStrategy(typeof(AllCorrectScoringStrategy), fromVersion: 1)]
         public IScoringStrategy Strategy { get; internal set; }
 
-        public int CheckAnswer(IUserAnswer userAnswer)
+        public virtual int CheckAnswer(IUserAnswer userAnswer)
         {
             var answerImpl = userAnswer as TQuestionUserAnswer ?? throw new ArgumentException($"UserAnswer must be of type {typeof(TQuestionUserAnswer).Name}.", nameof(userAnswer));
 

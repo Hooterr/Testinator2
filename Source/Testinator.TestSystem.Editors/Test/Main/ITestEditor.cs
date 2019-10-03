@@ -6,7 +6,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// Edits/creates a test
     /// </summary>
-    public interface ITestEditor : IBuildable<ITest> //, TODO IErrorListener<..>
+    public interface ITestEditor : IBuildable<ITest>
     {
         /// <summary>
         /// The editor for the info part of the test
