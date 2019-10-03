@@ -17,6 +17,7 @@ namespace Testinator.Server.Domain
         private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
         private readonly ITestFileManager mTestFileManager;
+        private readonly IGradingPresetFileManager mGradingPresetFileManager;
         private readonly TestMapper mTestMapper;
 
         #endregion
@@ -62,18 +63,22 @@ namespace Testinator.Server.Domain
         public TestCreatorInitialPageViewModel(
             ITestCreatorService testCreatorService, 
             ApplicationViewModel applicationVM, 
-            ITestFileManager testFileManager, 
+            ITestFileManager testFileManager,
+            IGradingPresetFileManager gradingPresetFileManager,
             TestMapper testMapper)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
             mApplicationVM = applicationVM;
             mTestFileManager = testFileManager;
+            mGradingPresetFileManager = gradingPresetFileManager;
             mTestMapper = testMapper;
 
             // Create commands
             TestSelectedCommand = new RelayParameterizedCommand(TestSelected);
             NewTestCommand = new RelayCommand(NewTest);
+            GradingSelectedCommand = new RelayParameterizedCommand(GradingSelected);
+            NewGradingCommand = new RelayCommand(NewGrading);
 
             // Load any saved tests
             LoadTests();
@@ -115,6 +120,32 @@ namespace Testinator.Server.Domain
 
             // Go to the next page
             mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestInfo);
+        }
+
+        /// <summary>
+        /// Fired when grading preset is selected in the list and user wants to edit it
+        /// </summary>
+        private void GradingSelected(object param)
+        {
+            // Get the selected preset
+            var presetVM = param as GradingPresetListItemViewModel;
+
+            // Get it's data from local file
+            var test = mGradingPresetFileManager.Read(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.Tests)
+                    .WithName(presetVM.Name);
+            });
+
+            // TODO: Load the editor and change page
+        }
+
+        /// <summary>
+        /// Creates brand-new grading preset
+        /// </summary>
+        private void NewGrading()
+        {
+            // TODO: Load the editor and change page
         }
 
         #endregion
