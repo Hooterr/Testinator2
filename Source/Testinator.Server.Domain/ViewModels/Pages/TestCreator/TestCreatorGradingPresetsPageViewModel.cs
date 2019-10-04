@@ -91,7 +91,7 @@ namespace Testinator.Server.Domain
             // If we are editing existing preset, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
             Name = mEditor.Name;
-            Grades = mEditor.Thresholds.ToGradeViewModels(mEditor.InitialThresholdCount, mEditor.MaxThresholdsCount);
+            Grades = mEditor.Thresholds.ToGradeViewModels(mEditor.InitialThresholdCount, 100);
 
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x.Name, Name.ErrorMessages);

@@ -30,6 +30,13 @@
                 Padding="30">
             <StackPanel>
 
+                <TextBox Text="{Binding Name.Value}"
+                         Style="{StaticResource BigInputTextBox}"
+                         Tag="Nazwa presetu" />
+
+                <TextBlock Text="{Binding Name.ErrorMessage}"
+                           Foreground="Red" />
+
                 <ItemsControl ItemsSource="{Binding Grades.Value}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
