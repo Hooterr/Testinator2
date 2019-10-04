@@ -14,5 +14,10 @@
         /// The page for multiple checkboxes question editing
         /// </summary>
         MultipleCheckBoxes,
+
+        /// <summary>
+        /// The page for single text box question editing
+        /// </summary>
+        SingleTextBox,
     }
 }

@@ -114,6 +114,9 @@ namespace Testinator.Server
                 case QuestionsPage.MultipleCheckBoxes:
                     return new QuestionsMultipleCheckBoxesPage(viewModel as QuestionsMultipleCheckBoxesPageViewModel ?? DI.GetInjectedPageViewModel<QuestionsMultipleCheckBoxesPageViewModel>());
 
+                case QuestionsPage.SingleTextBox:
+                    return new QuestionsSingleTextBoxPage(viewModel as QuestionsSingleTextBoxPageViewModel ?? DI.GetInjectedPageViewModel<QuestionsSingleTextBoxPageViewModel>());
+
                 default:
                     Debugger.Break();
                     return null;
@@ -131,6 +134,9 @@ namespace Testinator.Server
 
             if (page is QuestionsMultipleCheckBoxesPage)
                 return QuestionsPage.MultipleCheckBoxes;
+
+            if (page is QuestionsSingleTextBoxPage)
+                return QuestionsPage.SingleTextBox;
 
             // Alert developer of issue
             Debugger.Break();

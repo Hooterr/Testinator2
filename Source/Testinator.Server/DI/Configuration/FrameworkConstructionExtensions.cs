@@ -53,7 +53,7 @@ namespace Testinator.Server
             construction.Services.AddTransient<TestCreatorGradingPageViewModel>();
             construction.Services.AddTransient<QuestionsMultipleChoicePageViewModel>();
             construction.Services.AddTransient<QuestionsMultipleCheckBoxesPageViewModel>();
-            construction.Services.AddTransient<QuestionsSingleAnswerPageViewModel>();
+            construction.Services.AddTransient<QuestionsSingleTextBoxPageViewModel>();
 
             FilesServicesInstaller.Install(construction.Services);
 

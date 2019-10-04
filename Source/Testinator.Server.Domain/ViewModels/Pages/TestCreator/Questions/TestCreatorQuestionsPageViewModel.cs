@@ -54,7 +54,12 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// The command to create new question of the type checkboxes
         /// </summary>
-        public ICommand NewQuestionCheckboxesCommand { get; private set; }
+        public ICommand NewQuestionMultipleCheckBoxesCommand { get; private set; }
+
+        /// <summary>
+        /// The command to create new question of the type single text box
+        /// </summary>
+        public ICommand NewQuestionSingleTextBoxCommand { get; private set; }
 
         /// <summary>
         /// The command to edit existing question from the list
@@ -86,7 +91,8 @@ namespace Testinator.Server.Domain
 
             // Create commands
             NewQuestionMultipleChoiceCommand = new RelayCommand(() => GoToMultipleChoiceQuestion());
-            NewQuestionCheckboxesCommand = new RelayCommand(() => GoToCheckboxesQuestion());
+            NewQuestionMultipleCheckBoxesCommand = new RelayCommand(() => GoToCheckboxesQuestion());
+            NewQuestionSingleTextBoxCommand = new RelayCommand(() => GoToSingleTextBoxQuestion());
             EditQuestionCommand = new RelayParameterizedCommand(EditQuestion);
             SubmitQuestionCommand = new RelayCommand(SubmitCurrentQuestion);
             FinishQuestionsCommand = new RelayCommand(GoToNextPage);
@@ -143,7 +149,27 @@ namespace Testinator.Server.Domain
             IsCreatingQuestion = true;
             GoToPage(QuestionsPage.MultipleCheckBoxes, viewModel);
         }
-        
+
+        /// <summary>
+        /// Starts the edit for single text box question
+        /// </summary>
+        /// <param name="questionNumber">The question's data that can be pre-loaded, if its null, we create new question</param>
+        private void GoToSingleTextBoxQuestion(int? questionNumber = null)
+        {
+            // Get the editor for this specific question
+            /*var editor = mTestCreator.GetEditorMultipleCheckBoxes(questionNumber);
+
+            // Create the view model for this question
+            var viewModel = new QuestionsMultipleCheckBoxesPageViewModel();
+
+            // Initialize the view model with given editor, getting the submit action in return
+            mSubmitQuestionAction = viewModel.InitializeEditor(editor);
+
+            // Show the page
+            IsCreatingQuestion = true;
+            GoToPage(QuestionsPage.SingleTextBox, viewModel); */
+        }
+
         /// <summary>
         /// Edits specified question from the list
         /// </summary>
