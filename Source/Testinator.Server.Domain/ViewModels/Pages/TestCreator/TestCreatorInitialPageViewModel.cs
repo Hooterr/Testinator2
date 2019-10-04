@@ -1,9 +1,7 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Testinator.Core;
 using Testinator.TestSystem.Editors;
-using System.Linq;
-using System.Collections.ObjectModel;
 
 namespace Testinator.Server.Domain
 {
@@ -16,9 +14,11 @@ namespace Testinator.Server.Domain
 
         private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
+        private readonly IViewModelProvider mViewModelProvider;
         private readonly ITestFileManager mTestFileManager;
         private readonly IGradingPresetFileManager mGradingPresetFileManager;
         private readonly TestMapper mTestMapper;
+        private readonly GradingMapper mGradingMapper;
 
         #endregion
 
@@ -28,6 +28,11 @@ namespace Testinator.Server.Domain
         /// The tests that are available for editing
         /// </summary>
         public ObservableCollection<TestListItemViewModel> Tests { get; set; }
+
+        /// <summary>
+        /// The grading presets that are available for editing
+        /// </summary>
+        public ObservableCollection<GradingPresetListItemViewModel> GradingPresets { get; set; }
 
         #endregion
 
@@ -62,17 +67,21 @@ namespace Testinator.Server.Domain
         /// </summary>
         public TestCreatorInitialPageViewModel(
             ITestCreatorService testCreatorService, 
-            ApplicationViewModel applicationVM, 
+            ApplicationViewModel applicationVM,
+            IViewModelProvider viewModelProvider,
             ITestFileManager testFileManager,
             IGradingPresetFileManager gradingPresetFileManager,
-            TestMapper testMapper)
+            TestMapper testMapper,
+            GradingMapper gradingMapper)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
             mApplicationVM = applicationVM;
+            mViewModelProvider = viewModelProvider;
             mTestFileManager = testFileManager;
             mGradingPresetFileManager = gradingPresetFileManager;
             mTestMapper = testMapper;
+            mGradingMapper = gradingMapper;
 
             // Create commands
             TestSelectedCommand = new RelayParameterizedCommand(TestSelected);
@@ -82,6 +91,9 @@ namespace Testinator.Server.Domain
 
             // Load any saved tests
             LoadTests();
+
+            // Load any saved grading presets
+            LoadPresets();
         }
 
         #endregion
@@ -131,13 +143,23 @@ namespace Testinator.Server.Domain
             var presetVM = param as GradingPresetListItemViewModel;
 
             // Get it's data from local file
-            var test = mGradingPresetFileManager.Read(options =>
+            var preset = mGradingPresetFileManager.Read(options =>
             {
-                options.InApplicationFolder(ApplicationDataFolders.Tests)
+                options.InApplicationFolder(ApplicationDataFolders.GradingPresets)
                     .WithName(presetVM.Name);
             });
 
-            // TODO: Load the editor and change page
+            // Load the editor with pre-loaded preset
+            var editor = mTestCreator.GetEditorGradingPreset(preset);
+
+            // Get the view model for grading preset page
+            var presetPageVM = mViewModelProvider.GetInjectedPageViewModel<TestCreatorGradingPresetsPageViewModel>();
+
+            // Inject the editor to the page
+            presetPageVM.InitializeEditor(editor);
+
+            // Show the page itself
+            mApplicationVM.GoToPage(ApplicationPage.TestCreatorGradingPresets, presetPageVM);
         }
 
         /// <summary>
@@ -145,7 +167,17 @@ namespace Testinator.Server.Domain
         /// </summary>
         private void NewGrading()
         {
-            // TODO: Load the editor and change page
+            // Load new editor
+            var editor = mTestCreator.GetEditorGradingPreset();
+
+            // Get the view model for grading preset page
+            var presetPageVM = mViewModelProvider.GetInjectedPageViewModel<TestCreatorGradingPresetsPageViewModel>();
+
+            // Inject the editor to the page
+            presetPageVM.InitializeEditor(editor);
+
+            // Show the page itself
+            mApplicationVM.GoToPage(ApplicationPage.TestCreatorGradingPresets, presetPageVM);
         }
 
         #endregion
@@ -165,11 +197,31 @@ namespace Testinator.Server.Domain
                 options.InApplicationFolder(ApplicationDataFolders.Tests);
             });
 
-            // Convert all the test to suitable view models
+            // Convert all the tests to suitable view models
             var testViewModels = mTestMapper.Map(localTests);
 
             // Add them to the collection
             Tests = new ObservableCollection<TestListItemViewModel>(testViewModels);
+        }
+
+        /// <summary>
+        /// Loads any saved grading presets from both local files and web
+        /// </summary>
+        private void LoadPresets()
+        {
+            // TODO: Load presets from user account in web
+
+            // Get every locally saved preset
+            var localPresets = mGradingPresetFileManager.GetGradingPresetsContexts(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.GradingPresets);
+            });
+
+            // Convert all the presets to suitable view models
+            var presetViewModels = mGradingMapper.Map(localPresets);
+
+            // Add them to the collection
+            GradingPresets = new ObservableCollection<GradingPresetListItemViewModel>(presetViewModels);
         }
 
         #endregion
