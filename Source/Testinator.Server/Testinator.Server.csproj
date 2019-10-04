@@ -321,6 +321,9 @@
     <Compile Include="Pages\TestCreator\Questions\QuestionsMultipleCheckBoxesPage.xaml.cs">
       <DependentUpon>QuestionsMultipleCheckBoxesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\TestCreator\Questions\QuestionsSingleTextBoxPage.xaml.cs">
+      <DependentUpon>QuestionsSingleTextBoxPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\TestCreator\TestCreatorGradingPage.xaml.cs">
       <DependentUpon>TestCreatorGradingPage.xaml</DependentUpon>
     </Compile>
@@ -456,6 +459,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\TestCreator\Questions\QuestionsMultipleCheckBoxesPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\TestCreator\Questions\QuestionsSingleTextBoxPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
