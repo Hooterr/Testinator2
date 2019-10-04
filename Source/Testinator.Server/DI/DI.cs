@@ -5,7 +5,8 @@ using Testinator.Server.Domain;
 namespace Testinator.Server
 {
     /// <summary>
-    /// Dependency Injection container for Testinator.Server application
+    /// Dependency Injection container for Testinator.Server application\
+    /// TODO: Should probably get rid of it and make every single DI thing in constructor, if possible
     /// </summary>
     public static class DI
     {
@@ -20,16 +21,6 @@ namespace Testinator.Server
         /// A shortcut to access the <see cref="ApplicationSettingsViewModel"/>
         /// </summary>
         public static ApplicationSettingsViewModel Settings => Framework.Service<ApplicationSettingsViewModel>();
-
-        /// <summary>
-        /// A shortcut to access the injected implementation of <see cref="ILogFactory"/>
-        /// </summary>
-        public static ILogFactory Logger => Framework.Service<ILogFactory>();
-
-        /// <summary>
-        /// A shortcut to access the injected implementation of <see cref="IUIManager"/>
-        /// </summary>
-        public static IUIManager UI => Framework.Service<IUIManager>();
 
         /// <summary>
         /// A shortcut to get appropriate view model for page with injected dependiencies by DI

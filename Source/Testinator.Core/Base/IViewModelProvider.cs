@@ -1,6 +1,4 @@
-﻿using Testinator.Core;
-
-namespace Testinator.Client.Domain
+﻿namespace Testinator.Core
 {
     public interface IViewModelProvider
     {

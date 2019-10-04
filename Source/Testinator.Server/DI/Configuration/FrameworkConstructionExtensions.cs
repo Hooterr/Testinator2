@@ -1,6 +1,7 @@
 ﻿using Dna;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Testinator.Core;
 using Testinator.Server.Database;
 using Testinator.Server.Domain;
 using Testinator.Server.Files;
@@ -31,11 +32,13 @@ namespace Testinator.Server
             construction.Services.AddScoped<IServerNetwork, ServerNetwork>();
             construction.Services.AddScoped<UserMapper>();
             construction.Services.AddScoped<TestMapper>();
+            construction.Services.AddScoped<GradingMapper>();
             construction.Services.AddScoped<ISettingsRepository, SettingsRepository>();
             construction.Services.AddScoped<IUserRepository, UserRepository>();
             construction.Services.AddScoped<IUserAccountService, UserAccountService>();
             construction.Services.AddScoped<ITestCreatorService, TestCreatorService>();
             construction.Services.AddScoped<IUIManager, UIManager>();
+            construction.Services.AddScoped<IViewModelProvider, ViewModelProvider>();
             construction.Services.AddScoped<ITestFileManager, TestFileManager>();
             construction.Services.AddScoped<IGradingPresetFileManager, GradingPresetFileManager>();
 
