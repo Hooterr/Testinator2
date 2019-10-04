@@ -193,7 +193,7 @@ namespace Testinator.Server.Domain
             //mEditor.Validate();
 
             // Go to grading page
-            mApplicationVM.GoToPage(ApplicationPage.TestCreatorGrading);
+            mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestGrading);
         }
 
         #endregion

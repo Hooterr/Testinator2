@@ -14,15 +14,21 @@ namespace Testinator.Server.Domain
 
         private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
+        private readonly IGradingPresetFileManager mGradingPresetFileManager;
 
         /// <summary>
         /// The editor for grading presets
         /// </summary>
-        private readonly IGradingPresetEditor mEditor;
+        private IGradingPresetEditor mEditor;
 
         #endregion
 
         #region Public Properties
+
+        /// <summary>
+        /// The assigned name for this grading preset
+        /// </summary>
+        public InputField<string> Name { get; set; }
 
         /// <summary>
         /// The list of grades that sums up to create grading
@@ -55,27 +61,42 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorGradingPresetsPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
+        public TestCreatorGradingPresetsPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM, IGradingPresetFileManager gradingPresetFileManager)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
             mApplicationVM = applicationVM;
+            mGradingPresetFileManager = gradingPresetFileManager;
 
             // Create commands
             AddGradeCommand = new RelayCommand(AddGrade);
             RemoveGradeCommand = new RelayCommand(RemoveGrade);
             SaveGradingCommand = new RelayCommand(SaveGrading);
-
-            // Get the editor associated with this page
-            mEditor = mTestCreator.GetEditorGradingPreset();
-
-            // And initialize the data we display
-            InitializeInputData();
         }
 
         #endregion
 
         #region Command Methods
+
+        /// <summary>
+        /// Initializes this view model with provided editor for grading presets
+        /// </summary>
+        /// <param name="editor">The editor for grading preset containing all data</param>
+        public void InitializeEditor(IGradingPresetEditor editor)
+        {
+            // Catch the editor itself
+            mEditor = editor;
+
+            // Initialize every property based on current editor state
+            // If we are editing existing preset, editor will have it's data
+            // If we are creating new one, editor will be empty but its still fine at this point
+            Name = mEditor.Name;
+            Grades = mEditor.Thresholds.ToGradeViewModels(mEditor.InitialThresholdCount, mEditor.MaxThresholdsCount);
+
+            // Catch all the errors and display them
+            mEditor.OnErrorFor(x => x.Name, Name.ErrorMessages);
+            mEditor.OnErrorFor(x => x.Thresholds, Grades.ErrorMessages);
+        }
 
         /// <summary>
         /// Adds new possible grade to the current grading
@@ -110,21 +131,29 @@ namespace Testinator.Server.Domain
         /// </summary>
         private void SaveGrading()
         {
-            
-        }
+            // Copy all the user input data to the editor
+            mEditor.Name = Name;
+            mEditor.Thresholds = Grades.Value.ToThresholdsInEditor();
 
-        /// <summary>
-        /// Initializes the input data in this page by loading it from the editor
-        /// </summary>
-        private void InitializeInputData()
-        {
-            // Copy all the properties from the editor
-            Grades = mEditor.Thresholds
-                // Use the amount of grades that are provided in the editor
-                .ToGradeViewModels(mEditor.InitialThresholdCount, 100);
+            // Build the preset
+            var buildOperation = mEditor.Build();
 
-            // Catch all the errors and display them
-            mEditor.OnErrorFor(x => x.Thresholds, Grades.ErrorMessages);
+            // If editor validation fails...
+            if (buildOperation.Failed)
+            {
+                // Don't submit anything
+                // Error will be displayed by previous setup, no need to do anything here
+                return;
+            }
+
+            // Validation succeeded, save the grading
+            mGradingPresetFileManager.Save(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.GradingPresets);
+            }, buildOperation.Result);
+
+            // Go back to test creator initial page
+            mApplicationVM.GoToPage(ApplicationPage.TestCreatorInitial);
         }
 
         #endregion

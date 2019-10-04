@@ -1,4 +1,5 @@
 ﻿using System;
+using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Tests;
 using Testinator.TestSystem.Implementation;
 
