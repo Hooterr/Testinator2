@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Text;
 using Testinator.Server.Domain;
-using Testinator.TestSystem.Abstractions.Tests;
-using Testinator.TestSystem.Implementation;
+using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.Server.Files
 {

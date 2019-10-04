@@ -315,6 +315,7 @@
     <Compile Include="DI\Configuration\FrameworkConstructionExtensions.cs" />
     <Compile Include="DI\DI.cs" />
     <Compile Include="DI\Implementations\UIManager.cs" />
+    <Compile Include="DI\Implementations\ViewModelProvider.cs" />
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
