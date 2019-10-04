@@ -1,7 +1,7 @@
 ﻿using Dna;
 using Testinator.Core;
 
-namespace Testinator.Client
+namespace Testinator.Server
 {
     public class ViewModelProvider : IViewModelProvider
     {
