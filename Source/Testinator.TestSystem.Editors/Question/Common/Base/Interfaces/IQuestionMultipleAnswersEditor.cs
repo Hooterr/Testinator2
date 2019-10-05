@@ -1,6 +1,6 @@
 ﻿namespace Testinator.TestSystem.Editors
 {
-    public interface IQuestionMultipleAnswersOptionsEditor : IQuestionOptionsEditor
+    public interface IQuestionMultipleAnswersEditor
     {
         /// <summary>
         /// Gets the maximum count of the allowed options

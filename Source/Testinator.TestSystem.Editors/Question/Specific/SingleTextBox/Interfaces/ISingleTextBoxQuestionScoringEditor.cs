@@ -5,7 +5,7 @@ using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Editors
 {
-    public interface ISingleTextBoxQuestionScoringEditor : IQuestionScoringEditor
+    public interface ISingleTextBoxQuestionScoringEditor : IQuestionScoringEditor, IQuestionMultipleAnswersEditor
     {
         [EditorProperty]
         IDictionary<string, float> CorrectAnswers { get; set; }
