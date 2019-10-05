@@ -17,6 +17,7 @@ namespace Testinator.Server.Domain
 
         private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
+        private readonly IViewModelProvider mViewModelProvider;
 
         /// <summary>
         /// The editor for questions list in this page
@@ -83,11 +84,12 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorQuestionsPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
+        public TestCreatorQuestionsPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM, IViewModelProvider viewModelProvider)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
             mApplicationVM = applicationVM;
+            mViewModelProvider = viewModelProvider;
 
             // Create commands
             NewQuestionMultipleChoiceCommand = new RelayCommand(() => GoToMultipleChoiceQuestion());
@@ -120,7 +122,7 @@ namespace Testinator.Server.Domain
             var editor = mTestCreator.GetEditorMultipleChoice(questionNumber);
 
             // Create the view model for this question
-            var viewModel = new QuestionsMultipleChoicePageViewModel();
+            var viewModel = mViewModelProvider.GetInjectedPageViewModel<QuestionsMultipleChoicePageViewModel>();
 
             // Initialize the view model with given editor, getting the submit action in return
             mSubmitQuestionAction = viewModel.InitializeEditor(editor);
@@ -140,7 +142,7 @@ namespace Testinator.Server.Domain
             var editor = mTestCreator.GetEditorMultipleCheckBoxes(questionNumber);
 
             // Create the view model for this question
-            var viewModel = new QuestionsMultipleCheckBoxesPageViewModel();
+            var viewModel = mViewModelProvider.GetInjectedPageViewModel<QuestionsMultipleCheckBoxesPageViewModel>();
 
             // Initialize the view model with given editor, getting the submit action in return
             mSubmitQuestionAction = viewModel.InitializeEditor(editor);
@@ -157,17 +159,17 @@ namespace Testinator.Server.Domain
         private void GoToSingleTextBoxQuestion(int? questionNumber = null)
         {
             // Get the editor for this specific question
-            /*var editor = mTestCreator.GetEditorMultipleCheckBoxes(questionNumber);
+            var editor = mTestCreator.GetEditorSingleTextBox(questionNumber);
 
             // Create the view model for this question
-            var viewModel = new QuestionsMultipleCheckBoxesPageViewModel();
+            var viewModel = mViewModelProvider.GetInjectedPageViewModel<QuestionsSingleTextBoxPageViewModel>();
 
             // Initialize the view model with given editor, getting the submit action in return
             mSubmitQuestionAction = viewModel.InitializeEditor(editor);
 
             // Show the page
             IsCreatingQuestion = true;
-            GoToPage(QuestionsPage.SingleTextBox, viewModel); */
+            GoToPage(QuestionsPage.SingleTextBox, viewModel); 
         }
 
         /// <summary>

@@ -10,6 +10,7 @@ namespace Testinator.Server.Services
 {
     using IQuestionEditorMultipleChoice = IQuestionEditor<MultipleChoiceQuestion, IMultipleChoiceQuestionOptionsEditor, IMultipleChoiceQuestionScoringEditor>;
     using IQuestionEditorMultipleCheckBoxes = IQuestionEditor<MultipleCheckBoxesQuestion, IMultipleCheckBoxesQuestionOptionsEditor, IMultipleCheckBoxesQuestionScoringEditor>;
+    using IQuestionEditorSingleTextBox = IQuestionEditor<SingleTextBoxQuestion, ISingleTextBoxQuestionOptionsEditor, ISingleTextBoxQuestionScoringEditor>;
 
     /// <summary>
     /// The main test creator service that handles every interactions with data needed in test creator for Testinator.Server app
@@ -152,7 +153,7 @@ namespace Testinator.Server.Services
         /// Gets the editor for <see cref="MultipleCheckBoxesQuestion"/>
         /// </summary>
         /// <param name="questionNumber">The index of question to preload from test, if not provided, brand-new question will be created</param>
-        /// <returns>The editor of type MultipleChechBoxes</returns>
+        /// <returns>The editor of type MultipleCheckBoxes</returns>
         public IQuestionEditorMultipleCheckBoxes GetEditorMultipleCheckBoxes(int? questionNumber = null)
         {
             // If we have a question provided...
@@ -172,6 +173,38 @@ namespace Testinator.Server.Services
             // Otherwise...
             // Get the editor for this type of question
             return AllEditors.MultipleCheckBoxesQuestion
+                // No pre-data provided, so create new question
+                .NewQuestion()
+                // Use latest version since its new question
+                .UseNewestVersion()
+                // Return built editor
+                .Build();
+        }
+
+        /// <summary>
+        /// Gets the editor for <see cref="SingleTextBoxQuestion"/>
+        /// </summary>
+        /// <param name="questionNumber">The index of question to preload from test, if not provided, brand-new question will be created</param>
+        /// <returns>The editor of type SingleTextBox</returns>
+        public IQuestionEditorSingleTextBox GetEditorSingleTextBox(int? questionNumber = null)
+        {
+            // If we have a question provided...
+            if (questionNumber.HasValue)
+            {
+                // Get question from the test
+                var question = mCurrentTestEditor.Questions[questionNumber.Value] as SingleTextBoxQuestion;
+
+                // Get the editor for this type of question
+                return AllEditors.SingleTextBoxQuestion
+                    // Pre-load the question
+                    .SetInitialQuestion(question)
+                    // Return built editor
+                    .Build();
+            }
+
+            // Otherwise...
+            // Get the editor for this type of question
+            return AllEditors.SingleTextBoxQuestion
                 // No pre-data provided, so create new question
                 .NewQuestion()
                 // Use latest version since its new question
