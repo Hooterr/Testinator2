@@ -25,7 +25,11 @@
 
             <Button Content="Checkboxes"
                     Animations:AnimateSlideAndFadeInFromTopProperty.Value="{Binding IsCreatingQuestion, Converter={local:BooleanInvertConverter}}"
-                    Command="{Binding NewQuestionCheckboxesCommand}" />
+                    Command="{Binding NewQuestionMultipleCheckBoxesCommand}" />
+
+            <Button Content="Textbox"
+                    Animations:AnimateSlideAndFadeInFromTopProperty.Value="{Binding IsCreatingQuestion, Converter={local:BooleanInvertConverter}}"
+                    Command="{Binding NewQuestionSingleTextBoxCommand}" />
 
             <local:TestCreatorQuestionsPageHost
                     CurrentPage="{Binding CurrentPage}"

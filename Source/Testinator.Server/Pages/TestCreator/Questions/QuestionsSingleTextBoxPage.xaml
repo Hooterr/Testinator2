@@ -29,7 +29,7 @@
                 <ItemsControl ItemsSource="{Binding Answers.Value}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:AnswerSelectableControl />
+                            <local:AnswerEditableControl DataContext="{Binding}" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>

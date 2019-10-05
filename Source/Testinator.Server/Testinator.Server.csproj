@@ -253,6 +253,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="AttachedProperties\IsBusyProperty.cs" />
+    <Compile Include="Controls\TestCreator\AnswerEditableControl.xaml.cs">
+      <DependentUpon>AnswerEditableControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TestCreator\EditorDebugViewControl.xaml.cs">
       <DependentUpon>EditorDebugViewControl.xaml</DependentUpon>
     </Compile>
@@ -315,6 +318,7 @@
     <Compile Include="DI\Configuration\FrameworkConstructionExtensions.cs" />
     <Compile Include="DI\DI.cs" />
     <Compile Include="DI\Implementations\UIManager.cs" />
+    <Compile Include="DI\Implementations\ViewModelProvider.cs" />
     <Compile Include="Pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
@@ -370,6 +374,10 @@
     <Compile Include="ViewModels\DialogWindowViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="ViewModels\WindowViewModel.cs" />
+    <Page Include="Controls\TestCreator\AnswerEditableControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Controls\TestCreator\EditorDebugViewControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

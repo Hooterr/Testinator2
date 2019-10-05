@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 using Testinator.Core;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
@@ -29,12 +30,63 @@ namespace Testinator.Server.Domain
 
         #endregion
 
+        #region Commands
+
+        /// <summary>
+        /// The command to add new possible answer to the question
+        /// </summary>
+        public ICommand AddAnswerCommand { get; protected set; }
+
+        /// <summary>
+        /// The command to remove last answer from the question
+        /// </summary>
+        public ICommand RemoveAnswerCommand { get; protected set; }
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
         /// Default constructor
         /// </summary>
-        public QuestionsSingleTextBoxPageViewModel(ApplicationSettingsViewModel settingsVM) : base(settingsVM) { }
+        public QuestionsSingleTextBoxPageViewModel(ApplicationSettingsViewModel settingsVM) : base(settingsVM) 
+        {
+            // Create default commands
+            AddAnswerCommand = new RelayCommand(AddAnswer);
+            RemoveAnswerCommand = new RelayCommand(RemoveAnswer);
+        }
+
+        #endregion
+
+        #region Command Methods
+
+        /// <summary>
+        /// Adds new possible answer to the question
+        /// </summary>
+        protected void AddAnswer()
+        {
+            // Make sure we don't exceed maximum answer limit
+            var answersCount = Answers.Value.Count;
+            if (answersCount >= mEditor.Scoring.MaximumCount)
+                return;
+
+            // Add new answer
+            Answers.Value.Add(string.Empty);
+        }
+
+        /// <summary>
+        /// Removes last answer from the question
+        /// </summary>
+        protected void RemoveAnswer()
+        {
+            // Make sure we can remove the answer and still meet the requirement
+            var answersCount = Answers.Value.Count;
+            if (answersCount <= mEditor.Scoring.MinimumCount)
+                return;
+
+            // Remove the last answer
+            Answers.Value.RemoveAt(answersCount - 1);
+        }
 
         #endregion
 
