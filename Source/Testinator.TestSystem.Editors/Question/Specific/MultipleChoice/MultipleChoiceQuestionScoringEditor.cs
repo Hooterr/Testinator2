@@ -120,15 +120,12 @@ namespace Testinator.TestSystem.Editors
 
             if (false == mDefaultStrategyType.IsAssignableFrom(mScoringStrategy.GetType()))
             {
-                // TODO THIS WILL NOT WORK MOST LIKELY
                 ErrorHandlerAdapter.HandleErrorFor(x => x, $"The only valid type of scoring strategy for this question is {mDefaultStrategyType.Name}.");
                 validationPassed = false;
             }
 
             return validationPassed;
         }
-
-        // TODO initialization with existing data
 
         #endregion
     }

@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Implementation.Questions
 {
     public class SingleTextBoxQuestionScoring : BaseQuestionScoring<SingleTextBoxQuestionUserAnswer>
     {
         // Maybe add some alternative answers or something
+        [CollectionCount(max: 5, min: 1, fromVersion: 1)]
         public IDictionary<string, float> CorrectAnswers { get; internal set; }
 
         public bool IsCaseSensitive { get; internal set; }

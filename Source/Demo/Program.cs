@@ -77,7 +77,11 @@ namespace Demo
                 .SetInitialTest(test as Test)
                 .Build();
 
-
+            var editorrrr = AllEditors.SingleTextBoxQuestion
+                .NewQuestion()
+                .UseNewestVersion()
+                .Build();
+            var opres = editorrrr.Build();
             Console.ReadKey();
         }
     }

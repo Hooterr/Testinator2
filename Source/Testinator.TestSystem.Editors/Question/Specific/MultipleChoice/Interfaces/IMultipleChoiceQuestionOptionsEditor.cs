@@ -6,7 +6,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// The editor for options part of multiple choice question
     /// </summary>
-    public interface IMultipleChoiceQuestionOptionsEditor : IQuestionOptionsEditor//, IErrorListener<IMultipleChoiceQuestionOptionsEditor>
+    public interface IMultipleChoiceQuestionOptionsEditor : IQuestionOptionsEditor, IQuestionMultipleAnswersOptionsEditor
     {
         /// <summary>
         /// The ABCD options for this question

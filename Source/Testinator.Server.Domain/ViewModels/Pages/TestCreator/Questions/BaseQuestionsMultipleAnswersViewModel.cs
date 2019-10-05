@@ -8,10 +8,10 @@ using Testinator.TestSystem.Editors;
 namespace Testinator.Server.Domain
 {
     /// <summary>
-    /// The view model that provides base functionallity to the question view models that have multiple answers available
+    /// The view model that provides base functionality to the question view models that have multiple answers available
     /// </summary>
     public class BaseQuestionsMultipleAnswersViewModel<TQuestion, TOptionsEditor, TScoringEditor> : BaseViewModel
-        where TOptionsEditor : IQuestionOptionsEditor
+        where TOptionsEditor : IQuestionMultipleAnswersOptionsEditor
     {
         #region Protected Members
 

@@ -13,6 +13,7 @@ namespace Testinator.TestSystem.Implementation.Questions
         [IntegerValueRange(min: 1, max: 100, fromVersion: 1)]
         public int MaximumScore { get; internal set; }
 
+        // Not used
         public IScoringStrategy Strategy { get; internal set; }
 
         public virtual int CheckAnswer(IUserAnswer userAnswer)
