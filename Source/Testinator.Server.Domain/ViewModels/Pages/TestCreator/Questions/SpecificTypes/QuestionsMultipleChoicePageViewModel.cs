@@ -22,6 +22,43 @@ namespace Testinator.Server.Domain
     {
         #region Debug Stuff
 
+        // FOR DEBUG, delete later
+        public class DebugViewItemViewModel
+        {
+            public ObservableCollection<string> Errors { get; set; }
+
+            private bool mIsEnabled;
+
+            public bool IsEnabled
+            {
+                get => mIsEnabled;
+                set
+                {
+                    if (value)
+                        mEditor.OnErrorFor(mPropertyExpression, Errors);
+                    else
+                        mEditor.OnErrorFor(propertyExpression: mPropertyExpression, handler: null);
+                    mIsEnabled = value;
+                }
+            }
+
+            public string PropertyName { get; set; }
+
+            private IQuestionEditorMultipleChoice mEditor;
+            private Expression<Func<IQuestionEditorMultipleChoice, object>> mPropertyExpression;
+
+            public DebugViewItemViewModel(IQuestionEditorMultipleChoice editor, Expression<Func<IQuestionEditorMultipleChoice, object>> propertyExpression, string name, bool enabled = true)
+            {
+                mEditor = editor;
+                mPropertyExpression = propertyExpression;
+                PropertyName = name;
+                Errors = new ObservableCollection<string>();
+                IsEnabled = enabled;
+            }
+
+            public void Clear() => Errors.Clear();
+        }
+
         public bool DebugView { get; set; } = false;
 
         public List<string> MarkupTypes { get; } = (Enum.GetValues(typeof(MarkupLanguage)) as MarkupLanguage[]).Select(x => x.ToString()).ToList();
@@ -113,8 +150,8 @@ namespace Testinator.Server.Domain
         /// <param name="editor">The editor for this type of question containing all data</param>
         public override Func<IQuestion> InitializeEditor(IQuestionEditorMultipleChoice editor)
         {
-            // Do base stuff with editor validation and catch the submit action
-            base.InitializeEditor(editor);
+            // Catch provided editor
+            mEditor = editor;
 
             // Initialize every property based on current editor state
             // If we are editing existing question, editor will have it's data
@@ -149,7 +186,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Tries to submit the question to the editor
         /// </summary>
-        public IQuestion Submit()
+        public override IQuestion Submit()
         {
             // FOR DEBUG ONLY, DELETE LATER
             ClearAllErrorsCommand.Execute(null);
@@ -167,42 +204,5 @@ namespace Testinator.Server.Domain
         }
 
         #endregion
-    }
-
-    // FOR DEBUG, delete later
-    public class DebugViewItemViewModel
-    {
-        public ObservableCollection<string> Errors { get; set; }
-
-        private bool mIsEnabled;
-
-        public bool IsEnabled
-        {
-            get => mIsEnabled;
-            set
-            {
-                if (value)
-                    mEditor.OnErrorFor(mPropertyExpression, Errors);
-                else
-                    mEditor.OnErrorFor(propertyExpression: mPropertyExpression, handler: null);
-                mIsEnabled = value;
-            }
-        }
-
-        public string PropertyName { get; set; }
-
-        private IQuestionEditorMultipleChoice mEditor;
-        private Expression<Func<IQuestionEditorMultipleChoice, object>> mPropertyExpression;
-
-        public DebugViewItemViewModel(IQuestionEditorMultipleChoice editor, Expression<Func<IQuestionEditorMultipleChoice, object>> propertyExpression, string name, bool enabled = true)
-        {
-            mEditor = editor;
-            mPropertyExpression = propertyExpression;
-            PropertyName = name;
-            Errors = new ObservableCollection<string>();
-            IsEnabled = enabled;
-        }
-
-        public void Clear() => Errors.Clear();
     }
 }

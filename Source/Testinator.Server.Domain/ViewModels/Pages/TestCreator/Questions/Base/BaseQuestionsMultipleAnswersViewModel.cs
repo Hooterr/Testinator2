@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.Windows.Input;
 using Testinator.Core;
-using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
 
 namespace Testinator.Server.Domain
@@ -10,36 +8,15 @@ namespace Testinator.Server.Domain
     /// <summary>
     /// The view model that provides base functionality to the question view models that have multiple answers available
     /// </summary>
-    public class BaseQuestionsMultipleAnswersViewModel<TQuestion, TOptionsEditor, TScoringEditor> : BaseViewModel
+    public abstract class BaseQuestionsMultipleAnswersViewModel<TQuestion, TOptionsEditor, TScoringEditor> : BaseQuestionsViewModel<TQuestion, TOptionsEditor, TScoringEditor>
         where TOptionsEditor : IQuestionMultipleAnswersEditor
     {
-        #region Protected Members
-
-        protected readonly ApplicationSettingsViewModel mApplicationSettings;
-
-        /// <summary>
-        /// The editor for current question
-        /// </summary>
-        protected IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> mEditor;
-
-        #endregion
-
         #region Public Properties
-
-        /// <summary>
-        /// The task for this question
-        /// </summary>
-        public InputField<string> TaskTextContent { get; set; }
 
         /// <summary>
         /// The possible answers for this question as view models
         /// </summary>
         public InputField<ObservableCollection<AnswerSelectableViewModel>> Answers { get; set; }
-
-        /// <summary>
-        /// The points that are given for right answer
-        /// </summary>
-        public InputField<string> Points { get; set; }
 
         #endregion
 
@@ -61,13 +38,9 @@ namespace Testinator.Server.Domain
 
         /// <summary>
         /// Default constructor
-        /// Should be called by every question view model
         /// </summary>
-        public BaseQuestionsMultipleAnswersViewModel(ApplicationSettingsViewModel settingsVM)
+        public BaseQuestionsMultipleAnswersViewModel(ApplicationSettingsViewModel settingsVM) : base(settingsVM)
         {
-            // Inject DI services
-            mApplicationSettings = settingsVM;
-
             // Create default commands
             AddAnswerCommand = new RelayCommand(AddAnswer);
             RemoveAnswerCommand = new RelayCommand(RemoveAnswer);
@@ -103,23 +76,6 @@ namespace Testinator.Server.Domain
 
             // Remove the last answer
             Answers.Value.RemoveAt(answersCount - 1);
-        }
-
-        #endregion
-
-        #region Public Methods
-
-        public virtual Func<IQuestion> InitializeEditor(IQuestionEditor<TQuestion, TOptionsEditor, TScoringEditor> editor)
-        {
-            // If we don't get valid editor, we can't do anything
-            if (editor == null)
-                return null;
-
-            // Get the editor itself
-            mEditor = editor;
-
-            // Return nothing since its base class
-            return null;
         }
 
         #endregion

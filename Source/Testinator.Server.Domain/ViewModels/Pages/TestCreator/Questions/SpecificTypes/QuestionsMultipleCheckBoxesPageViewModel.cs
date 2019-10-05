@@ -30,8 +30,8 @@ namespace Testinator.Server.Domain
         /// <param name="editor">The editor for this type of question containing all data</param>
         public override Func<IQuestion> InitializeEditor(IQuestionEditorMultipleCheckBoxes editor)
         {
-            // Do base stuff with editor validation and catch the submit action
-            base.InitializeEditor(editor);
+            // Catch provided editor
+            mEditor = editor;
 
             // Initialize every property based on current editor state
             // If we are editing existing question, editor will have it's data
@@ -52,7 +52,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Tries to submit the question to the editor
         /// </summary>
-        public IQuestion Submit()
+        public override IQuestion Submit()
         {
             // Pass all the changes user has made to the editor
             mEditor.Task.Text.Content = TaskTextContent;
