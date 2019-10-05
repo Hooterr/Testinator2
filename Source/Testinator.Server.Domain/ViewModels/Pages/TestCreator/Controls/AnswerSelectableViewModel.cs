@@ -1,11 +1,9 @@
-﻿using Testinator.Core;
-
-namespace Testinator.Server.Domain
+﻿namespace Testinator.Server.Domain
 {
     /// <summary>
     /// The view model for single selectable answer control
     /// </summary>
-    public class AnswerSelectableViewModel : BaseViewModel
+    public class AnswerSelectableViewModel : AnswerEditableViewModel
     {
         /// <summary>
         /// The title to use to identify this answer
@@ -13,11 +11,6 @@ namespace Testinator.Server.Domain
         /// NOTE: Not used in every question type
         /// </summary>
         public string Title { get; set; } = string.Empty;
-
-        /// <summary>
-        /// The actual answer text content 
-        /// </summary>
-        public string Answer { get; set; } = string.Empty;
 
         /// <summary>
         /// Indicates if this answer is selected for being the right one 

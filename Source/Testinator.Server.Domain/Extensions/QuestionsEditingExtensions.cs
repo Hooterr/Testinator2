@@ -89,17 +89,20 @@ namespace Testinator.Server.Domain
         /// </summary>
         /// <param name="options">The options from question editor</param>
         /// <param name="minimumAnswersCount">The minimum amount of answers required</param>
-        /// <returns>Answers as strings</returns>
-        public static ObservableCollection<string> ToStringAnswers(this IEnumerable<string> options, int minimumAnswersCount)
+        /// <returns>Answers as view models with strings inside</returns>
+        public static ObservableCollection<AnswerEditableViewModel> ToStringAnswers(this IEnumerable<string> options, int minimumAnswersCount)
         {
             // Prepare a collection to return
-            var answers = new ObservableCollection<string>();
+            var answers = new ObservableCollection<AnswerEditableViewModel>();
 
             // For each given option
             foreach (var option in options)
             {
                 // Add it as an answer
-                answers.Add(option);
+                answers.Add(new AnswerEditableViewModel
+                {
+                    Answer = option
+                });
             }
 
             // Check if we haven't met the minimum requirement of answer count
@@ -110,7 +113,7 @@ namespace Testinator.Server.Domain
                 for (var i = 0; i < minimumAnswersCount - answerCount; i++)
                 {
                     // Add new empty answer
-                    answers.Add(string.Empty);
+                    answers.Add(new AnswerEditableViewModel());
                 }
             }
 
@@ -188,9 +191,9 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Converts answer list to the dictionary version with point rates
         /// </summary>
-        /// <param name="answers"></param>
-        /// <returns></returns>
-        public static Dictionary<string, float> ToRatedAnswers(this IList<string> answers)
+        /// <param name="answers">Answer view models</param>
+        /// <returns>The dictionary ready for editor to handle</returns>
+        public static Dictionary<string, float> ToRatedAnswers(this IList<AnswerEditableViewModel> answers)
         {
             // Prepare a dictionary to return
             var dictionary = new Dictionary<string, float>();
@@ -199,7 +202,7 @@ namespace Testinator.Server.Domain
             foreach (var answer in answers)
             {
                 // Add it to the dictionary with the rate
-                dictionary.Add(answer, 1f);
+                dictionary.Add(answer.Answer, 1f);
             }
 
             // Return the ready dictionary

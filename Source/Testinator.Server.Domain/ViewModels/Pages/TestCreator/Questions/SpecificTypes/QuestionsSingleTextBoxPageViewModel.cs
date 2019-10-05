@@ -19,9 +19,9 @@ namespace Testinator.Server.Domain
         #region Public Properties
 
         /// <summary>
-        /// The possible answers for this question as simple strings
+        /// The possible answers for this question as view models with simple strings inside
         /// </summary>
-        public InputField<ObservableCollection<string>> Answers { get; set; }
+        public InputField<ObservableCollection<AnswerEditableViewModel>> Answers { get; set; }
 
         /// <summary>
         /// Indicates if answers are case sensitive
@@ -71,7 +71,7 @@ namespace Testinator.Server.Domain
                 return;
 
             // Add new answer
-            Answers.Value.Add(string.Empty);
+            Answers.Value.Add(new AnswerEditableViewModel());
         }
 
         /// <summary>
