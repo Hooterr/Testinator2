@@ -15,7 +15,7 @@
 
                         <Grid Margin="4">
 
-                            <TextBox Text="{Binding}"
+                            <TextBox Text="{Binding Path=., UpdateSourceTrigger=PropertyChanged}"
                                      Tag="Odpowiedź"
                                      Style="{StaticResource BigInputTextBox}" />
 
