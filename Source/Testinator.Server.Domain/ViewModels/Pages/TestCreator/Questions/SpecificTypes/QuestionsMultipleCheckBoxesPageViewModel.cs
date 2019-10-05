@@ -38,7 +38,7 @@ namespace Testinator.Server.Domain
             // If we are creating new one, editor will be empty but its still fine at this point
             TaskTextContent = mEditor.Task.Text.Content;
             Answers = mEditor.Options.Boxes.ToAnswerViewModels(mApplicationSettings.InitialMultipleAnswersAmount);
-            Points = mEditor.Scoring.MaximumScore.ToString();
+            Points = mEditor.Scoring.MaximumScore == 0 ? string.Empty : mEditor.Scoring.MaximumScore.ToString();
 
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x.Task.Text.Content, TaskTextContent.ErrorMessages); 

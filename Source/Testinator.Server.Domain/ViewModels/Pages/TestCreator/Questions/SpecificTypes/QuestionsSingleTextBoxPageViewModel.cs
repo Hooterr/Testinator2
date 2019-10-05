@@ -55,7 +55,7 @@ namespace Testinator.Server.Domain
             TaskTextContent = mEditor.Task.Text.Content;
             Answers = mEditor.Scoring.CorrectAnswers.Keys.ToStringAnswers(mApplicationSettings.InitialSingleTextBoxAnswersAmount);
             IsCaseSensitive = mEditor.Scoring.IsCaseSensitive;
-            Points = mEditor.Scoring.MaximumScore.ToString();
+            Points = mEditor.Scoring.MaximumScore == 0 ? string.Empty : mEditor.Scoring.MaximumScore.ToString();
 
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x.Task.Text.Content, TaskTextContent.ErrorMessages); 

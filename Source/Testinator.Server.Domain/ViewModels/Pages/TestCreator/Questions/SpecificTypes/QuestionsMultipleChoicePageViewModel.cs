@@ -158,7 +158,7 @@ namespace Testinator.Server.Domain
             // If we are creating new one, editor will be empty but its still fine at this point
             TaskTextContent = mEditor.Task.Text.Content;
             Answers = mEditor.Options.ABCD.ToAnswerViewModels(mApplicationSettings.InitialMultipleAnswersAmount);
-            Points = mEditor.Scoring.MaximumScore.ToString();
+            Points = mEditor.Scoring.MaximumScore == 0 ? string.Empty : mEditor.Scoring.MaximumScore.ToString();
             Markup = mEditor.Task.Text.Markup.ToString();
             Answers.Value.ElementAt(mEditor.Scoring.CorrectAnswerIdx).IsSelected = true;
             // Catch all the errors and display them
