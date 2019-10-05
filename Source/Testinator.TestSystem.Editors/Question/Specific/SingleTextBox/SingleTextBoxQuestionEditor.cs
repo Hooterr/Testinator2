@@ -6,14 +6,14 @@ using Testinator.TestSystem.Implementation.Questions;
 namespace Testinator.TestSystem.Editors
 {
     [EditorFor(typeof(SingleTextBoxQuestion))]
-    internal class SingleTextBoxQuestionEditor : BaseQuestionEditor<SingleTextBoxQuestion, IQuestionOptionsEditor, IQuestionScoringEditor>
+    internal class SingleTextBoxQuestionEditor : BaseQuestionEditor<SingleTextBoxQuestion, ISingleTextBoxQuestionOptionsEditor, ISingleTextBoxQuestionScoringEditor>
     {
         private SingleTextBoxQuestionOptionsEditor mOptions;
         private SingleTextBoxQuestionScoringEditor mScoring;
 
-        public override IQuestionOptionsEditor Options => mOptions;
+        public override ISingleTextBoxQuestionOptionsEditor Options => mOptions;
 
-        public override IQuestionScoringEditor Scoring => mScoring;
+        public override ISingleTextBoxQuestionScoringEditor Scoring => mScoring;
 
         public SingleTextBoxQuestionEditor(SingleTextBoxQuestion question) : base(question) { }
 
@@ -36,9 +36,9 @@ namespace Testinator.TestSystem.Editors
         protected override void OnEditorsCreated()
         {
             base.OnEditorsCreated();
-            mOptions.SetInternalErrorHandler(mInternalErrorHandler);
+            mOptions.AttachErrorHandler(mInternalErrorHandler, "");
             mOptions.Initialize();
-            mScoring.SetInternalErrorHandler(mInternalErrorHandler);
+            mScoring.AttachErrorHandler(mInternalErrorHandler, "");
             mScoring.Initialize();
         }
 

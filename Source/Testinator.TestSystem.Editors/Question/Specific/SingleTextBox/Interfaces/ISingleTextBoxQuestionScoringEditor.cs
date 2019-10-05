@@ -12,6 +12,5 @@ namespace Testinator.TestSystem.Editors
 
         [EditorProperty]
         bool IsCaseSensitive { get; set; }
-
     }
 }
