@@ -1,4 +1,4 @@
-﻿<UICore:BasePage x:TypeArguments="Core:QuestionsMultipleChoicePageViewModel" x:Class="Testinator.Server.QuestionsMultipleChoicePage"
+﻿<UICore:BasePage x:TypeArguments="Core:QuestionsSingleTextBoxPageViewModel" x:Class="Testinator.Server.QuestionsSingleTextBoxPage"
                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -16,9 +16,8 @@
         <ScrollViewer VerticalScrollBarVisibility="Visible" Height="600">
             
             <StackPanel>
-                <Button Content="Debug view" HorizontalAlignment="Left" Command="{Binding ToggleDebugViewCommand}" Background="OrangeRed"/>
                 
-                <TextBlock Text="Question - Multiple Choice"
+                <TextBlock Text="Question - Single TextBox"
                            FontSize="30" />
                 <TextBox Text="{Binding TaskTextContent.Value}"
                          Tag="Tresc"
@@ -26,24 +25,11 @@
 
                 <local:ErrorListControl
                     Errors="{Binding TaskTextContent.ErrorMessages}"/>
-
-
-                <TextBlock Text="Markup:"/>
-                <ComboBox ItemsSource="{Binding MarkupTypes}"
-                          SelectedItem="{Binding Markup.Value}"
-                          />
-                                
                 
                 <ItemsControl ItemsSource="{Binding Answers.Value}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <local:AnswerSelectableControl>
-                                <Button Content="{Binding Title}"
-                                        Background="{Binding Path=Background, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}}"
-                                        Command="{Binding DataContext.SelectAnswerCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
-                                        CommandParameter="{Binding}"
-                                        />
-                            </local:AnswerSelectableControl>
+                            <local:AnswerSelectableControl />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
@@ -62,26 +48,6 @@
 
                 <Button Content="-"
                         Command="{Binding RemoveAnswerCommand}" />
-
-                <StackPanel Visibility="{Binding DebugView, Converter={local:BooleanToVisiblityConverter}}">
-                    <Button Content="Clear all" HorizontalAlignment="Left"
-                            Grid.Column="0"
-                            Grid.Row="0"
-                            Grid.ColumnSpan="2"
-                            Command="{Binding ClearAllErrorsCommand}"/>
-
-                    <local:EditorDebugViewControl DataContext="{Binding TaskErrors}"/>
-                    <local:EditorDebugViewControl DataContext="{Binding TaskTextErrors}"/>
-                    <local:EditorDebugViewControl DataContext="{Binding TaskTextContentErrors}"/>
-                    <local:EditorDebugViewControl DataContext="{Binding TaskTextMarkupErrors}"/>
-                    <local:EditorDebugViewControl DataContext="{Binding TaskImagesErrors}"/>
-                    <local:EditorDebugViewControl DataContext="{Binding OptionsErrors}"/>
-                    <local:EditorDebugViewControl DataContext="{Binding OptionsABCDErrors}"/>
-                    <local:EditorDebugViewControl DataContext="{Binding ScoringErrors}"/>
-                    <local:EditorDebugViewControl DataContext="{Binding ScoringMaxPointsErrors}"/>
-                    <local:EditorDebugViewControl DataContext="{Binding ScoringCorrectAnswerErrors}"/>
-                    <local:EditorDebugViewControl DataContext="{Binding General}"/>
-                </StackPanel>
 
             </StackPanel>
         </ScrollViewer>
