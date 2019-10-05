@@ -77,10 +77,18 @@
 
                 </StackPanel>
 
-                <Border Grid.Column="1" Background="{StaticResource WhiteLightBrush}">
-                    <!--<local:CriteriaListControl DataContext="{x:Static Core:CriteriaListViewModel.Instance}"/>-->
-                    <TextBlock Text="Tutaj będzie lista dostępnych gradingow presetow, obecnie nie ma nic" />
-                </Border>
+                <StackPanel Grid.Column="1" Background="{StaticResource WhiteLightBrush}">
+                    <TextBlock Text="Lista grading presetow, kliknij żeby użyć" />
+                    <ItemsControl ItemsSource="{Binding GradingPresets}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Button Content="{Binding Name}"
+                                Command="{Binding DataContext.PresetSelectedCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
+                                CommandParameter="{Binding}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
 
             </Grid>
 

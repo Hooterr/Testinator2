@@ -12,7 +12,6 @@ namespace Testinator.Server.Domain
     {
         #region Private Members
 
-        private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
         private readonly IGradingPresetFileManager mGradingPresetFileManager;
 
@@ -64,7 +63,6 @@ namespace Testinator.Server.Domain
         public TestCreatorGradingPresetsPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM, IGradingPresetFileManager gradingPresetFileManager)
         {
             // Inject DI services
-            mTestCreator = testCreatorService;
             mApplicationVM = applicationVM;
             mGradingPresetFileManager = gradingPresetFileManager;
 

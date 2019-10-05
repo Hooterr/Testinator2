@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Windows.Input;
 using Testinator.Core;
 using Testinator.TestSystem.Editors;
@@ -14,6 +15,8 @@ namespace Testinator.Server.Domain
 
         private readonly ITestCreatorService mTestCreator;
         private readonly ApplicationViewModel mApplicationVM;
+        private readonly IGradingPresetFileManager mGradingPresetFileManager;
+        private readonly GradingMapper mGradingMapper;
 
         /// <summary>
         /// Indicates if grading is in points mode
@@ -74,6 +77,11 @@ namespace Testinator.Server.Domain
         /// </summary>
         public InputField<BindingList<GradeEditableViewModel>> Grades { get; set; }
 
+        /// <summary>
+        /// The grading presets that are available to use in this test
+        /// </summary>
+        public ObservableCollection<GradingPresetListItemViewModel> GradingPresets { get; set; }
+
         #endregion
 
         #region Commands
@@ -89,6 +97,11 @@ namespace Testinator.Server.Domain
         public ICommand RemoveGradeCommand { get; private set; }
 
         /// <summary>
+        /// The command to fire when any grading preset is selected from the list
+        /// </summary>
+        public ICommand PresetSelectedCommand { get; private set; }
+
+        /// <summary>
         /// The command to finish this page and move forward with test creation
         /// </summary>
         public ICommand FinishGradingCommand { get; private set; }
@@ -100,15 +113,22 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public TestCreatorTestGradingPageViewModel(ITestCreatorService testCreatorService, ApplicationViewModel applicationVM)
+        public TestCreatorTestGradingPageViewModel(
+            ITestCreatorService testCreatorService, 
+            ApplicationViewModel applicationVM,
+            IGradingPresetFileManager gradingPresetFileManager,
+            GradingMapper gradingMapper)
         {
             // Inject DI services
             mTestCreator = testCreatorService;
             mApplicationVM = applicationVM;
+            mGradingPresetFileManager = gradingPresetFileManager;
+            mGradingMapper = gradingMapper;
 
             // Create commands
             AddGradeCommand = new RelayCommand(AddGrade);
             RemoveGradeCommand = new RelayCommand(RemoveGrade);
+            PresetSelectedCommand = new RelayParameterizedCommand(PresetSelected);
             FinishGradingCommand = new RelayCommand(GoToNextPage);
 
             // Get the editor associated with this page
@@ -116,6 +136,9 @@ namespace Testinator.Server.Domain
 
             // And initialize the data we display
             InitializeInputData();
+
+            // Load any saved grading presets
+            LoadPresets();
         }
 
         #endregion
@@ -148,6 +171,29 @@ namespace Testinator.Server.Domain
 
             // Remove the last grade
             Grades.Value.RemoveAt(gradesCount - 1);
+        }
+        
+        /// <summary>
+        /// Fired when grading preset is selected in the list
+        /// </summary>
+        private void PresetSelected(object param)
+        {
+            // Get the selected preset
+            var presetVM = param as GradingPresetListItemViewModel;
+
+            // Get it's data from local file
+            var preset = mGradingPresetFileManager.Read(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.GradingPresets)
+                    .WithName(presetVM.Name);
+            });
+
+            // Use that preset in this page
+            mEditor.UsePreset(preset);
+
+            // Re-initialize the data with the ones from preset
+            InitializeInputData();
+            OnPropertyChanged(nameof(PointsMode));
         }
 
         /// <summary>
@@ -187,6 +233,30 @@ namespace Testinator.Server.Domain
 
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x.Thresholds, Grades.ErrorMessages);
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        /// <summary>
+        /// Loads any saved grading presets from both local files and web
+        /// </summary>
+        private void LoadPresets()
+        {
+            // TODO: Load presets from user account in web
+
+            // Get every locally saved preset
+            var localPresets = mGradingPresetFileManager.GetGradingPresetsContexts(options =>
+            {
+                options.InApplicationFolder(ApplicationDataFolders.GradingPresets);
+            });
+
+            // Convert all the presets to suitable view models
+            var presetViewModels = mGradingMapper.Map(localPresets);
+
+            // Add them to the collection
+            GradingPresets = new ObservableCollection<GradingPresetListItemViewModel>(presetViewModels);
         }
 
         #endregion
