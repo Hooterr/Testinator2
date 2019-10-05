@@ -18,6 +18,12 @@ namespace Testinator.TestSystem.Editors
 
         public int MaximumScore { get; set; }
 
+        public int MaximumCount => mMaxAnswers;
+
+        public int MinimumCount => mMinAnswers;
+
+        public int InitialCount => mMinAnswers;
+
         public SingleTextBoxQuestionScoringEditor(SingleTextBoxQuestionScoring scoring, int version) : base(scoring, version) { }
 
         public SingleTextBoxQuestionScoringEditor(int version) : base(version) { }
