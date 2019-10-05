@@ -23,6 +23,9 @@
                          Tag="Tresc"
                          Style="{StaticResource BigInputTextBox}"/>
 
+                <CheckBox Content="Czy wielkość liter ma znaczenie"
+                              IsChecked="{Binding IsCaseSensitive}" />
+
                 <local:ErrorListControl
                     Errors="{Binding TaskTextContent.ErrorMessages}"/>
                 
