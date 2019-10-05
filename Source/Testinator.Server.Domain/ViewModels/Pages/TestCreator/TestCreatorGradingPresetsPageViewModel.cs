@@ -149,7 +149,8 @@ namespace Testinator.Server.Domain
             // Validation succeeded, save the grading
             mGradingPresetFileManager.Save(options =>
             {
-                options.InApplicationFolder(ApplicationDataFolders.GradingPresets);
+                options.InApplicationFolder(ApplicationDataFolders.GradingPresets)
+                       .WithName(buildOperation.Result.Name);
             }, buildOperation.Result);
 
             // Go back to test creator initial page
