@@ -6,7 +6,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// The editor for options part of multiple checkboxes question
     /// </summary>
-    public interface IMultipleCheckBoxesQuestionOptionsEditor : IQuestionOptionsEditor, IQuestionMultipleAnswersOptionsEditor
+    public interface IMultipleCheckBoxesQuestionOptionsEditor : IQuestionOptionsEditor, IQuestionMultipleAnswersEditor
     {
         /// <summary>
         /// The options for this question

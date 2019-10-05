@@ -11,7 +11,7 @@ namespace Testinator.Server.Domain
     /// The view model that provides base functionality to the question view models that have multiple answers available
     /// </summary>
     public class BaseQuestionsMultipleAnswersViewModel<TQuestion, TOptionsEditor, TScoringEditor> : BaseViewModel
-        where TOptionsEditor : IQuestionMultipleAnswersOptionsEditor
+        where TOptionsEditor : IQuestionMultipleAnswersEditor
     {
         #region Protected Members
 
