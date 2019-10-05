@@ -150,5 +150,26 @@ namespace Testinator.Server.Domain
             // Return the final list
             return bools;
         }
+
+        /// <summary>
+        /// Converts answer list to the dictionary version with point rates
+        /// </summary>
+        /// <param name="answers"></param>
+        /// <returns></returns>
+        public static Dictionary<string, float> ToRatedAnswers(this IList<string> answers)
+        {
+            // Prepare a dictionary to return
+            var dictionary = new Dictionary<string, float>();
+
+            // Loop each answer
+            foreach (var answer in answers)
+            {
+                // Add it to the dictionary with the rate
+                dictionary.Add(answer, 1f);
+            }
+
+            // Return the ready dictionary
+            return dictionary;
+        }
     }
 }

@@ -14,6 +14,15 @@ namespace Testinator.Server.Domain
     /// </summary>
     public class QuestionsSingleTextBoxPageViewModel : BaseQuestionVM
     {
+        #region Public Properties
+
+        /// <summary>
+        /// Indicates if answers are case sensitive
+        /// </summary>
+        public bool IsCaseSensitive { get; set; }
+
+        #endregion
+
         #region Constructor
 
         /// <summary>
@@ -38,12 +47,13 @@ namespace Testinator.Server.Domain
             // If we are editing existing question, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
             TaskTextContent = mEditor.Task.Text.Content;
-            Answers = mEditor.Options.ABCD.ToAnswerViewModels(mApplicationSettings.InitialSingleTextBoxAnswersAmount);
+            Answers = mEditor.Scoring.CorrectAnswers.Keys.ToAnswerViewModels(mApplicationSettings.InitialSingleTextBoxAnswersAmount);
+            IsCaseSensitive = mEditor.Scoring.IsCaseSensitive;
             Points = mEditor.Scoring.MaximumScore.ToString();
 
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x.Task.Text.Content, TaskTextContent.ErrorMessages); 
-            mEditor.OnErrorFor(x => x.Options.ABCD, Answers.ErrorMessages);
+            mEditor.OnErrorFor(x => x.Scoring.CorrectAnswers, Answers.ErrorMessages);
             mEditor.OnErrorFor(x => x.Scoring.MaximumScore, Points.ErrorMessages);
 
             // Return the submit action for the master view model to make use of
@@ -57,7 +67,8 @@ namespace Testinator.Server.Domain
         {
             // Pass all the changes user has made to the editor
             mEditor.Task.Text.Content = TaskTextContent;
-            mEditor.Options = Answers.Value.ToOptionsInEditor();
+            mEditor.Scoring.CorrectAnswers = Answers.Value.ToOptionsInEditor().ToRatedAnswers();
+            mEditor.Scoring.IsCaseSensitive = IsCaseSensitive;
             mEditor.Scoring.MaximumScore = int.TryParse(Points.Value, out var maxScore) ? maxScore : -1;
 
             // Return built question
