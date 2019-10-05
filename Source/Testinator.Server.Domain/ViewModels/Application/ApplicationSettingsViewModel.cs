@@ -84,6 +84,16 @@ namespace Testinator.Server.Domain
             }
         }
 
+        /// <summary>
+        /// The initial amount of answers for any multiple answers question
+        /// </summary>
+        public int InitialMultipleAnswersAmount { get; set; } = 4;
+
+        /// <summary>
+        /// The initial amount of answers for single text box question
+        /// </summary>
+        public int InitialSingleTextBoxAnswersAmount { get; set; } = 1;
+
         #endregion
 
         #region Constructor

@@ -59,12 +59,10 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public QuestionsMultipleChoicePageViewModel()
+        public QuestionsMultipleChoicePageViewModel(ApplicationSettingsViewModel settingsVM) : base(settingsVM)
         {
             // Create commands
             SelectAnswerCommand = new RelayParameterizedCommand(SelectAnswer);
-            AddAnswerCommand = new RelayCommand(AddAnswer);
-            RemoveAnswerCommand = new RelayCommand(RemoveAnswer);
 
             // DEBUG
             ToggleDebugViewCommand = new RelayCommand(() => DebugView ^= true);
@@ -122,7 +120,7 @@ namespace Testinator.Server.Domain
             // If we are editing existing question, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
             TaskTextContent = mEditor.Task.Text.Content;
-            Answers = mEditor.Options.ABCD.ToAnswerViewModels(mEditor.Options.InitialCount);
+            Answers = mEditor.Options.ABCD.ToAnswerViewModels(mApplicationSettings.InitialMultipleAnswersAmount);
             Points = mEditor.Scoring.MaximumScore.ToString();
             Markup = mEditor.Task.Text.Markup.ToString();
             Answers.Value.ElementAt(mEditor.Scoring.CorrectAnswerIdx).IsSelected = true;

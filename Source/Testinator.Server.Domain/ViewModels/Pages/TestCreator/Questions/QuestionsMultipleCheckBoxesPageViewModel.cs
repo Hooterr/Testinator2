@@ -1,15 +1,12 @@
 ﻿using System;
-using System.Collections.ObjectModel;
-using System.Windows.Input;
-using Testinator.Core;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Editors;
 using Testinator.TestSystem.Implementation.Questions;
 
 namespace Testinator.Server.Domain
 {
-    using IQuestionEditorMultipleCheckBoxes = IQuestionEditor<MultipleCheckBoxesQuestion, IMultipleCheckBoxesQuestionOptionsEditor, IMultipleCheckBoxesQuestionScoringEditor>;
     using BaseQuestionVM = BaseQuestionsMultipleAnswersViewModel<MultipleCheckBoxesQuestion, IMultipleCheckBoxesQuestionOptionsEditor, IMultipleCheckBoxesQuestionScoringEditor>;
+    using IQuestionEditorMultipleCheckBoxes = IQuestionEditor<MultipleCheckBoxesQuestion, IMultipleCheckBoxesQuestionOptionsEditor, IMultipleCheckBoxesQuestionScoringEditor>;
 
     /// <summary>
     /// The view model for multiple checkboxes question page in Test Creator
@@ -21,12 +18,7 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Default constructor
         /// </summary>
-        public QuestionsMultipleCheckBoxesPageViewModel()
-        {
-            // Create commands
-            AddAnswerCommand = new RelayCommand(AddAnswer);
-            RemoveAnswerCommand = new RelayCommand(RemoveAnswer);
-        }
+        public QuestionsMultipleCheckBoxesPageViewModel(ApplicationSettingsViewModel settingsVM) : base(settingsVM) { }
 
         #endregion
 
@@ -45,7 +37,7 @@ namespace Testinator.Server.Domain
             // If we are editing existing question, editor will have it's data
             // If we are creating new one, editor will be empty but its still fine at this point
             TaskTextContent = mEditor.Task.Text.Content;
-            Answers = mEditor.Options.Boxes.ToAnswerViewModels(mEditor.Options.InitialCount);
+            Answers = mEditor.Options.Boxes.ToAnswerViewModels(mApplicationSettings.InitialMultipleAnswersAmount);
             Points = mEditor.Scoring.MaximumScore.ToString();
 
             // Catch all the errors and display them

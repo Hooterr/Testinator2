@@ -46,11 +46,6 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         public int MinimumCount { get; private set; }
 
-        /// <summary>
-        /// Initial amount of options for new question
-        /// </summary>
-        public int InitialCount => 4; // TODO: Get this from attributes or wherever you want
-
         #endregion
 
         #region All Constructors

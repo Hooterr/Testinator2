@@ -15,6 +15,8 @@ namespace Testinator.Server.Domain
     {
         #region Protected Members
 
+        protected readonly ApplicationSettingsViewModel mApplicationSettings;
+
         /// <summary>
         /// The editor for current question
         /// </summary>
@@ -52,6 +54,24 @@ namespace Testinator.Server.Domain
         /// The command to remove last answer from the question
         /// </summary>
         public ICommand RemoveAnswerCommand { get; protected set; }
+
+        #endregion
+
+        #region Constructor
+
+        /// <summary>
+        /// Default constructor
+        /// Should be called by every question view model
+        /// </summary>
+        public BaseQuestionsMultipleAnswersViewModel(ApplicationSettingsViewModel settingsVM)
+        {
+            // Inject DI services
+            mApplicationSettings = settingsVM;
+
+            // Create default commands
+            AddAnswerCommand = new RelayCommand(AddAnswer);
+            RemoveAnswerCommand = new RelayCommand(RemoveAnswer);
+        }
 
         #endregion
 
