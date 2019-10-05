@@ -49,11 +49,12 @@ namespace Testinator.Server
             construction.Services.AddTransient<AboutViewModel>();
             construction.Services.AddTransient<MenuListItemViewModel>();
             construction.Services.AddTransient<TestCreatorInitialPageViewModel>();
+            construction.Services.AddTransient<TestCreatorGradingPresetsPageViewModel>();
             construction.Services.AddTransient<TestCreatorTestInfoPageViewModel>();
             construction.Services.AddTransient<TestCreatorTestOptionsPageViewModel>();
             construction.Services.AddTransient<TestCreatorTestFinalizePageViewModel>();
             construction.Services.AddTransient<TestCreatorQuestionsPageViewModel>();
-            construction.Services.AddTransient<TestCreatorGradingPageViewModel>();
+            construction.Services.AddTransient<TestCreatorTestGradingPageViewModel>();
             construction.Services.AddTransient<QuestionsMultipleChoicePageViewModel>();
             construction.Services.AddTransient<QuestionsMultipleCheckBoxesPageViewModel>();
             construction.Services.AddTransient<QuestionsSingleTextBoxPageViewModel>();

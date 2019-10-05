@@ -18,7 +18,13 @@ namespace Testinator.TestSystem.Editors
 
         public DateTime CreatedDate { get; private set; }
 
-        public DateTime LastModified { get; private set; } 
+        public DateTime LastModified { get; private set; }
+
+        // TODO: Set this however you want
+
+        public int MaxThresholdsCount => 12;
+        public int MinThresholdCount => 2;
+        public int InitialThresholdCount => 5;
 
         #endregion
 

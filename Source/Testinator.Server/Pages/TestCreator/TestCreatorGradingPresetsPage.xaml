@@ -1,0 +1,83 @@
+﻿<UICore:BasePage x:TypeArguments="Core:TestCreatorGradingPresetsPageViewModel" x:Class="Testinator.Server.TestCreatorGradingPresetsPage"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                 xmlns:local="clr-namespace:Testinator.Server"
+                 xmlns:Core="clr-namespace:Testinator.Server.Domain;assembly=Testinator.Server.Domain"
+                 xmlns:core="clr-namespace:Testinator.Core;assembly=Testinator.Core"
+                 xmlns:UICore="clr-namespace:Testinator.UICore;assembly=Testinator.UICore"
+                 xmlns:Animations="clr-namespace:Testinator.AnimationFramework;assembly=Testinator.AnimationFramework"
+                 mc:Ignorable="d"
+                 d:DesignHeight="720"
+                 d:DesignWidth="1024">
+
+    <Grid Background="{StaticResource WhiteLightBrush}">
+
+        <TextBlock Text="Grading preset editor"
+                   Margin="0 40"
+                   HorizontalAlignment="Center"
+                   VerticalAlignment="Top"
+                   Style="{StaticResource TitleText}"
+                   Foreground="{StaticResource BlackDarkBrush}" />
+
+        <Border HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                CornerRadius="3"
+                MinWidth="800"
+                MinHeight="600"
+                Background="{StaticResource WhiteDarkBrush}"
+                Padding="30">
+            <StackPanel>
+
+                <TextBox Text="{Binding Name.Value}"
+                         Style="{StaticResource BigInputTextBox}"
+                         Tag="Nazwa presetu" />
+
+                <TextBlock Text="{Binding Name.ErrorMessage}"
+                           Foreground="Red" />
+
+                <ItemsControl ItemsSource="{Binding Grades.Value}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <local:GradeEditableControl />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="+"
+                                Command="{Binding AddGradeCommand}"
+                                Style="{StaticResource BaseUIButton}" />
+
+                    <Button Content="-"
+                                Grid.Column="1"
+                                Command="{Binding RemoveGradeCommand}"
+                                Style="{StaticResource BaseUIButton}" />
+
+                </Grid>
+
+                <TextBlock Text="{Binding Grades.ErrorMessage}"
+                               Foreground="Red"
+                               Style="{StaticResource QuestionTextBlockStyle}" />
+
+            </StackPanel>
+
+        </Border>
+
+        <Button Content="Zapisz grading"
+                Margin="10"
+                Command="{Binding SaveGradingCommand}"
+                Style="{StaticResource BaseUIButton}"
+                VerticalAlignment="Bottom"
+                HorizontalAlignment="Right" />
+
+    </Grid>
+
+</UICore:BasePage>
+

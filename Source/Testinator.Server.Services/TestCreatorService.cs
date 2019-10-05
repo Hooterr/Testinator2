@@ -241,6 +241,31 @@ namespace Testinator.Server.Services
         }
 
         /// <summary>
+        /// Gets the editor for <see cref="IGradingPreset"/>
+        /// </summary>
+        public IGradingPresetEditor GetEditorGradingPreset(IGradingPreset gradingPreset = null)
+        {
+            // If we don't have any preset provided...
+            if (gradingPreset == null)
+            {
+                // Get the editor for grading preset
+                return AllEditors.GradingPresetEditor
+                        // Create brand-new preset
+                        .NewPreset()
+                        // Return built editor
+                        .Build();
+            }
+
+            // Otherwise...
+            // Get the editor for grading preset
+            return AllEditors.GradingPresetEditor
+                    // Pre-load given preset
+                    .SetInitialPreset(gradingPreset as GradingPreset)
+                    // Return built editor
+                    .Build();
+        }
+
+        /// <summary>
         /// Checks the pool of current user and returns all the questions inside that they can include in the test
         /// </summary>
         /// <returns>Collection of questions</returns>

@@ -26,6 +26,11 @@
         TestCreatorInitial,
 
         /// <summary>
+        /// The test creator grading presets page
+        /// </summary>
+        TestCreatorGradingPresets,
+
+        /// <summary>
         /// The test creator test info page to fill all basic test data
         /// </summary>
         TestCreatorTestInfo,
@@ -36,9 +41,9 @@
         TestCreatorQuestions,
 
         /// <summary>
-        /// The test creator grading master page
+        /// The test creator test grading page
         /// </summary>
-        TestCreatorGrading,
+        TestCreatorTestGrading,
 
         /// <summary>
         /// The test creator test options page
