@@ -85,6 +85,40 @@ namespace Testinator.Server.Domain
         }
 
         /// <summary>
+        /// Converts editor options to the simple answer strings that are displayed in UI
+        /// </summary>
+        /// <param name="options">The options from question editor</param>
+        /// <param name="minimumAnswersCount">The minimum amount of answers required</param>
+        /// <returns>Answers as strings</returns>
+        public static ObservableCollection<string> ToStringAnswers(this IEnumerable<string> options, int minimumAnswersCount)
+        {
+            // Prepare a collection to return
+            var answers = new ObservableCollection<string>();
+
+            // For each given option
+            foreach (var option in options)
+            {
+                // Add it as an answer
+                answers.Add(option);
+            }
+
+            // Check if we haven't met the minimum requirement of answer count
+            var answerCount = answers.Count;
+            if (answerCount < minimumAnswersCount)
+            {
+                // Then we need to create new answers to fill the gap
+                for (var i = 0; i < minimumAnswersCount - answerCount; i++)
+                {
+                    // Add new empty answer
+                    answers.Add(string.Empty);
+                }
+            }
+
+            // Return the final collection
+            return answers;
+        }
+
+        /// <summary>
         /// Converts answer view models to options suitable for question editor
         /// </summary>
         /// <param name="answers">Answer view models</param>

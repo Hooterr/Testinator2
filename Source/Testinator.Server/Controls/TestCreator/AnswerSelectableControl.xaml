@@ -23,10 +23,8 @@
                             <Border x:Name="test">
                                 <ContentPresenter  Content="{TemplateBinding Content}"/>
                             </Border>
-                            <TextBox Text="{Binding Answer}"
-                                     Grid.Column="1"
-                                     Tag="Odpowiedź"
-                                     Style="{StaticResource BigInputTextBox}" />
+
+                            <local:AnswerEditableControl DataContext="{Binding Answer}" />
 
                         </Grid>
 
