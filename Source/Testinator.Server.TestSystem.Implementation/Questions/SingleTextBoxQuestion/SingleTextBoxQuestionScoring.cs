@@ -6,6 +6,7 @@ using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Implementation.Questions
 {
+    [Serializable]
     public class SingleTextBoxQuestionScoring : BaseQuestionScoring<SingleTextBoxQuestionUserAnswer>
     {
         // Maybe add some alternative answers or something

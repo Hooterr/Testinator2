@@ -5,6 +5,7 @@ using Testinator.TestSystem.Implementation.Questions.ScoringStrategy;
 
 namespace Testinator.TestSystem.Implementation.Questions
 {
+    [Serializable]
     public class MultipleCheckBoxesQuestionScoring : BaseQuestionScoring<MultipleCheckBoxesQuestionUserAnswer>
     {
         public List<bool> CorrectAnswer { get; internal set; }
