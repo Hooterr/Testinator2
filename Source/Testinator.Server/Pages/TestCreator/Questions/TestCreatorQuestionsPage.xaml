@@ -55,6 +55,8 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
+            <local:ErrorListControl Errors="{Binding Questions.ErrorMessages}" />
+
         </StackPanel>
         
     </Border>

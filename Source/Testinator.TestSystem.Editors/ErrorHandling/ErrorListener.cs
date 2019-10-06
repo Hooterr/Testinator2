@@ -7,8 +7,8 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// The implementation of <see cref="IErrorListener{T}"/>
     /// </summary>
-    /// <typeparam name="TIntereface">The interface the implementation of the editor is hidden behind</typeparam>
-    internal class ErrorListener<TIntereface> : IErrorListener<TIntereface>, IInternalErrorHandler
+    /// <typeparam name="TInterface">The interface the implementation of the editor is hidden behind</typeparam>
+    internal class ErrorListener<TInterface> : IErrorListener<TInterface>, IInternalErrorHandler
     {
         #region Private Members
 
@@ -20,7 +20,7 @@ namespace Testinator.TestSystem.Editors
 
         #region Public Methods
 
-        public static ErrorListener<TIntereface> GenerateNew() => new ErrorListener<TIntereface>();
+        public static ErrorListener<TInterface> GenerateNew() => new ErrorListener<TInterface>();
 
         #endregion
 
@@ -31,7 +31,7 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         private ErrorListener()
         {
-            mHandlers = new HandlersCollection(typeof(TIntereface).GetHandlersTree());
+            mHandlers = new HandlersCollection(typeof(TInterface).GetHandlersTree());
             mUnhandled = new List<string>();
         }
 
@@ -44,7 +44,7 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         /// <param name="propertyExpression">The property this error concerns</param>
         /// <param name="message">The error message</param>
-        public void HandleErrorFor(Expression<Func<TIntereface, object>> propertyExpression, string message)
+        public void HandleErrorFor(Expression<Func<TInterface, object>> propertyExpression, string message)
         {
             var propertyName = propertyExpression.GetCorrectPropertyName();
             HandleErrorFor(propertyName, message);
@@ -93,7 +93,7 @@ namespace Testinator.TestSystem.Editors
                 mUnhandled.Add(message);
         }
 
-        public void OnErrorFor(Expression<Func<TIntereface, object>> propertyExpression, ICollection<string> handler)
+        public void OnErrorFor(Expression<Func<TInterface, object>> propertyExpression, ICollection<string> handler)
         {
             var propName = propertyExpression.GetCorrectPropertyName();
             mHandlers[propName] = handler;

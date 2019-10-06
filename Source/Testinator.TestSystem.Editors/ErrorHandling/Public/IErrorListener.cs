@@ -7,7 +7,7 @@ namespace Testinator.TestSystem.Editors
     /// <summary>
     /// Provides the option to listen for errors
     /// </summary>
-    public interface IErrorListener<T>
+    public interface IErrorListener<T> // TODO: Explain what T is plz :(
     {
         /// <summary>
         /// Adds a method to execute when an error for a given property occurs

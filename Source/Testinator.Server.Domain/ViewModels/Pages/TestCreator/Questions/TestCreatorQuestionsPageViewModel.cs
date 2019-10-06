@@ -106,6 +106,8 @@ namespace Testinator.Server.Domain
             {
                 Questions.Value.Add(new QuestionListItemViewModel { Task = question.Task.Text.Text });
             }
+            // Catch all the errors and display them
+            mEditor.OnErrorFor(x => x, Questions.ErrorMessages);
         }
 
         #endregion
@@ -217,11 +219,14 @@ namespace Testinator.Server.Domain
         /// </summary>
         private void GoToNextPage()
         {
-            // TODO: Validate questions
-            //mEditor.Validate();
+            // Check if everything is alright with question list
+            if (mEditor.Validate())
+            {
+                // Successful validation, go to grading page
+                mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestGrading);
+            }
 
-            // Go to grading page
-            mApplicationVM.GoToPage(ApplicationPage.TestCreatorTestGrading);
+            // Validation failed, errors will be displayed automatically
         }
 
         #endregion

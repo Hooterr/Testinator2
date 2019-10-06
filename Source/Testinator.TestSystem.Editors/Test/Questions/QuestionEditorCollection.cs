@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Editors
@@ -46,6 +47,16 @@ namespace Testinator.TestSystem.Editors
         {
             mQuestions.Clear();
             return OperationResult.Success();
+        }
+
+        public void OnErrorFor(Expression<Func<IQuestionEditorCollection, object>> propertyExpression, ICollection<string> handler)
+        {
+            // TODO: Implement this
+        }
+
+        public bool Validate()
+        {
+            return true; // TODO: Implement this
         }
 
         public QuestionEditorCollection(List<IQuestion> initial = null)
