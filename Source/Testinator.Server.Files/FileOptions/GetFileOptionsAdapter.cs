@@ -19,7 +19,7 @@ namespace Testinator.Server.Files
                 if (!string.IsNullOrWhiteSpace(mGetFileOptions.FileName))
                     return $"{mGetFileOptions.AbsolutePath}\\{mGetFileOptions.FileName}.{mFileExtension}";
                 else
-                    throw new InvalidOperationException("File name cannot be empty.");
+                    return mGetFileOptions.AbsolutePath;
             }
             else if(mGetFileOptions.ApplicationFolder != null)
             {
