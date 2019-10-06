@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Editors
@@ -9,5 +10,6 @@ namespace Testinator.TestSystem.Editors
         OperationResult Add(IQuestion question);
         OperationResult DeleteAt(int idx);
         OperationResult DeleteAll();
+        IQuestion WithId(Guid id);
     }
 }

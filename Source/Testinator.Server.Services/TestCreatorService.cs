@@ -120,15 +120,15 @@ namespace Testinator.Server.Services
         /// <summary>
         /// Gets the editor for <see cref="MultipleChoiceQuestion"/>
         /// </summary>
-        /// <param name="questionNumber">The index of question to preload from test, if not provided, brand-new question will be created</param>
+        /// <param name="questionId">The id of question to preload from test, if not provided, brand-new question will be created</param>
         /// <returns>The editor of type MultipleChoice</returns>
-        public IQuestionEditorMultipleChoice GetEditorMultipleChoice(int? questionNumber = null)
+        public IQuestionEditorMultipleChoice GetEditorMultipleChoice(Guid? questionId = null)
         {
             // If we have a question provided...
-            if (questionNumber.HasValue)
+            if (questionId.HasValue)
             {
                 // Get question from the test
-                var question = mCurrentTestEditor.Questions[questionNumber.Value] as MultipleChoiceQuestion;
+                var question = mCurrentTestEditor.Questions.WithId(questionId.Value) as MultipleChoiceQuestion;
 
                 // Get the editor for this type of question
                 return AllEditors.MultipleChoiceQuestion
@@ -152,15 +152,15 @@ namespace Testinator.Server.Services
         /// <summary>
         /// Gets the editor for <see cref="MultipleCheckBoxesQuestion"/>
         /// </summary>
-        /// <param name="questionNumber">The index of question to preload from test, if not provided, brand-new question will be created</param>
+        /// <param name="questionId">The id of question to preload from test, if not provided, brand-new question will be created</param>
         /// <returns>The editor of type MultipleCheckBoxes</returns>
-        public IQuestionEditorMultipleCheckBoxes GetEditorMultipleCheckBoxes(int? questionNumber = null)
+        public IQuestionEditorMultipleCheckBoxes GetEditorMultipleCheckBoxes(Guid? questionId = null)
         {
             // If we have a question provided...
-            if (questionNumber.HasValue)
+            if (questionId.HasValue)
             {
                 // Get question from the test
-                var question = mCurrentTestEditor.Questions[questionNumber.Value] as MultipleCheckBoxesQuestion;
+                var question = mCurrentTestEditor.Questions.WithId(questionId.Value) as MultipleCheckBoxesQuestion;
 
                 // Get the editor for this type of question
                 return AllEditors.MultipleCheckBoxesQuestion
@@ -184,15 +184,15 @@ namespace Testinator.Server.Services
         /// <summary>
         /// Gets the editor for <see cref="SingleTextBoxQuestion"/>
         /// </summary>
-        /// <param name="questionNumber">The index of question to preload from test, if not provided, brand-new question will be created</param>
+        /// <param name="questionId">The id of question to preload from test, if not provided, brand-new question will be created</param>
         /// <returns>The editor of type SingleTextBox</returns>
-        public IQuestionEditorSingleTextBox GetEditorSingleTextBox(int? questionNumber = null)
+        public IQuestionEditorSingleTextBox GetEditorSingleTextBox(Guid? questionId = null)
         {
             // If we have a question provided...
-            if (questionNumber.HasValue)
+            if (questionId.HasValue)
             {
                 // Get question from the test
-                var question = mCurrentTestEditor.Questions[questionNumber.Value] as SingleTextBoxQuestion;
+                var question = mCurrentTestEditor.Questions.WithId(questionId.Value) as SingleTextBoxQuestion;
 
                 // Get the editor for this type of question
                 return AllEditors.SingleTextBoxQuestion

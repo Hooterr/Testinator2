@@ -26,6 +26,14 @@ namespace Testinator.TestSystem.Editors
 
         public OperationResult Add(IQuestion question)
         {
+            foreach (var editorQuestion in mQuestions)
+            {
+                if (editorQuestion.Id == question.Id)
+                {
+                    mQuestions.Remove(editorQuestion);
+                }
+            }
+
             mQuestions.Add(question);
             return OperationResult.Success();
         }
@@ -57,6 +65,19 @@ namespace Testinator.TestSystem.Editors
         public bool Validate()
         {
             return true; // TODO: Implement this
+        }
+
+        public IQuestion WithId(Guid id)
+        {
+            foreach (var editorQuestion in mQuestions)
+            {
+                if (editorQuestion.Id == id)
+                {
+                    return editorQuestion;
+                }
+            }
+
+            return null;
         }
 
         public QuestionEditorCollection(List<IQuestion> initial = null)

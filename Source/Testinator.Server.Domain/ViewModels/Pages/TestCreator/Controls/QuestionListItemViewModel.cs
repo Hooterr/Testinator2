@@ -1,4 +1,5 @@
-﻿using Testinator.Core;
+﻿using System;
+using Testinator.Core;
 
 namespace Testinator.Server.Domain
 {
@@ -7,6 +8,11 @@ namespace Testinator.Server.Domain
     /// </summary>
     public class QuestionListItemViewModel : BaseViewModel
     {
+        /// <summary>
+        /// The unique identifier of this question as guid
+        /// </summary>
+        public Guid Id { get; set; }
+
         /// <summary>
         /// The task of the question
         /// </summary>

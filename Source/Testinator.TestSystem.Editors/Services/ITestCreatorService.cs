@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Abstractions.Tests;
 using Testinator.TestSystem.Implementation;
@@ -15,9 +16,9 @@ namespace Testinator.TestSystem.Editors
         IGradingEditor GetEditorGrading();
         IGradingPresetEditor GetEditorGradingPreset(IGradingPreset gradingPreset = null);
         IQuestionEditorCollection GetEditorTestQuestions();
-        IQuestionEditorMultipleChoice GetEditorMultipleChoice(int? questionNumber = null);
-        IQuestionEditorMultipleCheckBoxes GetEditorMultipleCheckBoxes(int? questionNumber = null);
-        IQuestionEditorSingleTextBox GetEditorSingleTextBox(int? questionNumber = null);
+        IQuestionEditorMultipleChoice GetEditorMultipleChoice(Guid? questionId = null);
+        IQuestionEditorMultipleCheckBoxes GetEditorMultipleCheckBoxes(Guid? questionId = null);
+        IQuestionEditorSingleTextBox GetEditorSingleTextBox(Guid? questionId = null);
         ITestInfoEditor GetEditorTestInfo();
         ITestOptionsEditor GetEditorTestOptions();
         ICollection<IQuestion> GetPossibleQuestionsFromPool();

@@ -116,11 +116,11 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Starts the edit for multiple choice question
         /// </summary>
-        /// <param name="questionNumber">The question's data that can be pre-loaded, if its null, we create new question</param>
-        private void GoToMultipleChoiceQuestion(int? questionNumber = null)
+        /// <param name="questionId">The question's id that can be pre-loaded, if its null, we create new question</param>
+        private void GoToMultipleChoiceQuestion(Guid? questionId = null)
         {
             // Get the editor for this specific question
-            var editor = mTestCreator.GetEditorMultipleChoice(questionNumber);
+            var editor = mTestCreator.GetEditorMultipleChoice(questionId);
 
             // Create the view model for this question
             var viewModel = mViewModelProvider.GetInjectedPageViewModel<QuestionsMultipleChoicePageViewModel>();
@@ -136,11 +136,11 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Starts the edit for multiple checkboxes question
         /// </summary>
-        /// <param name="questionNumber">The question's data that can be pre-loaded, if its null, we create new question</param>
-        private void GoToCheckboxesQuestion(int? questionNumber = null)
+        /// <param name="questionId">The question's id that can be pre-loaded, if its null, we create new question</param>
+        private void GoToCheckboxesQuestion(Guid? questionId = null)
         {
             // Get the editor for this specific question
-            var editor = mTestCreator.GetEditorMultipleCheckBoxes(questionNumber);
+            var editor = mTestCreator.GetEditorMultipleCheckBoxes(questionId);
 
             // Create the view model for this question
             var viewModel = mViewModelProvider.GetInjectedPageViewModel<QuestionsMultipleCheckBoxesPageViewModel>();
@@ -156,11 +156,11 @@ namespace Testinator.Server.Domain
         /// <summary>
         /// Starts the edit for single text box question
         /// </summary>
-        /// <param name="questionNumber">The question's data that can be pre-loaded, if its null, we create new question</param>
-        private void GoToSingleTextBoxQuestion(int? questionNumber = null)
+        /// <param name="questionId">The question's id that can be pre-loaded, if its null, we create new question</param>
+        private void GoToSingleTextBoxQuestion(Guid? questionId = null)
         {
             // Get the editor for this specific question
-            var editor = mTestCreator.GetEditorSingleTextBox(questionNumber);
+            var editor = mTestCreator.GetEditorSingleTextBox(questionId);
 
             // Create the view model for this question
             var viewModel = mViewModelProvider.GetInjectedPageViewModel<QuestionsSingleTextBoxPageViewModel>();
@@ -182,20 +182,17 @@ namespace Testinator.Server.Domain
             // Get the question view model itself
             var viewModel = param as QuestionListItemViewModel;
 
-            // Calculate the index
-            var index = Questions.Value.IndexOf(viewModel);
-
             // TODO: Maybe make it differently, but lets just get it working for now
             switch (viewModel.Icon)
             {
                 case IconType.MultipleChoiceQuestion:
-                    GoToMultipleChoiceQuestion(index);
+                    GoToMultipleChoiceQuestion(viewModel.Id);
                     break;
                 case IconType.MultipleCheckBoxesQuestion:
-                    GoToCheckboxesQuestion(index);
+                    GoToCheckboxesQuestion(viewModel.Id);
                     break;
                 case IconType.SingleTextBoxQuestion:
-                    GoToSingleTextBoxQuestion(index);
+                    GoToSingleTextBoxQuestion(viewModel.Id);
                     break;
             }
         }
@@ -214,6 +211,7 @@ namespace Testinator.Server.Domain
                 // Add it to the UI list
                 Questions.Value.Add(new QuestionListItemViewModel 
                 { 
+                    Id = question.Id,
                     Task = question.Task.Text.Text,
                     Icon = question.ToIcon()
                 });
