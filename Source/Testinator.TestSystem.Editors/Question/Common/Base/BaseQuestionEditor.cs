@@ -65,8 +65,8 @@ namespace Testinator.TestSystem.Editors
                 var questionBuildResult = OperationResult<TQuestion>.Fail();
                 questionBuildResult.Merge(taskBuildOperation)
                                    .Merge(optionsBuildOperation)
-                                   .Merge(scoringBuildOperation); 
-                                   //.AddErrors(GetUnhandledErrors());
+                                   .Merge(scoringBuildOperation);
+                                    //.AddErrors(GetUnhandledErrors());
 
                 return questionBuildResult;
             }
@@ -74,11 +74,14 @@ namespace Testinator.TestSystem.Editors
             TQuestion resultQuestion;
             // Assemble question
             if (OriginalObject == null)
-                resultQuestion = new TQuestion();
+                resultQuestion = new TQuestion()
+                {
+                    Id = Guid.NewGuid(),
+                };
             else
                 resultQuestion = OriginalObject;
 
-            resultQuestion.Id = new Guid(); // TODO: I guess this goes here?
+            
             resultQuestion.Task = taskBuildOperation.Result;
             resultQuestion.Options = optionsBuildOperation.Result;
             resultQuestion.Scoring = scoringBuildOperation.Result;
