@@ -71,6 +71,7 @@ namespace Testinator.TestSystem.Editors
         }
         protected override void CreateNestedEditorExistingObject()
         {
+            base.CreateNestedEditorExistingObject();
             mOptionsEditor = new MultipleCheckBoxesQuestionOptionsEditor(OriginalObject.Options, mVersion);
             mScoringEditor = new MultipleCheckBoxesQuestionScoringEditor(OriginalObject.Scoring, mVersion);
         }
