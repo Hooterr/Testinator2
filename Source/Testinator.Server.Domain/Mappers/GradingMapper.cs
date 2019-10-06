@@ -30,6 +30,7 @@ namespace Testinator.Server.Domain
             {
                 // Create TestFileContext to TestListItemViewModel map
                 config.CreateMap<GradingPresetFileContext, GradingPresetListItemViewModel>()
+                      .ForMember(vm => vm.AbsoluteFilePath, options => options.MapFrom(context => context.FilePath))
                       // And the other way around
                       .ReverseMap();
             })

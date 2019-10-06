@@ -31,6 +31,7 @@ namespace Testinator.Server.Domain
                 // Create TestFileContext to TestListItemViewModel map
                 config.CreateMap<TestFileContext, TestListItemViewModel>()
                       .ForMember(vm => vm.Name, options => options.MapFrom(context => context.TestName))
+                      .ForMember(vm => vm.AbsoluteFilePath, options => options.MapFrom(context => context.FilePath))
                       // And the other way around
                       .ReverseMap();
             })

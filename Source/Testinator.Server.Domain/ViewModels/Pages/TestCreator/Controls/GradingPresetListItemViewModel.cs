@@ -12,5 +12,15 @@ namespace Testinator.Server.Domain
         /// This is unique for the given preset and should be used to identify the grading preset
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// The absolute physical path to preset file
+        /// </summary>
+        public string AbsoluteFilePath { get; set; }
+
+        /// <summary>
+        /// The number of grades that this preset contains
+        /// </summary>
+        public int NumberOfGrades { get; set; }
     }
 }

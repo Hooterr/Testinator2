@@ -184,8 +184,8 @@ namespace Testinator.Server.Domain
             // Get it's data from local file
             var preset = mGradingPresetFileManager.Read(options =>
             {
-                options.InApplicationFolder(ApplicationDataFolders.GradingPresets)
-                    .WithName(presetVM.Name);
+                // Use absolute path in case someone stores the preset outside of default folder
+                options.InFolderAbsolute(presetVM.AbsoluteFilePath);
             });
 
             // Use that preset in this page
