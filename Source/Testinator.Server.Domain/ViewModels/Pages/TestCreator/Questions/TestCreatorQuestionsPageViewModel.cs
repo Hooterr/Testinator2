@@ -102,12 +102,11 @@ namespace Testinator.Server.Domain
             // Get the editor for questions
             mEditor = mTestCreator.GetEditorTestQuestions();
 
-            foreach (var question in mEditor)
-            {
-                Questions.Value.Add(new QuestionListItemViewModel { Task = question.Task.Text.Text });
-            }
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x, Questions.ErrorMessages);
+
+            // Get all the editor questions
+            ReloadQuestionList();
         }
 
         #endregion
@@ -186,9 +185,39 @@ namespace Testinator.Server.Domain
             // Calculate the index
             var index = Questions.Value.IndexOf(viewModel);
 
-            // TODO: Somehow determine the question type here
-            // Run appropriate function
-            GoToMultipleChoiceQuestion(index);
+            // TODO: Maybe make it differently, but lets just get it working for now
+            switch (viewModel.Icon)
+            {
+                case IconType.MultipleChoiceQuestion:
+                    GoToMultipleChoiceQuestion(index);
+                    break;
+                case IconType.MultipleCheckBoxesQuestion:
+                    GoToCheckboxesQuestion(index);
+                    break;
+                case IconType.SingleTextBoxQuestion:
+                    GoToSingleTextBoxQuestion(index);
+                    break;
+            }
+        }
+
+        /// <summary>
+        /// Refreshes current question list
+        /// </summary>
+        private void ReloadQuestionList()
+        {
+            // Empty the list to begin with
+            Questions = new ObservableCollection<QuestionListItemViewModel>();
+
+            // For each question in the editor...
+            foreach (var question in mEditor)
+            {
+                // Add it to the UI list
+                Questions.Value.Add(new QuestionListItemViewModel 
+                { 
+                    Task = question.Task.Text.Text,
+                    Icon = question.ToIcon()
+                });
+            }
         }
 
         /// <summary>
@@ -212,6 +241,9 @@ namespace Testinator.Server.Domain
 
             // We're done creating the question, hide the page
             IsCreatingQuestion = false;
+
+            // Refresh the question list to catch that new question we've submitted
+            ReloadQuestionList();
         }
 
         /// <summary>

@@ -1,4 +1,8 @@
-﻿namespace Testinator.Server.Domain
+﻿using Testinator.TestSystem.Abstractions;
+using Testinator.TestSystem.Implementation;
+using Testinator.TestSystem.Implementation.Questions;
+
+namespace Testinator.Server.Domain
 {
     /// <summary>
     /// Helper functions for <see cref="IconType"/>
@@ -54,6 +58,31 @@
                 default:
                     return null;
             }
+        }
+
+        /// <summary>
+        /// Gets the icon for question based on it's type
+        /// </summary>
+        /// <param name="question">The question that can be any type</param>
+        /// <returns>The icon</returns>
+        public static IconType ToIcon(this IQuestion question)
+        {
+            if (question is MultipleChoiceQuestion)
+            {
+                return IconType.MultipleChoiceQuestion;
+            }
+
+            if (question is MultipleCheckBoxesQuestion)
+            {
+                return IconType.MultipleCheckBoxesQuestion;
+            }
+
+            if (question is SingleTextBoxQuestion)
+            {
+                return IconType.SingleTextBoxQuestion;
+            }
+
+            return default;
         }
     }
 }

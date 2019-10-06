@@ -48,9 +48,21 @@
             <ItemsControl ItemsSource="{Binding Questions.Value}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Button Content="{Binding Task}"
-                                Command="{Binding DataContext.EditQuestionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
-                                CommandParameter="{Binding}" />
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="50" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <TextBlock Text="{Binding Icon, Converter={local:IconTypeToFontAwesomeConverter}}"
+                                       Style="{StaticResource FontAwesomeIconText}" />
+
+                            <Button Content="{Binding Task}"
+                                    Grid.Column="1"
+                                    Command="{Binding DataContext.EditQuestionCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UICore:BasePage}}}"
+                                    CommandParameter="{Binding}" />
+
+                        </Grid>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

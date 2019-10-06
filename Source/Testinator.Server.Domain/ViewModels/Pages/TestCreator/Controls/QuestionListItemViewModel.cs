@@ -8,8 +8,13 @@ namespace Testinator.Server.Domain
     public class QuestionListItemViewModel : BaseViewModel
     {
         /// <summary>
-        /// The task of the question, used to identify
+        /// The task of the question
         /// </summary>
         public string Task { get; set; }
+
+        /// <summary>
+        /// The icon to show in the UI for user to identify the question type
+        /// </summary>
+        public IconType Icon { get; set; }
     }
 }
