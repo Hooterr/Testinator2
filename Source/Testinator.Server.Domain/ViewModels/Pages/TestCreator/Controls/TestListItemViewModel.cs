@@ -13,6 +13,9 @@ namespace Testinator.Server.Domain
         /// </summary>
         public string Name { get; set; }
 
-        // TODO: Add more stuff
+        /// <summary>
+        /// The absolute physical path to test file
+        /// </summary>
+        public string AbsoluteFilePath { get; set; }
     }
 }
