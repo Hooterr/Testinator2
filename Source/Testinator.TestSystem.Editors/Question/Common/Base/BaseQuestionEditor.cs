@@ -78,6 +78,7 @@ namespace Testinator.TestSystem.Editors
             else
                 resultQuestion = OriginalObject;
 
+            resultQuestion.Id = new Guid(); // TODO: I guess this goes here?
             resultQuestion.Task = taskBuildOperation.Result;
             resultQuestion.Options = optionsBuildOperation.Result;
             resultQuestion.Scoring = scoringBuildOperation.Result;
