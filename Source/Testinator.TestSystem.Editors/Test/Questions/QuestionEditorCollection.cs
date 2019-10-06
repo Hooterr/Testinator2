@@ -31,6 +31,7 @@ namespace Testinator.TestSystem.Editors
                 if (editorQuestion.Id == question.Id)
                 {
                     mQuestions.Remove(editorQuestion);
+                    break;
                 }
             }
 
