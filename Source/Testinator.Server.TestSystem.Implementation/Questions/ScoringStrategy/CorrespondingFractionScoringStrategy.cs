@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Implementation.Questions.ScoringStrategy

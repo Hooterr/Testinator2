@@ -1,7 +1,14 @@
-﻿namespace Testinator.TestSystem.Abstractions
+﻿using System;
+
+namespace Testinator.TestSystem.Abstractions
 {
     public interface IQuestion
     {
+        /// <summary>
+        /// The unique indentifier for this question instance as guid
+        /// </summary>
+        Guid Id { get; }
+
         /// <summary>
         /// The content of this question task as <see cref="IQuestionTask"/>
         /// So it can be text or image or whatever implements this interface

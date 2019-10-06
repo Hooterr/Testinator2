@@ -9,7 +9,7 @@ namespace Testinator.TestSystem.Implementation.Questions
         /// <summary>
         /// Options for this question
         /// Checkbox - text
-        /// checkbox - text
+        /// Checkbox - text
         /// etc..
         /// </summary>
         // min = 1? or 2? I dunno

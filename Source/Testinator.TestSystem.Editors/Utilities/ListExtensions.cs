@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Testinator.TestSystem.Editors
 {
-    public static class IListExtensions
+    public static class ListExtensions
     {
         public static int RemoveAllLast<TSource>(this IList<TSource> source, Predicate<TSource> predicate)
         {

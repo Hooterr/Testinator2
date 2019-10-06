@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Testinator.TestSystem.Abstractions;
-using Testinator.TestSystem.Abstractions.Questions;
 
 namespace Testinator.TestSystem.Implementation.Questions
 {
@@ -12,6 +9,8 @@ namespace Testinator.TestSystem.Implementation.Questions
     [Serializable]
     public abstract class BaseQuestion : IQuestion
     {
+        public Guid Id { get; internal set; }
+
         public IQuestionTask Task { get; internal set; }
 
         public IQuestionScoring Scoring { get; internal set; }
