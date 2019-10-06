@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Testinator.TestSystem.Abstractions;
 using Testinator.TestSystem.Attributes;
 
 namespace Testinator.TestSystem.Implementation.Questions
 {
+    [Serializable]
     public class MultipleCheckBoxesQuestionOptions : IQuestionOptions
     {
         /// <summary>

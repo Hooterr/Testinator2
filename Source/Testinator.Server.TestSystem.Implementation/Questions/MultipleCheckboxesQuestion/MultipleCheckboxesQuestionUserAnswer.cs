@@ -5,6 +5,7 @@ using Testinator.TestSystem.Abstractions;
 
 namespace Testinator.TestSystem.Implementation.Questions
 {
+    [Serializable]
     public class MultipleCheckBoxesQuestionUserAnswer : IUserAnswer
     {
         /// <summary>
