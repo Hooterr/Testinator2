@@ -83,7 +83,7 @@ namespace Testinator.TestSystem.Editors
 
         protected override void OnInitialize()
         {
-            var scoreRangeAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionScoring, int, IntegerValueRangeAttribute>
+            var scoreRangeAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionScoring, IntegerValueRangeAttribute>
                 (x => x.MaximumScore, mVersion);
 
             mMaxScore = scoreRangeAttr.Max;

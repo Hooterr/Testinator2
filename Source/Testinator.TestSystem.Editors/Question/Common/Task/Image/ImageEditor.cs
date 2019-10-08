@@ -141,10 +141,10 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         protected virtual void LoadAttributeValues()
         {
-            mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContent, ICollection<Image>, MaxCollectionCountAttribute, int>
+            mMaxImageCount = AttributeHelper.GetPropertyAttributeValue<ImageContent, MaxCollectionCountAttribute, int>
                 (obj => obj.Images, attr => attr.MaxCount, mVersion);
 
-            var ImageSizeAttr = AttributeHelper.GetPropertyAttribute<ImageContent, ICollection<Image>, MaxImageSizeAttribute>
+            var ImageSizeAttr = AttributeHelper.GetPropertyAttribute<ImageContent, MaxImageSizeAttribute>
                 (x => x.Images, mVersion);
 
             mMaxImageHeight = ImageSizeAttr.Height;

@@ -144,15 +144,15 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         private void LoadAttributeValues()
         {
-            var collectionCountAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, List<string>, CollectionCountAttribute>
+            var collectionCountAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, CollectionCountAttribute>
                 (x => x.Options, mVersion);
             MaximumCount = collectionCountAttr.Max;
             MinimumCount = collectionCountAttr.Min;
 
-            mOnlyDistinct = AttributeHelper.GetPropertyAttributeValue<MultipleChoiceQuestionOptions, List<string>, CollectionItemsOnlyDistinctAttribute, bool>
+            mOnlyDistinct = AttributeHelper.GetPropertyAttributeValue<MultipleChoiceQuestionOptions, CollectionItemsOnlyDistinctAttribute, bool>
                 (x => x.Options, attr => attr.Value, mVersion);
 
-            var stringLenAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, List<string>, StringLengthAttribute>
+            var stringLenAttr = AttributeHelper.GetPropertyAttribute<MultipleChoiceQuestionOptions, StringLengthAttribute>
                     (x => x.Options, mVersion);
             mMaxOptionLen = stringLenAttr.Max;
             mMinOptionLen = stringLenAttr.Min;

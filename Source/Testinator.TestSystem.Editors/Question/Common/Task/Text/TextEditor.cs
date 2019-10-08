@@ -51,7 +51,7 @@ namespace Testinator.TestSystem.Editors
 
         protected virtual void LoadAttributeValues()
         {
-            mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, string, MaxLenghtAttribute, int>(x => x.Text, a => a.MaxLength, mVersion);
+            mMaxTextLength = AttributeHelper.GetPropertyAttributeValue<TextContent, MaxLenghtAttribute, int>(x => x.Text, a => a.MaxLength, mVersion);
         }
 
         #region Overridden Methods

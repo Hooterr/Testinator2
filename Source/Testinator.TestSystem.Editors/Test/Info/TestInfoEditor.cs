@@ -152,24 +152,24 @@ namespace Testinator.TestSystem.Editors
         /// </summary>
         private void LoadAttributes()
         {
-            var nameConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, string, StringLengthAttribute>
+            var nameConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, StringLengthAttribute>
                 (x => x.Name, mVersion);
 
             mNameMaxLen = nameConstraints.Max;
             mNameMinLen = nameConstraints.Min;
 
-            var descriptionConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, string, StringLengthAttribute>
+            var descriptionConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, StringLengthAttribute>
                 (x => x.Description, mVersion);
             mDescriptionMaxLen = descriptionConstraints.Max;
             mDescriptionMinLen = descriptionConstraints.Min;
 
-            var timeConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, TimeSpan, TimeSpanLimitAttribute>
+            var timeConstraints = AttributeHelper.GetPropertyAttribute<TestInfo, TimeSpanLimitAttribute>
                 (x => x.TimeLimit, mVersion);
 
             mTimeLimitMax = timeConstraints.Max;
             mTimeLimitMin = timeConstraints.Min;
 
-            mAllowEmptyDescription = AttributeHelper.GetPropertyAttribute<TestInfo, string, AllowNullOrEmptyStringAttribute>(x => x.Description, mVersion) != null;
+            mAllowEmptyDescription = AttributeHelper.GetPropertyAttribute<TestInfo, AllowNullOrEmptyStringAttribute>(x => x.Description, mVersion) != null;
         }
 
         public void OnErrorFor(Expression<Func<ITestInfoEditor, object>> propertyExpression, ICollection<string> handler)

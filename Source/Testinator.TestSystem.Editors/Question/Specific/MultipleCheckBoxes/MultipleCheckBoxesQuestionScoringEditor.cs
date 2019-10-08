@@ -93,7 +93,7 @@ namespace Testinator.TestSystem.Editors
 
         protected override void OnInitialize()
         {
-            var scoreRangeAttr = AttributeHelper.GetPropertyAttribute<MultipleCheckBoxesQuestionScoring, int, IntegerValueRangeAttribute>
+            var scoreRangeAttr = AttributeHelper.GetPropertyAttribute<MultipleCheckBoxesQuestionScoring, IntegerValueRangeAttribute>
                 (x => x.MaximumScore, mVersion);
 
             mMaxScore = scoreRangeAttr.Max;

@@ -57,11 +57,11 @@ namespace Testinator.TestSystem.Editors
         protected override void OnInitialize()
         {
             base.OnInitialize();
-            var attr = AttributeHelper.GetPropertyAttribute<SingleTextBoxQuestionScoring, IDictionary<string, float>, CollectionCountAttribute>(x => x.CorrectAnswers, mVersion);
+            var attr = AttributeHelper.GetPropertyAttribute<SingleTextBoxQuestionScoring, CollectionCountAttribute>(x => x.CorrectAnswers, mVersion);
             mMaxAnswers = attr.Max;
             mMinAnswers = attr.Min;
 
-            var attrScore = AttributeHelper.GetPropertyAttribute<SingleTextBoxQuestionScoring, int, IntegerValueRangeAttribute>(x => x.MaximumScore, mVersion);
+            var attrScore = AttributeHelper.GetPropertyAttribute<SingleTextBoxQuestionScoring, IntegerValueRangeAttribute>(x => x.MaximumScore, mVersion);
             mMaxScore = attrScore.Max;
             mMinScore = attrScore.Min;
         }

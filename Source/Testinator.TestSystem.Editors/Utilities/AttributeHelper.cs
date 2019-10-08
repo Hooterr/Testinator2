@@ -33,39 +33,12 @@ namespace Testinator.TestSystem.Editors
             return filtered.Values.FirstOrDefault();
         }
 
-        internal static TValue GetPropertyAttributeValue<TIn, TOut, TAttribute, TValue>(
-            Expression<Func<TIn, TOut>> propertyExpression,
-            Func<TAttribute, TValue> valueSelector,
+        internal static TAttribute GetPropertyAttribute<TIn, TAttribute>(
+            Expression<Func<TIn, object>> propertyExpression,
             int currentVersion)
             where TAttribute : BaseEditorAttribute
         {
-            var expression = (MemberExpression)propertyExpression.Body;
-            var propertyInfo = (PropertyInfo)expression.Member;
-            var filtered =
-                Filter<TAttribute>(propertyInfo, currentVersion)
-                .Select(x => new
-                {
-                    x.Key,
-                    Values = x.Select(attr => valueSelector(attr))
-                })
-                .FirstOrDefault();
-
-            if (filtered == null)
-                return default;
-
-            if (filtered.Values.Count() > 1)
-                throw new VersioningAmbiguityException(typeof(TAttribute).ToString());
-
-            return filtered.Values.FirstOrDefault();
-        }
-
-        internal static TAttribute GetPropertyAttribute<TIn, TOut, TAttribute>(
-            Expression<Func<TIn, TOut>> propertyExpression,
-            int currentVersion)
-            where TAttribute : BaseEditorAttribute
-        {
-            var expression = (MemberExpression)propertyExpression.Body;
-            var propertyInfo = (PropertyInfo)expression.Member;
+            var propertyInfo = propertyExpression.GetPropertyInfo();
             var filtered = 
                 Filter<TAttribute>(propertyInfo, currentVersion)
                 .Select(x => new
