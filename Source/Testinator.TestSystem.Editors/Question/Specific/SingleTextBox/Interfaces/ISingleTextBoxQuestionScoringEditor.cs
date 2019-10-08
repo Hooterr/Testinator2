@@ -8,7 +8,7 @@ namespace Testinator.TestSystem.Editors
     public interface ISingleTextBoxQuestionScoringEditor : IQuestionScoringEditor, IQuestionMultipleAnswersEditor
     {
         [EditorProperty]
-        IDictionary<string, float> CorrectAnswers { get; set; }
+        IList<KeyValuePair<string, float>> CorrectAnswers { get; set; }
 
         [EditorProperty]
         bool IsCaseSensitive { get; set; }

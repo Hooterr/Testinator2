@@ -12,7 +12,7 @@ namespace Testinator.TestSystem.Editors
         private int mMaxScore;
         private int mMinScore;
 
-        public IDictionary<string, float> CorrectAnswers { get; set; }
+        public IList<KeyValuePair<string, float>> CorrectAnswers { get; set; }
 
         public bool IsCaseSensitive { get; set; }
 
@@ -31,7 +31,7 @@ namespace Testinator.TestSystem.Editors
         protected override SingleTextBoxQuestionScoring BuildObject()
         {
             var returnObj = IsInCreationMode() ? new SingleTextBoxQuestionScoring() : OriginalObject;
-            returnObj.CorrectAnswers = CorrectAnswers;
+            returnObj.CorrectAnswers = CorrectAnswers.ToDictionary(x => x.Key, x => x.Value);
             returnObj.IsCaseSensitive = IsCaseSensitive;
             returnObj.MaximumScore = MaximumScore;
             returnObj.Strategy = null;
@@ -42,14 +42,14 @@ namespace Testinator.TestSystem.Editors
         protected override void InitializeCreateNewObject()
         {
             base.InitializeCreateNewObject();
-            CorrectAnswers = new Dictionary<string, float>();
+            CorrectAnswers = new List<KeyValuePair<string, float>>();
             IsCaseSensitive = false;
         }
 
         protected override void InitializeEditExistingObject()
         {
             base.InitializeEditExistingObject();
-            CorrectAnswers = OriginalObject.CorrectAnswers;
+            CorrectAnswers = OriginalObject.CorrectAnswers.Select(x => new KeyValuePair<string, float>(x.Key, x.Value)).ToList();
             IsCaseSensitive = OriginalObject.IsCaseSensitive;
             MaximumScore = OriginalObject.MaximumScore;
         }
@@ -82,13 +82,13 @@ namespace Testinator.TestSystem.Editors
                     ErrorHandlerAdapter.HandleErrorFor(x => x.CorrectAnswers, $"There must be from {mMinAnswers} to {mMaxAnswers} correct answers.");
                     validationPassed = false;
                 }
-                if (CorrectAnswers.Count != CorrectAnswers.Keys.Select(x => IsCaseSensitive ? x : x.ToLower()).Distinct().Count())
+                if (CorrectAnswers.Count != CorrectAnswers.Select(x=> x.Key).Select(x => IsCaseSensitive ? x : x.ToLower()).Distinct().Count())
                 {
                     ErrorHandlerAdapter.HandleErrorFor(x => x.CorrectAnswers, "More than one identical correct answers found.");
                     validationPassed = false;
                 }
 
-                if(CorrectAnswers.Values.Any(x => x < 0 || x > 1))
+                if(CorrectAnswers.Select(x => x.Value).Any(x => x < 0 || x > 1))
                 {
                     ErrorHandlerAdapter.HandleErrorFor(x => x.CorrectAnswers, "Multiplier cannot be less than 0 and more than one.");
                     validationPassed = false;

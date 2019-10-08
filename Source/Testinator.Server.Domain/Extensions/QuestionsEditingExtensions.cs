@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Testinator.TestSystem.Editors;
 
 namespace Testinator.Server.Domain
@@ -193,8 +194,9 @@ namespace Testinator.Server.Domain
         /// </summary>
         /// <param name="answers">Answer view models</param>
         /// <returns>The dictionary ready for editor to handle</returns>
-        public static Dictionary<string, float> ToRatedAnswers(this IList<AnswerEditableViewModel> answers)
+        public static IList<KeyValuePair<string, float>> ToRatedAnswers(this IList<AnswerEditableViewModel> answers)
         {
+            /*
             // Prepare a dictionary to return
             var dictionary = new Dictionary<string, float>();
 
@@ -206,7 +208,10 @@ namespace Testinator.Server.Domain
             }
 
             // Return the ready dictionary
-            return dictionary;
+            return dictionary;*/
+
+            // ain't that shorter and more clear?
+            return answers.Select(x => new KeyValuePair<string, float>(x.Answer, 1f)).ToList();
         }
     }
 }
