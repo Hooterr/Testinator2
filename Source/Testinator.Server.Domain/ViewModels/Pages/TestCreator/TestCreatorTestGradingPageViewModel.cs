@@ -233,6 +233,9 @@ namespace Testinator.Server.Domain
 
             // Catch all the errors and display them
             mEditor.OnErrorFor(x => x.Thresholds, Grades.ErrorMessages);
+
+            // Make sure grades are standarized at every change
+            Grades.Value.ListChanged += (ss, ee) => Grades.Value.StandarizeGrades();
         }
 
         #endregion
