@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Testinator.TestSystem.Editors;
@@ -118,7 +119,7 @@ namespace Testinator.Server.Domain
                 }
             }
 
-            // Return the final collection
+            // Return the result as collection
             return answers;
         }
 
@@ -129,18 +130,11 @@ namespace Testinator.Server.Domain
         /// <returns>List of options ready to pass into question editor</returns>
         public static List<string> ToOptionsInEditor(this IList<AnswerSelectableViewModel> answers)
         {
-            // Prepare a list to return
-            var options = new List<string>();
+            // Copy the list and get only string values from every answer
+            var options = answers.Select(answer => answer.Answer);
 
-            // For each answer...
-            foreach (var answer in answers)
-            {
-                // Add it's content as an option
-                options.Add(answer.Answer);
-            }
-
-            // Return the final list
-            return options; 
+            // Return it as list
+            return options.ToList();
         }
 
         /// <summary>
@@ -150,21 +144,12 @@ namespace Testinator.Server.Domain
         /// <returns>The list of indexes of selected answers</returns>
         public static IEnumerable<int?> GetIndexesOfSelected(this IList<AnswerSelectableViewModel> answers)
         {
-            // Prepare a list to return
-            var indexes = new List<int?>();
+            // Copy the list and get only selected answers
+            var indexes = answers.Where(answer => answer.IsSelected)
+                // For every selected answer, get only it's index
+                .Select(answer => new int?(answers.IndexOf(answer)));
 
-            // Loop each answer
-            foreach (var answer in answers)
-            {
-                // If its selected...
-                if (answer.IsSelected)
-                {
-                    // Add the index
-                    indexes.Add(answers.IndexOf(answer));
-                }
-            }
-
-            // Return the final list
+            // Return it as list
             return indexes;
         }
 
@@ -175,43 +160,25 @@ namespace Testinator.Server.Domain
         /// <returns>The list of bools with true values on right answers</returns>
         public static List<bool> GetBoolsOfSelected(this IList<AnswerSelectableViewModel> answers)
         {
-            // Prepare a list to return
-            var bools = new List<bool>();
+            // Copy the list and get only IsSelected values from every answer
+            var bools = answers.Select(answer => answer.IsSelected);
 
-            // Loop each answer
-            foreach (var answer in answers)
-            {
-                // Add its value to the list
-                bools.Add(answer.IsSelected);
-            }
-
-            // Return the final list
-            return bools;
+            // Return it as list
+            return bools.ToList();
         }
 
         /// <summary>
-        /// Converts answer list to the dictionary version with point rates
+        /// Converts answer list to the editor list version with point rates
         /// </summary>
         /// <param name="answers">Answer view models</param>
-        /// <returns>The dictionary ready for editor to handle</returns>
+        /// <returns>The list of pairs ready for editor to handle</returns>
         public static IList<KeyValuePair<string, float>> ToRatedAnswers(this IList<AnswerEditableViewModel> answers)
         {
-            /*
-            // Prepare a dictionary to return
-            var dictionary = new Dictionary<string, float>();
-
-            // Loop each answer
-            foreach (var answer in answers)
-            {
-                // Add it to the dictionary with the rate
-                dictionary.Add(answer.Answer, 1f);
-            }
-
-            // Return the ready dictionary
-            return dictionary;*/
-
-            // ain't that shorter and more clear?
-            return answers.Select(x => new KeyValuePair<string, float>(x.Answer, 1f)).ToList();
+            // Copy the list and attach the rate to every answer
+            var list = answers.Select(answer => new KeyValuePair<string, float>(answer.Answer, 1f));
+            
+            // Return it as list
+            return list.ToList();
         }
     }
 }
