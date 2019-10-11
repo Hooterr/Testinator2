@@ -16,7 +16,9 @@ namespace Testinator.WebApp
     {
         #region Private Members
 
-        private readonly SignInManager<ApplicationUser> mSignInManager;
+        /// <summary>
+        /// The user manager that handles every user account interactions
+        /// </summary>
         private readonly UserManager<ApplicationUser> mUserManager;
 
         #endregion
@@ -26,10 +28,9 @@ namespace Testinator.WebApp
         /// <summary>
         /// Default constructor
         /// </summary>
-        public AccountApiController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager)
+        public AccountApiController(UserManager<ApplicationUser> userManager)
         {
             // Inject services from DI
-            mSignInManager = signInManager;
             mUserManager = userManager;
         }
 

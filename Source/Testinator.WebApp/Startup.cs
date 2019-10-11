@@ -11,7 +11,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Testinator.Web.Database;
-using Testinator.WebApp.Data;
 
 namespace Testinator.WebApp
 {
@@ -30,7 +29,7 @@ namespace Testinator.WebApp
         {
             services.AddRazorPages();
             services.AddServerSideBlazor();
-            services.AddSingleton<WeatherForecastService>();
+            services.InjectApplicationServices();
 
             // Configure cookies policy
             services.Configure<CookiePolicyOptions>(options =>
