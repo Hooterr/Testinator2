@@ -65,7 +65,7 @@ namespace Testinator.Server.Services
         public async Task<string> LogInAsync(string email, string password)
         {
             // Prepare user data to send
-            var url = "https://localhost:44306/" + ApiRoutes.LoginRoute; // TODO: Put host in configuration
+            var url = "https://localhost:44322/" + ApiRoutes.LoginRoute; // TODO: Put host in configuration
             var credentials = new LoginCredentialsApiModel
             {
                 Email = email,

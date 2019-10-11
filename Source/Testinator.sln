@@ -76,6 +76,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.Services"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testinator.Server.Files", "Testinator.Server.Files\Testinator.Server.Files.csproj", "{28A0BFE6-214B-47C2-86C6-E3BB1635064B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testinator.WebApp", "Testinator.WebApp\Testinator.WebApp.csproj", "{2A09E1B6-C15A-4D55-87AD-F9F726AF32E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -296,6 +298,14 @@ Global
 		{28A0BFE6-214B-47C2-86C6-E3BB1635064B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{28A0BFE6-214B-47C2-86C6-E3BB1635064B}.Release|x86.ActiveCfg = Release|Any CPU
 		{28A0BFE6-214B-47C2-86C6-E3BB1635064B}.Release|x86.Build.0 = Release|Any CPU
+		{2A09E1B6-C15A-4D55-87AD-F9F726AF32E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2A09E1B6-C15A-4D55-87AD-F9F726AF32E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2A09E1B6-C15A-4D55-87AD-F9F726AF32E5}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{2A09E1B6-C15A-4D55-87AD-F9F726AF32E5}.Debug|x86.Build.0 = Debug|Any CPU
+		{2A09E1B6-C15A-4D55-87AD-F9F726AF32E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2A09E1B6-C15A-4D55-87AD-F9F726AF32E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2A09E1B6-C15A-4D55-87AD-F9F726AF32E5}.Release|x86.ActiveCfg = Release|Any CPU
+		{2A09E1B6-C15A-4D55-87AD-F9F726AF32E5}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -327,6 +337,7 @@ Global
 		{43436D55-161B-445C-B155-6DB1C6FD34B9} = {F647B6B0-3E60-47BD-92D3-72122CDA500C}
 		{72B73009-63D9-49A2-8FAA-E82917356C37} = {EFA7EAE9-954F-48D5-8DE8-81B5B6D2A213}
 		{28A0BFE6-214B-47C2-86C6-E3BB1635064B} = {EFA7EAE9-954F-48D5-8DE8-81B5B6D2A213}
+		{2A09E1B6-C15A-4D55-87AD-F9F726AF32E5} = {7C1087B8-3FD4-4006-AD80-DA059382D7BB}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {F44C476F-7275-42D4-AA3F-05FEF5D78E83}
