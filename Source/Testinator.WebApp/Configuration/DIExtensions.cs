@@ -20,6 +20,8 @@ namespace Testinator.WebApp
             // Inject scoped services
             // The instance is created for every scope (in this case, for every client call)
             services.AddScoped<LoginPageViewModel>();
+            services.AddScoped<RegisterPageViewModel>();
+            services.AddScoped<DashboardPageViewModel>();
 
             // Inject transient services
             // The instance is created every single time it is requested in code
