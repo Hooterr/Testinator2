@@ -24,6 +24,7 @@ namespace Testinator.WebApp
             services.AddScoped<RegisterPageViewModel>();
             services.AddScoped<DashboardPageViewModel>();
             services.AddScoped<TestCreatorInitialPageViewModel>();
+            services.AddScoped<TestCreatorTestInfoPageViewModel>();
 
             // Inject transient services
             // The instance is created every single time it is requested in code
