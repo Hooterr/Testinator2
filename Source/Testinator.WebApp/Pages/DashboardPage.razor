@@ -1,0 +1,8 @@
+﻿@page "/dashboard"
+@inject DashboardPageViewModel DataContext
+
+<h1>Dashboard</h1>
+
+<h2>Witaj @DataContext.FirstName @DataContext.SecondName</h2>
+
+<button @onclick="@DataContext.GoToTestCreatorCommand.ToAction()">Go to TestCreator</button>
