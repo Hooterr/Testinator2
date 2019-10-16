@@ -1,4 +1,8 @@
 ﻿@page "/login"
 @inject LoginPageViewModel DataContext
 
-<h1>Hi</h1>
+<h1>Zaloguj się</h1>
+
+<h2>TODO: Zrobic logowanie :)</h2>
+
+<button @onclick="DataContext.EnterWithoutLoginCommand.ToAction()">Zaloguj bez logowania</button>
