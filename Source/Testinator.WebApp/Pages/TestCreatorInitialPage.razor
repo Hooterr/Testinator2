@@ -1,0 +1,6 @@
+﻿@page "/testcreator"
+@inject TestCreatorInitialPageViewModel DataContext
+
+<h1>TestCreator</h1>
+
+<button @onclick="@DataContext.NewTestCommand.ToAction()">Stwórz nowy test</button>
