@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Testinator.Core;
 using Testinator.TestSystem.Editors;
-using Testinator.WebApp.Data;
 
 namespace Testinator.WebApp
 {
@@ -17,7 +16,6 @@ namespace Testinator.WebApp
         {
             // Inject singleton services
             // The instance is created only once
-            services.AddSingleton<WeatherForecastService>();
             services.AddSingleton<ITestCreatorService, TestCreatorService>();
 
             // Inject scoped services
