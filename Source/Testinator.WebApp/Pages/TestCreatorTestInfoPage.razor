@@ -3,4 +3,18 @@
 
 <h1>TestCreator TestInfo</h1>
 
-<button @onclick="@DataContext.SubmitCommand.ToAction()">Submit</button>
+<p>Nazwa: </p>
+<input @bind-value="DataContext.Name.Value" />
+@foreach (var error in DataContext.Name.ErrorMessages)
+{
+    <p>@error</p>
+}
+
+<p>Opis: </p>
+<input @bind-value="DataContext.Description.Value" />
+@foreach (var error in DataContext.Description.ErrorMessages)
+{
+    <p>@error</p>
+}
+
+<button @onclick="DataContext.SubmitCommand.ToAction()">Submit</button>
