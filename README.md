@@ -4,7 +4,7 @@ Authors: [Patryk Mikulski](https://github.com/Minorsonek), [Maksymilian Lach](ht
 
 The idea of the project is to help teachers (but not only) automize their examination process.
 
-Project consists of a Server and Client application. 
+Project consists of two applications: Server and Client. 
 
 Server is an editor-like application that lets you create, edit and manage your quiz questions, scoring criteria and quiz templates.
 When you have a test ready ask participants to open the client app on their machines and connect to the same LAN network. Once the connections is established you may start the test session. After you start the session you can observe the progress of every participant and have access to special features e.g. allow late-commers to join the session or kick a participant from the session, more to come in the future. 
