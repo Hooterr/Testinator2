@@ -2,6 +2,8 @@
 
 Authors: [Patryk Mikulski](https://github.com/Minorsonek), [Maksymilian Lach](https://github.com/Hooterr)
 
+#Last buildable version is on branch /Release/v1.0
+
 The idea of the project is to help teachers (but not only) automize their examination process.
 
 Project consists of two applications: Server and Client. 
@@ -17,5 +19,3 @@ Cloud storage of questions and online questions exchange is another idea that we
 
 The project is far from finished but it managed to grew to a considerable size and complexity. We are currently in the process of refactoring core features of the app which means that the project is not buildable at this point or if it is may not work correctly. 
 
-
-Last buildable version is on branch /Release/v1.0
