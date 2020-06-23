@@ -2,7 +2,7 @@
 
 Authors: [Patryk Mikulski](https://github.com/Minorsonek), [Maksymilian Lach](https://github.com/Hooterr)
 
-#Last buildable version is on branch /Release/v1.0
+**Last buildable version is on branch /Release/v1.0**
 
 The idea of the project is to help teachers (but not only) automize their examination process.
 
